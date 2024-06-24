@@ -1,0 +1,118 @@
+.uploadFile {
+    padding: 25px;
+    margin-right: 50px;
+    background-color: #C3D2F9;
+    width: 65%;
+    height: 400px;
+    margin-top: 2%;
+    border-radius: 20px;
+    border: 2px dashed #3E456F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.seeFiles, .limitFile, .dropFile, .seeImage {
+    background-color: #C3D2F9;
+    color: #3E456F;
+}
+.headerForFile {
+    line-height: 48px;
+    font-size: 40px;
+    font-weight: 800;
+    color: #3E456F;
+}
+.dropFile {
+    line-height: 48px;
+    font-size: 30px;
+    font-weight: 800;
+}
+.seeFiles {
+    background-color: #FFFFFF;
+    width: fit-content;
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: 450;
+    margin: 10px;
+}
+.seeImage {
+    background-color: #FFFFFF;
+    width: fit-content;
+    padding: 8px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: 450;
+    margin: 7px;
+}
+.limitFile {
+    font-size: 17px;
+    font-weight: 500;
+}
+.uploadImage {
+    padding: 25px;
+    background-color: #C3D2F9;
+    width: 400px;
+    height: 180px;
+    margin-top: 2%;
+    border-radius: 20px;
+    border: 2px dashed #3E456F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#datasetImageUpload, .dropImage, .limitImage {
+    background-color: #E1C5F5;
+    color: #3E456F;
+}
+.dropImage {
+    height: fit-content;
+    line-height: 48px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.limitImage {
+    font-size: 17px;
+    font-weight: 500;
+}
+.uploadFilesContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.uploadedFilesSection {
+    padding: 5px 25px 15px 25px;
+    width: 400px;
+    height: 185px;
+    scrollbar-color: #7d7070;
+    margin-top: 2%;
+    border-radius: 20px;
+    border: 2px dashed #3E456F;
+    color: #3E456F;
+    overflow-y: scroll;
+}
+.coverImageText {
+    color: #3E456F;
+    line-height: 48px;
+    font-size: 30px;
+    font-weight: 800;
+}
+.uploadedFilesTitle {
+    color: #3E456F;
+    width: fit-content;
+    height: fit-content;
+    line-height: 48px;
+    font-size: 20px;
+    font-weight: 800;
+    background-color: white;
+}
+.uploadPage {
+    margin-bottom: 50px;
+}
+button:hover {
+    transform: scale(1.05) ;
+}
