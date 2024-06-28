@@ -1,5 +1,9 @@
 .upload {
-  margin: 0% 10% 10% 8%;
+  padding: 0% 10% 10% 8%;
+  background-image: url('../../img/uploadBackground.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -24,21 +28,34 @@
   }
   .visible {
     margin-top: 10px;
-    padding: 20px;
+    padding: 9px;
     border: solid rgba(228, 231, 242, 1);
     border-width: 1px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: none;
-    height: 35px;
     width: 400px;
     font-size: 16px;
+    color: #3E456F;
+    box-sizing: border-box;
+    appearance: none; 
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="2  0" height="20" viewBox="0 0 20 20"><path fill="%233E456F" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px;
   }
 .visible:focus {
     border: solid rgba(0, 113, 206, 1);
     outline: none;
     border-width: 1px;
  }
+ .visible::after {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
 .metadataSection {
     display: flex;
     justify-content: space-between;

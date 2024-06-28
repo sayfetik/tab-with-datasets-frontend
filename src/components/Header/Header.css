@@ -107,6 +107,7 @@
     justify-content: flex-end;
     padding-left: 28px;
     padding-right: 28px;
+    background-color: none;
 }
 
 .Header_commonsHeader__AGVst {
@@ -136,6 +137,7 @@
 }
 .NavMenu_commonsNavMenuItemNotActive__0ESa- {
     color: #3b4168;
+    background-color: none;
 }
 div {
     display: block;
@@ -145,6 +147,7 @@ div {
     align-items: center;
     display: flex;
     padding-right: 14px;
+    background-color: transparent;
 }
 .NavProfile_wrapper__8vQYw {
     align-items: center;
@@ -153,6 +156,12 @@ div {
     height: 100%;
     padding-left: 28px;
     padding-right: 28px;
+}
+.NavMenu_itemLabel__kbH6O {
+    background-color: transparent;
+}
+svg {
+    background-color: transparent;
 }
 
 .Button_enterBtn__4ReAZ {

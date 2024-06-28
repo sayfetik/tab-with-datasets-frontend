@@ -16,16 +16,28 @@
     background-color: #C3D2F9;
     color: #3E456F;
 }
-.headerForFile {
+h1 {
     line-height: 48px;
-    font-size: 40px;
-    font-weight: 800;
+    font-size: 45px;
+    font-weight: 700;
+    color: #3E456F;
+}
+h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3E456F;
+}
+.fieldInfo {
+    line-height: 28px;
+}
+h3 {
+    line-height: 28px;
     color: #3E456F;
 }
 .dropFile {
     line-height: 48px;
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 700;
 }
 .seeFiles {
     background-color: #FFFFFF;
@@ -37,6 +49,7 @@
     font-size: 18px;
     font-weight: 450;
     margin: 10px;
+    border: none;
 }
 .seeImage {
     background-color: #FFFFFF;
@@ -48,6 +61,7 @@
     font-size: 18px;
     font-weight: 450;
     margin: 7px;
+    border: none;
 }
 .limitFile {
     font-size: 17px;
@@ -91,28 +105,29 @@
     scrollbar-color: #7d7070;
     margin-top: 2%;
     border-radius: 20px;
-    border: 2px dashed #3E456F;
+    border: 1px solid #3E456F;
     color: #3E456F;
     overflow-y: scroll;
+    background-color: white;
 }
 .coverImageText {
     color: #3E456F;
     line-height: 48px;
     font-size: 30px;
-    font-weight: 800;
+    font-weight: 700;
 }
 .uploadedFilesTitle {
+    background-color: white;
     color: #3E456F;
     width: fit-content;
     height: fit-content;
     line-height: 48px;
     font-size: 20px;
-    font-weight: 800;
-    background-color: white;
+    font-weight: 700;
 }
 .uploadPage {
     margin-bottom: 50px;
 }
-button:hover {
-    transform: scale(1.05) ;
+.seeImage, .seeFiles:hover {
+    background-color: #f5f5f5;
 }

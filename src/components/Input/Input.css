@@ -18,6 +18,7 @@ input[type="text"] {
     box-shadow: none;
     height: 35px;
     font-size: 16px;
+    color: #3E456F;
  }
 input[type="text"]:focus {
     border: solid rgba(0, 113, 206, 1);

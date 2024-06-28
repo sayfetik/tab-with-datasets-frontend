@@ -1,12 +1,13 @@
 .back {
     display: flex;
     align-items: center;
-    margin-top: 50px;
+    padding-top: 50px;
     margin-bottom: 10px;
 }
-.back a {
+.back button {
     color: #3E456F;
     margin: 0.5%;
     font-size: 16px;
     font-weight: 500;
+    border: none;
 }

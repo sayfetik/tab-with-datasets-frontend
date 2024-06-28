@@ -1,17 +1,20 @@
 import React from 'react'
-import Icon from '../Header/Icon'
+import Icon from '../Icon'
 import back from '../../img/back.png'
 import './Back.css'
+import { useNavigate } from 'react-router-dom';
 
-class Back extends React.Component {
-    render() {
-        return (
-            <div className='back'>
-                <Icon image={back} />
-                <a href="">Назад</a>
-            </div>
-        ) 
-    }
+const Back = () => {
+    const navigate = useNavigate();
+    const goBack = () => {
+    navigate(-1);
+  };
+    return (
+        <div className='back' onClick={goBack}>
+            <Icon image={back} />
+            <button>Назад</button>
+        </div>
+    )   
 }
 
 export default Back

@@ -5,8 +5,11 @@ import UploadFile from './UploadFilesSection/UploadFilesPart';
 import './Upload.css';
 import axios from 'axios';
 import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 const Upload = () => {
+    const navigate = useNavigate();
+
     return (
         <div>
             <Header />
@@ -17,8 +20,8 @@ const Upload = () => {
                 <div>
                     <Input label="Название" placeholder="Введите название"/>
                     <div className='metadataLabel'>Видимость</div>
-                    <select className="visible" id='metadataField'>
-                        <option value="Private" selected>Приватный</option>
+                    <select className="visible" id="metadataField">
+                        <option value="Private">Приватный</option>
                         <option value="Public">Публичный</option>
                     </select>
                     <Input label="Авторы" placeholder="Введите автора"/>
@@ -34,24 +37,12 @@ const Upload = () => {
                         </div>
                     </div>
                     <div id='saveButtons'>
-                        <button className='saveDraft'  onClick={()=>{
+                        <button className='saveDraft' onClick={()=>{
                                 axios.get('https://tab-with-datasets-mock.onrender.com/save_draft', {})
-                                    .then(response => {
-                                        alert(response.data);
-                                    })
-                                    .catch((error) => {
-                                      console.log(error);
-                                    });
+                                    .then(response => { alert(response.data); })
+                                    .catch((error) => { console.log(error); });
                             }}>Сохранить черновик</button>
-                            <button className='uploadDataset' onClick={()=>{
-                                axios.get('https://tab-with-datasets-mock.onrender.com/upload', {})
-                                    .then(response => {
-                                        alert(response.data);
-                                    })
-                                    .catch((error) => {
-                                      console.log(error);
-                                    });
-                            }}>Загрузить датасет</button>
+                            <button className='uploadDataset' onClick={()=>{navigate('/unsuccessUpload')}}>Загрузить датасет</button>
                     </div>
                 </div>
             </div>

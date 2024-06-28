@@ -1,0 +1,19 @@
+#datasetCard {
+    display: flex;
+    justify-content: space-between;
+}
+#card {
+    background-color: white;
+    border-radius: 50px;
+    padding: 30px;
+    width: 310px;
+}
+#datasetImage {
+    border-radius: 50px;
+    width: 250px;
+    margin-bottom: 10px;
+}
+#cardInfo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

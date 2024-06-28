@@ -1,13 +1,19 @@
 import React from 'react';
-import Upload from './components/Upload/Upload';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { UnsuccessUpload, Search, Upload, DatasetPage, Back } from './components';
 
-function App() {
+const App = () => {
     return (
-            <div className="App" id='app'>
-                <Upload />
-            </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Search />} />
+          <Route path="/dataset" element={<DatasetPage />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/unsuccessUpload" element={<UnsuccessUpload />} />
+        </Routes>
+      </Router>
     );
-}
+  };
 
 export default App;

@@ -1,16 +1,17 @@
 import React from 'react';
 import './Header.css'
-import Icon from './Icon';
+import Icon from '../Icon';
 import idhLogo from '../../img/idhLogo.png'
+import { useNavigate } from 'react-router-dom';
 
-class Header extends React.Component {
-  render() {
+const Header = () => {
+  const navigate = useNavigate();
     return (
         <div id="header">
         <header className="commonsHeader">
         <a href="https://unionepro.ru">
           <div className="logo">
-            <svg width="140px" height="36px" viewBox="0px 0px 140px 36px" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="140px" height="36px" viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M49.0541 30.8145L47.4637 33.9151C47.3241 34.1895 47.1567 34.396 46.9615 34.5352C46.7696 34.6704 46.5603 34.7382 46.3337 34.7382C46.1522 34.7382 45.9727 34.6978 45.7948 34.6175L45.9622 34.0577C46.1051 34.1052 46.2238 34.1291 46.318 34.1291C46.5377 34.1291 46.7191 34.0101 46.8621 33.7724L46.9196 33.6791L45.46 30.8145H46.1872L47.2701 33.0699L48.3845 30.8145H49.0541Z" fill="#3E456F"></path>
               <path d="M52.7815 30.8145V34.6559H52.1013V33.0096H50.2075V34.6559H49.5273V30.8145H50.2075V32.4004H52.1013V30.8145H52.7815Z" fill="#3E456F"></path>
               <path d="M53.8145 30.8145H54.4841V33.5419L56.4512 30.8145H57.0843V34.6559H56.4146V31.934L54.4475 34.6559H53.8145V30.8145Z" fill="#3E456F"></path>
@@ -66,7 +67,7 @@ class Header extends React.Component {
         <div className="NavMenu_commonsNavMenu__qSq5M">
           <a href="https://unionepro.ru" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemActive__-A5SY">
             <span className="NavMenu_itemIcon__Kpda0">
-              <svg width="20px" height="20px" viewBox="0px 0px 20px 20px" fill="none">
+              <svg width="20px" height="20px" viewBox="0 0 20 20" fill="none">
                 <path opacity="0.3" d="M10.0013 4.42065V17.779C9.85964 17.779 9.70963 17.754 9.59297 17.6873L9.55963 17.6706C7.95964 16.7956 5.16797 15.879 3.35964 15.6373L3.11797 15.604C2.31797 15.504 1.66797 14.754 1.66797 13.954V3.88732C1.66797 2.89565 2.4763 2.14565 3.46797 2.22898C5.21797 2.37065 7.86797 3.25398 9.3513 4.17898L9.55963 4.30398C9.68464 4.37898 9.84297 4.42065 10.0013 4.42065Z" fill="#0071CE"></path>
                 <path d="M18.3333 3.89128V13.9496C18.3333 14.7496 17.6833 15.4996 16.8833 15.5996L16.6083 15.633C14.7917 15.8746 11.9917 16.7996 10.3917 17.683C10.2833 17.7496 10.15 17.7746 10 17.7746V4.41628C10.1583 4.41628 10.3167 4.37462 10.4417 4.29962L10.5833 4.20795C12.0667 3.27462 14.725 2.38295 16.475 2.23295H16.525C17.5167 2.14962 18.3333 2.89128 18.3333 3.89128Z" fill="#0071CE"></path>
                 <path d="M6.45703 7.69922H4.58203C4.24036 7.69922 3.95703 7.41589 3.95703 7.07422C3.95703 6.73255 4.24036 6.44922 4.58203 6.44922H6.45703C6.7987 6.44922 7.08203 6.73255 7.08203 7.07422C7.08203 7.41589 6.7987 7.69922 6.45703 7.69922Z" fill="#0071CE"></path>
@@ -77,7 +78,7 @@ class Header extends React.Component {
           </a>
           <a href="https://assessment.unionepro.ru" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
           <span className="NavMenu_itemIcon__Kpda0">
-            <svg width="20px" height="20px" viewBox="0px 0px 20px 20px" fill="none"><path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M13.9032 3.14146C11.3303 2.85389 8.67078 2.85389 6.09782 3.14146C5.28726 3.23205 4.55978 3.61442 4.02974 4.18333C3.54592 4.69651 3.22363 5.36344 3.14146 6.09872C2.85389 8.67168 2.85389 11.3312 3.14146 13.9041C3.22927 14.6898 3.59122 15.3974 4.13145 15.9228C4.65108 16.4339 5.33794 16.7753 6.09782 16.8602C8.67078 17.1478 11.3303 17.1478 13.9032 16.8602C14.6376 16.7781 15.3039 16.4565 15.8168 15.9736C16.3865 15.4435 16.7695 14.7154 16.8602 13.9041C17.1478 11.3312 17.1478 8.67168 16.8602 6.09872C16.7752 5.33778 16.433 4.65006 15.9207 4.13018C15.3954 3.59065 14.6883 3.2292 13.9032 3.14146Z" fill="#0071CE"></path>
+            <svg width="20px" height="20px" viewBox="0 0 20 20" fill="none"><path opacity="0.3" fillRule="evenodd" clipRule="evenodd" d="M13.9032 3.14146C11.3303 2.85389 8.67078 2.85389 6.09782 3.14146C5.28726 3.23205 4.55978 3.61442 4.02974 4.18333C3.54592 4.69651 3.22363 5.36344 3.14146 6.09872C2.85389 8.67168 2.85389 11.3312 3.14146 13.9041C3.22927 14.6898 3.59122 15.3974 4.13145 15.9228C4.65108 16.4339 5.33794 16.7753 6.09782 16.8602C8.67078 17.1478 11.3303 17.1478 13.9032 16.8602C14.6376 16.7781 15.3039 16.4565 15.8168 15.9736C16.3865 15.4435 16.7695 14.7154 16.8602 13.9041C17.1478 11.3312 17.1478 8.67168 16.8602 6.09872C16.7752 5.33778 16.433 4.65006 15.9207 4.13018C15.3954 3.59065 14.6883 3.2292 13.9032 3.14146Z" fill="#0071CE"></path>
             <path d="M6.71387 9.14286L9.57101 12L17.1422 4.28516" stroke="#0071CE" strokeWidth="1.5" strokeLinecap="round"></path>
           </svg>
           </span>
@@ -85,7 +86,7 @@ class Header extends React.Component {
           </a>
           <a href="https://courses.unionepro.ru" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
             <span className="NavMenu_itemIcon__Kpda0">
-              <svg width="18px" height="18px" viewBox="0px 0px 18px 18px" fill="none">
+              <svg width="18px" height="18px" viewBox="0 0 18 18" fill="none">
                 <path opacity="0.4" d="M0.667055 8.23242C0.708722 10.1808 0.650482 13.5133 0.667149 13.8808C0.726316 14.6666 1.20205 15.4608 1.67039 16.0208C2.32205 16.8066 3.12455 17.1574 4.24372 17.1574C5.79039 17.1658 7.49539 17.1658 9.15122 17.1658C10.8137 17.1658 12.4271 17.1658 13.7896 17.1574C14.8929 17.1574 15.7204 16.7974 16.3637 16.0208C16.8321 15.4608 17.2826 14.6583 17.3251 13.8808C17.3418 13.5716 17.2754 9.95409 17.3254 8.23242H0.667055Z" fill="#0071CE"></path>
                 <path d="M8.37109 11.8203V12.8986C8.37109 13.2436 8.65109 13.5236 8.99609 13.5236C9.34109 13.5236 9.62109 13.2436 9.62109 12.8986V11.8203C9.62109 11.4753 9.34109 11.1953 8.99609 11.1953C8.65109 11.1953 8.37109 11.4753 8.37109 11.8203Z" fill="#0071CE"></path><path fillRule="evenodd" clipRule="evenodd" d="M7.50949 11.1313C7.42616 11.4338 7.13532 11.6271 6.82032 11.5855C4.69449 11.2888 2.66283 10.5346 0.947825 9.40213C0.771992 9.28713 0.666992 9.09047 0.666992 8.88047V5.99213C0.666992 4.24213 2.09366 2.8188 3.84783 2.8188H5.48699C5.64366 1.6088 6.66866 0.667969 7.92033 0.667969H10.072C11.3228 0.667969 12.3487 1.6088 12.5053 2.8188H14.1528C15.902 2.8188 17.3253 4.24213 17.3253 5.99213V8.88047C17.3253 9.09047 17.2195 9.2863 17.0453 9.40213C15.327 10.5396 13.287 11.2971 11.147 11.593C11.1178 11.5971 11.0895 11.5988 11.0612 11.5988C10.7787 11.5988 10.5262 11.408 10.4553 11.128C10.287 10.4646 9.68449 10.0005 8.99199 10.0005C8.29032 10.0005 7.69449 10.4546 7.50949 11.1313ZM10.072 1.91797H7.92033C7.35949 1.91797 6.89116 2.3013 6.75116 2.8188H11.2403C11.1003 2.3013 10.632 1.91797 10.072 1.91797Z" fill="#0071CE"></path>
               </svg>
@@ -94,7 +95,7 @@ class Header extends React.Component {
           </a>
           <a href="https://ep.unionepro.ru" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
             <span className="NavMenu_itemIcon__Kpda0">
-              <svg width="20px" height="20px" viewBox="0px 0px 20px 20px" fill="none"><path opacity="0.3" d="M18.0505 8.69944L17.2338 12.1828C16.5338 15.1911 15.1505 16.4078 12.5505 16.1578C12.1338 16.1244 11.6838 16.0494 11.2005 15.9328L9.80048 15.5994C6.32548 14.7744 5.25048 13.0578 6.06714 9.57444L6.88381 6.08277C7.05048 5.37444 7.25048 4.75777 7.50048 4.24944C8.47548 2.23277 10.1338 1.6911 12.9171 2.34944L14.3088 2.67444C17.8005 3.4911 18.8671 5.2161 18.0505 8.69944Z" fill="#0071CE"></path>
+              <svg width="20px" height="20px" viewBox="0 0 20 20" fill="none"><path opacity="0.3" d="M18.0505 8.69944L17.2338 12.1828C16.5338 15.1911 15.1505 16.4078 12.5505 16.1578C12.1338 16.1244 11.6838 16.0494 11.2005 15.9328L9.80048 15.5994C6.32548 14.7744 5.25048 13.0578 6.06714 9.57444L6.88381 6.08277C7.05048 5.37444 7.25048 4.75777 7.50048 4.24944C8.47548 2.23277 10.1338 1.6911 12.9171 2.34944L14.3088 2.67444C17.8005 3.4911 18.8671 5.2161 18.0505 8.69944Z" fill="#0071CE"></path>
                 <path d="M12.5503 16.1583C12.0336 16.5083 11.3836 16.8 10.592 17.0583L9.27528 17.4917C5.96695 18.5583 4.22528 17.6667 3.15028 14.3583L2.08362 11.0667C1.01695 7.75833 1.90028 6.00833 5.20862 4.94167L6.52528 4.50833C6.86695 4.4 7.19195 4.30833 7.50028 4.25C7.25028 4.75833 7.05028 5.375 6.88362 6.08333L6.06695 9.575C5.25028 13.0583 6.32528 14.775 9.80028 15.6L11.2003 15.9333C11.6836 16.05 12.1336 16.125 12.5503 16.1583Z" fill="#0071CE"></path>
                 <path d="M14.5751 8.75912C14.5251 8.75912 14.4751 8.75079 14.4168 8.74246L10.3751 7.71746C10.0418 7.63412 9.84181 7.29246 9.92514 6.95912C10.0085 6.62579 10.3501 6.42579 10.6835 6.50912L14.7251 7.53412C15.0585 7.61746 15.2585 7.95912 15.1751 8.29246C15.1085 8.56746 14.8501 8.75912 14.5751 8.75912Z" fill="#0071CE"></path>
                 <path d="M12.1333 11.5754C12.0833 11.5754 12.0333 11.5671 11.9749 11.5587L9.54994 10.9421C9.21661 10.8587 9.01661 10.5171 9.09994 10.1837C9.18328 9.8504 9.52494 9.6504 9.85828 9.73373L12.2833 10.3504C12.6166 10.4337 12.8166 10.7754 12.7333 11.1087C12.6666 11.3921 12.4166 11.5754 12.1333 11.5754Z" fill="#0071CE"></path>
@@ -113,7 +114,7 @@ class Header extends React.Component {
           </a>
           <a href="https://metrics.unionepro.ru" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
             <span className="NavMenu_itemIcon__Kpda0">
-              <svg width="20px" height="20px" viewBox="0px 0px 20px 20px" fill="none">
+              <svg width="20px" height="20px" viewBox="0 0 20 20" fill="none">
                 <path d="M18.3337 18.334H1.66699C1.32533 18.334 1.04199 18.0507 1.04199 17.709C1.04199 17.3673 1.32533 17.084 1.66699 17.084H18.3337C18.6753 17.084 18.9587 17.3673 18.9587 17.709C18.9587 18.0507 18.6753 18.334 18.3337 18.334Z" fill="#0071CE"></path>
                 <path d="M8.125 3.33268V18.3327H11.875V3.33268C11.875 2.41602 11.5 1.66602 10.375 1.66602H9.625C8.5 1.66602 8.125 2.41602 8.125 3.33268Z" fill="#0071CE"></path>
                 <path opacity="0.3" d="M2.5 8.33268V18.3327H5.83333V8.33268C5.83333 7.41602 5.5 6.66602 4.5 6.66602H3.83333C2.83333 6.66602 2.5 7.41602 2.5 8.33268Z" fill="#0071CE"></path>
@@ -124,19 +125,19 @@ class Header extends React.Component {
           </a>
           <a href="https://learn.unionepro.ru/" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
             <span className="NavMenu_itemIcon__Kpda0">
-              <svg width="20px" height="20px" viewBox="0px 0px 20px 20px" fill="none">
+              <svg width="20px" height="20px" viewBox="0 0 20 20" fill="none">
                 <path d="M11.6667 15V16.6667L13.3333 17.5V18.3333H6.66666L6.66333 17.5033L8.33333 16.6667V15H2.49333C2.3839 14.9993 2.27567 14.9771 2.17486 14.9345C2.07404 14.892 1.98262 14.83 1.90582 14.752C1.82902 14.674 1.76837 14.5817 1.72733 14.4802C1.68629 14.3788 1.66567 14.2703 1.66666 14.1608V3.33917C1.66666 2.87583 2.04583 2.5 2.49333 2.5H17.5067C17.9633 2.5 18.3333 2.87417 18.3333 3.33917V14.1608C18.3333 14.6242 17.9542 15 17.5067 15H11.6667ZM3.33333 4.16667V13.3333H16.6666L16.6667 4.16667H3.33333Z" fill="#0071CE">
                   </path>
               </svg>
             </span>
             <span className="NavMenu_itemLabel__kbH6O">LMS</span>
           </a>
-          <a href="" className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
-            <span className="NavMenu_itemIcon__Kpda0">
-              <Icon image={idhLogo}/>
-            </span>
-            <span className="NavMenu_itemLabel__kbH6O">InnoDataHub</span>
-          </a>
+            <a href="" onClick={()=>{navigate('/')}} className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
+              <span className="NavMenu_itemIcon__Kpda0">
+                <Icon image={idhLogo}/>
+              </span>
+              <span className="NavMenu_itemLabel__kbH6O">InnoDataHub</span>
+            </a>
         </div>
         <div className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
@@ -147,8 +148,6 @@ class Header extends React.Component {
         </div>
         
     )
-  }
-
 }
 
 export default Header

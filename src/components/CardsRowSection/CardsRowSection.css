@@ -1,0 +1,21 @@
+#cards {
+    display: flex;
+    justify-content: space-between;
+}
+#seeAll {
+    font-size: 23px;
+    margin-right: 9px;
+    padding-bottom: 7px;
+}
+.topicCardsInRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+#seeAllIcon {
+    display: flex;
+    align-items: center;
+}
+#cardsRowSection {
+    margin-bottom: 50px;
+}
