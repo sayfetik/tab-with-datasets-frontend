@@ -4,6 +4,9 @@
     line-height: 1.15;
     font-size: 13px;
 }
+#header {
+    z-index: 100;
+}
 .commonsHeader {
     font-family: 'IBM Plex sans', sans-serif;
     z-index: 11;

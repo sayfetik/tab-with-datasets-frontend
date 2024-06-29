@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from '../Input/Input';
 import Back from '../Back/Back';
 import UploadFile from './UploadFilesSection/UploadFilesPart';
 import './Upload.css';
 import axios from 'axios';
 import Header from '../Header/Header';
+import Notification from '../Notification/Notification';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useNotification } from '../Notification/NotificationContext';
 
 const Upload = () => {
     const navigate = useNavigate();
+    const { showNotification } = useNotification();
+  
+    const handleButtonClick = () => {
+      navigate('/dataset');
+      showNotification("Датасет успешно загружен!");
+    };
 
     return (
         <div>
@@ -42,7 +51,14 @@ const Upload = () => {
                                     .then(response => { alert(response.data); })
                                     .catch((error) => { console.log(error); });
                             }}>Сохранить черновик</button>
-                            <button className='uploadDataset' onClick={()=>{navigate('/unsuccessUpload')}}>Загрузить датасет</button>
+                            <div>
+                                <button className='uploadDataset' onClick={handleButtonClick}>Загрузить датасет</button>
+                                {showNotification && (
+                                    <Notification
+                                    message="Это уведомление!"
+                                    />
+                                )}
+                            </div>
                     </div>
                 </div>
             </div>

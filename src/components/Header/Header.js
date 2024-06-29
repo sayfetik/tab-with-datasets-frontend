@@ -132,7 +132,7 @@ const Header = () => {
             </span>
             <span className="NavMenu_itemLabel__kbH6O">LMS</span>
           </a>
-            <a href="" onClick={()=>{navigate('/')}} className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
+            <a onClick={()=>{navigate('/')}} className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
               <span className="NavMenu_itemIcon__Kpda0">
                 <Icon image={idhLogo}/>
               </span>
