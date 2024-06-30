@@ -6,7 +6,6 @@ import './Upload.css';
 import axios from 'axios';
 import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
 

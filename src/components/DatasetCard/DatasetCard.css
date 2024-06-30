@@ -1,6 +1,7 @@
 #datasetCard {
     display: flex;
     justify-content: space-between;
+    margin: 1%;
 }
 #card {
     background-color: white;
