@@ -36,7 +36,7 @@ const Upload = () => {
                     <Input label="Источник" placeholder="Введите источник"/>
                     <Input label="Частота обновлений" placeholder="Введите частоту обновлений"/>
                 </div>
-                <div>
+                <div id='rightContainer'>
                     <Input label="Теги" placeholder="Введите теги" />
                     <div id='descriptionInputContainer'>
                         <div className='metadataBigItem'>
