@@ -57,13 +57,9 @@
   pointer-events: none;
 }
 .metadataSection {
-    display: flex;
-<<<<<<< HEAD
-    justify-content: space-between;
-=======
-    justify-content: space-around;
-    width: 100%;
->>>>>>> parent of a34e0215 (update-layout)
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 #descriptionInputContainer {
   width: 100%;
