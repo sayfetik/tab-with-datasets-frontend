@@ -12,7 +12,7 @@ class DatasetPage extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+            <Header />
             <div id='datasetPage'>
                 <Back />
                 <div id='datasetInfoHeader'>

@@ -3,23 +3,53 @@
     font-family: sans-serif;
     line-height: 1.15;
     font-size: 13px;
+    background-color: transparent;
 }
 #header {
     z-index: 100;
-}
-.commonsHeader {
-    font-family: 'IBM Plex sans', sans-serif;
-    z-index: 11;
-    height: 64px;
-    background: #fff;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    font-size: 16px;
-    transition: all 0.5s;
-    border-bottom: 1px solid #E4E7F2;
 }
+@media screen and (min-width: 1351px) {
+    
+    .commonsHeader {
+        font-family: 'IBM Plex sans', sans-serif;
+        width: 100%;
+        z-index: 11;
+        height: 64px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        font-size: 16px;
+        transition: all 0.5s;
+        border-bottom: 1px solid #E4E7F2;
+    }
+    #smallHeader {
+        display: none;
+    }
+  }
+@media screen and (max-width: 1350px) {
+    .commonsHeader {
+      display: none;
+    }
+    #smallHeader {
+        font-family: 'IBM Plex sans', sans-serif;
+        width: 100%;
+        z-index: 11;
+        height: 64px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        font-size: 16px;
+        transition: all 0.5s;
+        border-bottom: 1px solid #E4E7F2;
+        padding-right: 20px;
+    }
+  }
 .NavMenu_commonsNavMenu__qSq5M {
     align-items: center;
     display: flex;
@@ -143,6 +173,7 @@
 div {
     display: block;
     unicode-bidi: isolate;
+    background-color: transparent;
 }
 .NavMenu_itemIcon__Kpda0 {
     align-items: center;
@@ -239,7 +270,6 @@ a {
 }
 * {
     font-feature-settings: "tnum";
-    background-color: #fff;
     color: rgba(0, 0, 0, .85);
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     font-size: 14px;

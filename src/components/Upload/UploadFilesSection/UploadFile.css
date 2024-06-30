@@ -23,6 +23,7 @@
     line-height: 48px;
     font-size: 30px;
     font-weight: 700;
+    text-align: center;
 }
 .seeFiles {
     background-color: #FFFFFF;
@@ -82,6 +83,7 @@
 .uploadFilesContainer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .uploadedFilesSection {
     padding: 5px 25px 15px 25px;

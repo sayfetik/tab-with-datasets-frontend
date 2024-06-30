@@ -41,7 +41,7 @@ const Upload = () => {
                     <div id='descriptionInputContainer'>
                         <div className='metadataBigItem'>
                             <div className='inputLabel'>Описание</div>
-                            <textarea id='descriptionInput' placeholder='Введите описание'></textarea>
+                            <div><textarea id='descriptionInput' placeholder='Введите описание'></textarea></div>
                         </div>
                     </div>
                     <div id='saveButtons'>
