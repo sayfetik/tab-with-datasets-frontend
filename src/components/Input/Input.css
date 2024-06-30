@@ -8,11 +8,6 @@
 #metadataField {
     width: 500px;
 }
-@media screen and (max-width: 1350px) {
-  #metadataField {
-    width: 300px
-  }
-}
 input[type="text"] {
     margin-top: 10px;
     padding: 20px;

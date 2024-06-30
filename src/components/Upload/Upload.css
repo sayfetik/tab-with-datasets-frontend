@@ -1,13 +1,9 @@
 .upload {
   padding: 0% 10% 10% 8%;
   background-image: url('../../img/uploadBackground.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -63,7 +59,6 @@
 .metadataSection {
     display: flex;
     justify-content: space-between;
-    width: 100%;
 }
 #descriptionInputContainer {
   width: 100%;
@@ -77,12 +72,8 @@
   height: 300px;
   resize: none;
 }
-#rightContainer {
-  width: 100%;
-  padding-left: 50px;
-}
 .metadataBigItem {
-  width: 100%;
+  width: 700px;
   height: 200px;
 }
 #descriptionInput {
@@ -123,7 +114,4 @@
   font-weight: 600;
   border-radius: 40px;
   font-size: 16px;
-}
-* {
-  background-color: transparent;
 }

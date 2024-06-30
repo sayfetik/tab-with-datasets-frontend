@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 * {
   font-family: "IBM Plex Sans", sans-serif;
-  background-color: transparent;
 }
 body {
   font-feature-settings: "tnum";
@@ -30,29 +29,4 @@ body {
   justify-content: flex-end;
   padding-left: 28px;
   padding-right: 28px;
-}
-h1 {
-    line-height: 48px;
-    font-size: 42px;
-    color: #3E456F;
-}
-h2 {
-    font-size: 36px;
-    font-weight: 700;
-    color: #3E456F;
-}
-h3 {
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 28px;
-    color: #3E456F;
-}
-h4 {
-    font-weight: 700;
-    font-size: 15px;
-}
-p {
-    color: #3E456F;
-    font-size: 16px;
-    font-weight: 400;
 }
