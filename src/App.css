@@ -11,25 +11,15 @@ body {
   font-variant: tabular-nums;
   line-height: 1.5715;
 }
+button:hover {
+  opacity: 90%;
+}
 *, :after, :before {
   box-sizing: border-box;
-}
-.Header_commonsHeader__AGVst a {
-  border-bottom: none;
-  text-decoration: none;
 }
 :root {
   --font-header: "Montserrat", sans-serif;
   --font-content: "IBM Plex sans", sans-serif;
-}
-.NavMenu_commonsNavMenuItem__N9\+6J {
-  align-items: center;
-  color: #3b4168;
-  display: flex;
-  height: 100%;
-  justify-content: flex-end;
-  padding-left: 28px;
-  padding-right: 28px;
 }
 h1 {
     line-height: 48px;

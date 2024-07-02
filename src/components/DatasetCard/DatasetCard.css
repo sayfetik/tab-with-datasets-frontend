@@ -6,6 +6,11 @@
     background-color: white;
     border-radius: 50px;
     padding: 2%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+#datasetCard:hover {
+    transform: scale(1.05);
 }
 #datasetImage {
     border-radius: 50px;

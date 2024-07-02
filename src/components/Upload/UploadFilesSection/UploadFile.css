@@ -13,7 +13,6 @@
     align-items: center;
 }
 .seeFiles, .limitFile, .dropFile, .seeImage {
-    background-color: #C3D2F9;
     color: #3E456F;
 }
 .fieldInfo {
@@ -89,13 +88,12 @@
     padding: 5px 25px 15px 25px;
     width: 400px;
     height: 185px;
-    scrollbar-color: #7d7070;
     margin-top: 2%;
     border-radius: 20px;
     border: 1px solid #3E456F;
     color: #3E456F;
-    overflow-y: scroll;
     background-color: white;
+    overflow-y: scroll;
 }
 .coverImageText {
     color: #3E456F;
@@ -115,6 +113,6 @@
 .uploadPage {
     margin-bottom: 50px;
 }
-.seeImage, .seeFiles:hover {
+.seeImage:hover, .seeFiles:hover {
     background-color: #f5f5f5;
 }
