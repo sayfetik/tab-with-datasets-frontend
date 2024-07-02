@@ -57,9 +57,9 @@
   pointer-events: none;
 }
 .metadataSection {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 #descriptionInputContainer {
   width: 100%;
