@@ -19,7 +19,7 @@ const Search = () => {
                     <form id='inputSearch'>
                         <Input placeholder='Поиск по каталогу датасетов'/>
                         <Filters />
-                        <button type='submit' id='searchButton'>Найти</button>
+                        <button type='submit' id='searchButton' onClick={()=>{navigate('/datasets')}}>Найти</button>
                     </form>
                     <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
                 </div>

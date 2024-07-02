@@ -15,8 +15,16 @@ class CardsRowSection extends React.Component {
                     </div>
                 </div>
 
-                <div id='cards'>
-                    <DatasetCard fetchUrl={"URL"}/>
+                <div id='cards4'>
+                    <DatasetCard />
+                    <DatasetCard />
+                    <DatasetCard />
+                    <DatasetCard />
+                </div>
+                <div id='cards3'>
+                    <DatasetCard />
+                    <DatasetCard />
+                    <DatasetCard />
                 </div>
             </div>
         ) 

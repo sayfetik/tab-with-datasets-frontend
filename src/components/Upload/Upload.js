@@ -6,7 +6,6 @@ import './Upload.css';
 import axios from 'axios';
 import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
-import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
 
@@ -37,12 +36,12 @@ const Upload = () => {
                     <Input label="Источник" placeholder="Введите источник"/>
                     <Input label="Частота обновлений" placeholder="Введите частоту обновлений"/>
                 </div>
-                <div>
+                <div id='rightContainer'>
                     <Input label="Теги" placeholder="Введите теги" />
                     <div id='descriptionInputContainer'>
                         <div className='metadataBigItem'>
                             <div className='inputLabel'>Описание</div>
-                            <textarea id='descriptionInput' placeholder='Введите описание'></textarea>
+                            <div><textarea id='descriptionInput' placeholder='Введите описание'></textarea></div>
                         </div>
                     </div>
                     <div id='saveButtons'>

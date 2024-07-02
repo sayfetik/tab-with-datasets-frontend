@@ -1,12 +1,11 @@
 #datasetCard {
     display: flex;
-    justify-content: space-between;
-}
-#card {
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
     background-color: white;
     border-radius: 50px;
-    padding: 30px;
-    width: 310px;
+    padding: 2%;
 }
 #datasetImage {
     border-radius: 50px;
@@ -16,4 +15,15 @@
 #cardInfo {
     margin-top: 10px;
     margin-bottom: 10px;
+    width: fit-content;
+}
+#nameOfDataset {
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 25px;
+    width: 250px;
+}
+* {
+    background-color: transparent;
+    color: #3b4168;
 }

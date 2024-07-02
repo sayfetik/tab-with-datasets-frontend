@@ -1,7 +1,3 @@
-#cards {
-    display: flex;
-    justify-content: space-between;
-}
 #seeAll {
     font-size: 23px;
     margin-right: 9px;
@@ -17,5 +13,33 @@
     align-items: center;
 }
 #cardsRowSection {
-    margin-bottom: 50px;
+    padding-bottom: 100px;
+}
+@media screen and (max-width: 1350px) {
+    #cards3 {
+        display: flex;
+        justify-content: space-between;
+    }
+    #cards4 {
+        display: none;
+    }
+}
+@media screen and (min-width: 1351px) {
+    #cards4 {
+        display: flex;
+        justify-content: space-between;
+    }
+    #cards3 {
+        display: none;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    #cards3 {
+        display: none;
+    }
+    #cards4 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 }

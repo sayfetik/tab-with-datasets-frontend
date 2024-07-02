@@ -16,28 +16,14 @@
     background-color: #C3D2F9;
     color: #3E456F;
 }
-h1 {
-    line-height: 48px;
-    font-size: 45px;
-    font-weight: 700;
-    color: #3E456F;
-}
-h2 {
-    font-size: 30px;
-    font-weight: 700;
-    color: #3E456F;
-}
 .fieldInfo {
     line-height: 28px;
-}
-h3 {
-    line-height: 28px;
-    color: #3E456F;
 }
 .dropFile {
     line-height: 48px;
     font-size: 30px;
     font-weight: 700;
+    text-align: center;
 }
 .seeFiles {
     background-color: #FFFFFF;
@@ -97,6 +83,7 @@ h3 {
 .uploadFilesContainer {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .uploadedFilesSection {
     padding: 5px 25px 15px 25px;
