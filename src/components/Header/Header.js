@@ -4,17 +4,9 @@ import Icon from '../Icon';
 import idhLogo from '../../img/idhLogo.png'
 import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../img/menuIcon.png';
-import { useState, useEffect } from 'react';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
     return (
         <div id="header">
@@ -142,12 +134,12 @@ const Header = () => {
             </span>
             <span className="NavMenu_itemLabel__kbH6O">LMS</span>
           </a>
-            <a onClick={()=>{navigate('/')}} className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
+            <p onClick={()=>{navigate('/')}} className="NavMenu_commonsNavMenuItem__N9+6J NavMenu_commonsNavMenuItemNotActive__0ESa-">
               <span className="NavMenu_itemIcon__Kpda0">
                 <Icon image={idhLogo}/>
               </span>
               <span className="NavMenu_itemLabel__kbH6O">InnoDataHub</span>
-            </a>
+            </p>
         </div>
         <div className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
@@ -212,7 +204,7 @@ const Header = () => {
               </svg>
           </div>
         </a>
-          <img id='menu' src={menuIcon} width="30px" height="30px"></img>
+          <img alt='' id='menu' src={menuIcon} width="30px" height="30px"></img>
         </div>
         </div>
         

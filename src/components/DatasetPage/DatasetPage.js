@@ -16,7 +16,7 @@ class DatasetPage extends React.Component {
             <div id='datasetPage'>
                 <Back />
                 <div id='datasetInfoHeader'>
-                    <img id='datasetCoverImage' src={datasetImage}></img>
+                    <img id='datasetCoverImage' src={datasetImage} alt='Dataset cover'></img>
                     <div id='mainInfo'>
                         <p className='author'>Вставить имя автора</p>
                         <h1>Вставить название датасета</h1>

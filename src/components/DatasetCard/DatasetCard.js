@@ -8,7 +8,7 @@ const DatasetCard = () => {
     return (
         <div onClick={()=>{navigate('/dataset')}} id='datasetCard'>
             <div>
-                <img id='datasetImage' src={datasetImage}></img>
+                <img id='datasetImage' src={datasetImage} alt='Dataset cover'></img>
                 <div id='nameOfDataset'>Вставить название датасета</div>
                 <div id='cardInfo'>
                     <p className='fieldInfo'>Вставить автора</p>

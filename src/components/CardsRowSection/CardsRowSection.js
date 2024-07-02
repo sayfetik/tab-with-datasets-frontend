@@ -11,7 +11,7 @@ class CardsRowSection extends React.Component {
                     <h2>{this.props.topicName}</h2>
                     <div id='seeAllIcon'>
                         <p id='seeAll'>Смотреть все</p>
-                        <img src={arrowsIcon} width={"19px"}/>
+                        <img src={arrowsIcon} width={"19px"} alt=''/>
                     </div>
                 </div>
 

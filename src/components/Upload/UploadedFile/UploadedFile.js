@@ -5,7 +5,7 @@ class UploadedFile extends React.Component {
     render() {
         return (
             <div className='uploadedFile'>
-                <a>{this.props.fileName}</a>
+                <div>{this.props.fileName}</div>
             </div>
             
         ) 
