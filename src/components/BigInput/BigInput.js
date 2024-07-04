@@ -7,7 +7,7 @@ class BigInput extends React.Component {
             <div className='input'>
                 <span className='inputLabel'>{this.props.label}</span>
                 <div className='inputField'>
-                    <input type="text" placeholder={this.props.placeholder}  className='metadataBig'></input>
+                    <input type="text" placeholder={this.props.placeholder} className='metadataBig'></input>
                 </div>
             </div>
         ) 

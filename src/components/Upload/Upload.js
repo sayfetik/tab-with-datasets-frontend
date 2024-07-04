@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../Input/Input';
 import Back from '../Back/Back';
 import UploadFile from './UploadFilesSection/UploadFilesPart';
@@ -10,14 +10,27 @@ import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
 import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
+import RemovableTag from '../RemovableTag/RemovableTag';
 
 const Upload = () => {
-    const navigate = useNavigate();
     const { showNotification } = useNotification();
-  
-    const handleButtonClick = () => {
+
+    const navigate = useNavigate();
+    const navigationButtonClick = () => {
       navigate('/dataset');
       showNotification("Датасет успешно загружен!");
+    };
+
+    const [buttonState, setStateButton] = useState(true);
+    const [descriptionState, setStateDescription] = useState(false);
+    const showDescriptionButtonClick = () => {
+        setStateButton(false);
+        setStateDescription(true);
+    };
+
+    const [tagsState, setStateTags] = useState(false);
+    const showTagsButtonClick = () => {
+        setStateTags(true);
     };
 
     return (
@@ -43,27 +56,32 @@ const Upload = () => {
                     <BigInput label="Структура данных *" placeholder="Опишите структуру данных" />
                     <BigInput label="Применение *" placeholder="Опишите применения датасета" />
 
-                    <button id='generateDescButton'>
-                        <img src={sparklesIcon} width='15px' style={{marginRight: '5px'}}/>
+                    {buttonState && (<button id='generateDescButton' onClick={showDescriptionButtonClick}>
+                        <img src={sparklesIcon} width='15px' style={{marginRight: '5px'}} alt=''/>
                         Сгенерировать описание
-                    </button>
+                    </button>)}
 
-                    <div id='descriptionInputContainer'>
-                        <div className='metadataBigItem'>
-                            <div className='inputLabel'>Описание</div>
-                            <div><textarea id='descriptionInput' placeholder='Введите описание'></textarea></div>
+                    {descriptionState && (
+                        <div>
+                            <div id='descriptionInputContainer'>
+                                <div className='metadataBigItem'>
+                                    <div className='inputLabel'>Описание</div>
+                                    <div><textarea id='descriptionInput' placeholder='Введите описание'></textarea></div>
+                                </div>
+                            </div>
+                            <button id='continuie'  onClick={showTagsButtonClick}>Продолжить</button>
                         </div>
-                    </div>
-                    <button id='continuie'>Продолжить</button>
-
-                    <span className='inputLabel'>Теги</span>
-                    <div id='tagsInput'>
-                            <span className='datasetTagInput'>
-                                <button id='hideTag'>X</button>
-                                Вставить тег
-                            </span>
+                    )}
+                    
+                    {tagsState && (
+                        <div>
+                            <span className='inputLabel'>Теги</span>
+                            <div id='tagsInput'>
+                                <RemovableTag />
+                                <button id='addNewTagButton'>+</button>
+                            </div>
                         </div>
-
+                    )}
 
                     <div id='saveButtons'>
                         <button className='saveDraft' onClick={()=>{
@@ -73,7 +91,7 @@ const Upload = () => {
                             }}>Сохранить черновик</button>
 
                         <div className="wrapper">
-                            <button className="cta" onClick={handleButtonClick}>
+                            <button className="cta" onClick={navigationButtonClick}>
                                 <span className='uploadDataset'>Загрузить датасет</span>
                                 <span id='arrowsAnimation'>
                                 <svg className='svgArrows'

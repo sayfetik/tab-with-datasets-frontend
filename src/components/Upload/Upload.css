@@ -258,16 +258,18 @@ path.two {
 }
 
 #tagsInput {
-  margin: 15px 10px 20px 0px;
+  margin: 10px 10px 20px 0px;
+  display: flex;
 }
-.datasetTagInput {
-  border: solid 1px #3E456F;
-  border-radius: 20px;
-  color: #3E456F;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 5px 15px 5px 15px;
-  margin-right: 7px;
-  margin-bottom: 10px;
-  background-color: white;
+
+#addNewTagButton {
+cursor: pointer;
+border: solid 1px #3E456F;
+border-radius: 100px;
+color: #3E456F;
+font-size: 20px;
+font-weight: 400;
+background-color: white;
+line-height: 15px;
+padding: 0px 10px;
 }
