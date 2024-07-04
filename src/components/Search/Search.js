@@ -5,6 +5,7 @@ import Header from '../Header/Header'
 import Filters from '../Filters/Filters'
 import Input from '../Input/Input'
 import { useNavigate } from 'react-router-dom'; 
+import arrowsIcon from '../../img/iconArrows.png'
 
 const Search = () => {
     const navigate = useNavigate();
@@ -57,7 +58,10 @@ const Search = () => {
                     <CardsRowSection topicName={'Путешествия'} />
                 </div>
 
-                <h2 id='seeAllTopic'>Смотреть все датасеты</h2>                
+                <div id='seeAllDatasets'>
+                    <h2 id='seeAllTopic'>Смотреть все датасеты</h2>
+                    <img src={arrowsIcon} width='30px' height='30px' alt=''></img>
+                </div>           
             </div>
             </div>
         ) 

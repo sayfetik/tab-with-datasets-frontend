@@ -11,8 +11,12 @@ body {
   font-variant: tabular-nums;
   line-height: 1.5715;
 }
+button {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
 button:hover {
-  opacity: 90%;
+  transform: scale(1.05);
 }
 *, :after, :before {
   box-sizing: border-box;
@@ -45,4 +49,7 @@ p {
     color: #3E456F;
     font-size: 16px;
     font-weight: 400;
+}
+button:disabled {
+  opacity: 80%;
 }

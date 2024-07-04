@@ -7,6 +7,7 @@ import Header from '../Header/Header'
 import Icon from '../Icon'
 import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
+import star from '../../img/star.png'
 
 class DatasetPage extends React.Component {
     render() {
@@ -19,15 +20,24 @@ class DatasetPage extends React.Component {
                     <img id='datasetCoverImage' src={datasetImage} alt='Dataset cover'></img>
                     <div id='mainInfo'>
                         <p className='author'>Вставить имя автора</p>
-                        <h1>Вставить название датасета</h1>
+                        <h1 id='datasetTitle'>Вставить название датасета</h1>
                         <div id='tags'>
                             <span className='datasetTag'>Вставить тег </span>
                             <span className='datasetTag'>Вставить тег2</span>
                         </div>
-                        <button id='downloadButton'>
-                            <Icon image={downloadIconWhite} />
-                            <span id='downloadLabel'>Скачать</span>
-                        </button>
+                        <div id='downloadRationgSection'>
+                            <button id='downloadButton'>
+                                <span id='downloadLabel'>Скачать</span>
+                                <Icon image={downloadIconWhite} />
+                            </button>
+                            <div>
+                                <div id='ratingLabel'>
+                                    <img src={star} width='17px' height='17px' alt=''/>
+                                    <p id='rating'>4.2</p>
+                                </div>
+                                <p id='numOfDownloads'>1858 скачиваний</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                     
