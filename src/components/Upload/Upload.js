@@ -76,6 +76,8 @@ const Upload = () => {
                     />
                     <Input label="Источник" placeholder="Введите источник"/>
                     <Input label="Частота обновлений" placeholder="Введите частоту обновлений"/>
+                    <Input label="Лицензия" placeholder="Введите лицензию"/>
+                    <Input label="DOI" placeholder="Укажите doi"/>
                 </div>
 
                 <div id='rightContainer'>
