@@ -1,0 +1,41 @@
+#inputTag {
+    margin-right: 8px;
+    padding: 4px;
+    font-size: 16px;
+    width: fit-content;
+    border-color: transparent;
+}
+#tag {
+    padding: 4px 10px;
+    border: 1px solid #3E456F;
+    border-radius: 50px;
+    cursor: pointer;    
+    width: fit-content;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+#deleteTagButton {
+    border: none;
+    font-size: 20px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+#addTagButton {
+    border: solid 1px #3E456F;
+    border-radius: 50px;
+    font-size: 20px;
+    padding: 4px 10px;
+    margin-left: 5px;
+    padding-bottom: 6px;
+}
+#inputTextSection {
+    display: flex;
+    align-items: center;
+}
+#clickToEditPlaceholder {
+    color: #3e456f86;
+    font-size: 16px;
+}

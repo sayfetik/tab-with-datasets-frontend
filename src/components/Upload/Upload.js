@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
 import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
-import RemovableTag from '../RemovableTag/RemovableTag';
+import InputTags from '../InputTags/InputTags';
 
 const Upload = () => {
     const { showNotification } = useNotification();
@@ -35,7 +35,6 @@ const Upload = () => {
     const [dataStructure, setDataStructure] = useState('');
     const [useCases, setUseCases] = useState('');
     const [titleOfDataset, setTitleOfDataset] = useState('');
-    const [visibility, setVisibility] = useState('');
     const [authors, setAuthors] = useState('');
 
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
@@ -117,12 +116,11 @@ const Upload = () => {
                         </div>
                     )}
                     
-                    {areRequiredInputsFilled && (
+                    {tagsState && (
                         <div>
                             <span className='inputLabel'>Теги</span>
                             <div id='tagsInput'>
-                                <RemovableTag />
-                                <button id='addNewTagButton'>+</button>
+                                <InputTags />
                             </div>
                         </div>
                     )}
