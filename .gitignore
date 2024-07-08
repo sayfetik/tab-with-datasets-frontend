@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/node_modules/.cache
+/node_modules/*/node-modules/
 /.pnp
 .pnp.js
 
