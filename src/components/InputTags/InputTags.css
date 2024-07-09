@@ -5,6 +5,11 @@
     width: fit-content;
     border-color: transparent;
 }
+#inputTag:focus {
+    border: none;
+    outline: none;
+    width: fit-content;
+}
 #tag {
     padding: 4px 10px;
     border: 1px solid #3E456F;
