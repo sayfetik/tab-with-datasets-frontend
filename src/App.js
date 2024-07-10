@@ -13,7 +13,7 @@ const App = () => {
         <Notification />
         <Routes>
           <Route path="/" element={<Search />} />
-          <Route path="/dataset" element={<DatasetPage />} />
+          <Route path="/dataset/:id" element={<DatasetPage />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/unsuccessUpload" element={<UnsuccessUpload />} />
           <Route path='/datasets' element={<Datasets />} />

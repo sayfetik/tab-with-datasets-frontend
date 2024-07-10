@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import './Search.css'
 import CardsRowSection from '../CardsRowSection/CardsRowSection'
 import Header from '../Header/Header'
@@ -15,18 +15,15 @@ const Search = ({ fetchUrl }) => {
     const handleSearch = async (e) => {
         e.preventDefault();
         const url = `http://localhost:8080/api/search/${searchString}/${resultsLimit}`;
-        alert(url)
         try {
             const response = await fetch(url);
             if (!response.ok) {
                 alert('Network response was not ok');
             }
             const data = await response.json();
-            alert('Fetched datasets:' + data);
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                alert('its okay')
                 navigate('/datasets', { state: { datasets: data } });
             } else {
                 alert('No data returned from the server');

@@ -5,14 +5,36 @@ import Header from '../Header/Header'
 import './Datasets.css'
 import Sort from '../Sort/Sort'
 import Filters from '../Filters/Filters'
-import { useLocation } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 
 const Datasets = () => {
     const location = useLocation();
-    const { datasets } = location.state || { datasets: [] };
+    const navigate = useNavigate();
+    const { datasets: initialDatasets } = location.state || { datasets: [] };
+    const [datasets, setDatasets] = useState(initialDatasets);
     const [searchString, setSearchString] = useState('');
+    const [resultsLimit, setResultsLimit] = useState(5);
 
-    const handleSearch = () => {}
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        const url = `http://localhost:8080/api/search/${searchString}/${resultsLimit}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+            const data = await response.json();
+            if (data && data.length > 0) {
+                setDatasets(data);
+                navigate('/datasets', { state: { datasets: data } });
+            } else {
+                alert('No data returned from the server');
+            } 
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+        }
+    };
 
         return (
             <div>
