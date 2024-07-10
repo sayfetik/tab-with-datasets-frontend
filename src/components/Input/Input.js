@@ -1,5 +1,6 @@
 import React from 'react'
 import './Input.css'
+import { THEME_ID } from '@mui/material'
 
 class Input extends React.Component {
     constructor(props) {
@@ -22,9 +23,9 @@ class Input extends React.Component {
                     <input
                         type="text"
                         placeholder={this.props.placeholder}
-                        value={this.state.inputValue}
+                        value={this.props.value}
                         id='metadataField'
-                        onChange={this.handleChange}>
+                        onChange={this.props.onChange}>
                     </input>
                 </div>
             </div>
@@ -32,4 +33,4 @@ class Input extends React.Component {
     }
 }
 
-export default Input
+export default Input;

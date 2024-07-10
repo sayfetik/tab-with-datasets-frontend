@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Search.css'
 import CardsRowSection from '../CardsRowSection/CardsRowSection'
 import Header from '../Header/Header'
@@ -7,8 +7,34 @@ import Input from '../Input/Input'
 import { useNavigate } from 'react-router-dom'; 
 import arrowsIcon from '../../img/iconArrows.png'
 
-const Search = () => {
+const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
+    const [searchString, setSearchString] = useState('');
+    const [resultsLimit, setResultsLimit] = useState(5);
+    const [datasets, setDatasets] = useState('');
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        const url = `http://localhost:8080/api/search/${searchString}/${resultsLimit}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                alert('Network response was not ok');
+            }
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                setDatasets(data);
+                navigate('/datasets', { state: { datasets: data } });
+            } else {
+                alert('No data returned from the server');
+            }
+        } catch (error) {
+            alert("Error fetching datasets: ", error);
+        }
+    };
+
+
         return (
             <div id='all'>
                 <Header />
@@ -17,10 +43,16 @@ const Search = () => {
                     <div id='datasetLabel'>
                         <p id='main'>Датасеты</p>
                     </div>
-                    <form id='inputSearch'>
-                        <Input placeholder='Поиск по каталогу датасетов'/>
+                    <form id='inputSearch' onSubmit={handleSearch}>
+                        <Input 
+                            placeholder='Поиск по каталогу датасетов'
+                            value={searchString}
+                            onChange={(e) => setSearchString(e.target.value)} 
+                        />
                         <Filters />
-                        <button type='submit' id='searchButton' onClick={()=>{navigate('/datasets')}}>Найти</button>
+                        <button type='submit' id='searchButton'>
+                            Найти
+                        </button>
                     </form>
                     <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
                 </div>
@@ -43,7 +75,7 @@ const Search = () => {
                         <button id='topicTag'>Ветеринария</button>
                         <button id='topicTag'>Население</button>
                         <button id='topicTag'>Фильмы</button>
-                        <button id='topicTag'>Растельный мир</button>
+                        <button id='topicTag'>Растительный мир</button>
                         <button id='topicTag'>Искусство</button>
                         <button id='topicTag'>Человек</button>
                         <button id='topicTag'>Животные</button>
