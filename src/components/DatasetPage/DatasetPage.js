@@ -85,7 +85,7 @@ const DatasetPage = () => {
                                     <img src={star} width='17px' height='17px' alt=''/>
                                     <p id='rating'>4.2</p>
                                 </div>
-                                <p id='numOfDownloads'>1858 скачиваний</p>
+                                <div id='numOfDownloads'>1858 скачиваний</div>
                             </div>
                         </div>
                     </div>
@@ -96,18 +96,26 @@ const DatasetPage = () => {
                         <h1 id='descriptionLabel'>Описание</h1>
                         <p id='description'>{dataset.description}</p>
                         <div id='filesSection'>
-                            <div id='filesHeader'>
-                                <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
-                                <p className='author' id='versionLabel'>{dataset.doi}</p>
-                            </div>
-                            <div className='files'>
-                                {dataset.files && dataset.files.map((file, index) => ( 
-                                    <div key={index} className='file'>
-                                        <Icon className="downloadIcon" image={downloadIconBlack} />
-                                        <p className='fileDownload'>{file}</p>
+                            {dataset.number_of_files === 0 ?
+                                <div id='filesHeader'>
+                                    <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
+                                    <p className='author' id='versionLabel'>{dataset.doi}</p>
+                                </div> :
+                                <div>
+                                    <div id='filesHeaderWithBottomDivider'>
+                                        <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
+                                        <p className='author' id='versionLabel'>{dataset.doi}</p>
                                     </div>
-                                ))}
-                            </div>
+                                    <div className='files'>
+                                        {dataset.files && dataset.files.map((file, index) => ( 
+                                            <div key={index} className='file'>
+                                                <Icon className="downloadIcon" image={downloadIconBlack} />
+                                                <p className='fileDownload'>{file}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div> 
+                            }
                         </div>
                     </div>
                     
@@ -155,7 +163,7 @@ const DatasetPage = () => {
                         </div>
                     </div>
                 </div>
-                <CardsRowSection topicName="Похожие датасеты"/>
+                {/*<CardsRowSection topicName="Похожие датасеты"/>*/}
             </div>
         </div>
     );

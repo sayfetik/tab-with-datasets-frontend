@@ -53,3 +53,20 @@ p {
 button:disabled {
   opacity: 80%;
 }
+.input input[type="text"], #datasets input[type="text"] {
+  margin-top: 10px;
+  padding: 20px;
+  border: solid rgba(228, 231, 242, 1);
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: none;
+  height: 35px;
+  font-size: 16px;
+  color: #3E456F;
+}
+.input input[type="text"]:focus, #datasets input[type="text"]:focus  {
+  border: solid rgba(0, 113, 206, 1);
+  outline: none;
+  border-width: 1px;
+}

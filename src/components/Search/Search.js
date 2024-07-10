@@ -56,7 +56,7 @@ const Search = ({ fetchUrl }) => {
                     </form>
                     <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
                 </div>
-
+{/*
                 <div className='datasetTopicSection'>
                     <div id='topicTags'>
                         <button id='topicTag'>Классификация</button>
@@ -93,7 +93,8 @@ const Search = ({ fetchUrl }) => {
                 <div id='seeAllDatasets'>
                     <h2 id='seeAllTopic'>Смотреть все датасеты</h2>
                     <img src={arrowsIcon} width='30px' height='30px' alt=''></img>
-                </div>           
+                </div>  
+        */}
             </div>
             </div>
         ) 

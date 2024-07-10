@@ -53,9 +53,12 @@
     justify-content: center;
 }
 #downloadButton {
+    display: flex;
+    align-items: center;
     width: fit-content;
     margin-right: 4%;
-    padding: 12px 23px 12px 23px;
+    padding: 12px 23px;
+    padding-bottom: 9px;
     border: none;
     background-color: #7B93D2;
     color: white;
@@ -66,6 +69,7 @@
     margin-right: 7px;
     color: white;
     font-size: 18px;
+    margin-bottom: 3px;
 }
 #versionLabel {
     padding-right: 10px;
@@ -110,7 +114,7 @@
     margin-bottom: 50px;
     box-shadow: 0 10px 3px rgba(223, 183, 241), 10px 10px 3px 0 rgba(223, 183, 241);
 }
-#filesHeader {
+#filesHeaderWithBottomDivider {
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -118,10 +122,19 @@
     padding-bottom: 15px;
     border-bottom:  solid 2px #3E456F;
 }
+#filesHeader {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+}
 .files {
     padding: 20px;
     padding-top: 15px;
     background-color: transparent;
+}
+#datasetInfo, #section, #filesSection, .files, .file {
+    width: 100%;
 }
 .file {
     background-color: transparent;
@@ -135,7 +148,6 @@
 #rating {
     font-weight: 500;
     margin-left: 5px;
-    line-height: 10px;
 }
 #ratingLabel {
     display: flex;
@@ -143,7 +155,8 @@
 }
 #numOfDownloads {
     font-weight: 500;
-    color: #5C659D ;
+    color: #5C659D;
+    width: 200px;
 }
 #downloadRationgSection {
     display: flex;

@@ -1,7 +1,7 @@
 #datasetCard {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
     margin: 1%;
     background-color: white;
     border-radius: 50px;
@@ -20,7 +20,7 @@
 #cardInfo {
     margin-top: 10px;
     margin-bottom: 10px;
-    width: fit-content;
+    width: 100%;
 }
 #nameOfDataset {
     font-weight: 700;
@@ -32,4 +32,17 @@
 * {
     background-color: transparent;
     color: #3b4168;
+}
+.rowSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+.row {
+    display: flex;
+}
+.fieldInfo {
+    margin-right: 7px;
+}
+#renewData {
+    color: #6b7092;
 }

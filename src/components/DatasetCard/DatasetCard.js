@@ -34,11 +34,15 @@ const DatasetCard = ({
             <img id='datasetImage' src={datasetImage} alt="Dataset"/>
             <h3>{title}</h3>
             <div id='cardInfo'>
-                <p className='fieldInfo'>Авторы: {authors}</p>
-                <p className='fieldInfo'>Обновлён: {lastChangeDatetime}</p>
+                <div className='rowSpaceBetween'>
+                    <p className='fieldInfo'>{authors}</p>
+                    <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDatetime}</p>
+                </div>
                 <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
-                <p className='fieldInfo'>{getFileWord(numberOfFiles)}</p>
-                <p className='fieldInfo'>{size}</p>
+                <div className='row'>
+                    <p className='fieldInfo'>{getFileWord(numberOfFiles)}</p>
+                    <p className='fieldInfo'>{size}</p>
+                </div>
             </div>
         </div>
     );
