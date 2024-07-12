@@ -60,24 +60,27 @@ const Datasets = () => {
                         <Sort />
                         <button type='submit' id='searchButton' onClick={handleSearch} onKeyDown={handleKeyDown}>Найти</button>     
                     </div>
-                    <div id='cards'>
-                        {datasets.length > 0 ? (
-                            datasets.map(dataset => (
-                                <DatasetCard
-                                    key={dataset.id}
-                                    id={dataset.id}
-                                    title={dataset.title}
-                                    authors={dataset.authors}
-                                    numberOfFiles={dataset.number_of_files}
-                                    lastChangeDatetime={dataset.last_change_datetime}
-                                    downloadsNumber={dataset.downloads_number}
-                                    size={dataset.size}
-                                />
-                            ))
-                        ) : ( 
-                            <p>No datasets found</p>
-                        )}   
+                    <div id='cardsContainer'>
+                        <div id='cards'>
+                            {datasets.length > 0 ? (
+                                datasets.map(dataset => (
+                                    <DatasetCard
+                                        key={dataset.id}
+                                        id={dataset.id}
+                                        title={dataset.title}
+                                        authors={dataset.authors}
+                                        numberOfFiles={dataset.number_of_files}
+                                        lastChangeDatetime={dataset.last_change_datetime}
+                                        downloadsNumber={dataset.downloads_number}
+                                        size={dataset.size}
+                                    />
+                                ))
+                            ) : ( 
+                                <p>No datasets found</p>
+                            )}   
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         );
