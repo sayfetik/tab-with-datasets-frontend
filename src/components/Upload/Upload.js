@@ -75,7 +75,23 @@ const Upload = () => {
                     />
                     <Input label="Источник" placeholder="Введите источник"/>
                     <Input label="Частота обновлений" placeholder="Введите частоту обновлений"/>
-                    <Input label="Лицензия" placeholder="Введите лицензию"/>
+                    <div className='metadataLabel'>Лицензия</div>
+                    <select className="visible" id="metadataField">
+                        <option value="Private">Public Domain Mark - Public Domain</option>
+                        <option value="Public">Open Data Commons Public Domain Dedication and License - PDDL</option>
+                        <option value="Private">Creative Commons Attribution 4.0 International CC-BY</option>
+                        <option value="Private">Community Data License Agreement – CDLA Permissive-2.0</option>
+                        <option value="Private">Open Data Commons Attribution License - ODC-BY</option>
+                        <option value="Private">Creative Commons Attribution-ShareAlike 4.0 International - CC-BY-SA</option>
+                        <option value="Private">Community Data License Agreement – CDLA-Sharing-1.0</option>
+                        <option value="Private">Open Data Commons Open Database License - ODC-ODbL</option>
+                        <option value="Private">Creative Commons Public Domain Dedication</option>
+                        <option value="Private">Creative Commons Attribution-NonCommercial 4.0 International - CC BY-NC</option>
+                        <option value="Private">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
+                        <option value="Private">Open Data Commons Open Database License - ODC-ODbL</option>
+                        <option value="Private">Additional License Coverage Options</option>
+                        <option value="Private" selected>No license specified</option>
+                    </select>
                     <Input label="DOI" placeholder="Укажите doi"/>
                 </div>
 
