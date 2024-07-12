@@ -82,19 +82,26 @@ const DatasetPage = () => {
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
                         </div>
-                        <div id='downloadRationgSection'>
-                            <button id='downloadButton'>
-                                <span id='downloadLabel'>Скачать</span>
-                                <Icon image={downloadIconWhite} />
-                            </button>
-                            <div>
-                                <div id='ratingLabel'>
-                                    <img src={star} width='17px' height='17px' alt=''/>
-                                    <p id='rating'>4.2</p>
+                        <div>
+                            <div id='downloadRationgSection'>
+                                <button id='downloadButton'>
+                                    <span id='downloadLabel'>Скачать</span>
+                                    <Icon image={downloadIconWhite} />
+                                </button>
+                                <div>
+                                    <div id='ratingLabel'>
+                                        <img src={star} width='17px' height='17px' alt=''/>
+                                        <p id='rating'>4.2</p>
+                                    </div>
+                                    <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
                                 </div>
-                                <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
+                            </div>
+                            <div className='row'>
+                                <button id='editDatasetButton'>Редактировать</button>
+                                <button id='deleteDatasetButton'>Удалить</button>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                     

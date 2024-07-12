@@ -2,12 +2,12 @@
     padding: 0% 10% 10% 8%;
     background-image: url('../../img/datasetPageBackground.png');
     background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
 }
 #metainfo {
     background-color: #9EB3E8;
@@ -97,7 +97,8 @@
     font-size: 18px;
     font-weight: 500;
     padding-left: 4px;
-    line-height: 16px;
+    line-height: 20px;
+    margin-right: 2%;
 }
 #datasetTitle {
     margin-bottom: 5px;
@@ -162,6 +163,7 @@
 #downloadRationgSection {
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 }
 #visibilityLabel {
     color: white;
@@ -170,5 +172,35 @@
     background-color: rgba(223, 183, 241);
     padding: 12px;
     border-radius: 10px;
+    height: fit-content;
     line-height: 5px;
+}
+#editDatasetButton {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 12px 23px;
+    border: solid 2px #3E456F;
+    color: #3E456F;
+    margin-right: 1%;
+    font-weight: 700;
+    border-radius: 40px;
+}
+#editDatasetButton:hover {
+    background-color: #3E456F;
+    color: white;
+}
+#deleteDatasetButton {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 12px 23px;
+    border: solid 2px #b45459;
+    color: #b45459;
+    font-weight: 700;
+    border-radius: 40px;
+}
+#deleteDatasetButton:hover {
+    background-color: #b45459;
+    color: white;
 }
