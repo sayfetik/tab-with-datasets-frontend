@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Back from '../Back/Back'
 import './DatasetPage.css'
 import CardsRowSection from '../CardsRowSection/CardsRowSection'
@@ -48,7 +48,7 @@ const DatasetPage = () => {
                     license: data.license || '',
                     number_of_files: data.number_of_files || 0,
                     doi: data.doi || '',
-                    expected_update_frequency: data.expected_update_frequency || '',
+                    expected_update_frequency: data.expected_update_frequency || 'Никогда',
                     last_change_datetime: data.last_change_datetime || '',
                     downloads_number: data.downloads_number || 0,
                     visibility: data.visibility || '',
@@ -59,6 +59,11 @@ const DatasetPage = () => {
             })
             .catch(error => console.error("Error fetching data: ", error));
         }, [id]);
+        
+    const navigate = useNavigate();
+    const handleEditClick = () => {
+        navigate('/editDataset', { state: dataset });
+      };
 
     return (
         <div>
@@ -70,7 +75,7 @@ const DatasetPage = () => {
                     <div id='mainInfo'>
                         <div className='rowSpaceBetween'>
                             <p className='author'>{dataset.authors}</p>
-                            {dataset.visibility === "Private" ?
+                            {dataset.visibility === "private" ?
                                 <div id='visibilityLabel'>Private</div>
                                 : <div id='visibilityLabel'>Public</div>
                             }
@@ -97,7 +102,7 @@ const DatasetPage = () => {
                                 </div>
                             </div>
                             <div className='row'>
-                                <button id='editDatasetButton'>Редактировать</button>
+                                <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
                                 <button id='deleteDatasetButton'>Удалить</button>
                             </div>
                         </div>
@@ -166,10 +171,6 @@ const DatasetPage = () => {
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Количество скачиваний</h4>
                             <p className='metaWhite'>{dataset.amount}</p>
-                        </div>
-                        <div className='infoContainer'>
-                            <h4 className='metaWhite'>Видимость</h4>
-                            <p className='metaWhite'>{dataset.visibility}</p>
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Оценка удобства использования</h4>

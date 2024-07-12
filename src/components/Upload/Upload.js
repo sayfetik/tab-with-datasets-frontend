@@ -31,11 +31,18 @@ const Upload = () => {
         setStateTags(true);
     };
 
+    const [titleOfDataset, setTitleOfDataset] = useState('');
+    const [visibility, setVisibility] = useState('private');
+    const [authors, setAuthors] = useState('');
+    const [dataSource, setDataSource] = useState('');
+    const [expectedUpdateFrequency, setExpectedUpdateFrequency] = useState('');
+    const [license, setLicense] = useState('No license specified');
+    const [doi, setDoi] = useState('');
     const [collectionMethod, setCollectionMethod] = useState('');
     const [dataStructure, setDataStructure] = useState('');
     const [useCases, setUseCases] = useState('');
-    const [titleOfDataset, setTitleOfDataset] = useState('');
-    const [authors, setAuthors] = useState('');
+    const [description, setDescription] = useState('');
+    const [tags, setTags] = useState('');
 
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
 
@@ -63,9 +70,9 @@ const Upload = () => {
                         onChange={(e) => setTitleOfDataset(e.target.value)}
                     />
                     <div className='metadataLabel'>Видимость *</div>
-                    <select className="visible" id="metadataField">
-                        <option value="Private">Приватный</option>
-                        <option value="Public">Публичный</option>
+                    <select className="visible" id="metadataField" defaultValue="private" onChange={(e)=>setVisibility(e.target.value)}>
+                        <option value="private">Приватный</option>
+                        <option value="public">Публичный</option>
                     </select>
                     <Input
                         label="Авторы *"
@@ -73,26 +80,41 @@ const Upload = () => {
                         value={authors}
                         onChange={(e) => setAuthors(e.target.value)}
                     />
-                    <Input label="Источник" placeholder="Введите источник"/>
-                    <Input label="Частота обновлений" placeholder="Введите частоту обновлений"/>
-                    <div className='metadataLabel'>Лицензия</div>
+                    <Input
+                        label="Источник"
+                        placeholder="Введите источник"
+                        value={dataSource}
+                        onChange={(e) => setDataSource(e.target.value)}
+                        />
+                    <Input
+                        label="Частота обновлений"
+                        placeholder="Введите частоту обновлений"
+                        value={expectedUpdateFrequency}
+                        onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
+                        />
+                    <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
                     <select className="visible" id="metadataField">
-                        <option value="Private">Public Domain Mark - Public Domain</option>
-                        <option value="Public">Open Data Commons Public Domain Dedication and License - PDDL</option>
-                        <option value="Private">Creative Commons Attribution 4.0 International CC-BY</option>
-                        <option value="Private">Community Data License Agreement – CDLA Permissive-2.0</option>
-                        <option value="Private">Open Data Commons Attribution License - ODC-BY</option>
-                        <option value="Private">Creative Commons Attribution-ShareAlike 4.0 International - CC-BY-SA</option>
-                        <option value="Private">Community Data License Agreement – CDLA-Sharing-1.0</option>
-                        <option value="Private">Open Data Commons Open Database License - ODC-ODbL</option>
-                        <option value="Private">Creative Commons Public Domain Dedication</option>
-                        <option value="Private">Creative Commons Attribution-NonCommercial 4.0 International - CC BY-NC</option>
-                        <option value="Private">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
-                        <option value="Private">Open Data Commons Open Database License - ODC-ODbL</option>
-                        <option value="Private">Additional License Coverage Options</option>
-                        <option value="Private" selected>No license specified</option>
+                        <option value="Public Domain">Public Domain Mark - Public Domain</option>
+                        <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
+                        <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
+                        <option value="CDLA Permissive-2.0">Community Data License Agreement – CDLA Permissive-2.0</option>
+                        <option value="ODC-BY">Open Data Commons Attribution License - ODC-BY</option>
+                        <option value="CC-BY-SA">Creative Commons Attribution-ShareAlike 4.0 International - CC-BY-SA</option>
+                        <option value="CDLA-Sharing-1.0">Community Data License Agreement – CDLA-Sharing-1.0</option>
+                        <option value="ODC-ODbL">Open Data Commons Open Database License - ODC-ODbL</option>
+                        <option value="Creative Commons Public Domain Dedication">Creative Commons Public Domain Dedication</option>
+                        <option value="CC BY-NC">Creative Commons Attribution-NonCommercial 4.0 International - CC BY-NC</option>
+                        <option value="CC BY-NC-SA">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
+                        <option value="ODC-ODbL">Open Data Commons Open Database License - ODC-ODbL</option>
+                        <option value="Additional License Coverage Options">Additional License Coverage Options</option>
+                        <option value="No license specified">No license specified</option>
                     </select>
-                    <Input label="DOI" placeholder="Укажите doi"/>
+                    <Input
+                        label="DOI"
+                        placeholder="Укажите doi"
+                        value={doi}
+                        onChange={(e) => setDoi(e.target.value)}
+                        />
                 </div>
 
                 <div id='rightContainer'>
@@ -125,7 +147,12 @@ const Upload = () => {
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <div className='inputLabel'>Описание</div>
-                                    <textarea id='descriptionInput' placeholder='Введите описание'></textarea>
+                                    <textarea
+                                        id='descriptionInput'
+                                        placeholder='Введите описание'
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        ></textarea>
                                 </div>
                             </div>
                             <button id='continuie' onClick={showTagsButtonClick}>Продолжить</button>
