@@ -35,7 +35,7 @@ const DatasetCard = ({
             <h3 id='datasetTitleOnCard'>{title}</h3>
             <div id='cardInfo'>
                 <div className='rowSpaceBetween'>
-                    <p className='fieldInfo'>{authors}</p>
+                    <p className='fieldInfo' id='authors'>{authors}</p>
                     <p className='fieldInfo' id='renewData'>{lastChangeDatetime}</p>
                 </div>
                 <p className='fieldInfo'>{downloadsNumber} скачиваний</p>

@@ -8,14 +8,14 @@
     padding: 2%;
     cursor: pointer;
     transition: transform 0.3s ease;
-    width: 300px;
+    width: 20%;
 }
 #datasetCard:hover {
     transform: scale(1.05);
 }
 #datasetImage {
     border-radius: 50px;
-    width: 250px;
+    width: 100%;
     margin-bottom: 15px;
 }
 #cardInfo {
@@ -32,7 +32,7 @@
 }
 .fieldInfo {
     margin-right: 7px;
-    width: 100%;
+    width: fit-content;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -45,4 +45,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+#authors {
+    width: 50%;
 }
