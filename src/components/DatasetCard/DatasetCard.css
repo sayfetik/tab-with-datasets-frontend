@@ -29,17 +29,6 @@
     width: 250px;
     color: #3E456F;
 }
-* {
-    background-color: transparent;
-    color: #3b4168;
-}
-.rowSpaceBetween {
-    display: flex;
-    justify-content: space-between;
-}
-.row {
-    display: flex;
-}
 .fieldInfo {
     margin-right: 7px;
 }

@@ -32,7 +32,7 @@ const DatasetPage = () => {
     });
 
     React.useEffect(() => {
-        const url = `http://localhost:8080/api/preview/${id}`;
+        const url = `http://10.100.30.74/api/preview/${id}`;
 
         fetch(url)
             .then(response => response.json())
@@ -68,7 +68,14 @@ const DatasetPage = () => {
                 <div id='datasetInfoHeader'>
                     <img id='datasetCoverImage' src={datasetImage} alt='Dataset cover'></img>
                     <div id='mainInfo'>
-                        <p className='author'>{dataset.authors}</p>
+                        <div className='rowSpaceBetween'>
+                            <p className='author'>{dataset.authors}</p>
+                            {dataset.visibility === "Private" ?
+                                <div id='visibilityLabel'>Private</div>
+                                : <div id='visibilityLabel'>Public</div>
+                            }
+                        </div>
+                        
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
                             {dataset.tags.map((tag, index) => ( 
@@ -97,10 +104,14 @@ const DatasetPage = () => {
                         <p id='description'>{dataset.description}</p>
                         <div id='filesSection'>
                             {dataset.number_of_files === 0 ?
+
                                 <div id='filesHeader'>
                                     <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
                                     <p className='author' id='versionLabel'>{dataset.doi}</p>
-                                </div> :
+                                </div>
+
+                                :
+
                                 <div>
                                     <div id='filesHeaderWithBottomDivider'>
                                         <p className='author'>Данные ({dataset.number_of_files} файлов)</p>

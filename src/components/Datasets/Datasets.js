@@ -17,7 +17,7 @@ const Datasets = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        const url = `http://localhost:8080/api/search/${searchString}/${resultsLimit}`;
+        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
         try {
             const response = await fetch(url);
             if (!response.ok) {

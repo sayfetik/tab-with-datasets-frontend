@@ -2,6 +2,7 @@
 * {
   font-family: "IBM Plex Sans", sans-serif;
   background-color: transparent;
+  color: #3b4168;
 }
 body {
   font-feature-settings: "tnum";
@@ -50,9 +51,31 @@ p {
     font-size: 16px;
     font-weight: 400;
 }
-button:disabled {
-  opacity: 80%;
+
+@media screen and (max-width: 800px) {
+  h1 {
+    line-height: 48px;
+    font-size: 25px;
+  }
+  h2 {
+      font-size: 20px;
+      font-weight: 700;
+  }
+  h3 {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 28px;
+  }
+  h4 {
+      font-weight: 700;
+      font-size: 7px;
+  }
+  p {
+      font-size: 5px;
+      font-weight: 400;
+  }
 }
+
 .input input[type="text"], #datasets input[type="text"] {
   margin-top: 10px;
   padding: 20px;
@@ -69,4 +92,13 @@ button:disabled {
   border: solid rgba(0, 113, 206, 1);
   outline: none;
   border-width: 1px;
+}
+
+.rowSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.row {
+  display: flex;
 }
