@@ -6,7 +6,7 @@ class UploadFile extends React.Component {
     render() {
         return (
             <div className='uploadPage'>
-                <h1>Датасет</h1>
+                <h1>Новый датасет</h1>
 
                 <div className='uploadFilesContainer'>
                     <div className='uploadFile'>
