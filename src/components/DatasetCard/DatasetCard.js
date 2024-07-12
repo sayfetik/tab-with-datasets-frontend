@@ -32,11 +32,11 @@ const DatasetCard = ({
     return (
         <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}} >
             <img id='datasetImage' src={datasetImage} alt="Dataset"/>
-            <h3>{title}</h3>
+            <h3 id='datasetTitleOnCard'>{title}</h3>
             <div id='cardInfo'>
                 <div className='rowSpaceBetween'>
                     <p className='fieldInfo'>{authors}</p>
-                    <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDatetime}</p>
+                    <p className='fieldInfo' id='renewData'>{lastChangeDatetime}</p>
                 </div>
                 <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
                 <div className='row'>

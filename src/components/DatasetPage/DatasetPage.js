@@ -92,7 +92,7 @@ const DatasetPage = () => {
                                     <img src={star} width='17px' height='17px' alt=''/>
                                     <p id='rating'>4.2</p>
                                 </div>
-                                <div id='numOfDownloads'>1858 скачиваний</div>
+                                <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
                             </div>
                         </div>
                     </div>
