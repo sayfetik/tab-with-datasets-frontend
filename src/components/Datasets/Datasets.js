@@ -9,10 +9,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const Datasets = () => {
     const location = useLocation();
-  const { state } = location;
-  const { searchString: searchQuery, datasets: initialDatasets } = state || { datasets: [] };
-  const [datasets, setDatasets] = useState(initialDatasets);
-  const [searchString, setSearchString] = useState(searchQuery || '');
+    const { state } = location;
+    const { searchString: searchQuery, datasets: initialDatasets } = state || { datasets: [] };
+    const [datasets, setDatasets] = useState(initialDatasets);
+    const [searchString, setSearchString] = useState(searchQuery || '');
 
     const navigate = useNavigate();
     const [resultsLimit, setResultsLimit] = useState(5);

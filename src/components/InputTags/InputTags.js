@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './InputTags.css'
 
-const InputTags = () => {
-  const [fields, setFields] = useState([]);
+const InputTags = ({tags, setTags}) => {
+  const [fields, setFields] = useState(tags);
   const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    setFields(tags);
+  }, [tags]);
 
   const handleAddField = () => {
     setFields([...fields, '']);
@@ -24,7 +28,7 @@ const InputTags = () => {
     setEditIndex(null);
   };
 
-  const handleKeyPress = (e, index) => {
+  const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       setEditIndex(null);
     }
@@ -45,9 +49,7 @@ const InputTags = () => {
               id='inputTag'
             />
           ) : (
-            <div style={{fontSize: '16px'}}
-              onClick={() => setEditIndex(index)}
-            >
+            <div style={{fontSize: '16px', color: '#3E456F'}} onClick={() => setEditIndex(index)}>
               {field || <div id='clickToEditPlaceholder'>Click to edit</div>}
             </div>
           )}

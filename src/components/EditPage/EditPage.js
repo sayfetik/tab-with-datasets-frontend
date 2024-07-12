@@ -42,6 +42,7 @@ const Upload = () => {
         } else 
             navigationButtonClick();
     };
+    
 
     return (
         <div>
@@ -124,7 +125,7 @@ const Upload = () => {
                     <div>
                         <span className='inputLabel'>Теги</span>
                         <div id='tagsInput'>
-                            <InputTags />
+                            <InputTags tags={tags} setTags={setTags}/>
                         </div>
                     </div>
 

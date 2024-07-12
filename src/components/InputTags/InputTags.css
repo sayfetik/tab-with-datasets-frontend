@@ -4,6 +4,7 @@
     font-size: 16px;
     width: fit-content;
     border-color: transparent;
+    color: #3E456F;
 }
 #inputTag:focus {
     border: none;
@@ -11,7 +12,8 @@
     width: fit-content;
 }
 #tag {
-    padding: 4px 10px;
+    padding: 1px 10px;
+    color: #3E456F;
     border: 1px solid #3E456F;
     border-radius: 50px;
     cursor: pointer;    
@@ -21,24 +23,29 @@
     display: flex;
     align-items: center;
     margin-left: 5px;
+    margin-bottom: 5px;
 }
 #deleteTagButton {
     border: none;
     font-size: 20px;
     margin-bottom: 2px;
-    margin-left: 2px;
+    margin-left: 4px;
+    padding: 1px;
 }
 #addTagButton {
     border: solid 1px #3E456F;
     border-radius: 50px;
     font-size: 20px;
-    padding: 4px 10px;
+    padding: 3px 10px;
     margin-left: 5px;
-    padding-bottom: 6px;
+    margin-bottom: 5px;
 }
 #inputTextSection {
     display: flex;
     align-items: center;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 #clickToEditPlaceholder {
     color: #3e456f86;

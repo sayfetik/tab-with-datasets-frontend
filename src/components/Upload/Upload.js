@@ -42,7 +42,7 @@ const Upload = () => {
     const [dataStructure, setDataStructure] = useState('');
     const [useCases, setUseCases] = useState('');
     const [description, setDescription] = useState('');
-    const [tags, setTags] = useState('');
+    const [tags, setTags] = useState([]);
 
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
 
@@ -163,7 +163,7 @@ const Upload = () => {
                         <div>
                             <span className='inputLabel'>Теги</span>
                             <div id='tagsInput'>
-                                <InputTags />
+                                <InputTags tags={tags} setTags={setTags}/>
                             </div>
                         </div>
                     )}
