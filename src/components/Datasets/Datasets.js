@@ -5,14 +5,16 @@ import Header from '../Header/Header'
 import './Datasets.css'
 import Sort from '../Sort/Sort'
 import Filters from '../Filters/Filters'
-import { useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Datasets = () => {
     const location = useLocation();
+  const { state } = location;
+  const { searchString: searchQuery, datasets: initialDatasets } = state || { datasets: [] };
+  const [datasets, setDatasets] = useState(initialDatasets);
+  const [searchString, setSearchString] = useState(searchQuery || '');
+
     const navigate = useNavigate();
-    const { datasets: initialDatasets } = location.state || { datasets: [] };
-    const [datasets, setDatasets] = useState(initialDatasets);
-    const [searchString, setSearchString] = useState('');
     const [resultsLimit, setResultsLimit] = useState(5);
 
     const handleSearch = async (e) => {
@@ -35,6 +37,11 @@ const Datasets = () => {
             alert("Error fetching datasets: " + error);
         }
     };
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch(event);
+        }
+      };
 
         return (
             <div>
@@ -45,20 +52,13 @@ const Datasets = () => {
                         <input
                             type='text'
                             id="sortInput"
-                            placeholder="Введённый запрос"
+                            placeholder="Поиск по каталогу датасетов"
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)}
                         />
                         <Filters />
                         <Sort />
-                        <button
-                            type='submit'
-                            id='searchButton'
-                            onClick={handleSearch}
-                        >
-
-                            Найти
-                        </button>     
+                        <button type='submit' id='searchButton' onClick={handleSearch} onKeyDown={handleKeyDown}>Найти</button>     
                     </div>
                     <div id='cards'>
                         {datasets.length > 0 ? (

@@ -4,7 +4,7 @@ import CardsRowSection from '../CardsRowSection/CardsRowSection'
 import Header from '../Header/Header'
 import Filters from '../Filters/Filters'
 import Input from '../Input/Input'
-import { useNavigate } from 'react-router-dom'; 
+import { useParams, useNavigate } from 'react-router-dom';
 import arrowsIcon from '../../img/iconArrows.png'
 
 const Search = ({ fetchUrl }) => {
@@ -25,7 +25,7 @@ const Search = ({ fetchUrl }) => {
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { datasets: data } });
+                navigate('/datasets', { state: {searchString: searchString, datasets: data } });
             } else {
                 alert('No data returned from the server');
             }
@@ -33,6 +33,12 @@ const Search = ({ fetchUrl }) => {
             alert("Error fetching datasets: ", error);
         }
     };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch(event);
+        }
+      };
 
 
         return (
@@ -43,14 +49,14 @@ const Search = ({ fetchUrl }) => {
                     <div id='datasetLabel'>
                         <p id='main'>Датасеты</p>
                     </div>
-                    <form id='inputSearch' onSubmit={handleSearch}>
+                    <form id='inputSearch' onSubmit={handleSearch} onKeyDown={handleKeyDown}>
                         <Input 
                             placeholder='Поиск по каталогу датасетов'
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)} 
                         />
                         <Filters />
-                        <button type='submit' id='searchButton'>
+                        <button type='submit' id='searchButton' >
                             Найти
                         </button>
                     </form>
