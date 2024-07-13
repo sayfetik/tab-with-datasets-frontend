@@ -8,11 +8,10 @@ const CardsRowSection = () => {
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const { datasets: initialDatasets } = location.state || { datasets: [] };
+    const { datasets: initialDatasets } = location.state.datasets || { datasets: [] };
     const [searchString, setSearchString] = useState('');
     const [resultsLimit, setResultsLimit] = useState(5);
     const [datasets, setDatasets] = useState([]);
-    
     
 
         return (

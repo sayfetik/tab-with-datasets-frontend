@@ -15,7 +15,7 @@ const Datasets = () => {
     const [searchString, setSearchString] = useState(searchQuery || '');
 
     const navigate = useNavigate();
-    const [resultsLimit, setResultsLimit] = useState(5);
+    const [resultsLimit, setResultsLimit] = useState(8);
 
     const handleSearch = async (e) => {
         e.preventDefault();

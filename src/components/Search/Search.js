@@ -10,7 +10,7 @@ import arrowsIcon from '../../img/iconArrows.png'
 const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
-    const [resultsLimit, setResultsLimit] = useState(5);
+    const [resultsLimit, setResultsLimit] = useState(8);
     const [datasets, setDatasets] = useState('');
 
     const handleSearch = async (e) => {

@@ -1,5 +1,6 @@
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Back from '../Back/Back'
 import './DatasetPage.css'
 import CardsRowSection from '../CardsRowSection/CardsRowSection'
@@ -9,9 +10,37 @@ import Icon from '../Icon'
 import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
+import DatasetCard from '../DatasetCard/DatasetCard';
+import arrowsIcon from '../../img/iconArrows.png'
 
 const DatasetPage = () => {
     const { id } = useParams();
+    const [datasets, setDatasets] = useState([]);
+    const [resultsLimit, setResultsLimit] = useState(4);
+
+    useEffect(() => {
+        const fetchRecommendations = async () => {
+            const url = `http://10.100.30.74/api/recommend/${id}/${resultsLimit}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    setDatasets(data);
+                } else {
+                    console.log('No data returned from the server');
+                }
+            } catch (error) {
+                console.error("Error fetching datasets: ", error);
+            }
+        };
+
+        fetchRecommendations();
+    }, [id, resultsLimit]);
+
     const [dataset, setDataset] = React.useState({
         id: '',
         title: '',
@@ -182,7 +211,34 @@ const DatasetPage = () => {
                         </div>
                     </div>
                 </div>
-                {/*<CardsRowSection topicName="Похожие датасеты"/>*/}
+                <div id='cardsRowSection'>
+                <div className='topicCardsInRow'>
+                    <h2>Похожее</h2>
+                    {/*<div id='seeAllIcon'>
+                        <p id='seeAll'>Смотреть все</p>
+                        <img src={arrowsIcon} width={"19px"} alt=''/>
+                        </div>*/}
+                </div>
+
+                <div id='cards'>
+                    {datasets.length > 0 ? (
+                        datasets.map(dataset => (
+                            <DatasetCard
+                                key={dataset.id}
+                                id={dataset.id}
+                                title={dataset.title}
+                                authors={dataset.authors}
+                                numberOfFiles={dataset.number_of_files}
+                                lastChangeDatetime={dataset.last_change_datetime}
+                                downloadsNumber={dataset.downloads_number}
+                                size={dataset.size}
+                            />
+                        ))
+                    ) : (
+                        <p>Error ocurred</p>
+                    )}       
+                </div>    
+            </div>
             </div>
         </div>
     );
