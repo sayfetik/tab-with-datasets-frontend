@@ -15,7 +15,7 @@ const Search = ({ fetchUrl }) => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        const url = `https://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
+        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
         try {
             const response = await fetch(url);
             if (!response.ok) {
