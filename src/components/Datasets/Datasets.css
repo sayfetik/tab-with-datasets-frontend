@@ -8,9 +8,14 @@
 #sort {
     width: 200px;
 }
+@media screen and (max-width: 900px) {
+    #sort {
+        width: 100px;
+    }
+}
 .searchFiltersSort {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     margin-bottom: 50px;
     margin-top: 30px;
 }
@@ -21,4 +26,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+#cardsContainer {
+    width: 100%;
 }

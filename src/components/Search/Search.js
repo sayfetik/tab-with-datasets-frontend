@@ -6,6 +6,7 @@ import Filters from '../Filters/Filters'
 import Input from '../Input/Input'
 import { useParams, useNavigate } from 'react-router-dom';
 import arrowsIcon from '../../img/iconArrows.png'
+import searchIcon from '../../img/search.png'
 
 const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
@@ -50,15 +51,14 @@ const Search = ({ fetchUrl }) => {
                         <p id='main'>Датасеты</p>
                     </div>
                     <form id='inputSearch' onSubmit={handleSearch} onKeyDown={handleKeyDown}>
-                        <Input 
+                        <input type='text' 
                             placeholder='Поиск по каталогу датасетов'
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)} 
                         />
                         <Filters />
-                        <button type='submit' id='searchButton' >
-                            Найти
-                        </button>
+                        <button type='submit' id='searchButton'>Найти</button>
+                        <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon}/></button>
                     </form>
                     <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
                 </div>

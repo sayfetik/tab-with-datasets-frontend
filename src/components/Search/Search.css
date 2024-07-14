@@ -104,3 +104,46 @@ body::before {
     display: flex;
     align-items: center;
 }
+#searchIcon {
+    border: none;
+    width: 50px;
+    display: none;
+}
+@media screen and (max-width: 1000px){
+    #searchIcon {
+        display: flex;
+    }
+    #searchButton {
+        display: none;
+    }
+}
+
+#search input[type="text"] {
+    margin-top: 8px;
+    padding: 20px;
+    border: solid rgba(228, 231, 242, 1);
+    border-width: 1px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: none;
+    height: 35px;
+    font-size: 16px;
+    color: #3E456F;
+    width: 500px;
+  }
+#search input[type="text"]:focus {
+    border: solid rgba(0, 113, 206, 1);
+    outline: none;
+    border-width: 1px;
+  }
+
+@media screen and (max-width: 1000px) {
+    #search input[type="text"] {
+        width: 300px;
+      }
+}
+@media screen and (max-width: 500px) {
+    #search input[type="text"] {
+        width: 200px;
+      }
+}

@@ -6,6 +6,7 @@ import './Datasets.css'
 import Sort from '../Sort/Sort'
 import Filters from '../Filters/Filters'
 import { useLocation, useNavigate } from 'react-router-dom';
+import searchIcon from '../../img/search.png'
 
 const Datasets = () => {
     const location = useLocation();
@@ -58,7 +59,8 @@ const Datasets = () => {
                         />
                         <Filters />
                         <Sort />
-                        <button type='submit' id='searchButton' onClick={handleSearch} onKeyDown={handleKeyDown}>Найти</button>     
+                        <button type='submit' id='searchButton' onClick={handleSearch} onKeyDown={handleKeyDown}>Найти</button>    
+                        <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon}/></button> 
                     </div>
                     <div id='cardsContainer'>
                         <div id='cards'>

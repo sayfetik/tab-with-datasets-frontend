@@ -31,6 +31,11 @@
     font-weight: 500;
     word-break: break-word;
   }
+  
+#rightContainer {
+  width: 100%;
+  padding-left: 10%;
+}
   .visible {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -66,6 +71,15 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .metadataSection {
+    display: flex;
+    flex-direction: column;
+  }
+  #rightContainer {
+    padding: 0px;
+  }
 }
 #descriptionInputContainer {
   width: 100%;
@@ -116,10 +130,6 @@
 .metadataBigItem {
   width: 100%;
   margin: 0px;
-}
-#rightContainer {
-  width: 100%;
-  padding-left: 10%;
 }
 #descriptionInput {
   margin-top: 10px;

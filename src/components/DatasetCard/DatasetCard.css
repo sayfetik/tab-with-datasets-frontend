@@ -8,7 +8,22 @@
     padding: 2%;
     cursor: pointer;
     transition: transform 0.3s ease;
-    width: 330px;
+    width: 22%;
+}
+@media screen and (max-width: 1300px) {
+    #datasetCard {
+        width: 30%;
+    }
+}
+@media screen and (max-width: 800px) {
+    #datasetCard {
+        width: 45%;
+    }
+}
+@media screen and (max-width: 500px) {
+    #datasetCard {
+        width: 80%;
+    }
 }
 #datasetCard:hover {
     transform: scale(1.05);
@@ -47,5 +62,5 @@
     text-overflow: ellipsis;
 }
 #authors {
-    width: 50%;
+    width: 70%;
 }
