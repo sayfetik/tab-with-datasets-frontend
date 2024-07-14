@@ -28,15 +28,19 @@ const Upload = () => {
     const [titleOfDataset, setTitleOfDataset] = useState(dataset.title);
     const [visibility, setVisibility] = useState(dataset.visibility);
     const [authors, setAuthors] = useState(dataset.authors);
-    const [dataSource, setDataSource] = useState('');
+    const [dataSource, setDataSource] = useState(dataset.data_source);
     const [expectedUpdateFrequency, setExpectedUpdateFrequency] = useState(dataset.expected_update_frequency);
     const [license, setLicense] = useState(dataset.license);
     const [doi, setDoi] = useState(dataset.doi);
     const [description, setDescription] = useState(dataset.description);
-    const [tags, setTags] = useState(dataset.tags);
+    const [geography_and_places, set_geography_and_places] = useState(dataset.geography_and_places);
+    const [language, set_language] = useState(dataset.language);
+    const [data_type, set_data_type] = useState(dataset.data_type);
+    const [task, set_task] = useState(dataset.task);
+    const [technique, set_technique] = useState(dataset.technique);
+    const [subject, set_subject] = useState(dataset.subject);
 
-    const areRequiredInputsFilled = description && titleOfDataset && authors && tags;
-    
+    const areRequiredInputsFilled = description && titleOfDataset && authors && geography_and_places;
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) {
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
@@ -44,7 +48,6 @@ const Upload = () => {
             navigationButtonClick();
     };
     
-
     return (
         <div>
             <Header />
@@ -161,12 +164,32 @@ const Upload = () => {
                         </div>
                     </div>
                 
-                
                     <div>
                         <span className='inputLabel'>Теги</span>
-                        <div id='tagsInput'>
-                            <InputTags tags={tags} setTags={setTags}/>
-                        </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>География данных</p>
+                                <InputTags tags={geography_and_places} setTags={set_geography_and_places}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Язык</p>
+                                <InputTags tags={language} setTags={set_language}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Тип данных</p>
+                                <InputTags tags={data_type} setTags={set_data_type}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Задача</p>
+                                <InputTags tags={task} setTags={set_task}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Техника</p>
+                                <InputTags tags={technique} setTags={set_technique}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Предмет</p>
+                                <InputTags tags={subject} setTags={set_subject}/>
+                            </div>
                     </div>
 
                     <div id='saveButtons'>

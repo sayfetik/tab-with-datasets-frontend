@@ -46,6 +46,12 @@ const DatasetPage = () => {
         title: '',
         description: '',
         tags: [],
+        geography_and_places: [],
+        language: [],
+        data_type: [],
+        task: [],
+        technique: [],
+        subject: [],
         owner: '',
         authors: '',
         data_source: '',
@@ -70,7 +76,14 @@ const DatasetPage = () => {
                     id: data.id || '',
                     title: data.title || '',
                     description: data.description || '',
-                    tags: [],
+
+                    geography_and_places: data.tags.geography_and_places || [],
+                    language: data.tags.language || [],
+                    data_type: data.tags.data_type || [],
+                    task: data.tags.task || [],
+                    technique: data.tags.technique || [],
+                    subject: data.tags.subject || [],
+
                     owner: data.owner || '',
                     authors: data.authors || '',
                     data_source: data.data_source || '',
@@ -103,7 +116,7 @@ const DatasetPage = () => {
                     <img id='datasetCoverImage' src={datasetImage} alt='Dataset cover'></img>
                     <div id='mainInfo'>
                         <div className='rowSpaceBetween'>
-                            <p className='author'>{dataset.authors}</p>
+                            <p className='author'>{dataset.owner}</p>
                             {dataset.visibility === "private" ?
                                 <div id='visibilityLabel'>Private</div>
                                 : <div id='visibilityLabel'>Public</div>
@@ -112,7 +125,22 @@ const DatasetPage = () => {
                         
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
-                            {dataset.tags.map((tag, index) => ( 
+                            {dataset.geography_and_places.map((tag, index) => ( 
+                                <span key={index} className='datasetTag'>{tag}</span>
+                            ))}
+                            {dataset.language.map((tag, index) => ( 
+                                <span key={index} className='datasetTag'>{tag}</span>
+                            ))}
+                            {dataset.data_type.map((tag, index) => ( 
+                                <span key={index} className='datasetTag'>{tag}</span>
+                            ))}
+                            {dataset.task.map((tag, index) => ( 
+                                <span key={index} className='datasetTag'>{tag}</span>
+                            ))}
+                            {dataset.technique.map((tag, index) => ( 
+                                <span key={index} className='datasetTag'>{tag}</span>
+                            ))}
+                            {dataset.subject.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
                         </div>
@@ -183,7 +211,7 @@ const DatasetPage = () => {
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Источник</h4>
-                            <p className='metaWhite'>{dataset.source}</p>
+                            <p className='metaWhite'>{dataset.data_source}</p>
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Лицензия</h4>
@@ -199,7 +227,7 @@ const DatasetPage = () => {
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Количество скачиваний</h4>
-                            <p className='metaWhite'>{dataset.amount}</p>
+                            <p className='metaWhite'>{dataset.downloads_number}</p>
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Оценка удобства использования</h4>

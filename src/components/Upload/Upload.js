@@ -42,7 +42,12 @@ const Upload = () => {
     const [dataStructure, setDataStructure] = useState('');
     const [useCases, setUseCases] = useState('');
     const [description, setDescription] = useState('');
-    const [tags, setTags] = useState([]);
+    const [geography_and_places, set_geography_and_places] = useState([]);
+    const [language, set_language] = useState([]);
+    const [data_type, set_data_type] = useState([]);
+    const [task, set_task] = useState([]);
+    const [technique, set_technique] = useState([]);
+    const [subject, set_subject] = useState([]);
 
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
 
@@ -107,7 +112,7 @@ const Upload = () => {
                         <option value="CC BY-NC-SA">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
                         <option value="ODC-ODbL">Open Data Commons Open Database License - ODC-ODbL</option>
                         <option value="Additional License Coverage Options">Additional License Coverage Options</option>
-                        <option value="No license specified">No license specified</option>
+                        <option value="No license specified" selected>No license specified</option>
                     </select>
                     <Input
                         label="DOI"
@@ -162,8 +167,29 @@ const Upload = () => {
                     {tagsState && (
                         <div>
                             <span className='inputLabel'>Теги</span>
-                            <div id='tagsInput'>
-                                <InputTags tags={tags} setTags={setTags}/>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>География данных</p>
+                                <InputTags tags={geography_and_places} setTags={set_geography_and_places}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Язык</p>
+                                <InputTags tags={language} setTags={set_language}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Тип данных</p>
+                                <InputTags tags={data_type} setTags={set_data_type}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Задача</p>
+                                <InputTags tags={task} setTags={set_task}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Техника</p>
+                                <InputTags tags={technique} setTags={set_technique}/>
+                            </div>
+                            <div id='tagType'>
+                                <p id='tagTypeLabel'>Область</p>
+                                <InputTags tags={subject} setTags={set_subject}/>
                             </div>
                         </div>
                     )}

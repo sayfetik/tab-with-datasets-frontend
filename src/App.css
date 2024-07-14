@@ -78,3 +78,6 @@ p {
 .row {
   display: flex;
 }
+select, option {
+  padding: 10px 20px;
+}

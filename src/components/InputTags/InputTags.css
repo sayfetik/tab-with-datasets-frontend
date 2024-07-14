@@ -36,9 +36,10 @@
     border: solid 1px #3E456F;
     border-radius: 50px;
     font-size: 20px;
-    padding: 3px 10px;
+    padding: 1px 8px 4px 8px;
     margin-left: 5px;
     margin-bottom: 5px;
+    color: #3E456F;
 }
 #inputTextSection {
     display: flex;
