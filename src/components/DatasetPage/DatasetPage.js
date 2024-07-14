@@ -70,7 +70,7 @@ const DatasetPage = () => {
                     id: data.id || '',
                     title: data.title || '',
                     description: data.description || '',
-                    tags: data.tags ? data.tags.split(' ') : [],
+                    tags: [],
                     owner: data.owner || '',
                     authors: data.authors || '',
                     data_source: data.data_source || '',

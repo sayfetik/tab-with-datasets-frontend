@@ -52,30 +52,6 @@ p {
     font-weight: 400;
 }
 
-@media screen and (max-width: 800px) {
-  h1 {
-    line-height: 48px;
-    font-size: 25px;
-  }
-  h2 {
-      font-size: 20px;
-      font-weight: 700;
-  }
-  h3 {
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 28px;
-  }
-  h4 {
-      font-weight: 700;
-      font-size: 7px;
-  }
-  p {
-      font-size: 5px;
-      font-weight: 400;
-  }
-}
-
 .input input[type="text"], #datasets input[type="text"] {
   margin-top: 10px;
   padding: 20px;
