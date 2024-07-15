@@ -1,6 +1,5 @@
 import React from 'react'
 import './Input.css'
-import { THEME_ID } from '@mui/material'
 
 class Input extends React.Component {
     constructor(props) {

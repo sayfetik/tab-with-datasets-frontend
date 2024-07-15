@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
 import './Search.css'
-import CardsRowSection from '../CardsRowSection/CardsRowSection'
 import Header from '../Header/Header'
 import Filters from '../Filters/Filters'
-import Input from '../Input/Input'
-import { useParams, useNavigate } from 'react-router-dom';
-import arrowsIcon from '../../img/iconArrows.png'
+import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 
 const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
-    const [resultsLimit, setResultsLimit] = useState(8);
+    const resultsLimit = 8;
     const [datasets, setDatasets] = useState('');
 
     const handleSearch = async (e) => {
@@ -58,7 +55,7 @@ const Search = ({ fetchUrl }) => {
                         />
                         <Filters />
                         <button type='submit' id='searchButton'>Найти</button>
-                        <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon}/></button>
+                        <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                     </form>
                     <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
                 </div>

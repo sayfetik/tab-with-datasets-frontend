@@ -75,7 +75,7 @@ const Upload = () => {
                         onChange={(e) => setTitleOfDataset(e.target.value)}
                     />
                     <div className='metadataLabel'>Видимость *</div>
-                    <select className="visible" id="metadataField" defaultValue="private" onChange={(e)=>setVisibility(e.target.value)}>
+                    <select className="visible" id="metadataField" value={visibility} defaultValue="private" onChange={(e)=>setVisibility(e.target.value)}>
                         <option value="private">Приватный</option>
                         <option value="public">Публичный</option>
                     </select>
@@ -97,7 +97,7 @@ const Upload = () => {
                         value={expectedUpdateFrequency}
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
                         />
-                    <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
+                    <div className='metadataLabel' value={license} onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
                     <select className="visible" id="metadataField">
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>

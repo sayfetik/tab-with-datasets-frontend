@@ -1,9 +1,8 @@
 import React from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Back from '../Back/Back'
 import './DatasetPage.css'
-import CardsRowSection from '../CardsRowSection/CardsRowSection'
 import datasetImage from '../../img/datasetImage.png'
 import Header from '../Header/Header'
 import Icon from '../Icon'
@@ -11,12 +10,11 @@ import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
 import DatasetCard from '../DatasetCard/DatasetCard';
-import arrowsIcon from '../../img/iconArrows.png'
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
-    const [resultsLimit, setResultsLimit] = useState(4);
+    const resultsLimit = 4;
 
     useEffect(() => {
         const fetchRecommendations = async () => {
