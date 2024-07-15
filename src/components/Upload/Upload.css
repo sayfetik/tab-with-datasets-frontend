@@ -179,17 +179,17 @@
 
 .cta {
   border: none;
-    display: flex;
-    padding: 3px 25px;
-    align-items: center;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    color: white;
-    background-color: #3E456F;
-    transition: 1s;
-    box-shadow: 6px 6px 0 black;
-    border-radius: 50px;
+  display: flex;
+  padding: 15px 33px 15px 25px;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  color: white;
+  background-color: #3E456F;
+  transition: 1s;
+  box-shadow: 6px 6px 0 black;
+  border-radius: 50px;
 }
 
 .cta:focus {

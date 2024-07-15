@@ -195,11 +195,11 @@ const Upload = () => {
                     )}
 
                     <div id='saveButtons'>
-                        <button className='saveDraft' onClick={()=>{
+                        {/*<button className='saveDraft' onClick={()=>{
                                 axios.get('https://tab-with-datasets-mock.onrender.com/save_draft', {})
                                     .then(response => { alert(response.data); })
                                     .catch((error) => { console.log(error); });
-                            }}>Сохранить черновик</button>
+                            }}>Сохранить черновик</button>*/}
                         {tagsState &&  (
                             <div className="wrapper">
                                 <button className="cta" onClick={checkRequiredInputsAndUpload}>
