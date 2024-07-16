@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import './InputTagFilter.css'
 
-const InputTagFilter = ( {label} ) => {
-  const [items, setItems] = useState([]);
+const InputTagFilter = ( { label, tags =[], setTags } ) => {
   const [availableOptions, setAvailableOptions] = useState([
-    { value: 'option1', label: 'Apple' },
+    { value: 'option1', label: 'global' },
     { value: 'option2', label: 'Banana' },
     { value: 'option3', label: 'Cherry' },
     { value: 'option4', label: 'Date' },
@@ -20,14 +19,14 @@ const InputTagFilter = ( {label} ) => {
     const selectedValue = event.target.value;
     if (selectedValue) {
       const selectedOption = availableOptions.find(option => option.value === selectedValue);
-      setItems([...items, selectedOption]);
+      setTags([...(tags || []), selectedOption]);
       setAvailableOptions(availableOptions.filter(option => option.value !== selectedValue));
     }
   };
 
   const handleRemoveItem = (index) => {
-    const removedItem = items[index];
-    setItems(items.filter((_, i) => i !== index));
+    const removedItem = tags[index];
+    setTags((tags || []).filter((_, i) => i !== index));
     setAvailableOptions([...availableOptions, removedItem]);
   };
 
@@ -42,9 +41,9 @@ const InputTagFilter = ( {label} ) => {
         ))}
       </select>
       <div className='row'>
-        {items.map((item, index) => (
+        {tags.map((tag, index) => (
           <div id='tagFilter' key={index}>
-            {item.label}
+            {tag.label}
             <button id='deleteTagButton' onClick={() => handleRemoveItem(index)}>&times;</button>
           </div>
         ))}

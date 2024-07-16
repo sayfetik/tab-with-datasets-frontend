@@ -3,11 +3,22 @@ import './Filters.css'
 import InputTagFilter from '../InputTagFilter/InputTagFilter';
 
 const Filters = ({ isOpen, onClose, onFilterChange }) => {
-  const [filter1, setFilter1] = useState(['']);
-  const [filter2, setFilter2] = useState([]);
+  const [geography_and_places, setGeography] = useState([]);
+  const [language, setLanguage] = useState([]);
+  const [data_type, setData_type] = useState([]);
+  const [task, setTask] = useState([]);
+  const [technique, setTechinque] = useState([]);
+  const [subject, setSubject] = useState([]);
 
   const handleFilterChange = () => {
-    onFilterChange({ filter1, filter2 });
+    onFilterChange({
+      geography_and_places,
+      language,
+      data_type,
+      task,
+      technique,
+      subject
+    });
     onClose();
   };
 
@@ -26,16 +37,16 @@ const Filters = ({ isOpen, onClose, onFilterChange }) => {
         </div>
         <div>
           <label>
-            <InputTagFilter label="География данных" />
-            <InputTagFilter label="Язык" />
-            <InputTagFilter label="Тип данных" />
-            <InputTagFilter label="Задача" />
-            <InputTagFilter label="Техника" />
-            <InputTagFilter label="Область" />
+            <InputTagFilter label="География данных" tags={geography_and_places} setTags={setGeography}/>
+            <InputTagFilter label="Язык" tags={language} setTags={setLanguage}/>
+            <InputTagFilter label="Тип данных" tags={data_type} setTags={setData_type}/>
+            <InputTagFilter label="Задача" tags={task} setTags={setTask}/>
+            <InputTagFilter label="Техника" tags={technique} setTags={setTechinque}/>
+            <InputTagFilter label="Область" tags={subject} setTags={setSubject}/>
           </label>
         </div>
         <div id='applyFiltersLayout'>
-          <button id='applyFilters' /*onClick={handleFilterChange}*/>Apply Filters</button>
+          <button id='applyFilters' onClick={handleFilterChange}>Apply Filters</button>
         </div>
       </div>
     </div>

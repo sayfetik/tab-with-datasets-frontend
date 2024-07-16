@@ -36,6 +36,7 @@ const Datasets = () => {
             const data = await response.json();
             if (data && data.length > 0) {
                 setDatasets(data);
+                setFilteredData(data);
                 setSortedData(data); 
                 navigate('/datasets', { state: { datasets: data } });
             } else {
@@ -54,42 +55,58 @@ const Datasets = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredData, setFilteredData] = useState(datasets);
     const handleFilterChange = (filters) => {
-        // Здесь должна быть логика фильтрации данных на основе выбранных фильтров
-        // Примерно так:
-        // const newFilteredData = originalData.filter(item => 
-        //   (filters.filter1 ? item.category1 === filters.filter1 : true) &&
-        //   (filters.filter2 ? item.category2 === filters.filter2 : true)
-        // );
-        // setFilteredData(newFilteredData);
+        const filteredDatasets = datasets.filter(dataset => {
+            // Проверяем каждую категорию фильтров
+            const categories = ['geography_and_places', 'language', 'data_type', 'task', 'technique', 'subject'];
+            
+            return categories.every(category => {
+                // Проверяем, существует ли категория в фильтрах и является ли она массивом
+                if (!filters[category] || !Array.isArray(filters[category]) || filters[category].length === 0) {
+                    return true;
+                }
+                
+                // Проверяем, содержит ли датасет хотя бы один тег из фильтра для этой категории
+                return filters[category].some(filterTag => 
+                    /*dataset.tags && Array.isArray(dataset.tags) && dataset.tags.some(datasetTag => 
+                        datasetTag && filterTag &&
+                        datasetTag.value === filterTag.value && 
+                        datasetTag.label === filterTag.label
+                    )*/
+                    dataset.tags && Array.isArray(dataset.tags) && dataset.tags.some(datasetTag =>  
+                        datasetTag.label === filterTag.label
+                    )
+                );
+            });
+        });
     
-        console.log('Applied filters:', filters);
-      };
+        setFilteredData(filteredDatasets);
+        setSortedData(filteredDatasets);
+    };
 
-      
     const [sortedData, setSortedData] = useState(filteredData);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
 
     useEffect(() => {
         switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...datasets]);
+                setSortedData([...filteredData]);
                 break;
             case 'byRating':
-                setSortedData(_.orderBy(datasets, ['rating'], ['desc']));
+                setSortedData(_.orderBy(filteredData, ['rating'], ['desc']));
                 break;
             case 'byUsabilityRating':
-                setSortedData(_.orderBy(datasets, ['usability_rating'], ['desc']));
+                setSortedData(_.orderBy(filteredData, ['usability_rating'], ['desc']));
                 break;
             case 'largeFirst':
-                setSortedData(_.orderBy(datasets, ['size'], ['desc']));
+                setSortedData(_.orderBy(filteredData, ['size'], ['desc']));
                 break;
             case 'smallFirst':
-                setSortedData(_.orderBy(datasets, ['size'], ['asc']));
+                setSortedData(_.orderBy(filteredData, ['size'], ['asc']));
                 break;
             default:
-                setSortedData([...datasets]);
+                setSortedData([...filteredData]);
         }
-    }, [selectedOption, datasets]);
+    }, [selectedOption, filteredData]);
 
         return (
             <div>
@@ -111,6 +128,7 @@ const Datasets = () => {
                             <Filters 
                                 isOpen={isModalOpen}
                                 onClose={() => setIsModalOpen(false)}
+                                onFilterChange={handleFilterChange}
                             />
                             <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                 <option value="byRelevance">By relevance</option>
