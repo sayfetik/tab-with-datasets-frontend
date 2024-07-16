@@ -24,6 +24,7 @@ const InputTagFilter = ( { label, tags =[], setTags, options = [] } ) => {
     setAvailableOptions([...availableOptions, removedItem]);
   };
 
+  
   return (
     <div id='inputTagsFilter'>
       <select className="selectTags" onChange={handleSelectChange} value="">

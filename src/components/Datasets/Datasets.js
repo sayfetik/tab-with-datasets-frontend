@@ -20,6 +20,9 @@ const Datasets = () => {
     const { searchString: searchQuery, datasets: initialDatasets } = state;
     const [datasets, setDatasets] = useState(initialDatasets);
     const [searchString, setSearchString] = useState(searchQuery || '');
+    const [sortedData, setSortedData] = useState(initialDatasets);
+    const [selectedOption, setSelectedOption] = useState('byRelevance');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
     const resultsLimit = 8;
@@ -36,7 +39,6 @@ const Datasets = () => {
             const data = await response.json();
             if (data && data.length > 0) {
                 setDatasets(data);
-                setFilteredData(data);
                 setSortedData(data); 
                 navigate('/datasets', { state: { datasets: data } });
             } else {
@@ -52,62 +54,55 @@ const Datasets = () => {
         }
       };
     
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [filteredData, setFilteredData] = useState(datasets);
-    const handleFilterChange = (filters) => {
-        const filteredDatasets = datasets.filter(dataset => {
-            // Проверяем каждую категорию фильтров
-            const categories = ['geography_and_places', 'language', 'data_type', 'task', 'technique', 'subject'];
-            
-            return categories.every(category => {
-                // Проверяем, существует ли категория в фильтрах и является ли она массивом
-                if (!filters[category] || !Array.isArray(filters[category]) || filters[category].length === 0) {
-                    return true;
-                }
-                
-                // Проверяем, содержит ли датасет хотя бы один тег из фильтра для этой категории
-                return filters[category].some(filterTag => 
-                    /*dataset.tags && Array.isArray(dataset.tags) && dataset.tags.some(datasetTag => 
-                        datasetTag && filterTag &&
-                        datasetTag.value === filterTag.value && 
-                        datasetTag.label === filterTag.label
-                    )*/
-                    dataset.tags && Array.isArray(dataset.tags) && dataset.tags.some(datasetTag =>  
-                        datasetTag.label === filterTag.label
-                    )
-                );
-            });
-        });
+    const sendFiltersToBackend = async (filters) => {
+        const url = 'http://10.100.30.74/api/filters';
     
-        console.log(filters);
-        setFilteredData(filteredDatasets);
-        setSortedData(filteredDatasets);
-    };
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(filters),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          const data = await response.json();
+          console.log('Response from backend:', data);
+          setSortedData(data);
+        } catch (error) {
+          console.error('Error sending filters to backend:', error);
+        }
+      };
 
-    const [sortedData, setSortedData] = useState(filteredData);
-    const [selectedOption, setSelectedOption] = useState('byRelevance');
+    const handleFilterChange = (filters) => {
+        sendFiltersToBackend(filters);
+    };
 
     useEffect(() => {
         switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...filteredData]);
+                setSortedData([...sortedData]);
                 break;
             case 'byRating':
-                setSortedData(_.orderBy(filteredData, ['rating'], ['desc']));
+                setSortedData(_.orderBy(sortedData, ['rating'], ['desc']));
                 break;
             case 'byUsabilityRating':
-                setSortedData(_.orderBy(filteredData, ['usability_rating'], ['desc']));
+                setSortedData(_.orderBy(sortedData, ['usability_rating'], ['desc']));
                 break;
             case 'largeFirst':
-                setSortedData(_.orderBy(filteredData, ['size'], ['desc']));
+                setSortedData(_.orderBy(sortedData, ['size'], ['desc']));
                 break;
             case 'smallFirst':
-                setSortedData(_.orderBy(filteredData, ['size'], ['asc']));
+                setSortedData(_.orderBy(sortedData, ['size'], ['asc']));
                 break;
             default:
-                setSortedData([...filteredData]);
+                setSortedData([...sortedData]);
         }
-    }, [selectedOption, filteredData]);
+    }, [selectedOption, sortedData]);
 
         return (
             <div>

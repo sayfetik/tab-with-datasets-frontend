@@ -30,7 +30,6 @@ const Filters = ({ isOpen, onClose, onFilterChange }) => {
     { value: 'global', label: 'Global' },
     { value: 'usa', label: 'USA' },
     { value: 'europe', label: 'Europe' },
-    // ... другие опции
   ];
 
   return (

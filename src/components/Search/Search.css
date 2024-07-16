@@ -119,7 +119,6 @@ body::before {
 }
 
 #search input[type="text"] {
-    margin-top: 8px;
     padding: 20px;
     border: solid rgba(228, 231, 242, 1);
     border-width: 1px;
