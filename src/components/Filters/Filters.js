@@ -26,6 +26,13 @@ const Filters = ({ isOpen, onClose, onFilterChange }) => {
     return null;
   }
 
+  const geographyOptions = [
+    { value: 'global', label: 'Global' },
+    { value: 'usa', label: 'USA' },
+    { value: 'europe', label: 'Europe' },
+    // ... другие опции
+  ];
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -37,12 +44,12 @@ const Filters = ({ isOpen, onClose, onFilterChange }) => {
         </div>
         <div>
           <label>
-            <InputTagFilter label="География данных" tags={geography_and_places} setTags={setGeography}/>
-            <InputTagFilter label="Язык" tags={language} setTags={setLanguage}/>
-            <InputTagFilter label="Тип данных" tags={data_type} setTags={setData_type}/>
-            <InputTagFilter label="Задача" tags={task} setTags={setTask}/>
-            <InputTagFilter label="Техника" tags={technique} setTags={setTechinque}/>
-            <InputTagFilter label="Область" tags={subject} setTags={setSubject}/>
+            <InputTagFilter label="География данных" tags={geography_and_places} setTags={setGeography} options={geographyOptions}/>
+            <InputTagFilter label="Язык" tags={language} setTags={setLanguage} options={geographyOptions}/>
+            <InputTagFilter label="Тип данных" tags={data_type} setTags={setData_type} options={geographyOptions}/>
+            <InputTagFilter label="Задача" tags={task} setTags={setTask} options={geographyOptions}/>
+            <InputTagFilter label="Техника" tags={technique} setTags={setTechinque} options={geographyOptions}/>
+            <InputTagFilter label="Область" tags={subject} setTags={setSubject} options={geographyOptions}/>
           </label>
         </div>
         <div id='applyFiltersLayout'>

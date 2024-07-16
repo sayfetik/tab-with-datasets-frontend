@@ -79,6 +79,7 @@ const Datasets = () => {
             });
         });
     
+        console.log(filters);
         setFilteredData(filteredDatasets);
         setSortedData(filteredDatasets);
     };

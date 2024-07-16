@@ -1,14 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import './InputTagFilter.css'
 
-const InputTagFilter = ( { label, tags =[], setTags } ) => {
-  const [availableOptions, setAvailableOptions] = useState([
-    { value: 'option1', label: 'global' },
-    { value: 'option2', label: 'Banana' },
-    { value: 'option3', label: 'Cherry' },
-    { value: 'option4', label: 'Date' },
-    { value: 'option5', label: 'Elderberry' },
-  ]);
+const InputTagFilter = ( { label, tags =[], setTags, options = [] } ) => {
+  const [availableOptions, setAvailableOptions] = useState(options);
 
   // Сортировка доступных опций в алфавитном порядке
   const sortedAvailableOptions = useMemo(() => {
