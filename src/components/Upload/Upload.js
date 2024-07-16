@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Input from '../Input/Input';
 import Back from '../Back/Back';
-import UploadFile from './UploadFilesSection/UploadFilesPart';
+import UploadFile from './UploadFile/UploadFile';
 import './Upload.css';
-import axios from 'axios';
 import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +64,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile limitFile="5" limitImage="100" />
+            <UploadFile pageLabel="Новый датасет"/>
             <div className='metadataSection'>
                 <div>
                     <Input

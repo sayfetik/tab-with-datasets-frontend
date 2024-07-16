@@ -1,0 +1,60 @@
+#tagFilter {
+    padding: 0px 10px;
+    color: #3E456F;
+    border: 1px solid #3E456F;
+    border-radius: 50px;
+    cursor: pointer;    
+    width: fit-content;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+#inputTagsFilter {
+    display: flex;
+    margin-bottom: 8px;
+}
+.selectTags {
+    padding: 4px 10px;
+    border: 1px solid #3E456F;
+    border-radius: 50px;
+    cursor: pointer;    
+    width: fit-content;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #3E456F;
+    color: aliceblue;
+  }
+.selectTags:focus {
+    border: solid rgba(0, 113, 206, 1);
+    outline: none;
+    border-width: 1px;
+ }
+ .selectTags::after {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+#tagOption {
+    color: white;
+    font-size: 16px;
+    font-weight: 500px;
+    height: fit-content;
+    border-radius: 20px;
+}
+#filterTagLabel {
+    background-color: white;
+    color: #3E456F;
+    font-size: 16px;
+    font-weight: 600px;
+}

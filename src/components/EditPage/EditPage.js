@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import Input from '../Input/Input';
 import Back from '../Back/Back';
-import UploadFile from '../Upload/UploadFilesSection/UploadFilesPart';
-import axios from 'axios';
 import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
 import InputTags from '../InputTags/InputTags';
-import { useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './EditPage.css'
-import UploadedFile from '../Upload/UploadedFile/UploadedFile';
+import UploadFile from '../Upload/UploadFile/UploadFile';
 
 const Upload = () => {
-    const { id } = useParams();
     const { state: dataset } = useLocation();
 
     const { showNotification } = useNotification();
@@ -53,46 +49,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <div className='uploadPage'>
-                <h1>Редактировать датасет</h1>
-
-                <div className='uploadFilesContainer'>
-                    <div className='uploadFile'>
-                        <div className='dropFile'>Перетащите файлы для загрузки</div>
-                        <input type="file" id='chooseFiles' style={{display: 'none'}}></input>
-                        <button className='seeFiles' onClick={()=>{
-                            document.getElementById('chooseFiles').click();
-                        }}>Просмотр файлов</button>
-                        <div className='limitFile'>0кБ / 5 ГБ</div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <div className='coverImageText'>Обложка для датасета</div>
-                            <div className='uploadImage' id='datasetImageUpload'>
-                                <div className='dropImage'>Перетащите файлы для загрузки</div>
-                                <input type="file" id='chooseImage' style={{display: 'none'}}></input>
-                                <button className='seeImage' onClick={()=>{
-                                    document.getElementById('chooseImage').click();
-                                }}>Просмотр файлов</button>
-                                <div className='limitImage'>0кБ / 100 МБ</div>
-                            </div>
-                        </div>
-                    
-                        <div className='uploadedFilesSection'>
-                            <div className='uploadedFilesTitle'>Загруженные файлы</div>
-                            <div className='uploadedFilesContainer'>
-                                <UploadedFile fileName="Название загруженного файла"/>
-                                <UploadedFile fileName="Название большой загруженного файла"/>
-                                <UploadedFile fileName="Название загруженного файла"/>
-                                <UploadedFile fileName="Название загруженного файла"/>
-                                <UploadedFile fileName="Название большой загруженного файла"/>
-                                <UploadedFile fileName="Название загруженного файла"/>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            </div>
+            <UploadFile pageLabel="Редактировать датасет"/>
             <div className='metadataSection'>
             <div>
                     <Input
@@ -125,7 +82,7 @@ const Upload = () => {
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
-                    <select className="visible" id="metadataField">
+                    <select className="visible" value={license} id="metadataField">
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                         <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>

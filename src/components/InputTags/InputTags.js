@@ -2,26 +2,25 @@ import React, { useState, useEffect } from 'react';
 import './InputTags.css'
 
 const InputTags = ({tags, setTags}) => {
-  const [fields, setFields] = useState(tags);
   const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
-    setFields(tags);
-  }, [tags]);
+    setTags(tags);
+  }, [setTags, tags]);
 
   const handleAddField = () => {
-    setFields([...fields, '']);
-    setEditIndex(fields.length);
+    setTags([...tags, '']);
+    setEditIndex(tags.length);
   };
 
   const handleRemoveField = (index) => {
-    setFields(fields.filter((_, i) => i !== index));
+    setTags(tags.filter((_, i) => i !== index));
   };
 
   const handleInputChange = (index, value) => {
-    const newFields = [...fields];
+    const newFields = [...tags];
     newFields[index] = value;
-    setFields(newFields);
+    setTags(newFields);
   };
 
   const handleBlur = () => {
@@ -36,7 +35,7 @@ const InputTags = ({tags, setTags}) => {
 
   return (
     <div id='inputTextSection'>
-      {fields.map((field, index) => (
+      {tags.map((field, index) => (
         <div id='tag' key={index}>
           {editIndex === index ? (
             <input

@@ -7,13 +7,18 @@ import Filters from '../Filters/Filters'
 import { useLocation, useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
+import {
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
 
 const Datasets = () => {
     const location = useLocation();
     const { state } = location;
     const { searchString: searchQuery, datasets: initialDatasets } = state;
     const [datasets, setDatasets] = useState(initialDatasets);
-    const [sortedData, setSortedData] = useState(initialDatasets);
     const [searchString, setSearchString] = useState(searchQuery || '');
 
     const navigate = useNavigate();
@@ -46,18 +51,28 @@ const Datasets = () => {
         }
       };
     
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [filteredData, setFilteredData] = useState(datasets);
+    const handleFilterChange = (filters) => {
+        // Здесь должна быть логика фильтрации данных на основе выбранных фильтров
+        // Примерно так:
+        // const newFilteredData = originalData.filter(item => 
+        //   (filters.filter1 ? item.category1 === filters.filter1 : true) &&
+        //   (filters.filter2 ? item.category2 === filters.filter2 : true)
+        // );
+        // setFilteredData(newFilteredData);
+    
+        console.log('Applied filters:', filters);
+      };
 
-
+      
+    const [sortedData, setSortedData] = useState(filteredData);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
 
     useEffect(() => {
-        sortData(selectedOption);
-    }, [selectedOption, datasets]);
-
-    const sortData = (option) => {
-        switch(option) {
+        switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...initialDatasets]);
+                setSortedData([...datasets]);
                 break;
             case 'byRating':
                 setSortedData(_.orderBy(datasets, ['rating'], ['desc']));
@@ -74,7 +89,7 @@ const Datasets = () => {
             default:
                 setSortedData([...datasets]);
         }
-    };
+    }, [selectedOption, datasets]);
 
         return (
             <div>
@@ -90,7 +105,13 @@ const Datasets = () => {
                                 value={searchString}
                                 onChange={(e) => setSearchString(e.target.value)} 
                             />
-                            <Filters />
+                            <InputAdornment position="start">
+                                <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
+                            </InputAdornment>
+                            <Filters 
+                                isOpen={isModalOpen}
+                                onClose={() => setIsModalOpen(false)}
+                            />
                             <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                 <option value="byRelevance">By relevance</option>
                                 <option value="byRating">By rating</option>

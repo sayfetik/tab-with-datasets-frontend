@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
-import {
-  InputAdornment,
-  IconButton,
-  Menu,
-  MenuItem
-} from '@mui/material';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import './Filters.css'
+import InputTagFilter from '../InputTagFilter/InputTagFilter';
 
-const Filters = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+const Filters = ({ isOpen, onClose, onFilterChange }) => {
+  const [filter1, setFilter1] = useState(['']);
+  const [filter2, setFilter2] = useState([]);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleFilterChange = () => {
+    onFilterChange({ filter1, filter2 });
+    onClose();
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <div>
-        <InputAdornment position="end">
-            <IconButton
-            aria-controls="filter-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            >
-            <FilterListIcon />
-            </IconButton>
-        </InputAdornment>
-      <Menu
-        id="filter-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Filter 1</MenuItem>
-        <MenuItem onClick={handleClose}>Filter 2</MenuItem>
-        <MenuItem onClick={handleClose}>Filter 3</MenuItem>
-      </Menu>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>Фильтры</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            &times;
+          </button>
+        </div>
+        <div>
+          <label>
+            <InputTagFilter label="География данных" />
+            <InputTagFilter label="Язык" />
+            <InputTagFilter label="Тип данных" />
+            <InputTagFilter label="Задача" />
+            <InputTagFilter label="Техника" />
+            <InputTagFilter label="Область" />
+          </label>
+        </div>
+        <div id='applyFiltersLayout'>
+          <button id='applyFilters' /*onClick={handleFilterChange}*/>Apply Filters</button>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default Filters;

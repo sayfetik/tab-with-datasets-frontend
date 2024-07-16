@@ -1,0 +1,52 @@
+/* styles.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 30px;
+    width: 50%;
+    max-width: 90%;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+#applyFilters {
+  padding: 5px 15px;
+  margin-left: 7px;
+  border: none;
+  background-color: #3E456F;
+  color: white;
+  font-weight: 600;
+  border-radius: 40px;
+  font-size: 16px;
+  height: 40px;
+}
+#applyFiltersLayout {
+  display: flex;
+  justify-content: end;
+}
+  
