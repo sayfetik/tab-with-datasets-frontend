@@ -23,8 +23,6 @@ const Datasets = () => {
     const [sortedData, setSortedData] = useState(initialDatasets);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const navigate = useNavigate();
     const resultsLimit = 8;
 
     const handleSearch = async (e) => {
@@ -37,17 +35,13 @@ const Datasets = () => {
                 return;
             }
             const data = await response.json();
-            if (data && data.length > 0) {
-                setDatasets(data);
-                setSortedData(data); 
-                navigate('/datasets', { state: { datasets: data } });
-            } else {
-                alert('No data returned from the server');
-            } 
+            setDatasets(data);
+            setSortedData(data);
         } catch (error) {
             alert("Error fetching datasets: " + error);
         }
     };
+
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             handleSearch(event);
@@ -78,14 +72,10 @@ const Datasets = () => {
         }
       };
 
-    const handleFilterChange = (filters) => {
-        sendFiltersToBackend(filters);
-    };
-
     useEffect(() => {
         switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...sortedData]);
+                setSortedData([...datasets]);
                 break;
             case 'byRating':
                 setSortedData(_.orderBy(sortedData, ['rating'], ['desc']));
@@ -100,7 +90,7 @@ const Datasets = () => {
                 setSortedData(_.orderBy(sortedData, ['size'], ['asc']));
                 break;
             default:
-                setSortedData([...sortedData]);
+                setSortedData([...datasets]);
         }
     }, [selectedOption, sortedData]);
 
@@ -118,13 +108,13 @@ const Datasets = () => {
                                 value={searchString}
                                 onChange={(e) => setSearchString(e.target.value)} 
                             />
-                            <InputAdornment position="start">
+                            <InputAdornment>
                                 <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
                             </InputAdornment>
                             <Filters 
                                 isOpen={isModalOpen}
                                 onClose={() => setIsModalOpen(false)}
-                                onFilterChange={handleFilterChange}
+                                onFilterChange={sendFiltersToBackend}
                             />
                             <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                 <option value="byRelevance">By relevance</option>

@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const Back = () => {
     const navigate = useNavigate();
     const goBack = () => {
-    navigate(-1);
-  };
+        navigate(-1);
+    };
     return (
         <div className='back' onClick={goBack}>
             <Icon image={back} />
