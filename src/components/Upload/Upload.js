@@ -11,8 +11,15 @@ import { useNotification } from '../Notification/NotificationContext';
 import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
 import InputTags from '../InputTags/InputTags';
+import BackendConnector from '../BackendConnector';
+import files from '../UploadFilesPart';
 
 const Upload = () => {
+    const [selectedValue, setSelectedValue] = useState('No license specified');
+    const handleSelectChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
     const { showNotification } = useNotification();
 
     const navigate = useNavigate();
@@ -53,11 +60,50 @@ const Upload = () => {
 
     const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset && authors;
     
+    const formData = new FormData();
+
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) {
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
-        } else 
-            navigationButtonClick();
+        } else {
+            const payload = {
+                title: titleOfDataset,
+                visibility,
+                authors,
+                data_source: dataSource,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                license,
+                description,
+                tags: {
+                    geography_and_places,
+                    language,
+                    data_type,
+                    task,
+                    technique,
+                    subject,
+                },
+            };
+
+            console.log(JSON.stringify(payload))
+            formData.append('metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+
+            if (image) {
+                formData.append('image', image);
+            }
+
+            BackendConnector.upload(formData)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     };
 
     return (
@@ -98,7 +144,7 @@ const Upload = () => {
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
-                    <select className="visible" id="metadataField">
+                    <select defaultValue={"No license specified"} onChange={(e) => setLicense(e.target.value)} className="visible" id="metadataField">
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                         <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
@@ -112,7 +158,7 @@ const Upload = () => {
                         <option value="CC BY-NC-SA">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
                         <option value="ODC-ODbL">Open Data Commons Open Database License - ODC-ODbL</option>
                         <option value="Additional License Coverage Options">Additional License Coverage Options</option>
-                        <option value="No license specified" selected>No license specified</option>
+                        <option value="No license specified">No license specified</option>
                     </select>
                     <Input
                         label="DOI"
@@ -235,7 +281,7 @@ const Upload = () => {
                                 </button>
                                 {showNotification && (
                                     <Notification
-                                    message="Это уведомление!"
+                                        message="Это уведомление!"
                                     />
                                 )}
                             </div>

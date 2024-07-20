@@ -12,6 +12,7 @@ import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
 import DatasetCard from '../DatasetCard/DatasetCard';
 import arrowsIcon from '../../img/iconArrows.png'
+import BackendConnector from '../BackendConnector';
 
 const DatasetPage = () => {
     const { id } = useParams();
@@ -20,14 +21,8 @@ const DatasetPage = () => {
 
     useEffect(() => {
         const fetchRecommendations = async () => {
-            const url = `http://10.100.30.74/api/recommend/${id}/${resultsLimit}`;
             try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-
+                const data = await BackendConnector.recommend(id);
                 if (data && data.length > 0) {
                     setDatasets(data);
                 } else {
@@ -67,23 +62,19 @@ const DatasetPage = () => {
     });
 
     React.useEffect(() => {
-        const url = `http://10.100.30.74/api/preview/${id}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
+        const fetchDataset = async () => {
+            try {
+                const data = await BackendConnector.preview(id);
                 setDataset({
                     id: data.id || '',
                     title: data.title || '',
                     description: data.description || '',
-
                     geography_and_places: data.tags.geography_and_places || [],
                     language: data.tags.language || [],
                     data_type: data.tags.data_type || [],
                     task: data.tags.task || [],
                     technique: data.tags.technique || [],
                     subject: data.tags.subject || [],
-
                     owner: data.owner || '',
                     authors: data.authors || '',
                     data_source: data.data_source || '',
@@ -98,9 +89,13 @@ const DatasetPage = () => {
                     size: data.size || '',
                     files: data.files || []
                 });
-            })
-            .catch(error => console.error("Error fetching data: ", error));
-        }, [id]);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+
+        fetchDataset();
+    }, [id]);
         
     const navigate = useNavigate();
     const handleEditClick = () => {

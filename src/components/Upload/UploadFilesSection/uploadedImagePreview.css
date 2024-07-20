@@ -1,0 +1,12 @@
+.uploadedImagePreview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.coverPreviewImage {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}

@@ -7,6 +7,7 @@ import Input from '../Input/Input'
 import { useParams, useNavigate } from 'react-router-dom';
 import arrowsIcon from '../../img/iconArrows.png'
 import searchIcon from '../../img/search.png'
+import BackendConnector from '../BackendConnector'
 
 const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
@@ -16,14 +17,8 @@ const Search = ({ fetchUrl }) => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                alert('Network response was not ok');
-            }
-            const data = await response.json();
-
+            const data = await BackendConnector.search(searchString);
             if (data && data.length > 0) {
                 setDatasets(data);
                 navigate('/datasets', { state: {searchString: searchString, datasets: data } });

@@ -7,6 +7,7 @@ import Sort from '../Sort/Sort'
 import Filters from '../Filters/Filters'
 import { useLocation, useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
+import BackendConnector from '../BackendConnector'
 
 const Datasets = () => {
     const location = useLocation();
@@ -20,14 +21,8 @@ const Datasets = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                alert('Network response was not ok');
-                return;
-            }
-            const data = await response.json();
+            const data = await BackendConnector.search(searchString);
             if (data && data.length > 0) {
                 setDatasets(data);
                 navigate('/datasets', { state: { datasets: data } });
