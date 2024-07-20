@@ -92,13 +92,13 @@ const Upload = () => {
             console.log(JSON.stringify(payload))
             formData.append('uploading_metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
 
-            for (let i = 0; i < files.length; i++) {
-                formData.append('files', files[i]);
-            }
+            // for (let i = 0; i < files.length; i++) {
+            //     formData.append('files', files[i]);
+            // }
 
-            if (image) {
-                formData.append('image', image);
-            }
+            // if (image) {
+            //     formData.append('image', image);
+            // }
 
             BackendConnector.upload(formData)
                 .then(response => {
