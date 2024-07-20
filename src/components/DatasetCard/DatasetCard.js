@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const DatasetCard = ({ 
     id, 
     title,
-    tags,
     authors, 
     numberOfFiles, 
     lastChangeDatetime, 

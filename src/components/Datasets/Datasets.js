@@ -4,7 +4,7 @@ import Back from '../Back/Back'
 import Header from '../Header/Header'
 import './Datasets.css'
 import Filters from '../Filters/Filters'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
 import {
@@ -84,15 +84,15 @@ const Datasets = () => {
                 setSortedData(_.orderBy(sortedData, ['usability_rating'], ['desc']));
                 break;
             case 'largeFirst':
-                setSortedData(_.orderBy(sortedData, ['size'], ['desc']));
+                setSortedData(_.orderBy(sortedData, ['size_bytes'], ['desc']));
                 break;
             case 'smallFirst':
-                setSortedData(_.orderBy(sortedData, ['size'], ['asc']));
+                setSortedData(_.orderBy(sortedData, ['size_bytes'], ['asc']));
                 break;
             default:
                 setSortedData([...datasets]);
         }
-    }, [selectedOption, sortedData]);
+    }, [selectedOption, sortedData, datasets]);
 
         return (
             <div>

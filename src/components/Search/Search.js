@@ -5,7 +5,7 @@ import Filters from '../Filters/Filters'
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 
-const Search = () => {
+const Search = ({ fetchUrl }) => {
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
     const resultsLimit = 8;
@@ -23,7 +23,7 @@ const Search = () => {
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate(`/datasets`, { state: {searchString: searchString, datasets: data } });
+                navigate('/datasets', { state: {searchString: searchString, datasets: data } });
             } else {
                 alert('No data returned from the server');
             }
