@@ -12,9 +12,11 @@ import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
 import InputTags from '../InputTags/InputTags';
 import BackendConnector from '../BackendConnector';
-import files from '../UploadFilesPart';
 
 const Upload = () => {
+    const [files, setFiles] = useState([]);
+    const [image, setImage] = useState(null);
+
     const [selectedValue, setSelectedValue] = useState('No license specified');
     const handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
@@ -37,6 +39,7 @@ const Upload = () => {
     const showTagsButtonClick = () => {
         setStateTags(true);
     };
+
 
     const [titleOfDataset, setTitleOfDataset] = useState('');
     const [visibility, setVisibility] = useState('private');
@@ -111,7 +114,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile limitFile="5" limitImage="100" />
+            <UploadFile image={image} setImage={setImage} files={files} setFiles={setFiles}/>
             <div className='metadataSection'>
                 <div>
                     <Input

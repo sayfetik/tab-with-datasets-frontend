@@ -1,9 +1,10 @@
 import React from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Back from '../Back/Back'
 import './DatasetPage.css'
-import CardsRowSection from '../CardsRowSection/CardsRowSection'
+/*import CardsRowSection from '../CardsRowSection/CardsRowSection'
+import arrowsIcon from '../../img/iconArrows.png'*/
 import datasetImage from '../../img/datasetImage.png'
 import Header from '../Header/Header'
 import Icon from '../Icon'
@@ -11,13 +12,12 @@ import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
 import DatasetCard from '../DatasetCard/DatasetCard';
-import arrowsIcon from '../../img/iconArrows.png'
 import BackendConnector from '../BackendConnector';
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
-    const [resultsLimit, setResultsLimit] = useState(4);
+    const resultsLimit=4;
 
     useEffect(() => {
         const fetchRecommendations = async () => {
@@ -54,11 +54,12 @@ const DatasetPage = () => {
         number_of_files: 0,
         doi: '',
         expected_update_frequency: '',
-        last_change_datetime: '',
+        last_change_date: '',
         downloads_number: 0,
         visibility: '',
         usability_rating: 0,
-        size: ''
+        size: '',
+        rating: ''
     });
 
     React.useEffect(() => {
@@ -82,11 +83,12 @@ const DatasetPage = () => {
                     number_of_files: data.number_of_files || 0,
                     doi: data.doi || '',
                     expected_update_frequency: data.expected_update_frequency || 'Никогда',
-                    last_change_datetime: data.last_change_datetime || '',
+                    last_change_date: data.last_change_date || '',
                     downloads_number: data.downloads_number || 0,
                     visibility: data.visibility || '',
                     usability_rating: data.usability_rating || 0,
                     size: data.size || '',
+                    rating: data.rating || '',
                     files: data.files || []
                 });
             } catch (error) {

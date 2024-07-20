@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './UploadFile.css';
 import UploadedFile from '../UploadedFile/UploadedFile';
 
-const UploadFilesPart = () => {
-    const [files, setFiles] = useState([]);
-    const [image, setImage] = useState(null);
+const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
 
     const handleFileChange = (event) => {
         const selectedFiles = Array.from(event.target.files);
