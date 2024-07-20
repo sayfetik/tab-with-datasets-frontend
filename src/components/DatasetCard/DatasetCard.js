@@ -8,9 +8,11 @@ const DatasetCard = ({
     title,
     authors, 
     numberOfFiles, 
-    lastChangeDatetime, 
-    downloadsNumber, 
-    size 
+    lastChangeDate, 
+    downloadsNumber,
+    size_bytes,
+    rating,
+    size
 }) => {
     const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ const DatasetCard = ({
             <div id='cardInfo'>
                 <div className='rowSpaceBetween'>
                     <p className='fieldInfo' id='authors'>{authors}</p>
-                    <p className='fieldInfo' id='renewData'>{lastChangeDatetime}</p>
+                    <p className='fieldInfo' id='renewData'>{lastChangeDate}</p>
                 </div>
                 <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
                 <div className='row'>

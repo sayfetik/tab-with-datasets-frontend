@@ -57,16 +57,17 @@ const DatasetPage = () => {
         number_of_files: 0,
         doi: '',
         expected_update_frequency: '',
-        last_change_datetime: '',
+        last_change_date: '',
         downloads_number: 0,
         visibility: '',
         usability_rating: 0,
-        size: ''
+        size: '',
+        size_bytes: 0,
+        rating: 0
     });
 
     React.useEffect(() => {
         const url = `http://10.100.30.74/api/preview/${id}`;
-
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -89,13 +90,16 @@ const DatasetPage = () => {
                     number_of_files: data.number_of_files || 0,
                     doi: data.doi || '',
                     expected_update_frequency: data.expected_update_frequency || 'Никогда',
-                    last_change_datetime: data.last_change_datetime || '',
+                    last_change_date: data.last_change_date || '',
                     downloads_number: data.downloads_number || 0,
                     visibility: data.visibility || '',
                     usability_rating: data.usability_rating || 0,
                     size: data.size || '',
-                    files: data.files || []
+                    size_bytes: data.size_bytes || '',
+                    files: data.files || [],
+                    rating: data.rating || 0
                 });
+                console.log(dataset);
             })
             .catch(error => console.error("Error fetching data: ", error));
         }, [id]);
@@ -123,22 +127,22 @@ const DatasetPage = () => {
                         
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
-                            {dataset.geography_and_places.map((tag, index) => ( 
+                            {dataset.geography_and_places.length !==0 && dataset.geography_and_places.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.language.map((tag, index) => ( 
+                            {dataset.language.length !==0 && dataset.language.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.data_type.map((tag, index) => ( 
+                            {dataset.data_type.length !==0 && dataset.data_type.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.task.map((tag, index) => ( 
+                            {dataset.task.length !==0 && dataset.task.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.technique.map((tag, index) => ( 
+                            {dataset.technique.length !==0 && dataset.technique.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.subject.map((tag, index) => ( 
+                            {dataset.subject.length !==0 && dataset.subject.map((tag, index) => ( 
                                 <span key={index} className='datasetTag'>{tag}</span>
                             ))}
                         </div>
@@ -151,7 +155,7 @@ const DatasetPage = () => {
                                 <div>
                                     <div id='ratingLabel'>
                                         <img src={star} width='17px' height='17px' alt=''/>
-                                        <p id='rating'>4.2</p>
+                                        <p id='rating'>{dataset.rating}</p>
                                     </div>
                                     <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
                                 </div>
@@ -174,7 +178,7 @@ const DatasetPage = () => {
 
                                 <div id='filesHeader'>
                                     <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
-                                    <p className='author' id='versionLabel'>{dataset.doi}</p>
+                                    {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
                                 </div>
 
                                 :
@@ -182,7 +186,7 @@ const DatasetPage = () => {
                                 <div>
                                     <div id='filesHeaderWithBottomDivider'>
                                         <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
-                                        <p className='author' id='versionLabel'>{dataset.doi}</p>
+                                        {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
                                     </div>
                                     <div className='files'>
                                         {dataset.files && dataset.files.map((file, index) => ( 
@@ -221,7 +225,11 @@ const DatasetPage = () => {
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Последнее изменение</h4>
-                            <p className='metaWhite'>{dataset.last_change_datetime}</p>
+                            <p className='metaWhite'>{dataset.last_change_date}</p>
+                        </div>
+                        <div className='infoContainer'>
+                            <h4 className='metaWhite'>DOI</h4>
+                            <p className='metaWhite'>{dataset.doi}</p>
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Количество скачиваний</h4>
