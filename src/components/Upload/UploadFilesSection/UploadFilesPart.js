@@ -55,7 +55,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
                             </div>
                             {image && (
                                 <div classname='uploadedImagePreview'>
-                                    <img src={image} alt="Uploaded cover" classname='coverPreviewImage' />
+                                    <img src={image} alt="Uploaded cover" className='coverPreviewImage' />
                                 </div>
                             )}
                         </div>

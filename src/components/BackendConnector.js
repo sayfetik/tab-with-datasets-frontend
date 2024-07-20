@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default class BackendConnector {
-  static host = 'http://localhost:8080';
+  static host = 'http://10.100.30.74';
   static preview_endpoint = 'api/preview';
   static recommend_endpoint = 'api/recommend';
   static search_endpoint = 'api/search';

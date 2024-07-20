@@ -40,10 +40,10 @@ const Upload = () => {
         setStateTags(true);
     };
 
-
     const [titleOfDataset, setTitleOfDataset] = useState('');
     const [visibility, setVisibility] = useState('private');
     const [authors, setAuthors] = useState('');
+    const [owner, setOwner] = useState('');
     const [dataSource, setDataSource] = useState('');
     const [expectedUpdateFrequency, setExpectedUpdateFrequency] = useState('');
     const [license, setLicense] = useState('No license specified');
@@ -71,12 +71,6 @@ const Upload = () => {
         } else {
             const payload = {
                 title: titleOfDataset,
-                visibility,
-                authors,
-                data_source: dataSource,
-                doi,
-                expected_update_frequency: expectedUpdateFrequency,
-                license,
                 description,
                 tags: {
                     geography_and_places,
@@ -86,10 +80,17 @@ const Upload = () => {
                     technique,
                     subject,
                 },
+                owner,
+                authors,
+                data_source: dataSource,
+                license,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                visibility
             };
 
             console.log(JSON.stringify(payload))
-            formData.append('metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+            formData.append('uploading_metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
 
             for (let i = 0; i < files.length; i++) {
                 formData.append('files', files[i]);
