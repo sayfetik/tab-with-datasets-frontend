@@ -18,14 +18,8 @@ const DatasetPage = () => {
 
     useEffect(() => {
         const fetchRecommendations = async () => {
-            const url = `http://10.100.30.74/api/recommend/${id}/${resultsLimit}`;
             try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-
+                const data = await BackendConnector.recommend(id);
                 if (data && data.length > 0) {
                     setDatasets(data);
                 } else {
@@ -69,39 +63,39 @@ const DatasetPage = () => {
     React.useEffect(() => {
         const url = `http://10.100.30.74/api/preview/${id}`;
         fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                setDataset({
-                    id: data.id || '',
-                    title: data.title || '',
-                    description: data.description || '',
-
-                    geography_and_places: data.tags.geography_and_places || [],
-                    language: data.tags.language || [],
-                    data_type: data.tags.data_type || [],
-                    task: data.tags.task || [],
-                    technique: data.tags.technique || [],
-                    subject: data.tags.subject || [],
-
-                    owner: data.owner || '',
-                    authors: data.authors || '',
-                    data_source: data.data_source || '',
-                    license: data.license || '',
-                    number_of_files: data.number_of_files || 0,
-                    doi: data.doi || '',
-                    expected_update_frequency: data.expected_update_frequency || 'Никогда',
-                    last_change_date: data.last_change_date || '',
-                    downloads_number: data.downloads_number || 0,
-                    visibility: data.visibility || '',
-                    usability_rating: data.usability_rating || 0,
-                    size: data.size || '',
-                    size_bytes: data.size_bytes || '',
-                    files: data.files || [],
-                    rating: data.rating || 0
-                });
-            })
-            .catch(error => console.error("Error fetching data: ", error));
-        }, [id]);
+          .then(response => response.json())
+          .then(data => {
+            setDataset({
+              id: data.id || '',
+              title: data.title || '',
+              description: data.description || '',
+              geography_and_places: data.tags.geography_and_places || [],
+              language: data.tags.language || [],
+              data_type: data.tags.data_type || [],
+              task: data.tags.task || [],
+              technique: data.tags.technique || [],
+              subject: data.tags.subject || [],
+              owner: data.owner || '',
+              authors: data.authors || '',
+              data_source: data.data_source || '',
+              license: data.license || '',
+              number_of_files: data.number_of_files || 0,
+              doi: data.doi || '',
+              expected_update_frequency: data.expected_update_frequency || 'Никогда',
+              last_change_date: data.last_change_date || '',
+              downloads_number: data.downloads_number || 0,
+              visibility: data.visibility || '',
+              usability_rating: data.usability_rating || 0,
+              size: data.size || '',
+              size_bytes: data.size_bytes || '',
+              files: data.files || [],
+              rating: data.rating || 0
+            });
+          })
+          .catch(error => {
+            console.error("Error fetching data: ", error);
+          });
+      }, [id]);
         
     const navigate = useNavigate();
     const handleEditClick = () => {

@@ -22,7 +22,6 @@ const Search = () => {
     const [task, setTask] = useState([]);
     const [technique, setTechnique] = useState([]);
     const [subject, setSubject] = useState([]);
-
     const sendFiltersToBackend = async (filters) => {
         const url = 'http://10.100.30.74/api/filters';
     
@@ -72,12 +71,11 @@ const Search = () => {
             }
     
             const data = await response.json();
-    
             if (data && data.length > 0) {
                 setDatasets(data);
                 navigate('/datasets', { state: { searchString: searchString, datasets: data } });
             } else {
-                alert('No data returned from the server');
+                console.log('No data returned from the server');
             }
         } catch (error) {
             alert("Error fetching datasets: " + error);
