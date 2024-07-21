@@ -37,39 +37,40 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
                     </div>
 
                     <div>
-                        <div>
-                            <div className='coverImageText'>Обложка для датасета</div>
-                            <div className='uploadImage' id='datasetImageUpload'>
-                                <div className='dropImage'>Перетащите файлы для загрузки</div>
-                                <input
-                                    type="file"
-                                    id='chooseImage'
-                                    style={{ display: 'none' }}
-                                    onChange={handleImageChange}
-                                    accept="image/*"
-                                />        
-                                <button className='seeImage' onClick={() => {
-                                    document.getElementById('chooseImage').click();
-                                }}>Просмотр файлов</button>
-                                <div className='limitImage'>0кБ / 100 ГБ</div>
-                            </div>
-                            {image && (
-                                <div classname='uploadedImagePreview'>
-                                    <img src={image} alt="Uploaded cover" classname='coverPreviewImage' />
+                        <div className='coverImageText'>Обложка для датасета</div>
+                        {!image && 
+                            <div>
+                                <div className='uploadImage' id='datasetImageUpload'>
+                                    <div className='dropImage'>Перетащите файлы для загрузки</div>
+                                    <input
+                                        type="file"
+                                        id='chooseImage'
+                                        style={{ display: 'none' }}
+                                        onChange={handleImageChange}
+                                        accept="image/*"
+                                    />        
+                                    <button className='seeImage' onClick={() => {
+                                        document.getElementById('chooseImage').click();
+                                    }}>Просмотр файлов</button>
+                                    <div className='limitImage'>0кБ / 100 ГБ</div>
                                 </div>
-                            )}
-                        </div>
+                            </div>}
+                        {image && (
+                            <div  id='datasetImageUpload'>
+                                <img src={image} alt="Uploaded cover" id='coverPreviewImage' />
+                            </div>
+                        )}
                     
                         <div className='uploadedFilesSection'>
                             <div className='uploadedFilesTitle'>Загруженные файлы</div>
-                            <div className='uploadedFilesContainer'>
-                                {files.map((file, index) => (
-                                    <UploadedFile key={index} fileName={file.name} />
-                                ))}
+                                <div className='uploadedFilesContainer'>
+                                    {files.map((file, index) => (
+                                        <UploadedFile key={index} fileName={file.name} />
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
-            </div>
             </div>
         );
     }
