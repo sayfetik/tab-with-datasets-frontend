@@ -52,7 +52,7 @@ p {
     font-weight: 400;
 }
 
-.input input[type="text"], #datasets input[type="text"] {
+.input input[type="text"], #datasets input[type="text"], #inputTagsFilter input[type="search"] {
   padding: 20px;
   border: solid rgba(228, 231, 242, 1);
   border-width: 1px;
@@ -63,7 +63,7 @@ p {
   font-size: 16px;
   color: #3E456F;
 }
-.input input[type="text"]:focus, #datasets input[type="text"]:focus  {
+.input input[type="text"]:focus, #datasets input[type="text"]:focus, #inputTagsFilter input[type="search"]:focus  {
   border: solid rgba(0, 113, 206, 1);
   outline: none;
   border-width: 1px;

@@ -7,10 +7,10 @@ import Filters from '../Filters/Filters'
 import { useLocation } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
-import {
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
+    import {
+    InputAdornment,
+    IconButton,
+    } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 

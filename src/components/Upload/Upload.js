@@ -3,6 +3,7 @@ import Input from '../Input/Input';
 import Back from '../Back/Back';
 import UploadFile from './UploadFile/UploadFile';
 import './Upload.css';
+import axios from 'axios';
 import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +11,17 @@ import { useNotification } from '../Notification/NotificationContext';
 import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
 import InputTags from '../InputTags/InputTags';
+import BackendConnector from '../BackendConnector';
 
 const Upload = () => {
+    const [files, setFiles] = useState([]);
+    const [image, setImage] = useState(null);
+
+    const [selectedValue, setSelectedValue] = useState('No license specified');
+    const handleSelectChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
     const { showNotification } = useNotification();
 
     const navigate = useNavigate();
@@ -33,6 +43,7 @@ const Upload = () => {
     const [titleOfDataset, setTitleOfDataset] = useState('');
     const [visibility, setVisibility] = useState('private');
     const [authors, setAuthors] = useState('');
+    const [owner, setOwner] = useState('');
     const [dataSource, setDataSource] = useState('');
     const [expectedUpdateFrequency, setExpectedUpdateFrequency] = useState('');
     const [license, setLicense] = useState('No license specified');
@@ -52,11 +63,51 @@ const Upload = () => {
 
     const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset && authors;
     
+    const formData = new FormData();
+
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) {
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
-        } else 
-            navigationButtonClick();
+        } else {
+            const payload = {
+                title: titleOfDataset,
+                description,
+                tags: {
+                    geography_and_places,
+                    language,
+                    data_type,
+                    task,
+                    technique,
+                    subject,
+                },
+                owner,
+                authors,
+                data_source: dataSource,
+                license,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                visibility
+            };
+
+            console.log(JSON.stringify(payload))
+            formData.append('uploading_metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+
+            // for (let i = 0; i < files.length; i++) {
+            //     formData.append('files', files[i]);
+            // }
+
+            // if (image) {
+            //     formData.append('image', image);
+            // }
+
+            BackendConnector.upload(formData)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     };
 
     return (
@@ -64,7 +115,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Новый датасет"/>
+            <UploadFile image={image} setImage={setImage} files={files} setFiles={setFiles}/>
             <div className='metadataSection'>
                 <div>
                     <Input
@@ -74,7 +125,7 @@ const Upload = () => {
                         onChange={(e) => setTitleOfDataset(e.target.value)}
                     />
                     <div className='metadataLabel'>Видимость *</div>
-                    <select className="visible" id="metadataField" value={visibility} defaultValue="private" onChange={(e)=>setVisibility(e.target.value)}>
+                    <select className="visible" id="metadataField" defaultValue="private" onChange={(e)=>setVisibility(e.target.value)}>
                         <option value="private">Приватный</option>
                         <option value="public">Публичный</option>
                     </select>
@@ -96,8 +147,8 @@ const Upload = () => {
                         value={expectedUpdateFrequency}
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
                         />
-                    <div className='metadataLabel' value={license} onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
-                    <select className="visible" id="metadataField">
+                    <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
+                    <select defaultValue={"No license specified"} onChange={(e) => setLicense(e.target.value)} className="visible" id="metadataField">
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                         <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
@@ -111,7 +162,7 @@ const Upload = () => {
                         <option value="CC BY-NC-SA">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International - CC BY-NC-SA</option>
                         <option value="ODC-ODbL">Open Data Commons Open Database License - ODC-ODbL</option>
                         <option value="Additional License Coverage Options">Additional License Coverage Options</option>
-                        <option value="No license specified" selected>No license specified</option>
+                        <option value="No license specified">No license specified</option>
                     </select>
                     <Input
                         label="DOI"
@@ -194,11 +245,11 @@ const Upload = () => {
                     )}
 
                     <div id='saveButtons'>
-                        {/*<button className='saveDraft' onClick={()=>{
+                        <button className='saveDraft' onClick={()=>{
                                 axios.get('https://tab-with-datasets-mock.onrender.com/save_draft', {})
                                     .then(response => { alert(response.data); })
                                     .catch((error) => { console.log(error); });
-                            }}>Сохранить черновик</button>*/}
+                            }}>Сохранить черновик</button>
                         {tagsState &&  (
                             <div className="wrapper">
                                 <button className="cta" onClick={checkRequiredInputsAndUpload}>
@@ -234,7 +285,7 @@ const Upload = () => {
                                 </button>
                                 {showNotification && (
                                     <Notification
-                                    message="Это уведомление!"
+                                        message="Это уведомление!"
                                     />
                                 )}
                             </div>

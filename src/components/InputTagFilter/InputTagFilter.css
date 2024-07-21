@@ -1,5 +1,20 @@
 #tagFilter {
     padding: 0px 10px;
+    color: white;
+    background-color: #3E456F;
+    border: 1px solid white;
+    border-radius: 50px;
+    cursor: pointer;    
+    width: fit-content;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+#tagFilterSuggestion {
+    padding: 0px 10px;
     color: #3E456F;
     border: 1px solid #3E456F;
     border-radius: 50px;
@@ -15,6 +30,7 @@
 #inputTagsFilter {
     display: flex;
     margin-bottom: 8px;
+
 }
 .selectTags {
     padding: 4px 10px;
@@ -57,4 +73,9 @@
     color: #3E456F;
     font-size: 16px;
     font-weight: 600px;
+}
+.rowTags {
+    display: flex;
+    margin: 0;
+    padding: 0;
 }

@@ -9,8 +9,9 @@ import InputTags from '../InputTags/InputTags';
 import { useLocation } from 'react-router-dom';
 import './EditPage.css'
 import UploadFile from '../Upload/UploadFile/UploadFile';
+import InputTagFilter from '../InputTagFilter/InputTagFilter';
 
-const Upload = () => {
+const EditPage = () => {
     const { state: dataset } = useLocation();
 
     const { showNotification } = useNotification();
@@ -35,6 +36,8 @@ const Upload = () => {
     const [task, set_task] = useState(dataset.task);
     const [technique, set_technique] = useState(dataset.technique);
     const [subject, set_subject] = useState(dataset.subject);
+    const [files, setFiles] = useState([]);
+    const [image, setImage] = useState(null);
 
     const areRequiredInputsFilled = description && titleOfDataset && authors && geography_and_places;
     const checkRequiredInputsAndUpload = () => {
@@ -49,7 +52,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет"/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles}/>
             <div className='metadataSection'>
             <div>
                     <Input
@@ -125,27 +128,27 @@ const Upload = () => {
                         <span className='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
-                                <InputTags tags={geography_and_places} setTags={set_geography_and_places}/>
+                                <InputTagFilter label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Язык</p>
-                                <InputTags tags={language} setTags={set_language}/>
+                                <InputTagFilter label="Язык" tags={language} setTags={set_language}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Тип данных</p>
-                                <InputTags tags={data_type} setTags={set_data_type}/>
+                                <InputTagFilter label="Тип данных" tags={data_type} setTags={set_data_type}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Задача</p>
-                                <InputTags tags={task} setTags={set_task}/>
+                                <InputTagFilter label="Задача" tags={task} setTags={set_task}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Техника</p>
-                                <InputTags tags={technique} setTags={set_technique}/>
+                                <InputTagFilter label="Техника" tags={technique} setTags={set_technique}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Предмет</p>
-                                <InputTags tags={subject} setTags={set_subject}/>
+                                <InputTagFilter label="Предмет" tags={subject} setTags={set_subject}/>
                             </div>
                     </div>
 
@@ -196,4 +199,4 @@ const Upload = () => {
     );
 };
 
-export default Upload;
+export default EditPage;

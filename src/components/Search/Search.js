@@ -3,32 +3,132 @@ import './Search.css'
 import Header from '../Header/Header'
 import Filters from '../Filters/Filters'
 import { useNavigate } from 'react-router-dom';
-import searchIcon from '../../img/search.png'
+import searchIcon from '../../img/search.png';
+import {
+    InputAdornment,
+    IconButton,
+} from '@mui/material';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
-const Search = ({ fetchUrl }) => {
+const Search = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
     const resultsLimit = 8;
     const [datasets, setDatasets] = useState('');
+    const [geography_and_places, setGeography] = useState([]);
+    const [language, setLanguage] = useState([]);
+    const [data_type, setData_type] = useState([]);
+    const [task, setTask] = useState([]);
+    const [technique, setTechnique] = useState([]);
+    const [subject, setSubject] = useState([]);
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
+    const sendFiltersToBackend = async (filters) => {
+        const url = 'http://10.100.30.74/api/filters';
+    
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filters),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const data = await response.json();
+            console.log('Response from backend:', data);
+            setDatasets(data);
+        } catch (error) {
+            console.error('Error sending filters to backend:', error);
+        }
+    };
+
+    const search_by_query = async (e) => {
+        e.preventDefault();
+        const url = `http://10.100.30.74/api/search_by_query/${searchString}/${resultsLimit}`;
+        const requestBody = {
+            geography_and_places: [], 
+            language: [], 
+            data_type: [], 
+            task: [], 
+            technique: [], 
+            subject: [] 
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
             if (!response.ok) {
                 alert('Network response was not ok');
+                return;
             }
+    
             const data = await response.json();
-
+    
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: {searchString: searchString, datasets: data } });
+                navigate('/datasets', { state: { searchString: searchString, datasets: data } });
             } else {
                 alert('No data returned from the server');
             }
         } catch (error) {
-            alert("Error fetching datasets: ", error);
+            alert("Error fetching datasets: " + error);
+        }
+    };
+
+    const search_by_tags = async (e) => {
+        e.preventDefault();
+        const url = `http://10.100.30.74/api/search_by_tags/20`;
+        const requestBody = {
+            geography_and_places: geography_and_places, 
+            language: language, 
+            data_type: data_type, 
+            task: task, 
+            technique: technique, 
+            subject: subject 
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                setDatasets(data);
+                navigate('/datasets', { state: { searchString: searchString, datasets: data } });
+            } else {
+                alert('No data returned from the server');
+            }
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+        }
+    };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (searchString.length > 0) {
+            await search_by_query(e);
+        } else {
+            await search_by_tags(e);
         }
     };
 
@@ -36,12 +136,11 @@ const Search = ({ fetchUrl }) => {
         if (event.key === 'Enter') {
             handleSearch(event);
         }
-      };
+    };
 
-
-        return (
-            <div id='all'>
-                <Header />
+    return (
+        <div id='all'>
+            <Header />
             <div id='search'>
                 <div id='searchSection'>
                     <div id='datasetLabel'>
@@ -53,13 +152,20 @@ const Search = ({ fetchUrl }) => {
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)} 
                         />
-                        <Filters />
+                        <InputAdornment>
+                            <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
+                        </InputAdornment>
+                        <Filters 
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            onFilterChange={sendFiltersToBackend}
+                        />
                         <button type='submit' id='searchButton'>Найти</button>
                         <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                     </form>
-                    <button id='newDatasetButton' onClick={()=>{navigate('/upload')}}>+ Новый датасет</button>
+                    <button id='newDatasetButton' onClick={() => { navigate('/upload') }}>+ Новый датасет</button>
                 </div>
-{/*
+                {/*
                 <div className='datasetTopicSection'>
                     <div id='topicTags'>
                         <button id='topicTag'>Классификация</button>
@@ -99,8 +205,8 @@ const Search = ({ fetchUrl }) => {
                 </div>  
         */}
             </div>
-            </div>
-        ) 
-    }
+        </div>
+    );
+};
 
-export default Search
+export default Search;

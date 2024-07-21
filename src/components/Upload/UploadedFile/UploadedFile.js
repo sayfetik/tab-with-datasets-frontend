@@ -7,7 +7,6 @@ class UploadedFile extends React.Component {
             <div className='uploadedFile'>
                 <div id='uploadedFileName'>{this.props.fileName}</div>
             </div>
-            
         ) 
     }
 }

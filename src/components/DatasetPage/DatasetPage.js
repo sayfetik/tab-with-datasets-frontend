@@ -99,7 +99,6 @@ const DatasetPage = () => {
                     files: data.files || [],
                     rating: data.rating || 0
                 });
-                console.log(dataset);
             })
             .catch(error => console.error("Error fetching data: ", error));
         }, [id]);
