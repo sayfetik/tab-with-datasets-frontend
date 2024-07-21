@@ -26,3 +26,7 @@ yarn-error.log*
 
 # Ignore node_modules cache
 node_modules/.cache
+/node_modules
+/node_modules/.cache
+/node_modules/.cache/default-development
+/node_modules/.cache/default-development

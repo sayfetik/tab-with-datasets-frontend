@@ -23,10 +23,10 @@ const Search = ({ fetchUrl }) => {
                 setDatasets(data);
                 navigate('/datasets', { state: {searchString: searchString, datasets: data } });
             } else {
-                alert('No data returned from the server');
+                console.log('No data returned from the server');
             }
         } catch (error) {
-            alert("Error fetching datasets: ", error);
+            console.log("Error fetching datasets: ", error);
         }
     };
 
