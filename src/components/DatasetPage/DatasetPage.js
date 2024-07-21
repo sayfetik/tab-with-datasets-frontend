@@ -100,7 +100,7 @@ const DatasetPage = () => {
         
     const navigate = useNavigate();
     const handleEditClick = () => {
-        navigate('/editDataset', { state: dataset });
+        navigate('/editDataset', { state: dataset});
       };
 
     const handleDeleteClick = () => {

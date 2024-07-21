@@ -16,28 +16,111 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 const Datasets = () => {
     const location = useLocation();
     const { state } = location;
-    const { searchString: searchQuery, datasets: initialDatasets } = state;
-    const [datasets, setDatasets] = useState(initialDatasets);
+    const {
+        searchString: searchQuery,
+        datasets: initialDatasets,
+        geography_and_places: initialGeography,
+        language: initialLanguage,
+        data_type: initialDataType,
+        task: initialTask,
+        technique: initialTechnique,
+        subject: initialSubject
+    } = state;
+    const [datasets, setDatasets] = useState(initialDatasets || []);
     const [searchString, setSearchString] = useState(searchQuery || '');
-    const [sortedData, setSortedData] = useState(initialDatasets);
+    const [sortedData, setSortedData] = useState(initialDatasets || []);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const resultsLimit = 8;
+    
+    const [geography_and_places, setGeography] = useState(initialGeography || []);
+    const [language, setLanguage] = useState(initialLanguage || []);
+    const [data_type, setData_type] = useState(initialDataType || []);
+    const [task, setTask] = useState(initialTask || []);
+    const [technique, setTechnique] = useState(initialTechnique || []);
+    const [subject, setSubject] = useState(initialSubject || []);
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        const url = `http://10.100.30.74/api/search/${searchString}/${resultsLimit}`;
+    const search_by_query = async (e) => {
+        if (e) e.preventDefault();
+        const url = `http://10.100.30.74/api/search_by_query/${searchString}/${resultsLimit}`;
+        const requestBody = {
+            geography_and_places: geography_and_places, 
+            language: language, 
+            data_type: data_type, 
+            task: task, 
+            technique: technique,
+            subject: subject 
+        };
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
             if (!response.ok) {
                 alert('Network response was not ok');
                 return;
             }
+    
             const data = await response.json();
-            setDatasets(data);
-            setSortedData(data);
+            if (data && data.length > 0) {
+                setDatasets(data);
+                setSortedData(data);
+            } else {
+                console.log('No data returned from the server');
+            }
         } catch (error) {
             alert("Error fetching datasets: " + error);
+        }
+    };
+
+    const search_by_tags = async (e) => {
+        if (e) e.preventDefault();
+        const url = `http://10.100.30.74/api/search_by_tags/20`;
+        const requestBody = {
+            geography_and_places,
+            language,
+            data_type,
+            task,
+            technique,
+            subject,
+        };
+        console.log('search_by_query requestBody:', requestBody);
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                setDatasets(data);
+                setSortedData(data);
+            } else {
+                alert('No data returned from the server');
+            }
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+        }
+    };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        if (searchString.length > 0) {
+            await search_by_query(e);
+        } else {
+            await search_by_tags(e);
         }
     };
 
@@ -45,53 +128,31 @@ const Datasets = () => {
         if (event.key === 'Enter') {
             handleSearch(event);
         }
-      };
-    
-    const sendFiltersToBackend = async (filters) => {
-        const url = 'http://10.100.30.74/api/filters';
-    
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(filters),
-          });
-    
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-    
-          const data = await response.json();
-          console.log('Response from backend:', data);
-          setSortedData(data);
-        } catch (error) {
-          console.error('Error sending filters to backend:', error);
-        }
-      };
+    };
 
     useEffect(() => {
+        let sorted = [...datasets];
         switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...datasets]);
+                sorted = [...datasets];
                 break;
             case 'byRating':
-                setSortedData(_.orderBy(sortedData, ['rating'], ['desc']));
+                sorted = _.orderBy(datasets, ['rating'], ['desc']);
                 break;
             case 'byUsabilityRating':
-                setSortedData(_.orderBy(sortedData, ['usability_rating'], ['desc']));
+                sorted = _.orderBy(datasets, ['usability_rating'], ['desc']);
                 break;
             case 'largeFirst':
-                setSortedData(_.orderBy(sortedData, ['size_bytes'], ['desc']));
+                sorted = _.orderBy(datasets, ['size_bytes'], ['desc']);
                 break;
             case 'smallFirst':
-                setSortedData(_.orderBy(sortedData, ['size_bytes'], ['asc']));
+                sorted = _.orderBy(datasets, ['size_bytes'], ['asc']);
                 break;
             default:
-                setSortedData([...datasets]);
+                sorted = [...datasets];
         }
-    }, [selectedOption, sortedData, datasets]);
+        setSortedData(sorted);
+    }, [selectedOption, datasets]);
 
         return (
             <div>
@@ -107,15 +168,27 @@ const Datasets = () => {
                                 value={searchString}
                                 onChange={(e) => setSearchString(e.target.value)} 
                             />
-                            <InputAdornment>
+                            <InputAdornment position='end'>
                                 <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
                             </InputAdornment>
-                            <Filters 
+                            <Filters
                                 isOpen={isModalOpen}
                                 onClose={() => setIsModalOpen(false)}
-                                onFilterChange={sendFiltersToBackend}
-                            />
-                            <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+                                geography_and_places={geography_and_places}
+                                setGeography={setGeography}
+                                language={language}
+                                setLanguage={setLanguage}
+                                data_type={data_type}
+                                setData_type={setData_type}
+                                task={task}
+                                setTask={setTask}
+                                technique={technique}
+                                setTechnique={setTechnique}
+                                subject={subject}
+                                setSubject={setSubject}
+                                applyChanges={search_by_tags}
+                                />
+                                <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                 <option value="byRelevance">By relevance</option>
                                 <option value="byRating">By rating</option>
                                 <option value="byUsabilityRating">By usability rating</option>

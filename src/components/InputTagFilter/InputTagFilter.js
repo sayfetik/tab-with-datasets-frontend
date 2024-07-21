@@ -18,25 +18,25 @@ const InputTagFilter = ({ label, tags = [], setTags }) => {
       if (inputValue.length >= 3) {
         const url = `http://10.100.30.74/api/search_tags/${category}/${inputValue}/3`;
         const requestBody = {
-            tags: []
+          tags: []
         };
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestBody)
-            });
-            if (!response.ok) {
-                alert('Network response was not ok');
-                return;
-            }
-  
-            const data = await response.json();
-            setSuggestions(data.tags);
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          });
+          if (!response.ok) {
+            alert('Network response was not ok');
+            return;
+          }
+
+          const data = await response.json();
+          setSuggestions(data.tags);
         } catch (error) {
-            console.error('Error fetching suggestions:', error);
+          console.error('Error fetching suggestions:', error);
         }
       } else {
         setSuggestions([]);
@@ -80,14 +80,16 @@ const InputTagFilter = ({ label, tags = [], setTags }) => {
       </div>
       {suggestions.length > 0 && (
         <ul className='rowTags'>
-          {suggestions.map((suggestion) => (
-            <li id='tagFilterSuggestion' key={suggestion.value} onClick={() => handleTagSelect(suggestion)}>{suggestion}</li>
+          {suggestions.map((suggestion, index) => (
+            <li id='tagFilterSuggestion' key={`${suggestion}-${index}`} onClick={() => handleTagSelect(suggestion)}>
+              {suggestion}
+            </li>
           ))}
         </ul>
       )}
       <div className='row'>
         {tags.map((tag, index) => (
-          <div id='tagFilter' key={index}>
+          <div id='tagFilter' key={`${tag}-${index}`}>
             {tag}
             <button id='deleteTagButton' onClick={() => handleRemoveTag(index)}>&times;</button>
           </div>

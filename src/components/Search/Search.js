@@ -27,12 +27,12 @@ const Search = () => {
         if (e) e.preventDefault();
         const url = `http://10.100.30.74/api/search_by_query/${searchString}/${resultsLimit}`;
         const requestBody = {
-            geography_and_places,
-            language,
-            data_type,
-            task,
-            technique,
-            subject,
+            geography_and_places: geography_and_places, 
+            language: language, 
+            data_type: data_type, 
+            task: task, 
+            technique: technique, 
+            subject: subject
         };
         try {
             const response = await fetch(url, {
@@ -50,7 +50,15 @@ const Search = () => {
             const data = await response.json();
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { searchString, datasets: data } });
+                navigate('/datasets', { state: { searchString, 
+                    datasets: data, 
+                    geography_and_places, 
+                    language,
+                    data_type,
+                    task, 
+                    technique, 
+                    subject 
+                 } });
             } else {
                 console.log('No data returned from the server');
             }
@@ -88,7 +96,15 @@ const Search = () => {
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { searchString, datasets: data } });
+                navigate('/datasets', { state: { searchString, 
+                    datasets: data, 
+                    geography_and_places, 
+                    language, 
+                    data_type, 
+                    task, 
+                    technique, 
+                    subject 
+                 } });
             } else {
                 alert('No data returned from the server');
             }

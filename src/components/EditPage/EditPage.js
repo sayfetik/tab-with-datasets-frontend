@@ -18,7 +18,7 @@ const EditPage = () => {
 
     const navigate = useNavigate();
     const navigationButtonClick = () => {
-      navigate('/dataset');
+      navigate(-1);
       showNotification("Датасет успешно обновлён!");
     };
 

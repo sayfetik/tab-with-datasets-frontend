@@ -10,8 +10,6 @@ const DatasetCard = ({
     numberOfFiles, 
     lastChangeDate, 
     downloadsNumber,
-    size_bytes,
-    rating,
     size
 }) => {
     const navigate = useNavigate();
