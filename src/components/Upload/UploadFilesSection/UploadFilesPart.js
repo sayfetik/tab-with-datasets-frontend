@@ -12,7 +12,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
-            setImage(URL.createObjectURL(selectedImage));
+            setImage(selectedImage);
         }
     };
 
@@ -54,7 +54,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
                                 <div className='limitImage'>0кБ / 100 ГБ</div>
                             </div>
                             {image && (
-                                <div classname='uploadedImagePreview'>
+                                <div className='uploadedImagePreview'>
                                     <img src={image} alt="Uploaded cover" className='coverPreviewImage' />
                                 </div>
                             )}

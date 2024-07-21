@@ -24,8 +24,9 @@ export default class BackendConnector {
       return await this.get(`${this.search_endpoint}/${search_query}/${this.results_amount_limit}`);
   }
 
-  static async upload(uploadingMetadata) {
-      return await this.postFormData(this.upload_endpoint, uploadingMetadata);
+  static async upload(uploadingMetadata, uploadingFiles, uploadingImage) {
+      console.log('hiiiiii')
+      return await this.post(this.upload_endpoint, uploadingMetadata, uploadingFiles, uploadingImage);
   }
 
   static async get(endpoint) {
@@ -41,36 +42,37 @@ export default class BackendConnector {
       }
   }
 
-  static async post(endpoint, payload) {
-      try {
-          const response = await axios({
-              method: 'post',
-              url: `${this.host}/${endpoint}`,
-              data: payload,
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          });
-          return response.data;
-      } catch (error) {
-          console.error(error);
-          return null;
-      }
-  }
+    static async post(endpoint, uploadingMetadata, files, image) {
+        const formData = new FormData();
 
-    static async postFormData(endpoint, formData) {
+        
+        
+        formData.append('uploading_metadata', JSON.stringify(uploadingMetadata));
+
+        
+        
+            for (let i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+            if (image) {
+                formData.append('image', image);
+            }  
+
+            formData.forEach((value, key) => {
+                console.log(`${key}: ${value}`);
+              });
         try {
             const response = await axios({
                 method: 'post',
                 url: `${this.host}/${endpoint}`,
                 data: formData,
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                    'Content-Type': 'multipart/form-data'
+                  }
             });
             return response.data;
         } catch (error) {
-            console.error(error);
+            console.error('Error uploading data:', error.response?.data || error.message);
             return null;
         }
     }

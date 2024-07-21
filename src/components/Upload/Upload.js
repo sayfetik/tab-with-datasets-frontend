@@ -62,8 +62,6 @@ const Upload = () => {
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
 
     const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset && authors;
-    
-    const formData = new FormData();
 
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) {
@@ -71,6 +69,12 @@ const Upload = () => {
         } else {
             const payload = {
                 title: titleOfDataset,
+                visibility,
+                authors,
+                data_source: dataSource,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                license,
                 description,
                 tags: {
                     geography_and_places,
@@ -78,29 +82,13 @@ const Upload = () => {
                     data_type,
                     task,
                     technique,
-                    subject,
-                },
-                owner,
-                authors,
-                data_source: dataSource,
-                license,
-                doi,
-                expected_update_frequency: expectedUpdateFrequency,
-                visibility
+                    subject
+                }
             };
 
-            console.log(JSON.stringify(payload))
-            formData.append('uploading_metadata', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+            console.log('hi')
 
-            // for (let i = 0; i < files.length; i++) {
-            //     formData.append('files', files[i]);
-            // }
-
-            // if (image) {
-            //     formData.append('image', image);
-            // }
-
-            BackendConnector.upload(formData)
+            BackendConnector.upload(payload, files, image)
                 .then(response => {
                     console.log(response);
                 })
