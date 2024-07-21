@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import './EditPage.css'
 import UploadFile from '../Upload/UploadFile/UploadFile';
 import InputTagFilter from '../InputTagFilter/InputTagFilter';
+import BackendConnector from '../BackendConnector';
 
 const EditPage = () => {
     const { state: dataset } = useLocation();
@@ -42,9 +43,35 @@ const EditPage = () => {
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) {
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
-        } else 
-            navigationButtonClick();
+        } else {
+            const payload = {
+                title: titleOfDataset,
+                visibility,
+                authors,
+                data_source: dataSource,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                license,
+                description,
+                tags: {
+                    geography_and_places,
+                    language,
+                    data_type,
+                    task,
+                    technique,
+                    subject
+                }
+            };
+            BackendConnector.upload(payload, files, image)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+                navigationButtonClick();
     };
+}
     
     return (
         <div>

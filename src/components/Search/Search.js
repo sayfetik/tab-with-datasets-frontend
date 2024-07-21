@@ -70,8 +70,6 @@ const Search = () => {
             technique: technique, 
             subject: subject 
         };
-
-        console.log(geography_and_places);
         try {
             const response = await fetch(url, {
                 method: 'POST',

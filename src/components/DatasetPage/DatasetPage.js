@@ -103,6 +103,17 @@ const DatasetPage = () => {
         navigate('/editDataset', { state: dataset });
       };
 
+    const handleDeleteClick = () => {
+        BackendConnector.delete(dataset.id)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        navigate('/search', {state: dataset});
+    }
+
     return (
         <div>
             <Header />
@@ -156,7 +167,7 @@ const DatasetPage = () => {
                             </div>
                             <div className='row'>
                                 <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
-                                <button id='deleteDatasetButton'>Удалить</button>
+                                <button id='deleteDatasetButton' onClick={handleDeleteClick}>Удалить</button>
                             </div>
                         </div>
                         
