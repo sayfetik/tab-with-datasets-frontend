@@ -3,7 +3,7 @@ import './UploadFile.css';
 import UploadedFile from '../UploadedFile/UploadedFile';
 import deleteIcon from '../../../img/delete.png'
 
-const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
     const handleFileChange = (event) => {
@@ -15,7 +15,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
             setImage(selectedImage);
-            setShowDeleteIcon(false); // Скрыть иконку удаления при загрузке новой картинки
+            setShowDeleteIcon(false);
         }
     };
 
@@ -26,7 +26,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
 
     return (
         <div className='uploadPage'>
-            <h1>Новый датасет</h1>
+            <h1>{pageLabel}</h1>
             <div className='uploadFilesContainer'>
                 <div className='uploadFile'>
                     <div className='dropFile'>Перетащите файлы для загрузки</div>

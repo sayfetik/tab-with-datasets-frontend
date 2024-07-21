@@ -100,7 +100,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile image={image} setImage={setImage} files={files} setFiles={setFiles}/>
+            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles}/>
             <div className='metadataSection'>
                 <div>
                     <Input
