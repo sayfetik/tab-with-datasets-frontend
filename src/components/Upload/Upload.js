@@ -26,7 +26,7 @@ const Upload = () => {
 
     const navigate = useNavigate();
     const navigationButtonClick = () => {
-      navigate('/dataset');
+      /*navigate('/dataset');*/
       showNotification("Датасет успешно загружен!");
     };
 

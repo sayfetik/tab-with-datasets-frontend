@@ -5,7 +5,6 @@ import Header from '../Header/Header';
 import Notification from '../Notification/Notification';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../Notification/NotificationContext';
-import InputTags from '../InputTags/InputTags';
 import { useLocation } from 'react-router-dom';
 import './EditPage.css'
 import UploadFile from '../Upload/UploadFile/UploadFile';
