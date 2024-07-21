@@ -86,8 +86,6 @@ const Upload = () => {
                 }
             };
 
-            console.log('hi')
-
             BackendConnector.upload(payload, files, image)
                 .then(response => {
                     console.log(response);

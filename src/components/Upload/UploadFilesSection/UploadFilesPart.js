@@ -19,7 +19,6 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
         return (
             <div className='uploadPage'>
                 <h1>Новый датасет</h1>
-
                 <div className='uploadFilesContainer'>
                     <div className='uploadFile'>
                         <div className='dropFile'>Перетащите файлы для загрузки</div>
@@ -56,7 +55,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
                             </div>}
                         {image && (
                             <div  id='datasetImageUpload'>
-                                <img src={image} alt="Uploaded cover" id='coverPreviewImage' />
+                                <img src={URL.createObjectURL(image)} alt="Uploaded cover" id='coverPreviewImage' />
                             </div>
                         )}
                     
