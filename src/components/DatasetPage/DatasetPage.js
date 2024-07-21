@@ -10,6 +10,7 @@ import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
 import DatasetCard from '../DatasetCard/DatasetCard';
+import BackendConnector from '../BackendConnector';
 
 const DatasetPage = () => {
     const { id } = useParams();
