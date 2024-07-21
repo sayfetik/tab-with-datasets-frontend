@@ -94,7 +94,6 @@ const Search = () => {
             subject: subject 
         };
 
-        console.log(JSON.stringify(requestBody));
 
         try {
             const response = await fetch(url, {
