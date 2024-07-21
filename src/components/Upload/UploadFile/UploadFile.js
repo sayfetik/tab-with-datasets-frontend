@@ -14,7 +14,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
-            setImage(URL.createObjectURL(selectedImage));
+            setImage(selectedImage);
             setShowDeleteIcon(false); // Скрыть иконку удаления при загрузке новой картинки
         }
     };
@@ -27,7 +27,6 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
     return (
         <div className='uploadPage'>
             <h1>Новый датасет</h1>
-
             <div className='uploadFilesContainer'>
                 <div className='uploadFile'>
                     <div className='dropFile'>Перетащите файлы для загрузки</div>
@@ -75,7 +74,7 @@ const UploadFilesPart = ({ files, setFiles, image, setImage }) => {
                             }}
                         >
                             <img
-                                src={image}
+                                src={URL.createObjectURL(image)}
                                 alt="Uploaded cover"
                                 id='coverPreviewImage'
                                 style={{

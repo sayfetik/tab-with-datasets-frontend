@@ -94,6 +94,8 @@ const Search = () => {
             subject: subject 
         };
 
+        console.log(JSON.stringify(requestBody));
+
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -150,7 +152,7 @@ const Search = () => {
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)} 
                         />
-                        <InputAdornment>
+                        <InputAdornment position="start">
                             <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
                         </InputAdornment>
                         <Filters 

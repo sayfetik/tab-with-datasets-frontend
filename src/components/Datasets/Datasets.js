@@ -72,10 +72,11 @@ const Datasets = () => {
       };
 
     useEffect(() => {
+        let sorted = [...datasets];
+
         switch(selectedOption) {
             case 'byRelevance':
-                setSortedData([...datasets]);
-                break;
+                break; // Default order
             case 'byRating':
                 setSortedData(_.orderBy(sortedData, ['rating'], ['desc']));
                 break;
@@ -89,8 +90,10 @@ const Datasets = () => {
                 setSortedData(_.orderBy(sortedData, ['size_bytes'], ['asc']));
                 break;
             default:
-                setSortedData([...datasets]);
+                break;
         }
+
+        setSortedData(sorted);
     }, [selectedOption, sortedData, datasets]);
 
         return (
@@ -107,7 +110,7 @@ const Datasets = () => {
                                 value={searchString}
                                 onChange={(e) => setSearchString(e.target.value)} 
                             />
-                            <InputAdornment>
+                            <InputAdornment position="start">
                                 <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
                             </InputAdornment>
                             <Filters 

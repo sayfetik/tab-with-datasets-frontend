@@ -61,7 +61,7 @@ const DatasetPage = () => {
         rating: 0
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         const url = `http://10.100.30.74/api/preview/${id}`;
         fetch(url)
           .then(response => response.json())

@@ -82,7 +82,6 @@ const Upload = () => {
                     data_type,
                     task,
                     technique,
-
                     subject
                 }
             };
