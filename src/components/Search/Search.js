@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import './Search.css'
-import Header from '../Header/Header'
-import Filters from '../Filters/Filters'
+import React, { useState } from 'react';
+import './Search.css';
+import Header from '../Header/Header';
+import Filters from '../Filters/Filters';
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png';
 import {
@@ -22,40 +22,17 @@ const Search = () => {
     const [task, setTask] = useState([]);
     const [technique, setTechnique] = useState([]);
     const [subject, setSubject] = useState([]);
-    const sendFiltersToBackend = async (filters) => {
-        const url = 'http://10.100.30.74/api/filters';
-    
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(filters),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            const data = await response.json();
-            console.log('Response from backend:', data);
-            setDatasets(data);
-        } catch (error) {
-            console.error('Error sending filters to backend:', error);
-        }
-    };
 
     const search_by_query = async (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         const url = `http://10.100.30.74/api/search_by_query/${searchString}/${resultsLimit}`;
         const requestBody = {
-            geography_and_places: [], 
-            language: [], 
-            data_type: [], 
-            task: [], 
-            technique: [], 
-            subject: [] 
+            geography_and_places,
+            language,
+            data_type,
+            task,
+            technique,
+            subject,
         };
         try {
             const response = await fetch(url, {
@@ -73,7 +50,7 @@ const Search = () => {
             const data = await response.json();
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { searchString: searchString, datasets: data } });
+                navigate('/datasets', { state: { searchString, datasets: data } });
             } else {
                 console.log('No data returned from the server');
             }
@@ -83,7 +60,7 @@ const Search = () => {
     };
 
     const search_by_tags = async (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         const url = `http://10.100.30.74/api/search_by_tags/20`;
         const requestBody = {
             geography_and_places: geography_and_places, 
@@ -93,8 +70,6 @@ const Search = () => {
             technique: technique, 
             subject: subject 
         };
-
-
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -113,7 +88,7 @@ const Search = () => {
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { searchString: searchString, datasets: data } });
+                navigate('/datasets', { state: { searchString, datasets: data } });
             } else {
                 alert('No data returned from the server');
             }
@@ -157,52 +132,25 @@ const Search = () => {
                         <Filters 
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}
-                            onFilterChange={sendFiltersToBackend}
+                            geography_and_places={geography_and_places}
+                            setGeography={setGeography}
+                            language={language}
+                            setLanguage={setLanguage}
+                            data_type={data_type}
+                            setData_type={setData_type}
+                            task={task}
+                            setTask={setTask}
+                            technique={technique}
+                            setTechnique={setTechnique}
+                            subject={subject}
+                            setSubject={setSubject}
+                            applyChanges={search_by_tags}
                         />
                         <button type='submit' id='searchButton'>Найти</button>
                         <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                     </form>
                     <button id='newDatasetButton' onClick={() => { navigate('/upload') }}>+ Новый датасет</button>
                 </div>
-                {/*
-                <div className='datasetTopicSection'>
-                    <div id='topicTags'>
-                        <button id='topicTag'>Классификация</button>
-                        <button id='topicTag'>Музыка</button>
-                        <button id='topicTag'>Демография</button>
-                        <button id='topicTag'>Лингвистика</button>
-                        <button id='topicTag'>Бизнес</button>
-                        <button id='topicTag'>Образование</button>
-                        <button id='topicTag'>Экзамены</button>
-                        <button id='topicTag'>Погода</button>
-                        <button id='topicTag'>Компьютерное зрение</button>
-                        <button id='topicTag'>Компьютерное технологие</button>
-                        <button id='topicTag'>Температура</button>
-                        <button id='topicTag'>Социальные науки</button>
-                        <button id='topicTag'>Математика</button>
-                        <button id='topicTag'>Ветеринария</button>
-                        <button id='topicTag'>Население</button>
-                        <button id='topicTag'>Фильмы</button>
-                        <button id='topicTag'>Растительный мир</button>
-                        <button id='topicTag'>Искусство</button>
-                        <button id='topicTag'>Человек</button>
-                        <button id='topicTag'>Животные</button>
-                        <button id='topicTag'>Книги</button>
-                    </div>
-                    <p id='main'>Темы датасетов</p>
-                </div>
-
-                <div>
-                    <CardsRowSection topicName={'Популярное'} />
-                    <CardsRowSection topicName={'Рекомендованное'} />
-                    <CardsRowSection topicName={'Путешествия'} />
-                </div>
-
-                <div id='seeAllDatasets'>
-                    <h2 id='seeAllTopic'>Смотреть все датасеты</h2>
-                    <img src={arrowsIcon} width='30px' height='30px' alt=''></img>
-                </div>  
-        */}
             </div>
         </div>
     );

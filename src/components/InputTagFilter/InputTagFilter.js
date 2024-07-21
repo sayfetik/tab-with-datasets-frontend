@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import axios from 'axios';
-import './InputTagFilter.css'
+import React, { useState, useEffect } from 'react';
+import './InputTagFilter.css';
 
-const InputTagFilter = ( { label, tags =[], setTags } ) => {
-  const [inputValue, setInputValue] = useState(tags);
+const InputTagFilter = ({ label, tags = [], setTags }) => {
+  const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
   let category = "";
@@ -17,27 +16,27 @@ const InputTagFilter = ( { label, tags =[], setTags } ) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (inputValue.length >= 3) {
-          const url = `http://10.100.30.74/api/search_tags/${category}/${inputValue}/3`;
-          const requestBody = {
-              tags: []
-          };
-          try {
-              const response = await fetch(url, {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(requestBody)
-              });
-              if (!response.ok) {
-                  alert('Network response was not ok');
-                  return;
-              }
+        const url = `http://10.100.30.74/api/search_tags/${category}/${inputValue}/3`;
+        const requestBody = {
+            tags: []
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
   
-          const data = await response.json();
-          setSuggestions(data.tags);
+            const data = await response.json();
+            setSuggestions(data.tags);
         } catch (error) {
-          console.error('Error fetching suggestions:', error);
+            console.error('Error fetching suggestions:', error);
         }
       } else {
         setSuggestions([]);
@@ -51,7 +50,9 @@ const InputTagFilter = ( { label, tags =[], setTags } ) => {
   };
 
   const handleTagSelect = (tag) => {
-    setTags([...tags, tag]);
+    if (!tags.includes(tag)) {
+      setTags([...tags, tag]);
+    }
     setInputValue('');
     setSuggestions([]);
   };
@@ -84,7 +85,7 @@ const InputTagFilter = ( { label, tags =[], setTags } ) => {
           ))}
         </ul>
       )}
-      <div className='rowTags'>
+      <div className='row'>
         {tags.map((tag, index) => (
           <div id='tagFilter' key={index}>
             {tag}
