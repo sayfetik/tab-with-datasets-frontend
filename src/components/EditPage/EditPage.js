@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '../Input/Input';
 import Back from '../Back/Back';
 import Header from '../Header/Header';
@@ -22,6 +22,7 @@ const EditPage = () => {
       showNotification("Датасет успешно обновлён!");
     };
 
+
     const [titleOfDataset, setTitleOfDataset] = useState(dataset.title);
     const [visibility, setVisibility] = useState(dataset.visibility);
     const [authors, setAuthors] = useState(dataset.authors);
@@ -30,12 +31,21 @@ const EditPage = () => {
     const [license, setLicense] = useState(dataset.license);
     const [doi, setDoi] = useState(dataset.doi);
     const [description, setDescription] = useState(dataset.description);
-    const [geography_and_places, set_geography_and_places] = useState(dataset.geography_and_places);
-    const [language, set_language] = useState(dataset.language);
-    const [data_type, set_data_type] = useState(dataset.data_type);
-    const [task, set_task] = useState(dataset.task);
-    const [technique, set_technique] = useState(dataset.technique);
-    const [subject, set_subject] = useState(dataset.subject);
+    const [geography_and_places, setLocalGeography] = useState(dataset.geography_and_places);
+  const [language, setLocalLanguage] = useState(dataset.language);
+  const [data_type, setLocalDataType] = useState(dataset.data_type);
+  const [task, setLocalTask] = useState(dataset.task);
+  const [technique, setLocalTechnique] = useState(dataset.technique);
+  const [subject, setLocalSubject] = useState(dataset.subject);
+
+  useEffect(() => {
+    setLocalGeography(geography_and_places);
+    setLocalLanguage(language);
+    setLocalDataType(data_type);
+    setLocalTask(task);
+    setLocalTechnique(technique);
+    setLocalSubject(subject);
+  }, [geography_and_places, language, data_type, task, technique, subject]);
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
 
@@ -44,27 +54,39 @@ const EditPage = () => {
         if (!areRequiredInputsFilled) {
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
         } else {
+            console.log(dataset.last_change_time)
             const payload = {
+                id: dataset.id,
                 title: titleOfDataset,
-                visibility,
-                authors,
                 data_source: dataSource,
-                doi,
                 expected_update_frequency: expectedUpdateFrequency,
-                license,
-                description,
+                description: description,
                 tags: {
-                    geography_and_places,
-                    language,
-                    data_type,
-                    task,
-                    technique,
-                    subject
-                }
+                    geography_and_places: geography_and_places,
+                    language: language,
+                    data_type: data_type,
+                    task: task,
+                    technique: technique,
+                    subject: subject
+                },
+                owner: dataset.owner,
+                authors: authors,
+                license: license,
+                number_of_files: dataset.number_of_files,
+                doi: doi,
+                last_change_date: dataset.last_change_date,
+                last_change_time: dataset.last_change_time || '',
+                downloads_number: dataset.downloads_number,
+                visibility: visibility,
+                rating: dataset.rating,
+                usability_rating: dataset.usability_rating,
+                size: dataset.size,
+                size_bytes: dataset.size_bytes
             };
-            BackendConnector.upload(payload, files, image)
+            BackendConnector.update(payload, files, image)
                 .then(response => {
                     console.log(response);
+                    navigate(`/dataset/${dataset.id}`)
                 })
                 .catch(error => {
                     console.error(error);
@@ -154,27 +176,27 @@ const EditPage = () => {
                         <span className='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
-                                <InputTagFilter label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
+                                <InputTagFilter label="География данных" tags={geography_and_places} setTags={setLocalGeography}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Язык</p>
-                                <InputTagFilter label="Язык" tags={language} setTags={set_language}/>
+                                <InputTagFilter label="Язык" tags={language} setTags={setLocalLanguage}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Тип данных</p>
-                                <InputTagFilter label="Тип данных" tags={data_type} setTags={set_data_type}/>
+                                <InputTagFilter label="Тип данных" tags={data_type} setTags={setLocalDataType}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Задача</p>
-                                <InputTagFilter label="Задача" tags={task} setTags={set_task}/>
+                                <InputTagFilter label="Задача" tags={task} setTags={setLocalTask}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Техника</p>
-                                <InputTagFilter label="Техника" tags={technique} setTags={set_technique}/>
+                                <InputTagFilter label="Техника" tags={technique} setTags={setLocalTechnique}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Предмет</p>
-                                <InputTagFilter label="Предмет" tags={subject} setTags={set_subject}/>
+                                <InputTagFilter label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
                     </div>
 

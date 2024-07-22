@@ -1,7 +1,7 @@
 import React from 'react'
 import './DatasetCard.css'
-import datasetImage from '../../img/datasetImage.png'
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const DatasetCard = ({ 
     id, 
@@ -13,6 +13,36 @@ const DatasetCard = ({
     size
 }) => {
     const navigate = useNavigate();
+    const [image, setImage] = useState(null);
+
+    const getImage = () => {
+        const url = `http://10.100.30.74/api/get_image/${id}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.blob();  // Изменено на получение blob
+        })
+        .then(blob => {
+            const imageUrl = URL.createObjectURL(blob);
+            setImage(imageUrl);
+            console.log(imageUrl);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    useEffect(() => {
+        if (image === null) getImage();
+    })
 
     const getFileWord = (number) => {
         if (11 <= number % 100 && number % 100 <= 14) {
@@ -31,7 +61,7 @@ const DatasetCard = ({
     
     return (
         <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}} >
-            <img id='datasetImage' src={datasetImage} alt="Dataset"/>
+            <img id='datasetImage' src={image} alt='Dataset cover'></img>
             <h3 id='datasetTitleOnCard'>{title}</h3>
             <div id='cardInfo'>
                 <div className='rowSpaceBetween'>

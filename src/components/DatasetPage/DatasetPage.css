@@ -44,7 +44,11 @@
 #datasetCoverImage {
     border-radius: 50px;
     width: 35%;
-    height: 35%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 50px;
+    margin-bottom: 25px;
 }
 #mainInfo {
     margin-left: 50px;

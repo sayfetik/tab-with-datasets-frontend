@@ -19,7 +19,7 @@ export default class BackendConnector {
     }
 
     static async recommend(id) {
-        return await this.get(`${this.recommend_endpoint}/${id}/${this.results_amount_limit}`);
+        return await this.get(`${this.recommend_endpoint}/${id}/4`);
     }
 
     static async search(search_query) {

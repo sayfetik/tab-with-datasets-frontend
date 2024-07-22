@@ -12,6 +12,7 @@ import BigInput from '../BigInput/BigInput';
 import sparklesIcon from '../../img/sparkles.png'
 import InputTags from '../InputTags/InputTags';
 import BackendConnector from '../BackendConnector';
+import InputTagFilter from '../InputTagFilter/InputTagFilter';
 
 const Upload = () => {
     const [files, setFiles] = useState([]);
@@ -32,7 +33,6 @@ const Upload = () => {
 
     const [descriptionState, setStateDescription] = useState(false);
     const showDescriptionButtonClick = () => {
-        setStateDescription(true);
     };
 
     const [tagsState, setStateTags] = useState(false);
@@ -84,14 +84,86 @@ const Upload = () => {
                     technique,
                     subject
                 }
-            };
+            };  
             BackendConnector.upload(payload, files, image)
                 .then(response => {
                     console.log(response);
+                    navigate(`/dataset/${response.id}`);
                 })
                 .catch(error => {
                     console.error(error);
                 });
+        }
+    };
+
+    const generateDescription = async (e) => {
+        if (e) e.preventDefault();
+        const url = `http://10.100.30.74/api/generate_description`;
+        const requestBody = {
+            actions_taken_to_collect_and_process_the_dataset: collectionMethod,
+            detailed_description_of_content: dataStructure,
+            potential_use_cases: useCases
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+
+            const data = await response.json();
+            if (data.text && data.text.length > 0) {
+                setDescription(data.text);
+                setStateDescription(true);
+            } else {
+                alert('No data returned from the server');
+            }
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+        }
+    };
+
+    const generateTags = async (e) => {
+        if (e) e.preventDefault();
+        const url = `http://10.100.30.74/api/generate_tags`;
+        const requestBody = {
+            text: description
+        };
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                alert('Network response was not ok');
+                return;
+            }
+
+            const data = await response.json();
+            if (data && data.length > 0) {
+                set_geography_and_places(data.geography_and_places)
+                set_language(data.language)
+                set_data_type(data.data_type)
+                set_technique(data.technique)
+                set_task(data.task)
+                set_subject(data.subject)
+                setStateTags(true);
+            } else {
+                alert('No data returned from the server');
+            }
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
         }
     };
 
@@ -176,7 +248,7 @@ const Upload = () => {
                         placeholder="Опишите применения датасета" />
 
                     {areAllInputsFilled && (
-                        <button id='generateDescButton' onClick={showDescriptionButtonClick}>
+                        <button id='generateDescButton' onClick={generateDescription}>
                             <img src={sparklesIcon} width='15px' style={{marginRight: '5px'}} alt=''/>
                             Сгенерировать описание
                         </button>
@@ -204,27 +276,27 @@ const Upload = () => {
                             <span className='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
-                                <InputTags tags={geography_and_places} setTags={set_geography_and_places}/>
+                                <InputTagFilter label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Язык</p>
-                                <InputTags tags={language} setTags={set_language}/>
+                                <InputTagFilter label="Язык" tags={language} setTags={set_language}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Тип данных</p>
-                                <InputTags tags={data_type} setTags={set_data_type}/>
+                                <InputTagFilter label="Тип данных" tags={data_type} setTags={set_data_type}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Задача</p>
-                                <InputTags tags={task} setTags={set_task}/>
+                                <InputTagFilter label="Задача" tags={task} setTags={set_task}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Техника</p>
-                                <InputTags tags={technique} setTags={set_technique}/>
+                                <InputTagFilter label="Техника" tags={technique} setTags={set_technique}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Область</p>
-                                <InputTags tags={subject} setTags={set_subject}/>
+                                <p id='tagTypeLabel'>Предмет</p>
+                                <InputTagFilter label="Предмет" tags={subject} setTags={set_subject}/>
                             </div>
                         </div>
                     )}
@@ -235,7 +307,7 @@ const Upload = () => {
                                     .then(response => { alert(response.data); })
                                     .catch((error) => { console.log(error); });
                             }}>Сохранить черновик</button>
-                        {tagsState &&  (
+                        {areRequiredInputsFilled &&  (
                             <div className="wrapper">
                                 <button className="cta" onClick={checkRequiredInputsAndUpload}>
                                     <span className='uploadDataset'>Загрузить датасет</span>

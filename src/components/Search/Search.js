@@ -14,7 +14,7 @@ const Search = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
-    const resultsLimit = 8;
+    const resultsLimit = 30;
     const [datasets, setDatasets] = useState('');
     const [geography_and_places, setGeography] = useState([]);
     const [language, setLanguage] = useState([]);

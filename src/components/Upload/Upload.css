@@ -122,6 +122,7 @@
 }
 #descriptionInput {
   width: 100%;
+  height: fit-content;
   margin: 0px;
   color: #3E456F;
 }

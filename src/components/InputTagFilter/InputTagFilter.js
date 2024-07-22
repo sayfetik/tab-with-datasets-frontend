@@ -5,6 +5,10 @@ const InputTagFilter = ({ label, tags = [], setTags }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
+  useEffect(() => {
+    setTags(tags);
+  }, [tags]);
+
   let category = "";
   if (label === "География данных") category = "geography_and_places";
   else if (label === "Язык") category = "language";

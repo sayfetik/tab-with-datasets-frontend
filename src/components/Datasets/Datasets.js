@@ -24,14 +24,14 @@ const Datasets = () => {
         data_type: initialDataType,
         task: initialTask,
         technique: initialTechnique,
-        subject: initialSubject
+        subject: initialSubject,
     } = state;
     const [datasets, setDatasets] = useState(initialDatasets || []);
     const [searchString, setSearchString] = useState(searchQuery || '');
     const [sortedData, setSortedData] = useState(initialDatasets || []);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const resultsLimit = 8;
+    const resultsLimit = 30;
     
     const [geography_and_places, setGeography] = useState(initialGeography || []);
     const [language, setLanguage] = useState(initialLanguage || []);
@@ -116,13 +116,18 @@ const Datasets = () => {
     };
 
     const handleSearch = async (e) => {
-        e.preventDefault();
+        if (e) e.preventDefault();
         if (searchString.length > 0) {
             await search_by_query(e);
         } else {
             await search_by_tags(e);
         }
     };
+
+    useEffect(() => {
+        handleSearch();
+    }, [datasets]);
+
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {

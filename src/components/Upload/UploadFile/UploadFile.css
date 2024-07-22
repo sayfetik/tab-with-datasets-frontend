@@ -138,10 +138,13 @@
 }
 #coverPreviewImage {
     background-color: #E1C5F5;
-    width: 100%;
-    height: 100%;
     border-radius: 20px;
     box-sizing: border-box;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 5 / 3;
+    object-fit: cover;
+    margin-bottom: 20px;
 }
 #datasetImageUpload {
     width: 100%;

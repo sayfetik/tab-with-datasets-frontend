@@ -16,8 +16,35 @@ const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
     const resultsLimit = 4;
+    const [image, setImage] = useState(null);
+
+    const getImage = () => {
+        const url = `http://10.100.30.74/api/get_image/${id}`;
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.blob();  // Изменено на получение blob
+        })
+        .then(blob => {
+            const imageUrl = URL.createObjectURL(blob);
+            setImage(imageUrl);
+            console.log(imageUrl);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
     useEffect(() => {
+        if (image === null) getImage();
         const fetchRecommendations = async () => {
             try {
                 const data = await BackendConnector.recommend(id);
@@ -53,6 +80,7 @@ const DatasetPage = () => {
         doi: '',
         expected_update_frequency: '',
         last_change_date: '',
+        last_change_time: '',
         downloads_number: 0,
         visibility: '',
         usability_rating: 0,
@@ -84,6 +112,7 @@ const DatasetPage = () => {
               doi: data.doi || '',
               expected_update_frequency: data.expected_update_frequency || 'Никогда',
               last_change_date: data.last_change_date || '',
+              last_change_time: data.last_change_time || '',
               downloads_number: data.downloads_number || 0,
               visibility: data.visibility || '',
               usability_rating: data.usability_rating || 0,
@@ -100,19 +129,22 @@ const DatasetPage = () => {
         
     const navigate = useNavigate();
     const handleEditClick = () => {
+        console.log(dataset);
         navigate('/editDataset', { state: dataset});
       };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (event) => {
+        event.preventDefault();
         BackendConnector.delete(dataset.id)
             .then(response => {
                 console.log(response);
+                navigate(-1);
             })
             .catch(error => {
                 console.error(error);
             });
-        navigate('/search', {state: dataset});
     }
+
 
     return (
         <div>
@@ -120,7 +152,7 @@ const DatasetPage = () => {
             <div id='datasetPage'>
                 <Back />
                 <div id='datasetInfoHeader'>
-                    <img id='datasetCoverImage' src={datasetImage} alt='Dataset cover'></img>
+                <img id='datasetCoverImage' src={image} alt='Dataset cover'></img>
                     <div id='mainInfo'>
                         <div className='rowSpaceBetween'>
                             <p className='author'>{dataset.owner}</p>
@@ -132,23 +164,23 @@ const DatasetPage = () => {
                         
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
-                            {dataset.geography_and_places.length !==0 && dataset.geography_and_places.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.geography_and_places.length >0 && dataset.geography_and_places.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.language.length !==0 && dataset.language.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.language.length > 0 && dataset.language.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.data_type.length !==0 && dataset.data_type.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.data_type.length > 0 && dataset.data_type.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.task.length !==0 && dataset.task.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.task.length > 0 && dataset.task.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.technique.length !==0 && dataset.technique.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.technique.length > 0 && dataset.technique.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
-                            {dataset.subject.length !==0 && dataset.subject.map((tag, index) => ( 
-                                <span key={index} className='datasetTag'>{tag}</span>
+                            {dataset.subject.length > 0 && dataset.subject.map((tag, index) => ( 
+                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                             ))}
                         </div>
                         <div>
@@ -194,12 +226,11 @@ const DatasetPage = () => {
                                         {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
                                     </div>
                                     <div className='files'>
-                                        {dataset.files && dataset.files.map((file, index) => ( 
-                                            <div key={index} className='file'>
+                                        
+                                            <div className='file'>
                                                 <Icon className="downloadIcon" image={downloadIconBlack} />
-                                                <p className='fileDownload'>{file}</p>
+                                                <p className='fileDownload'>files.zip</p>
                                             </div>
-                                        ))}
                                     </div>
                                 </div> 
                             }
