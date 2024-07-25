@@ -18,7 +18,7 @@ button {
 }
 button:hover {
   transform: scale(1.05);
-}
+} 
 *, :after, :before {
   box-sizing: border-box;
 }

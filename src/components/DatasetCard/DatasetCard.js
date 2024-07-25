@@ -2,6 +2,7 @@ import React from 'react'
 import './DatasetCard.css'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import BackendConnector from '../BackendConnector';
 
 const DatasetCard = ({ 
     id, 
@@ -15,33 +16,17 @@ const DatasetCard = ({
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
 
-    const getImage = () => {
-        const url = `http://10.100.30.74/api/get_image/${id}`;
-
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.blob();  // Изменено на получение blob
-        })
-        .then(blob => {
-            const imageUrl = URL.createObjectURL(blob);
+    const fetchImage = async () => {
+        try {
+            const imageUrl = await BackendConnector.getImage(id);
             setImage(imageUrl);
-            console.log(imageUrl);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+        } catch (error) {
+            console.error('Error fetching image:', error);
+        }
+    };
 
     useEffect(() => {
-        if (image === null) getImage();
+        if (image === null) fetchImage();
     })
 
     const getFileWord = (number) => {

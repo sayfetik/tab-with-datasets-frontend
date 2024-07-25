@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UnsuccessUpload, Search, Upload, DatasetPage, Datasets, Notification, EditPage } from './components';
-import { NotificationProvider } from './components/Notification/NotificationContext';
-import ScrollToTop from './components/ScrollToTop';
+import { UnsuccessUpload, Search, Upload, DatasetPage, Datasets, EditPage } from './pages';
+import { Notification, NotificationProvider, ScrollToTop } from './components';
 
 const App = () => {
     return (

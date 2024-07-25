@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css'
-import Icon from '../Icon';
+import Icon from '../Icon/Icon';
 import idhLogo from '../../img/idhLogo.png'
 import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../img/menuIcon.png';
