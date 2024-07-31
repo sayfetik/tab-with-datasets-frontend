@@ -14,7 +14,9 @@ export default class BackendConnector {
     static delete_endpoint = 'api/delete';
     static getImage_endpoint = 'api/get_image'
     static generateDescription_endpoint = 'api/generate_description';
+    static generateSmallDescription_endpoint = 'api/summarize_description';
     static generateTags_endpoint = 'api/generate_tags';
+    static tagsSuggestions_endpoint = 'api/search_tags';
 
     static results_amount_limit = 12;
 
@@ -65,7 +67,17 @@ export default class BackendConnector {
     }
 
     static async download(id) {
-        return await this.get(`${this.download_endpoint}/${id}`);
+        try {
+            const response = await axios({
+                method: 'get',
+                url: `${this.host}/${this.download_endpoint}/${id}`,
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error downloading file:', error);
+            return null;
+        }
     }
 
     static async delete(id) {
@@ -173,7 +185,7 @@ export default class BackendConnector {
     }
 
     static async searchByQuery(searchString, filters) {
-        const url = `${this.host}/${this.searchByQuery_endpoint}/${searchString}/30`;
+        const url = `${this.host}/${this.searchByQuery_endpoint}/${searchString}/36`;
         const requestBody = filters;
         const response = await fetch(url, {
             method: 'POST',
@@ -191,7 +203,7 @@ export default class BackendConnector {
     }
 
     static async searchByTags(filters) {
-        const url = `${this.host}/${this.searchByTags_endpoint}/30`;
+        const url = `${this.host}/${this.searchByTags_endpoint}/36`;
         const requestBody = filters;
         const response = await fetch(url, {
             method: 'POST',
@@ -215,14 +227,76 @@ export default class BackendConnector {
             detailed_description_of_content: dataStructure,
             potential_use_cases: useCases
         };
-        const response = await axios.post(url, requestBody);
-        return response.data;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+    };
+    
+    static async  generateSmallDescription(text) {
+        const url = `${this.host}/${this.generateSmallDescription_endpoint}`;
+        const requestBody = {
+            text: text
+        };
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
     };
     
     static async generateTags(description)  {
         const url = `${this.host}/${this.generateTags_endpoint}`;
         const requestBody = { text: description };
-        const response = await axios.post(url, requestBody);
-        return response.data;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
     };
+
+    static async fetchSuggestions(category, inputValue) {
+        const url = `${this.host}/${this.tagsSuggestions_endpoint}/${category}/${inputValue}/3`;
+        const requestBody = { tags: [] };
+
+        try {
+            const response = await axios.post(url, requestBody, {
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.status !== 200) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            return response.data.tags;
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+            return [];
+        }
+    }
 }

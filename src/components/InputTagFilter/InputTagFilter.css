@@ -1,9 +1,9 @@
 #tagFilter {
-    padding: 0px 10px;
+    padding: 5px 10px;
     color: white;
     background-color: #3E456F;
     border: 1px solid white;
-    border-radius: 50px;
+    border-radius: 10px;
     cursor: pointer;    
     width: fit-content;
     cursor: pointer;
@@ -14,10 +14,10 @@
     margin-bottom: 5px;
 }
 #tagFilterSuggestion {
-    padding: 0px 10px;
+    padding: 5px 10px;
     color: #3E456F;
     border: 1px solid #3E456F;
-    border-radius: 50px;
+    border-radius: 10px;
     cursor: pointer;    
     width: fit-content;
     cursor: pointer;
@@ -26,11 +26,24 @@
     align-items: center;
     margin-left: 5px;
     margin-bottom: 5px;
+    position: relative;
+}
+.clearTagInput {
+    margin-right: 5px;
 }
 #inputTagsFilter {
     display: flex;
     margin-bottom: 8px;
-
+    width: 100%;
+}
+@media screen and (max-width: 1100px) {
+    #inputTagsFilter {
+        flex-direction: column;
+    }
+}
+.input-container {
+    display: flex;
+    align-items: baseline;
 }
 .selectTags {
     padding: 4px 10px;
@@ -61,13 +74,6 @@
   transform: translateY(-50%);
   pointer-events: none;
 }
-#tagOption {
-    color: white;
-    font-size: 16px;
-    font-weight: 500px;
-    height: fit-content;
-    border-radius: 20px;
-}
 #filterTagLabel {
     background-color: white;
     color: #3E456F;
@@ -76,6 +82,11 @@
 }
 .rowTags {
     display: flex;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
+}
+.tagsDisplay {
+    display: flex;
+    flex-wrap: wrap;
 }

@@ -36,36 +36,7 @@
   width: 100%;
   padding-left: 10%;
 }
-  .visible {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: solid rgba(228, 231, 242, 1);
-    border-width: 1px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: none;
-    width: 400px;
-    font-size: 16px;
-    color: #3E456F;
-    box-sizing: border-box;
-    appearance: none; 
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="2  0" height="20" viewBox="0 0 20 20"><path fill="%233E456F" d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 10px;
-  }
-.visible:focus {
-    border: solid rgba(0, 113, 206, 1);
-    outline: none;
-    border-width: 1px;
- }
- .visible::after {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
+
 .metadataSection {
     display: flex;
     justify-content: space-between;
@@ -89,7 +60,7 @@
   margin-top: 10px;
 }
 #generateDescButton {
-  margin-right: 15px;
+  margin: 0px 15px 10px 0px;
   padding: 13px 20px;
   border: none;
   background-color: #D5A9F4;
@@ -104,7 +75,7 @@
   margin: 0px;
 }
 #continuie {
-  margin: 5px 0px 10px 10px;
+  margin: 3px 15px 10px 0px;
   padding: 13px 20px;
   border: none;
   background-color: #D5A9F4;
@@ -130,7 +101,6 @@
   width: 100%;
 }
 #descriptionInput {
-  margin-top: 10px;
   padding: 10px 20px;
   border: solid rgba(228, 231, 242, 1);
   border-width: 1px;
@@ -167,12 +137,6 @@
   border-radius: 40px;
   font-size: 16px;
 }
-* {
-  background-color: transparent;
-}
-
-
-
 .wrapper {
   display: flex;
   justify-content: center;
@@ -279,13 +243,23 @@ padding: 0px 10px;
 }
 #tagType {
   display: flex;
-  align-items: center;
+}
+@media screen and (max-width: 1000px) {
+  #tagType {
+    flex-direction: column;
+  }
 }
 #tagTypeLabel {
   width: 180px;
-  margin-bottom: 5px;
+  padding-top: 7px;
 }
 #rowContunuieLoading {
   display: flex;
   align-items: center;
+}
+#smallDescriptionContainer {
+  margin-bottom: 10px;
+}
+.inputLabel {
+  margin-bottom: 8px;
 }

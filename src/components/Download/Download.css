@@ -1,0 +1,52 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content-download {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 30px;
+    width: fit-content;
+    max-width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+    
+  .modal-close-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+#modalWindowDownload {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+#downloadDatasetButton {
+    background-color: #7B93D2;
+}
+#downloadCleanedDatasetButton {
+  background-color: #D19DEA;
+}
+#downloadCleanedDatasetButton, #downloadDatasetButton {
+  margin: 15px 20px;
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 40px;
+  font-size: 17px;
+}

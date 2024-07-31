@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input, Back, Header, Notification, UploadFile, InputTagFilter, BackendConnector } from '../../components';
 import { useNotification } from '../../components/Notification/NotificationContext';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -28,19 +28,10 @@ const EditPage = () => {
     const [technique, setLocalTechnique] = useState(dataset.technique);
     const [subject, setLocalSubject] = useState(dataset.subject);
 
-    useEffect(() => {
-        setLocalGeography(geography_and_places);
-        setLocalLanguage(language);
-        setLocalDataType(data_type);
-        setLocalTask(task);
-        setLocalTechnique(technique);
-        setLocalSubject(subject);
-    }, [geography_and_places, language, data_type, task, technique, subject]);
-
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
 
-    const areRequiredInputsFilled = description && titleOfDataset && authors && geography_and_places;
+    const areRequiredInputsFilled = description && titleOfDataset;
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled)  alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
         else {
@@ -104,7 +95,7 @@ const EditPage = () => {
                         <option value="public">Публичный</option>
                     </select>
                     <Input
-                        label="Авторы *"
+                        label="Авторы"
                         placeholder="Введите автора"
                         value={authors}
                         onChange={(e) => setAuthors(e.target.value)}

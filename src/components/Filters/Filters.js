@@ -11,22 +11,16 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
   const [localSubject, setLocalSubject] = useState(subject);
 
   useEffect(() => {
-    setLocalGeography(geography_and_places);
-    setLocalLanguage(language);
-    setLocalDataType(data_type);
-    setLocalTask(task);
-    setLocalTechnique(technique);
-    setLocalSubject(subject);
-  }, [geography_and_places, language, data_type, task, technique, subject]);
-
-  const applyFilters = () => {
     setGeography(localGeography);
     setLanguage(localLanguage);
     setData_type(localDataType);
     setTask(localTask);
     setTechnique(localTechnique);
     setSubject(localSubject);
-    applyChanges(); // Call applyChanges without an event object
+  }, [localGeography, localLanguage, localDataType, localTask, localTechnique, localSubject]);
+
+  const applyFilters = () => {
+    applyChanges();
     onClose();
   };
 

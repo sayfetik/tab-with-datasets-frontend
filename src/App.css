@@ -15,10 +15,11 @@ body {
 button {
   cursor: pointer;
   transition: transform 0.3s ease;
+  border-radius: 10px !important;
 }
 button:hover {
-  transform: scale(1.05);
-} 
+  filter: brightness(0.95);
+}
 *, :after, :before {
   box-sizing: border-box;
 }
@@ -53,7 +54,7 @@ p {
 }
 
 .input input[type="text"], #datasets input[type="text"], #inputTagsFilter input[type="search"] {
-  padding: 20px;
+  padding: 21px;
   border: solid rgba(228, 231, 242, 1);
   border-width: 1px;
   border-radius: 10px;
@@ -78,7 +79,42 @@ p {
 .row {
   display: flex;
 }
-select, option {
+select {
   padding: 10px 20px;
   border-radius: 30px;
+}
+option {
+  padding: 20px;
+}
+option:hover {
+  background-color: #D5A9F4;
+}
+.visible {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: solid rgba(228, 231, 242, 1);
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: none;
+  width: 400px;
+  font-size: 16px;
+  color: #3E456F;
+  box-sizing: border-box;
+  appearance: none; 
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20"><path fill="%233E456F" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+.visible:focus {
+  border: solid rgba(0, 113, 206, 1);
+  outline: none;
+  border-width: 1px;
+}
+.visible::after {
+position: absolute;
+right: 10px;
+top: 50%;
+transform: translateY(-50%);
+pointer-events: none;
 }

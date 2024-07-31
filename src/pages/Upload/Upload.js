@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Back, UploadFile, Header, Notification, BigInput, BackendConnector, InputTagFilter} from '../../components';
+import { Input, Back, UploadFile, Header, Notification, BigInput, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
 import './Upload.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../components/Notification/NotificationContext';
 import sparklesIcon from '../../img/sparkles.png';
@@ -13,17 +12,15 @@ const Upload = () => {
     const { showNotification } = useNotification();
     const navigate = useNavigate();
     const [descriptionState, setStateDescription] = useState(false);
+    const [smallDescriptionState, setStateSmallDescription] = useState(false);
     const [tagsState, setStateTags] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
-    const showTagsButtonClick = () => {
-        setStateTags(true);
-    };
+    const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
+    const [isLoadingTags, setIsLoadingTags] = useState(false);
 
     const [titleOfDataset, setTitleOfDataset] = useState('');
     const [visibility, setVisibility] = useState('public');
     const [authors, setAuthors] = useState('');
-    const [owner, setOwner] = useState('');
     const [dataSource, setDataSource] = useState('');
     const [expectedUpdateFrequency, setExpectedUpdateFrequency] = useState('');
     const [license, setLicense] = useState('No license specified');
@@ -32,6 +29,7 @@ const Upload = () => {
     const [dataStructure, setDataStructure] = useState('');
     const [useCases, setUseCases] = useState('');
     const [description, setDescription] = useState('');
+    const [smallDescription, setSmallDescription] = useState('');
     const [geography_and_places, set_geography_and_places] = useState([]);
     const [language, set_language] = useState([]);
     const [data_type, set_data_type] = useState([]);
@@ -41,7 +39,7 @@ const Upload = () => {
 
     const areAllInputsFilled = collectionMethod && dataStructure && useCases;
 
-    const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset && authors;
+    const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset;
 
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
@@ -81,8 +79,8 @@ const Upload = () => {
         try {
             setIsLoading(true);
             const data = await BackendConnector.generateDescription(collectionMethod, dataStructure, useCases);
-            if (data.text && data.text.length > 0) {
-                setDescription(data.text);
+            if (data.text.text && data.text.text.length > 0) {
+                setDescription(data.text.text);
                 setStateDescription(true);
             } else {
                 alert('No data returned from the server');
@@ -94,26 +92,41 @@ const Upload = () => {
         }
     };
 
-    const generateTags = async (e) => {
+    const generateSmallDescription = async (e) => {
         if (e) e.preventDefault();
         try {
-            setIsLoading(true);
-            const data = await BackendConnector.generateTags(description);
-            if (data && data.length > 0) {
-                set_geography_and_places(data.geography_and_places);
-                set_language(data.language);
-                set_data_type(data.data_type);
-                set_technique(data.technique);
-                set_task(data.task);
-                set_subject(data.subject);
-                setStateTags(true);
+            setIsLoadingSmallDesc(true);
+            const data = await BackendConnector.generateSmallDescription(description);
+            if (data.text && data.text.length > 0) {
+                setSmallDescription(data.text);
+                setStateSmallDescription(true);
             } else {
                 alert('No data returned from the server');
             }
-            setIsLoading(false);
+            setIsLoadingSmallDesc(false);
         } catch (error) {
             alert("Error fetching datasets: " + error);
-            setIsLoading(false);
+            setIsLoadingSmallDesc(false);
+        }
+    };
+
+    const generateTags = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            setIsLoadingTags(true);
+            const data = await BackendConnector.generateTags(description);
+            set_geography_and_places(data.geography_and_places);
+            set_language(data.language);
+            set_data_type(data.data_type);
+            set_technique(data.technique);
+            set_task(data.task);
+            set_subject(data.subject);
+            setStateTags(true);
+            setIsLoadingTags(false);
+            setStateTags(true);
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+            setIsLoadingTags(false);
         }
     };
 
@@ -137,7 +150,7 @@ const Upload = () => {
                         <option value="public">Публичный</option>
                     </select>
                     <Input
-                        label="Авторы *"
+                        label="Авторы"
                         placeholder="Введите автора"
                         value={authors}
                         onChange={(e) => setAuthors(e.target.value)}
@@ -199,8 +212,8 @@ const Upload = () => {
 
                         <div id='rowContunuieLoading'>
                             {areAllInputsFilled && (
-                                <button id='generateDescButton' onClick={generateDescription}>
-                                    <img src={sparklesIcon} width='15px' style={{marginRight: '5px'}} alt=''/>
+                                <button id='continuie' onClick={generateDescription}>
+                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                     Сгенерировать описание
                                 </button>
                             )}
@@ -212,20 +225,39 @@ const Upload = () => {
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <div className='inputLabel'>Описание</div>
-                                    <textarea
-                                        id='descriptionInput'
-                                        placeholder='Введите описание'
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        ></textarea>
+                                    <AutoResizeTextarea value={description} setValue={setDescription} />
                                 </div>
                             </div>
-                            <button id='continuie' onClick={showTagsButtonClick}>Продолжить</button>
+                            <div id='rowContunuieLoading'>
+                                <button id='continuie' onClick={generateSmallDescription}>
+                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                    Сгенерировать краткое описание
+                                </button>
+                                {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
                             </div>
+                        </div>
+                    )}
+
+                    {smallDescriptionState && (
+                        <div id='smallDescriptionContainer'>
+                            <div id='descriptionInputContainer'>
+                                <div className='metadataBigItem'>
+                                    <div className='inputLabel'>Краткое описание</div>
+                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} />
+                                </div>
+                            </div>
+                            <div id='rowContunuieLoading'>
+                                <button id='continuie' onClick={generateTags}>
+                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                    Сгенерировать теги
+                                </button>
+                                {isLoadingTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                            </div>
+                        </div>
                     )}
                     
                     {tagsState && (
-                        <div>
+                        <div id='tagTypesContainer'>
                             <span className='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
@@ -255,11 +287,7 @@ const Upload = () => {
                     )}
 
                     <div id='saveButtons'>
-                        <button className='saveDraft' onClick={()=>{
-                                axios.get('https://tab-with-datasets-mock.onrender.com/save_draft', {})
-                                    .then(response => { alert(response.data); })
-                                    .catch((error) => { console.log(error); });
-                            }}>Сохранить черновик</button>
+                        {/*<button className='saveDraft' onClick={()=>{console.log(subject);}}>Сохранить черновик</button>*/}
                         {areRequiredInputsFilled &&  (
                             <div className="wrapper">
                                 <button className="cta" onClick={checkRequiredInputsAndUpload}>

@@ -4,13 +4,13 @@ import downloadIconWhite from '../../img/downloadWhite.png'
 import downloadIconBlack from '../../img/downloadBlack.png'
 import star from '../../img/star.png'
 import './DatasetPage.css'
-import { Back, Header, Icon, DatasetCard, BackendConnector } from '../../components'
+import { Back, Header, Icon, DatasetCard, BackendConnector, Download } from '../../components'
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
-    const resultsLimit = 4;
     const [image, setImage] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchImage = async () => {
         try {
@@ -45,7 +45,7 @@ const DatasetPage = () => {
 
         fetchRecommendations();
         fetchDatasetPreview();
-    }, [id, resultsLimit]);
+    }, [id]);
 
     const [dataset, setDataset] = React.useState({
         id: '',
@@ -96,13 +96,15 @@ const DatasetPage = () => {
     const handleDownloadClick = async () => {
         try {
             const blob = await BackendConnector.download(dataset.id);
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'file.zip'); // You can specify the filename here
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            if (blob) {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'file.zip'); // Specify the filename here
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            }
         } catch (error) {
             console.error('Error downloading file:', error);
         }
@@ -123,7 +125,6 @@ const DatasetPage = () => {
                                 : <div id='visibilityLabel'>Public</div>
                             }
                         </div>
-                        
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
                             {dataset.geography_and_places.length >0 && dataset.geography_and_places.map((tag, index) => ( 
@@ -151,6 +152,10 @@ const DatasetPage = () => {
                                     <span id='downloadLabel' onClick={handleDownloadClick}>Скачать</span>
                                     <Icon image={downloadIconWhite} />
                                 </button>
+                                <Download
+                                    isOpen={isModalOpen}
+                                    onClose={() => setIsModalOpen(false)}
+                                />
                                 <div>
                                     <div id='ratingLabel'>
                                         <img src={star} width='17px' height='17px' alt=''/>
@@ -234,8 +239,8 @@ const DatasetPage = () => {
                             <p className='metaWhite'>{dataset.downloads_number}</p>
                         </div>
                         <div className='infoContainer'>
-                            <h4 className='metaWhite'>Оценка удобства использования</h4>
-                            <p className='metaWhite'>{dataset.usability_rating}</p>
+                            <h4 className='metaWhite'>Подробность описания</h4>
+                            <p className='metaWhite'>{dataset.usability_rating}%</p>
                         </div>
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Размер</h4>

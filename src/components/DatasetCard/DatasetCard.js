@@ -11,7 +11,8 @@ const DatasetCard = ({
     numberOfFiles, 
     lastChangeDate, 
     downloadsNumber,
-    size
+    size,
+    smallDescription
 }) => {
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
@@ -43,9 +44,31 @@ const DatasetCard = ({
             }
         }
     };
+
+
+    const [isHovered, setIsHovered] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+    let hoverTimer = null;
+
+    const handleMouseEnter = () => {
+        setIsExpanded(true);
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        clearTimeout(hoverTimer);
+        setIsExpanded(false);
+        setIsHovered(false);
+    };
     
     return (
-        <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}} >
+        <div
+            id='datasetCard'
+            onClick={() => {navigate(`/dataset/${id}`)}}
+            className={isExpanded ? 'expanded' : ''} 
+            onMouseEnter={handleMouseEnter} 
+            onMouseLeave={handleMouseLeave}
+        >
             <img id='datasetImage' src={image} alt='Dataset cover'></img>
             <h3 id='datasetTitleOnCard'>{title}</h3>
             <div id='cardInfo'>
@@ -58,6 +81,7 @@ const DatasetCard = ({
                     <p className='fieldInfo'>{getFileWord(numberOfFiles)}</p>
                     <p className='fieldInfo'>{size}</p>
                 </div>
+            <p id='description'>{smallDescription}</p>
             </div>
         </div>
     );

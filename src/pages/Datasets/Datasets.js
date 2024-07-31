@@ -4,7 +4,7 @@ import './Datasets.css'
 import { useLocation } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
-import { InputAdornment, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Datasets = () => {
@@ -34,15 +34,19 @@ const Datasets = () => {
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
+        if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
+            alert('Введите запрос в поле поиска или укажите теги для фильтрации датасетов');
+            return;
+        }
         try {
             let data;
             const filters = {
-                geography_and_places,
-                language,
-                data_type,
-                task,
-                technique,
-                subject
+                geography_and_places: geography_and_places,
+                language: language,
+                data_type: data_type,
+                task: task,
+                technique: technique,
+                subject: subject
             };
 
             if (searchString.length > 0) {
@@ -63,12 +67,11 @@ const Datasets = () => {
     };
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            handleSearch(event);
-        }
+        if (event.key === 'Enter') handleSearch(event);
     };
 
     useEffect(() => {
+        handleSearch();
         let sorted = [...datasets];
         switch(selectedOption) {
             case 'byRelevance':
@@ -106,9 +109,9 @@ const Datasets = () => {
                                 value={searchString}
                                 onChange={(e) => setSearchString(e.target.value)} 
                             />
-                            <InputAdornment position='end'>
+                            <div id='filterIcon'>
                                 <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
-                            </InputAdornment>
+                            </div>
                             <Filters
                                 isOpen={isModalOpen}
                                 onClose={() => setIsModalOpen(false)}
@@ -150,6 +153,7 @@ const Datasets = () => {
                                         lastChangeDate={dataset.last_change_date}
                                         downloadsNumber={dataset.downloads_number}
                                         size={dataset.size}
+                                        smallDescription={dataset.small_description}
                                     />
                                 ))
                             ) : ( 

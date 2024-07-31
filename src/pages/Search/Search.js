@@ -3,14 +3,13 @@ import './Search.css';
 import { Header, Filters, BackendConnector } from '../../components'
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png';
-import { InputAdornment, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Search = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
-    const resultsLimit = 30;
     const [datasets, setDatasets] = useState('');
     const [geography_and_places, setGeography] = useState([]);
     const [language, setLanguage] = useState([]);
@@ -21,15 +20,19 @@ const Search = () => {
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
+        if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
+            alert('Введите запрос в поле поиска или укажите теги для фильтрации датасетов');
+            return;
+        }
         try {
             let data;
             const filters = {
-                geography_and_places,
-                language,
-                data_type,
-                task,
-                technique,
-                subject
+                geography_and_places: geography_and_places,
+                language: language,
+                data_type: data_type,
+                task: task,
+                technique: technique,
+                subject: subject
             };
 
             if (searchString.length > 0) {
@@ -40,17 +43,18 @@ const Search = () => {
 
             if (data && data.length > 0) {
                 setDatasets(data);
-                navigate('/datasets', { state: { searchString, 
+                navigate('/datasets', { state: {
+                    searchString: searchString, 
                     datasets: data, 
-                    geography_and_places, 
-                    language,
-                    data_type,
-                    task, 
-                    technique, 
-                    subject 
+                    geography_and_places: geography_and_places,
+                    language: language,
+                    data_type: data_type,
+                    task: task,
+                    technique: technique,
+                    subject: subject
                  } });
             } else {
-                console.log('No data returned from the server');
+                alert('No data returned from the server');
             }
         } catch (error) {
             alert("Error fetching datasets: " + error);
@@ -75,10 +79,11 @@ const Search = () => {
                             value={searchString}
                             onChange={(e) => setSearchString(e.target.value)} 
                         />
-                        <InputAdornment position="start">
+                        <div id='filterIcon'>
                             <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
-                        </InputAdornment>
-                        <Filters 
+                        </div>
+                        
+                        <Filters
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}
                             geography_and_places={geography_and_places}

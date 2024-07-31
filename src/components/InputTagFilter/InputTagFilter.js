@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './InputTagFilter.css';
+import BackendConnector from '../BackendConnector';
 
-const InputTagFilter = ({ label, tags = [], setTags }) => {
+const InputTagFilter = ({ label, tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -20,25 +21,9 @@ const InputTagFilter = ({ label, tags = [], setTags }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (inputValue.length >= 3) {
-        const url = `http://10.100.30.74/api/search_tags/${category}/${inputValue}/3`;
-        const requestBody = {
-          tags: []
-        };
         try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-          });
-          if (!response.ok) {
-            alert('Network response was not ok');
-            return;
-          }
-
-          const data = await response.json();
-          setSuggestions(data.tags);
+          const fetchedSuggestions = await BackendConnector.fetchSuggestions(category, inputValue);
+          setSuggestions(fetchedSuggestions);
         } catch (error) {
           console.error('Error fetching suggestions:', error);
         }
@@ -80,18 +65,19 @@ const InputTagFilter = ({ label, tags = [], setTags }) => {
           onChange={handleInputChange}
           placeholder={label}
         />
-        <button id='deleteTagButton' onClick={clearInput}>&times;</button>
+        <button id='deleteTagButton' className='clearTagInput' onClick={clearInput}>&times;</button>
       </div>
-      {suggestions.length > 0 && (
-        <ul className='rowTags'>
-          {suggestions.map((suggestion, index) => (
-            <li id='tagFilterSuggestion' key={`${suggestion}-${index}`} onClick={() => handleTagSelect(suggestion)}>
-              {suggestion}
-            </li>
-          ))}
-        </ul>
-      )}
-      <div className='row'>
+      
+      <div className='tagsDisplay'>
+        {suggestions.length > 0 && (
+          <ul className='rowTags'>
+            {suggestions.map((suggestion, index) => (
+              <li id='tagFilterSuggestion' key={`${suggestion}-${index}`} onClick={() => handleTagSelect(suggestion)}>
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
         {tags.map((tag, index) => (
           <div id='tagFilter' key={`${tag}-${index}`}>
             {tag}
