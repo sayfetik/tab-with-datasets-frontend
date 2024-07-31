@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Input, Back, Header, Notification, UploadFile, InputTagFilter, BackendConnector } from '../../components';
+import { Input, Back, Header, Notification, UploadFile, InputTagFilter, BackendConnector, AutoResizeTextarea } from '../../components';
 import { useNotification } from '../../components/Notification/NotificationContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
+import sparklesIcon from '../../img/sparkles.png';
+import loadingGif from '../../img/loading.gif';
 
 const EditPage = () => {
     const { state: dataset } = useLocation();
@@ -12,6 +14,8 @@ const EditPage = () => {
       navigate(-1);
       showNotification("Датасет успешно обновлён!");
     };
+    const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
+    const [isLoadingTags, setIsLoadingTags] = useState(false);
 
     const [titleOfDataset, setTitleOfDataset] = useState(dataset.title);
     const [visibility, setVisibility] = useState(dataset.visibility);
@@ -21,6 +25,7 @@ const EditPage = () => {
     const [license, setLicense] = useState(dataset.license);
     const [doi, setDoi] = useState(dataset.doi);
     const [description, setDescription] = useState(dataset.description);
+    const [smallDescription, setSmallDescription] = useState(dataset.small_description);
     const [geography_and_places, setLocalGeography] = useState(dataset.geography_and_places);
     const [language, setLocalLanguage] = useState(dataset.language);
     const [data_type, setLocalDataType] = useState(dataset.data_type);
@@ -31,7 +36,43 @@ const EditPage = () => {
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
 
+    const generateSmallDescription = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            setIsLoadingSmallDesc(true);
+            const data = await BackendConnector.generateSmallDescription(description);
+            if (data.text && data.text.length > 0) {
+                setSmallDescription(data.text);
+            } else {
+                alert('No data returned from the server');
+            }
+            setIsLoadingSmallDesc(false);
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+            setIsLoadingSmallDesc(false);
+        }
+    };
+
+    const generateTags = async (e) => {
+        if (e) e.preventDefault();
+        try {
+            setIsLoadingTags(true);
+            const data = await BackendConnector.generateTags(description);
+            setLocalGeography(data.geography_and_places);
+            setLocalLanguage(data.language);
+            setLocalDataType(data.data_type);
+            setLocalTechnique(data.technique);
+            setLocalTask(data.task);
+            setLocalSubject(data.subject);
+            setIsLoadingTags(false);
+        } catch (error) {
+            alert("Error fetching datasets: " + error);
+            setIsLoadingTags(false);
+        }
+    };
+
     const areRequiredInputsFilled = description && titleOfDataset;
+
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled)  alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
         else {
@@ -41,6 +82,7 @@ const EditPage = () => {
                 data_source: dataSource,
                 expected_update_frequency: expectedUpdateFrequency,
                 description: description,
+                small_description: smallDescription,
                 tags: {
                     geography_and_places: geography_and_places,
                     language: language,
@@ -61,7 +103,8 @@ const EditPage = () => {
                 rating: dataset.rating,
                 usability_rating: dataset.usability_rating,
                 size: dataset.size,
-                size_bytes: dataset.size_bytes
+                size_bytes: dataset.size_bytes,
+                smaLL_description: smallDescription
             };
             BackendConnector.update(payload, files, image)
                 .then(response => {
@@ -142,16 +185,32 @@ const EditPage = () => {
                         <div id='descriptionInputContainer'>
                             <div className='metadataBigItem'>
                                 <div className='inputLabel'>Описание</div>
-                                <textarea
-                                    id='descriptionInput'
-                                    placeholder='Введите описание'
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    ></textarea>
+                                <AutoResizeTextarea value={description} setValue={setDescription} />
                             </div>
                         </div>
+                        <div id='rowContunuieLoading'>
+                            <button id='continuie' onClick={generateSmallDescription}>
+                                <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                Повторно сгенерировать краткое описание
+                            </button>
+                            {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                        </div>
                     </div>
-                
+                    <div id='smallDescriptionContainer'>
+                            <div id='descriptionInputContainer'>
+                                <div className='metadataBigItem'>
+                                    <div className='inputLabel'>Краткое описание</div>
+                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} />
+                                </div>
+                            </div>
+                            <div id='rowContunuieLoading'>
+                                <button id='continuie' onClick={generateTags}>
+                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                    Повторно сгенерировать теги
+                                </button>
+                                {isLoadingTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                            </div>
+                        </div>
                     <div>
                         <span className='inputLabel'>Теги</span>
                             <div id='tagType'>

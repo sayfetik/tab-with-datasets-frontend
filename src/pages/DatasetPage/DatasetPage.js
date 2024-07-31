@@ -51,6 +51,7 @@ const DatasetPage = () => {
         id: '',
         title: '',
         description: '',
+        small_description: '',
         tags: [],
         geography_and_places: [],
         language: [],

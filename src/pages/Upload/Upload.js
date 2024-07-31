@@ -43,6 +43,7 @@ const Upload = () => {
 
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
+        else if (files.length === 0) alert('Пожалуйста, загрузите файлы с данными датасета');
         else {
             const payload = {
                 title: titleOfDataset,
@@ -53,6 +54,7 @@ const Upload = () => {
                 expected_update_frequency: expectedUpdateFrequency,
                 license,
                 description,
+                small_description: smallDescription,
                 tags: {
                     geography_and_places,
                     language,
@@ -121,7 +123,6 @@ const Upload = () => {
             set_technique(data.technique);
             set_task(data.task);
             set_subject(data.subject);
-            setStateTags(true);
             setIsLoadingTags(false);
             setStateTags(true);
         } catch (error) {
@@ -135,7 +136,7 @@ const Upload = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles}/>
+            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} />
             <div className='metadataSection'>
                 <div>
                     <Input
