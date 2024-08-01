@@ -130,12 +130,12 @@ const Datasets = () => {
                                 applyChanges={handleSearch}
                                 />
                                 <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                                <option value="byRelevance">By relevance</option>
-                                <option value="byRating">By rating</option>
-                                <option value="byUsabilityRating">By usability rating</option>
-                                <option value="largeFirst">Large first</option>
-                                <option value="smallFirst">Small first</option>
-                            </select>
+                                    <option value="byRelevance">By relevance</option>
+                                    <option value="byRating">By rating</option>
+                                    <option value="byUsabilityRating">By usability rating</option>
+                                    <option value="largeFirst">Large first</option>
+                                    <option value="smallFirst">Small first</option>
+                                </select>
                             <button type='submit' id='searchButton'>Найти</button>
                             <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                         </form>

@@ -81,7 +81,7 @@ const DatasetCard = ({
                     <p className='fieldInfo'>{getFileWord(numberOfFiles)}</p>
                     <p className='fieldInfo'>{size}</p>
                 </div>
-            <p id='description'>{smallDescription}</p>
+            <p id='datasetCardDescription'>{smallDescription}</p>
             </div>
         </div>
     );

@@ -188,13 +188,7 @@ const EditPage = () => {
                                 <AutoResizeTextarea value={description} setValue={setDescription} />
                             </div>
                         </div>
-                        <div id='rowContunuieLoading'>
-                            <button id='continuie' onClick={generateSmallDescription}>
-                                <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
-                                Повторно сгенерировать краткое описание
-                            </button>
-                            {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-                        </div>
+                        
                     </div>
                     <div id='smallDescriptionContainer'>
                             <div id='descriptionInputContainer'>
@@ -203,13 +197,13 @@ const EditPage = () => {
                                     <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} />
                                 </div>
                             </div>
-                            <div id='rowContunuieLoading'>
-                                <button id='continuie' onClick={generateTags}>
+                            {/*<div id='rowContunuieLoading'>
+                                <button id='continuie' onClick={generateSmallDescription}>
                                     <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
-                                    Повторно сгенерировать теги
+                                    Повторно сгенерировать краткое описание
                                 </button>
-                                {isLoadingTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-                            </div>
+                                {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+    </div>*/}
                         </div>
                     <div>
                         <span className='inputLabel'>Теги</span>
@@ -237,6 +231,14 @@ const EditPage = () => {
                                 <p id='tagTypeLabel'>Предмет</p>
                                 <InputTagFilter label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
+                            
+                            {/*<div id='rowContunuieLoading'>
+                                <button id='continuie' onClick={generateTags}>
+                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                    Повторно сгенерировать теги
+                                </button>
+                                {isLoadingTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+    </div>*/}
                     </div>
 
                     <div id='saveButtons'>

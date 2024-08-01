@@ -45,7 +45,7 @@
     width: 100%;
 }
 
-#description {
+#datasetCardDescription {
     display: none;
     position: absolute;
     bottom: 10px;
@@ -56,7 +56,7 @@
     border-radius: 5px;
     color: #3b4168;
 }
-#datasetCard.expanded #description {
+#datasetCard.expanded #datasetCardDescription {
     display: block;
 }
 

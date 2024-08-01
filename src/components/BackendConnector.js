@@ -33,6 +33,7 @@ export default class BackendConnector {
             id: data.id || '',
             title: data.title || '',
             description: data.description || '',
+            small_description: data.small_description || '',
             geography_and_places: data.tags.geography_and_places || [],
             language: data.tags.language || [],
             data_type: data.tags.data_type || [],
