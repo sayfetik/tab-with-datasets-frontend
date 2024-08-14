@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Back, Header, Notification, UploadFile, InputTagFilter, BackendConnector, AutoResizeTextarea } from '../../components';
 import { useNotification } from '../../components/Notification/NotificationContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
-import sparklesIcon from '../../img/sparkles.png';
-import loadingGif from '../../img/loading.gif';
 
 const EditPage = () => {
     const { state: dataset } = useLocation();
@@ -14,8 +12,6 @@ const EditPage = () => {
       navigate(-1);
       showNotification("Датасет успешно обновлён!");
     };
-    const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
-    const [isLoadingTags, setIsLoadingTags] = useState(false);
 
     const [titleOfDataset, setTitleOfDataset] = useState(dataset.title);
     const [visibility, setVisibility] = useState(dataset.visibility);
@@ -26,6 +22,7 @@ const EditPage = () => {
     const [doi, setDoi] = useState(dataset.doi);
     const [description, setDescription] = useState(dataset.description);
     const [smallDescription, setSmallDescription] = useState(dataset.small_description);
+
     const [geography_and_places, setLocalGeography] = useState(dataset.geography_and_places);
     const [language, setLocalLanguage] = useState(dataset.language);
     const [data_type, setLocalDataType] = useState(dataset.data_type);
@@ -35,54 +32,42 @@ const EditPage = () => {
 
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
+    const [filesStructure, setFilesStructure] = useState(dataset.files_structure);
 
-    const generateSmallDescription = async (e) => {
-        if (e) e.preventDefault();
+    const fetchImage = async () => {
         try {
-            setIsLoadingSmallDesc(true);
-            const data = await BackendConnector.generateSmallDescription(description);
-            if (data.text && data.text.length > 0) {
-                setSmallDescription(data.text);
-            } else {
-                alert('No data returned from the server');
-            }
-            setIsLoadingSmallDesc(false);
+            const imageUrl = await BackendConnector.getImage(dataset.id);
+            setImage(imageUrl);
         } catch (error) {
-            alert("Error fetching datasets: " + error);
-            setIsLoadingSmallDesc(false);
+            console.error('Error fetching image:', error);
         }
     };
 
-    const generateTags = async (e) => {
-        if (e) e.preventDefault();
-        try {
-            setIsLoadingTags(true);
-            const data = await BackendConnector.generateTags(description);
-            setLocalGeography(data.geography_and_places);
-            setLocalLanguage(data.language);
-            setLocalDataType(data.data_type);
-            setLocalTechnique(data.technique);
-            setLocalTask(data.task);
-            setLocalSubject(data.subject);
-            setIsLoadingTags(false);
-        } catch (error) {
-            alert("Error fetching datasets: " + error);
-            setIsLoadingTags(false);
-        }
-    };
+
+    useEffect(() => {
+        const resetFilesStructure = {};
+        Object.keys(dataset.files_structure).forEach(key => {
+            resetFilesStructure[key] = false;
+        });
+        setFilesStructure(resetFilesStructure);
+        console.log(filesStructure)
+    }, [dataset.filesStructure]);
 
     const areRequiredInputsFilled = description && titleOfDataset;
 
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled)  alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
         else {
-            const payload = {
-                id: dataset.id,
+            const uploading_metadata = {
                 title: titleOfDataset,
-                data_source: dataSource,
-                expected_update_frequency: expectedUpdateFrequency,
-                description: description,
                 small_description: smallDescription,
+                visibility: visibility,
+                authors: authors,
+                data_source: dataSource,
+                doi: doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                license: license,
+                description: description,
                 tags: {
                     geography_and_places: geography_and_places,
                     language: language,
@@ -90,23 +75,10 @@ const EditPage = () => {
                     task: task,
                     technique: technique,
                     subject: subject
-                },
-                owner: dataset.owner,
-                authors: authors,
-                license: license,
-                number_of_files: dataset.number_of_files,
-                doi: doi,
-                last_change_date: dataset.last_change_date,
-                last_change_time: dataset.last_change_time || '',
-                downloads_number: dataset.downloads_number,
-                visibility: visibility,
-                rating: dataset.rating,
-                usability_rating: dataset.usability_rating,
-                size: dataset.size,
-                size_bytes: dataset.size_bytes,
-                smaLL_description: smallDescription
+                }
             };
-            BackendConnector.update(payload, files, image)
+            const files_updates = filesStructure;
+            BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, image)
                 .then(response => {
                     console.log(response);
                     navigate(`/dataset/${dataset.id}`)
@@ -114,7 +86,6 @@ const EditPage = () => {
                 .catch(error => {
                     console.error(error);
                 });
-                navigationButtonClick();
     };
 }
     
@@ -123,7 +94,7 @@ const EditPage = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure}/>
             <div className='metadataSection'>
             <div>
                     <Input
@@ -131,6 +102,7 @@ const EditPage = () => {
                         placeholder="Введите название"
                         value={titleOfDataset}
                         onChange={(e) => setTitleOfDataset(e.target.value)}
+                        textLimit={100}
                     />
                     <div className='metadataLabel'>Видимость *</div>
                     <select className="visible" id="metadataField" value={visibility} onChange={(e)=>setVisibility(e.target.value)}>
@@ -142,18 +114,21 @@ const EditPage = () => {
                         placeholder="Введите автора"
                         value={authors}
                         onChange={(e) => setAuthors(e.target.value)}
+                        textLimit={0}
                     />
                     <Input
                         label="Источник"
                         placeholder="Введите источник"
                         value={dataSource}
                         onChange={(e) => setDataSource(e.target.value)}
+                        textLimit={20}
                         />
                     <Input
                         label="Частота обновлений"
                         placeholder="Введите частоту обновлений"
                         value={expectedUpdateFrequency}
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
+                        textLimit={20}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
                     <select className="visible" value={license} id="metadataField">
@@ -177,7 +152,8 @@ const EditPage = () => {
                         placeholder="Укажите doi"
                         value={doi}
                         onChange={(e) => setDoi(e.target.value)}
-                        />
+                        textLimit={0}
+                    />
                 </div>
 
                 <div id='rightContainer'>
@@ -185,7 +161,7 @@ const EditPage = () => {
                         <div id='descriptionInputContainer'>
                             <div className='metadataBigItem'>
                                 <div className='inputLabel'>Описание</div>
-                                <AutoResizeTextarea value={description} setValue={setDescription} />
+                                <AutoResizeTextarea value={description} setValue={setDescription} textLimit={1000}/>
                             </div>
                         </div>
                         
@@ -194,16 +170,9 @@ const EditPage = () => {
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <div className='inputLabel'>Краткое описание</div>
-                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} />
+                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} textLimit={200}/>
                                 </div>
                             </div>
-                            {/*<div id='rowContunuieLoading'>
-                                <button id='continuie' onClick={generateSmallDescription}>
-                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
-                                    Повторно сгенерировать краткое описание
-                                </button>
-                                {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-    </div>*/}
                         </div>
                     <div>
                         <span className='inputLabel'>Теги</span>
@@ -231,14 +200,6 @@ const EditPage = () => {
                                 <p id='tagTypeLabel'>Предмет</p>
                                 <InputTagFilter label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
-                            
-                            {/*<div id='rowContunuieLoading'>
-                                <button id='continuie' onClick={generateTags}>
-                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
-                                    Повторно сгенерировать теги
-                                </button>
-                                {isLoadingTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-    </div>*/}
                     </div>
 
                     <div id='saveButtons'>

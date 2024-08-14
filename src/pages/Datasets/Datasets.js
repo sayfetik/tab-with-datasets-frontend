@@ -71,7 +71,6 @@ const Datasets = () => {
     };
 
     useEffect(() => {
-        handleSearch();
         let sorted = [...datasets];
         switch(selectedOption) {
             case 'byRelevance':
@@ -93,7 +92,7 @@ const Datasets = () => {
                 sorted = [...datasets];
         }
         setSortedData(sorted);
-    }, [selectedOption, datasets]);
+    }, [selectedOption]);
 
         return (
             <div>

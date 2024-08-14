@@ -45,7 +45,6 @@ const DatasetCard = ({
         }
     };
 
-
     const [isHovered, setIsHovered] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     let hoverTimer = null;
@@ -62,28 +61,50 @@ const DatasetCard = ({
     };
     
     return (
-        <div
-            id='datasetCard'
-            onClick={() => {navigate(`/dataset/${id}`)}}
-            className={isExpanded ? 'expanded' : ''} 
-            onMouseEnter={handleMouseEnter} 
-            onMouseLeave={handleMouseLeave}
-        >
-            <img id='datasetImage' src={image} alt='Dataset cover'></img>
-            <h3 id='datasetTitleOnCard'>{title}</h3>
-            <div id='cardInfo'>
-                <div className='rowSpaceBetween'>
+        <div id='hover'>
+            <div
+                id='datasetCard'
+                onClick={() => {navigate(`/dataset/${id}`)}}
+                className={isExpanded ? 'expanded' : ''} 
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <img id='datasetImage' src={image} alt='Dataset cover'></img>
+                <h3 id='datasetTitleOnCard'>{title}</h3>
+                <div id='cardInfo'>
                     <p className='fieldInfo' id='authors'>{authors}</p>
-                    <p className='fieldInfo' id='renewData'>{lastChangeDate}</p>
+                    <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDate}</p>
+                    <div className='rowSpaceBetween'>
+                        <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
+                        <div className='row'>
+                            <p className='fieldInfo'>{size} ({getFileWord(numberOfFiles)})</p>
+                        </div>
+                    </div>
                 </div>
-                <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
-                <div className='row'>
-                    <p className='fieldInfo'>{getFileWord(numberOfFiles)}</p>
-                    <p className='fieldInfo'>{size}</p>
+                <p id='datasetCardDescription'>{smallDescription}</p>
+            </div>
+
+            <div
+                id='datasetCardInvisible'
+                onClick={() => {navigate(`/dataset/${id}`)}}
+                onMouseEnter={handleMouseEnter} 
+                onMouseLeave={handleMouseLeave}
+            >  
+                <img id='datasetImage' src={image} alt='Dataset cover'></img>
+                <h3 id='datasetTitleOnCard'>{title}</h3>
+                <div id='cardInfo'>
+                    <p className='fieldInfo' id='authors'>{authors}</p>
+                    <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDate}</p>
+                    <div className='rowSpaceBetween'>
+                        <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
+                        <div className='row'>
+                            <p className='fieldInfo'>{size} ({getFileWord(numberOfFiles)})</p>
+                        </div>
+                    </div>
                 </div>
-            <p id='datasetCardDescription'>{smallDescription}</p>
             </div>
         </div>
+        
     );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNotification } from './NotificationContext';
-import closeIcon from '../../img/close.png'
+import closeIcon from '../../img/close.png';
 
 const Notification = () => {
   const { notification, hideNotification } = useNotification();

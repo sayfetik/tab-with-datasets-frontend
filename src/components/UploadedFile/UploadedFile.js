@@ -1,14 +1,14 @@
-import React from 'react'
-import './UploadedFile.css'
+import React from 'react';
+import './UploadedFile.css';
+import closeIcon from '../../img/close.png';
 
-class UploadedFile extends React.Component {
-    render() {
+const UploadedFile = ({ index, fileName, handleDeleteFile }) => {
         return (
             <div className='uploadedFile'>
-                <div id='uploadedFileName'>{this.props.fileName}</div>
+                <div id='uploadedFileName'>{fileName}</div>
+                <button onClick={() => handleDeleteFile(index)} style={{ margin: '0px 10px', border: 'none', fontWeight: '700', width: '20px', height: '20px'}}><img width='15px' height='15px' src={closeIcon}></img></button>
             </div>
-        ) 
-    }
+        )
 }
 
 export default UploadedFile

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AutoresizeTextarea.css'
 
-const AutoResizeTextarea = ({value, setValue}) => {
+const AutoResizeTextarea = ({value, setValue, textLimit, placeholder}) => {
   const [description, setDescription] = useState(value);
 
   useEffect(() => {
@@ -12,18 +12,41 @@ const AutoResizeTextarea = ({value, setValue}) => {
 
   const textareaRef = useRef(null);
 
-  const handleChange = (e) => {
-    setDescription(e.target.value);
+  const handleChange = (event) => {
+    if (event.target.value.length <= textLimit) {
+      setDescription(event.target.value);
+    }
   };
 
+  const counterColor = description.length < textLimit ? 'rgb(169 169 169)' : '#3E456F';
+
   return (
-    <textarea
-      id='descriptionInput'
-      placeholder='Введите описание'
-      value={description}
-      onChange={handleChange}
-      ref={textareaRef}
-    ></textarea>
+    <div>
+      {textLimit != 0 ? 
+        <div>
+          <textarea
+            id='descriptionInput'
+            placeholder={placeholder}
+            value={description}
+            maxLength={textLimit}
+            onChange={handleChange}
+            ref={textareaRef}
+          ></textarea>
+          <p id='textLimit'>
+            <p style={{color: counterColor}}>{description.length}</p>/{textLimit}
+          </p>
+        </div>
+        :
+        <textarea
+          id='descriptionInput'
+          placeholder={placeholder}
+          value={description}
+          onChange={handleChange}
+          ref={textareaRef}
+        ></textarea>
+      }
+    </div>
+    
   );
 }
 

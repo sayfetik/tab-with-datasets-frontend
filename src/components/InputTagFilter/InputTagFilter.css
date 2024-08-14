@@ -1,5 +1,5 @@
 #tagFilter {
-    padding: 5px 10px;
+    padding: 5px 15px;
     color: white;
     background-color: #3E456F;
     border: 1px solid white;
@@ -14,7 +14,7 @@
     margin-bottom: 5px;
 }
 #tagFilterSuggestion {
-    padding: 5px 10px;
+    padding: 5px 15px;
     color: #3E456F;
     border: 1px solid #3E456F;
     border-radius: 10px;
@@ -90,3 +90,9 @@
     display: flex;
     flex-wrap: wrap;
 }
+  
+  #inputTagsFilter .tagsDisplay,
+  #inputTagsFilter ul li {
+    text-transform: capitalize;
+  }
+  

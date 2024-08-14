@@ -52,3 +52,11 @@
     color: #3e456f86;
     font-size: 16px;
 }
+#inputTextSection div {
+    text-transform: capitalize;
+  }
+  
+  #inputTextSection input {
+    text-transform: capitalize;
+  }
+  

@@ -28,7 +28,9 @@ export default class BackendConnector {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
+        const responseData = await response.json();
+        const data = responseData.metadata;
+        const filesStructure = responseData.files_structure;
         return {
             id: data.id || '',
             title: data.title || '',
@@ -55,7 +57,8 @@ export default class BackendConnector {
             size: data.size || '',
             size_bytes: data.size_bytes || 0,
             files: data.files || [],
-            rating: data.rating || 0
+            rating: data.rating || 0,
+            files_structure: filesStructure || {}
         };
     }
 
@@ -101,10 +104,11 @@ export default class BackendConnector {
         return await this.post(this.upload_endpoint, formData);
     }
 
-    static async update(updatingMetadata, updatingFiles, updatingImage) {
+    static async update(id, uploading_metadata, files_updates, updatingFiles, updatingImage) {
         const formData = new FormData();
 
-        formData.append('metadata', JSON.stringify(updatingMetadata));
+        formData.append('uploading_metadata', JSON.stringify(uploading_metadata));
+        formData.append('files_updates', JSON.stringify(files_updates));
 
         for (let i = 0; i < updatingFiles.length; i++) {
             formData.append('files', updatingFiles[i]);
@@ -114,7 +118,9 @@ export default class BackendConnector {
             formData.append('image', updatingImage);
         }
 
-        return await this.post(this.update_endpoint, formData);
+        const api_url = `${this.update_endpoint}/${id}`;
+
+        return await this.post(api_url, formData);
     }
 
   static async get(endpoint) {

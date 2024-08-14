@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UploadFile.css';
 import UploadedFile from '../UploadedFile/UploadedFile';
 import deleteIcon from '../../img/delete.png'
 
-const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure }) => {
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
-    const handleFileChange = (event) => {
+    const handleFileAdding = (event) => {
         const selectedFiles = Array.from(event.target.files);
         setFiles(prevFiles => [...prevFiles, ...selectedFiles]);
+
+        const updatedStructure = { ...filesStructure };
+        selectedFiles.forEach(file => {
+            updatedStructure[file.name] = true;
+        });
+        setFilesStructure(updatedStructure);
     };
 
-    const handleImageChange = (event) => {
+    const handleDeleteFile = (index) => {
+        const keys = Object.keys(filesStructure);
+        const fileName = keys[index];
+
+        const newFiles = files.filter((_, i) => i !== index);
+        setFiles(newFiles);
+
+        const updatedStructure = { ...filesStructure };
+        delete updatedStructure[fileName];
+        setFilesStructure(updatedStructure);
+    };
+
+    const handleImageAdding = (event) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
             setImage(selectedImage);
@@ -23,6 +41,9 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
         setImage(null);
         setShowDeleteIcon(false);
     };
+    useEffect(() => {
+        console.log(filesStructure)
+    });
 
     return (
         <div className='uploadPage'>
@@ -34,7 +55,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
                         type="file"
                         id='chooseFiles'
                         style={{ display: 'none' }}
-                        onChange={handleFileChange}
+                        onChange={handleFileAdding}
                         multiple
                     />
                     <button className='seeFiles' onClick={() => {
@@ -53,13 +74,13 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
                                     type="file"
                                     id='chooseImage'
                                     style={{ display: 'none' }}
-                                    onChange={handleImageChange}
+                                    onChange={handleImageAdding}
                                     accept="image/*"
                                 />
                                 <button className='seeImage' onClick={() => {
                                     document.getElementById('chooseImage').click();
                                 }}>Просмотр файлов</button>
-                                <div className='limitImage'>0кБ / 100 МБ</div>
+                                <div className='limitImage'>0кБ / 10 МБ</div>
                             </div>
                         </div>
                     )}
@@ -100,9 +121,10 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage }) => {
                     <div className='uploadedFilesSection'>
                         <div className='uploadedFilesTitle'>Загруженные файлы</div>
                         <div className='uploadedFilesContainer'>
-                            {files.map((file, index) => (
-                                <UploadedFile key={index} fileName={file.name} />
-                            ))}
+                            {Object.entries(filesStructure).map(([fileName, fileSize], index) => (
+                                <UploadedFile key={index} fileName={fileName} index={index} handleDeleteFile={handleDeleteFile} />
+                            ))
+                            }
                         </div>
                     </div>
                 </div>

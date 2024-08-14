@@ -73,13 +73,14 @@ const DatasetPage = () => {
         usability_rating: 0,
         size: '',
         size_bytes: 0,
-        rating: 0
+        rating: 0,
+        files_structure: {}
     });
         
     const navigate = useNavigate();
 
     const handleEditClick = () => {
-        navigate('/editDataset', { state: dataset});
+        navigate('/editDataset', { state: dataset });
       };
 
     const handleDeleteClick = (event) => {
@@ -108,6 +109,21 @@ const DatasetPage = () => {
             }
         } catch (error) {
             console.error('Error downloading file:', error);
+        }
+    };
+
+    const getFileWord = (number) => {
+        if (11 <= number % 100 && number % 100 <= 14) {
+            return `${number} файлов`;
+        } else { 
+            const lastDigit = number % 10;
+            if (lastDigit === 1) {
+                return `${number} файл`;
+            } else if (2 <= lastDigit && lastDigit <= 4) {
+                return `${number} файла`;
+            } else {
+                return `${number} файлов`;
+            }
         }
     };
 
@@ -182,23 +198,28 @@ const DatasetPage = () => {
                             {dataset.number_of_files === 0 ?
 
                                 <div id='filesHeader'>
-                                    <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
-                                    {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
+                                    <p className='author'>Данные ({dataset.number_of_files} {getFileWord(dataset.number_of_files)})</p>
                                 </div>
 
                                 :
 
                                 <div>
                                     <div id='filesHeaderWithBottomDivider'>
-                                        <p className='author'>Данные ({dataset.number_of_files} файлов)</p>
+                                        <p className='author'>Данные ({getFileWord(dataset.number_of_files)})</p>
                                         {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
                                     </div>
                                     <div className='files'>
-                                        
+                                        {/*
                                             <div className='file'>
                                                 <Icon className="downloadIcon" image={downloadIconBlack} />
                                                 <p className='fileDownload'>files.zip</p>
+                                            </div>*/}
+                                            {Object.entries(dataset.files_structure).map(([fileName, fileSize], index) => (
+                                            <div key={index} className='file'>
+                                                <Icon className="downloadIcon" image={downloadIconBlack} />
+                                                <p className='fileDownload'>{fileName} - {fileSize}</p>
                                             </div>
+                                        ))}
                                     </div>
                                 </div> 
                             }
@@ -270,6 +291,7 @@ const DatasetPage = () => {
                                 lastChangeDatetime={dataset.last_change_datetime}
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
+                                smallDescription={dataset.small_description}
                             />
                         ))
                     ) : (

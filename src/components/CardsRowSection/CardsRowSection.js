@@ -36,6 +36,7 @@ const CardsRowSection = () => {
                                 lastChangeDatetime={dataset.last_change_datetime}
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
+                                smallDescription={dataset.small_description}
                             />
                         ))
                     ) : (

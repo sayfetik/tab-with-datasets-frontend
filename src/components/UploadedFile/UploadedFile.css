@@ -3,6 +3,9 @@
     color: #3E456F;
     padding: 1.7%;
     border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .uploadedFile {
     margin-bottom: 7px;
@@ -12,4 +15,5 @@
 }
 #uploadedFileName {
     padding-left: 4%;
+    color: #3b4168;
 }

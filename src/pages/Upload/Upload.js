@@ -9,10 +9,13 @@ import loadingGif from '../../img/loading.gif';
 const Upload = () => {
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
+
     const { showNotification } = useNotification();
     const navigate = useNavigate();
     const [descriptionState, setStateDescription] = useState(false);
+    const [descriptionFields, setStateDescriptionFields] = useState(false);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
+    const [choiceDescriptionState, setChoiceDescState] = useState(true);
     const [tagsState, setStateTags] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
@@ -36,47 +39,65 @@ const Upload = () => {
     const [task, set_task] = useState([]);
     const [technique, set_technique] = useState([]);
     const [subject, set_subject] = useState([]);
+    const [filesStructure, setFilesStructure] = useState({});
 
-    const areAllInputsFilled = collectionMethod && dataStructure && useCases;
+    const areAllInputsFilledForDesc = collectionMethod && dataStructure && useCases;
 
-    const areRequiredInputsFilled = areAllInputsFilled && titleOfDataset;
+    const areRequiredInputsFilled = areAllInputsFilledForDesc && titleOfDataset;
 
     const checkRequiredInputsAndUpload = () => {
         if (!areRequiredInputsFilled) alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
         else if (files.length === 0) alert('Пожалуйста, загрузите файлы с данными датасета');
         else {
             const payload = {
-                title: titleOfDataset,
-                visibility,
-                authors,
-                data_source: dataSource,
-                doi,
-                expected_update_frequency: expectedUpdateFrequency,
-                license,
-                description,
-                small_description: smallDescription,
-                tags: {
-                    geography_and_places,
-                    language,
-                    data_type,
-                    task,
-                    technique,
-                    subject
-                }
-            };  
-            BackendConnector.upload(payload, files, image)
-                .then(response => {
-                    console.log(response);
-                    navigate(`/dataset/${response.id}`);
-                    showNotification("Датасет успешно загружен!");
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    };
+                metadata: {
+                    title: titleOfDataset,
+                    visibility,
+                    authors,
+                    data_source: dataSource,
+                    doi,
+                    expected_update_frequency: expectedUpdateFrequency,
+                    license,
+                    description,
+                    small_description: smallDescription,
+                    tags: {
+                        geography_and_places,
+                        language,
+                        data_type,
+                        task,
+                        technique,
+                        subject
+                    }
+                },
+                files_structure: filesStructure
+            }
+        BackendConnector.upload(payload, files, image)
+            .then(response => {
+                console.log(response);
+                navigate(`/dataset/${response.id}`);
+                showNotification("Датасет успешно загружен!");
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        };  
+    }
+
+    const showDescriptionInput = async (e) => {
+        setStateDescription(true);
+        setStateDescriptionFields(false);
+    }
+
+    const showDescriptionFields = async (e) => {
+        setStateDescriptionFields(true);
+        setStateDescription(false);
+    }
 
     const generateDescription = async (e) => {
+        if (!areAllInputsFilledForDesc) {
+            alert('Заполните все обязательные поля с данными для генерации описания');
+            return;
+        }
         if (e) e.preventDefault();
         try {
             setIsLoading(true);
@@ -93,6 +114,11 @@ const Upload = () => {
             setIsLoading(false);
         }
     };
+
+    const generateSmallDescAndTags = async (e) => {
+        generateSmallDescription();
+        generateTags();
+    }
 
     const generateSmallDescription = async (e) => {
         if (e) e.preventDefault();
@@ -115,7 +141,7 @@ const Upload = () => {
     const generateTags = async (e) => {
         if (e) e.preventDefault();
         try {
-            setIsLoadingTags(true);
+            /*setIsLoadingTags(true);*/
             const data = await BackendConnector.generateTags(description);
             set_geography_and_places(data.geography_and_places);
             set_language(data.language);
@@ -123,20 +149,23 @@ const Upload = () => {
             set_technique(data.technique);
             set_task(data.task);
             set_subject(data.subject);
-            setIsLoadingTags(false);
-            setStateTags(true);
+            /*setIsLoadingTags(false);*/
         } catch (error) {
             alert("Error fetching datasets: " + error);
-            setIsLoadingTags(false);
+            /*setIsLoadingTags(false);*/
         }
     };
+
+    const showTags = async (e) => {
+        setStateTags(true);
+    }
 
     return (
         <div>
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} />
+            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure}/>
             <div className='metadataSection'>
                 <div>
                     <Input
@@ -144,6 +173,7 @@ const Upload = () => {
                         placeholder="Введите название"
                         value={titleOfDataset}
                         onChange={(e) => setTitleOfDataset(e.target.value)}
+                        textLimit={100}
                     />
                     <div className='metadataLabel'>Видимость *</div>
                     <select className="visible" id="metadataField" defaultValue={'public'} onChange={(e)=>setVisibility(e.target.value)}>
@@ -155,18 +185,21 @@ const Upload = () => {
                         placeholder="Введите автора"
                         value={authors}
                         onChange={(e) => setAuthors(e.target.value)}
+                        textLimit={0}
                     />
                     <Input
                         label="Источник"
                         placeholder="Введите источник"
                         value={dataSource}
                         onChange={(e) => setDataSource(e.target.value)}
+                        textLimit={20}
                         />
                     <Input
                         label="Частота обновлений"
                         placeholder="Введите частоту обновлений"
                         value={expectedUpdateFrequency}
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
+                        textLimit={20}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
                     <select defaultValue={"No license specified"} onChange={(e) => setLicense(e.target.value)} className="visible" id="metadataField">
@@ -190,47 +223,50 @@ const Upload = () => {
                         placeholder="Укажите doi"
                         value={doi}
                         onChange={(e) => setDoi(e.target.value)}
-                        />
+                        textLimit={0}
+                    />
                 </div>
 
                 <div id='rightContainer'>
-                    <BigInput 
-                        onChange={(e) => setCollectionMethod(e.target.value)}
-                        className='metadataBig'
-                        value={collectionMethod}
-                        label="Метод сбора данных *"
-                        placeholder="Введите информацию о том, как были получены данные" />
-                    <BigInput
-                        value={dataStructure}
-                        onChange={(e) => setDataStructure(e.target.value)}
-                        label="Структура данных *"
-                        placeholder="Опишите структуру данных" />
-                    <BigInput
-                        value={useCases}
-                        onChange={(e) => setUseCases(e.target.value)}
-                        label="Применение *"
-                        placeholder="Опишите применения датасета" />
+                    <div className='inputLabel'>Описание *</div>
+                    <div className='row'>
+                        <button id={descriptionFields ? 'descriptionChoice' : 'descriptionChosen'} onClick={showDescriptionInput}>
+                            Добавить своё описание
+                        </button>
+                        <div className='inputLabel' style={{marginBottom: '15px'}}>или</div>
+                        <button id={descriptionFields ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={showDescriptionFields}>
+                            Сгенерировать с помощью ИИ
+                        </button>
+                    </div>
 
-                        <div id='rowContunuieLoading'>
-                            {areAllInputsFilled && (
-                                <button id='continuie' onClick={generateDescription}>
-                                    <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
-                                    Сгенерировать описание
-                                </button>
-                            )}
+                    {descriptionFields && (
+                        <div>
+                            <AutoResizeTextarea placeholder="Введите информацию о том, как были получены данные" value={collectionMethod} setValue={setCollectionMethod} textLimit={300}/>
+
+                            <AutoResizeTextarea placeholder="Опишите структуру данных" value={dataStructure} setValue={setDataStructure} textLimit={300}/>
+
+                            <AutoResizeTextarea placeholder="Опишите применение датасета" value={useCases} setValue={setUseCases} textLimit={300}/>
+
+                            <div id='rowContunuieLoading'>
+                            <button id='continuie' onClick={generateDescription}>
+                                <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
+                                Сгенерировать описание
+                            </button>
                             {isLoading && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
                         </div>
-                    
+                        </div>
+                        )
+                    }
+
                     {descriptionState && (
                         <div>
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
-                                    <div className='inputLabel'>Описание</div>
-                                    <AutoResizeTextarea value={description} setValue={setDescription} />
+                                    <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={600}/>
                                 </div>
                             </div>
                             <div id='rowContunuieLoading'>
-                                <button id='continuie' onClick={generateSmallDescription}>
+                                <button id='continuie' onClick={generateSmallDescAndTags}>
                                     <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                     Сгенерировать краткое описание
                                 </button>
@@ -244,11 +280,11 @@ const Upload = () => {
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <div className='inputLabel'>Краткое описание</div>
-                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} />
+                                    <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={200}/>
                                 </div>
                             </div>
                             <div id='rowContunuieLoading'>
-                                <button id='continuie' onClick={generateTags}>
+                                <button id='continuie' onClick={showTags}>
                                     <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                     Сгенерировать теги
                                 </button>
