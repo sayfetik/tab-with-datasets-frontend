@@ -220,7 +220,7 @@ const DatasetPage = () => {
                     
                 <div id='datasetInfo'>
                     <div id='section'>
-                        <h1 id='descriptionLabel'>Описание</h1>
+                        <h2 id='descriptionLabel'>Описание</h2>
                         <p id='description'>{dataset.description}</p>
                         <div id='filesSection'>
                             {dataset.number_of_files === 0 ?

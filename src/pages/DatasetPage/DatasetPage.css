@@ -109,10 +109,10 @@
     margin-right: 2%;
 }
 #descriptionLabel {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 #description {
-    width: 90%;
+    width: 100%;
     margin-bottom: 30px;
 }
 #filesSection {
