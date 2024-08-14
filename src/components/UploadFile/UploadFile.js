@@ -80,7 +80,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                                 <button className='seeImage' onClick={() => {
                                     document.getElementById('chooseImage').click();
                                 }}>Просмотр файлов</button>
-                                <div className='limitImage'>0кБ / 10 МБ</div>
+                                <div className='limitImage'>0кБ / 100 МБ</div>
                             </div>
                         </div>
                     )}

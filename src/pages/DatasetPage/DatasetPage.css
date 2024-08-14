@@ -209,3 +209,21 @@
     background-color: #b45459;
     color: white;
 }
+#fileInFolder {
+    padding-left: 13px;
+    margin-left: 10px;
+    border-left: 1px solid #3E456F;
+}
+#folderIcon {
+    width: 20px;
+    margin-right: 10px;
+}
+#folderName {
+    color: #3E456F;
+    font-size: 18px;
+    font-weight: 500;
+    padding-left: 4px;
+    line-height: 20px;
+    margin-right: 2%;
+    margin-bottom: 5px;
+}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import downloadIconWhite from '../../img/downloadWhite.png'
-import downloadIconBlack from '../../img/downloadBlack.png'
+import downloadIconWhite from '../../img/downloadWhite.png';
+import folderDarkIcon from '../../img/folderDark.png';
+import downloadIconBlack from '../../img/downloadBlack.png';
+import line from '../../img/lineDark.png'
 import star from '../../img/star.png'
 import './DatasetPage.css'
 import { Back, Header, Icon, DatasetCard, BackendConnector, Download } from '../../components'
@@ -80,6 +82,7 @@ const DatasetPage = () => {
     const navigate = useNavigate();
 
     const handleEditClick = () => {
+        console.log(dataset);
         navigate('/editDataset', { state: dataset });
       };
 
@@ -126,6 +129,31 @@ const DatasetPage = () => {
             }
         }
     };
+
+    function getFileCountString(folderCount, fileCount) {
+        const getFolderWord = (count) => {
+          if (count % 10 === 1 && count % 100 !== 11) {
+            return 'папка';
+          } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+            return 'папки';
+          } else {
+            return 'папок';
+          }
+        };
+      
+        const getFileWord = (count) => {
+          if (count % 10 === 1 && count % 100 !== 11) {
+            return 'файл';
+          } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+            return 'файла';
+          } else {
+            return 'файлов';
+          }
+        };
+      
+        if (folderCount === 0) return `${fileCount} ${getFileWord(fileCount)}`;
+        return `${folderCount} ${getFolderWord(folderCount)}, ${fileCount} ${getFileWord(fileCount)}`;
+      }
 
     return (
         <div>
@@ -198,28 +226,74 @@ const DatasetPage = () => {
                             {dataset.number_of_files === 0 ?
 
                                 <div id='filesHeader'>
-                                    <p className='author'>Данные ({dataset.number_of_files} {getFileWord(dataset.number_of_files)})</p>
+                                    <p className='author'>Данные ({getFileWord(dataset.number_of_files)})</p>
                                 </div>
 
                                 :
 
                                 <div>
                                     <div id='filesHeaderWithBottomDivider'>
-                                        <p className='author'>Данные ({getFileWord(dataset.number_of_files)})</p>
-                                        {/*<p className='author' id='versionLabel'>{dataset.version}</p>*/}
+                                        {/* Calculate the number of folders and total files */}
+                                        {(() => {
+                                            const folderCount = Object.keys(dataset.files_structure).filter(key => 
+                                                typeof dataset.files_structure[key] === 'object' && dataset.files_structure[key] !== null
+                                            ).length; // Count the number of folders
+                                            
+                                            let totalFileCount = 0;
+
+                                            // Calculate the total number of files in all folders and flat structures
+                                            Object.entries(dataset.files_structure).forEach(([key, value]) => {
+                                                if (typeof value === 'object' && value !== null) {
+                                                    totalFileCount += Object.keys(value).length; // Count files in each folder
+                                                } else {
+                                                    totalFileCount += 1; // Count the flat structure as a single file
+                                                }
+                                            });
+
+                                            return (
+                                                <p className='author'>Данные ({getFileCountString(folderCount, totalFileCount)})</p>
+                                            );
+                                        })()}
+                                        {/* <p className='author' id='versionLabel'>{dataset.version}</p> */}
                                     </div>
                                     <div className='files'>
-                                        {/*
-                                            <div className='file'>
-                                                <Icon className="downloadIcon" image={downloadIconBlack} />
-                                                <p className='fileDownload'>files.zip</p>
-                                            </div>*/}
-                                            {Object.entries(dataset.files_structure).map(([fileName, fileSize], index) => (
-                                            <div key={index} className='file'>
-                                                <Icon className="downloadIcon" image={downloadIconBlack} />
-                                                <p className='fileDownload'>{fileName} - {fileSize}</p>
-                                            </div>
-                                        ))}
+                                        {(() => {
+                                            // Check if files_structure is an object and not null
+                                            if (typeof dataset.files_structure === 'object' && dataset.files_structure !== null) {
+                                                // Iterate through the entries of files_structure
+                                                return Object.entries(dataset.files_structure).map(([folderName, files], index) => {
+                                                    // Check if the current entry is an object (folder)
+                                                    if (typeof files === 'object' && files !== null) {
+                                                        return (
+                                                            <div key={index}>
+                                                                <div className='row'>
+                                                                    <img id="folderIcon" src={folderDarkIcon} />
+                                                                    <p id='folderName'>{folderName}</p>
+                                                                </div>
+                                                                {Object.entries(files).map(([fileName, fileSize], subIndex) => (
+                                                                    <div key={subIndex} className='file' id='fileInFolder'>
+                                                                        {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
+                                                                        
+                                                                        <p className='fileDownload'>{fileName} - {fileSize}</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        );
+                                                    } else {
+                                                        // If it's not an object, treat it as a flat structure
+                                                        return (
+                                                            <div key={index} className='file'>
+                                                                {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
+                                                                <p className='fileDownload'>{folderName} - {files}</p>
+                                                            </div>
+                                                        );
+                                                    }
+                                                });
+                                            } else {
+                                                // Handle the case where files_structure is not a valid object
+                                                return <p>No files available.</p>;
+                                            }
+                                        })()}
                                     </div>
                                 </div> 
                             }

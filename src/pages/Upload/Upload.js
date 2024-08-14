@@ -50,26 +50,23 @@ const Upload = () => {
         else if (files.length === 0) alert('Пожалуйста, загрузите файлы с данными датасета');
         else {
             const payload = {
-                metadata: {
-                    title: titleOfDataset,
-                    visibility,
-                    authors,
-                    data_source: dataSource,
-                    doi,
-                    expected_update_frequency: expectedUpdateFrequency,
-                    license,
-                    description,
-                    small_description: smallDescription,
-                    tags: {
-                        geography_and_places,
-                        language,
-                        data_type,
-                        task,
-                        technique,
-                        subject
-                    }
-                },
-                files_structure: filesStructure
+                title: titleOfDataset,
+                visibility,
+                authors,
+                data_source: dataSource,
+                doi,
+                expected_update_frequency: expectedUpdateFrequency,
+                license,
+                description,
+                small_description: smallDescription,
+                tags: {
+                    geography_and_places,
+                    language,
+                    data_type,
+                    task,
+                    technique,
+                    subject
+                }
             }
         BackendConnector.upload(payload, files, image)
             .then(response => {
