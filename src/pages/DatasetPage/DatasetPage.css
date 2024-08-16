@@ -92,7 +92,6 @@
     margin-right: 5px;
     margin-bottom: 5px;
     background-color: white;
-    text-transform: capitalize;
 }
 #tags {
     margin: 15px 10px 15px 0px;
@@ -226,4 +225,7 @@
     line-height: 20px;
     margin-right: 2%;
     margin-bottom: 5px;
+}
+.capitalize {
+    text-transform: capitalize;
 }

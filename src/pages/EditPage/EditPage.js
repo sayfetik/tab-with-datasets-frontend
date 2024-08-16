@@ -4,7 +4,7 @@ import { useNotification } from '../../components/Notification/NotificationConte
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 
-const EditPage = () => {
+const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit}) => {
     const { state: dataset } = useLocation();
     const { showNotification } = useNotification();
     const navigate = useNavigate();
@@ -43,14 +43,12 @@ const EditPage = () => {
         }
     };
 
-
     useEffect(() => {
         const resetFilesStructure = {};
         Object.keys(dataset.files_structure).forEach(key => {
             resetFilesStructure[key] = false;
         });
         setFilesStructure(resetFilesStructure);
-        console.log(filesStructure)
     }, [dataset.filesStructure]);
 
     const areRequiredInputsFilled = description && titleOfDataset;
@@ -94,7 +92,7 @@ const EditPage = () => {
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure}/>
             <div className='metadataSection'>
             <div>
                     <Input
@@ -102,7 +100,7 @@ const EditPage = () => {
                         placeholder="Введите название"
                         value={titleOfDataset}
                         onChange={(e) => setTitleOfDataset(e.target.value)}
-                        textLimit={100}
+                        textLimit={titleLimit}
                     />
                     <div className='metadataLabel'>Видимость *</div>
                     <select className="visible" id="metadataField" value={visibility} onChange={(e)=>setVisibility(e.target.value)}>
@@ -121,14 +119,14 @@ const EditPage = () => {
                         placeholder="Введите источник"
                         value={dataSource}
                         onChange={(e) => setDataSource(e.target.value)}
-                        textLimit={20}
+                        textLimit={sourceLimit}
                         />
                     <Input
                         label="Частота обновлений"
                         placeholder="Введите частоту обновлений"
                         value={expectedUpdateFrequency}
                         onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
-                        textLimit={20}
+                        textLimit={frequencyLimit}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
                     <select className="visible" value={license} id="metadataField">
@@ -161,7 +159,7 @@ const EditPage = () => {
                         <div id='descriptionInputContainer'>
                             <div className='metadataBigItem'>
                                 <div className='inputLabel'>Описание</div>
-                                <AutoResizeTextarea value={description} setValue={setDescription} textLimit={1000}/>
+                                <AutoResizeTextarea value={description} setValue={setDescription} textLimit={descriptionLimit}/>
                             </div>
                         </div>
                         
@@ -170,7 +168,7 @@ const EditPage = () => {
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <div className='inputLabel'>Краткое описание</div>
-                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} textLimit={200}/>
+                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                                 </div>
                             </div>
                         </div>

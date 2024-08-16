@@ -23,6 +23,14 @@ const DatasetPage = () => {
         }
     };
 
+    const formatFileSize = (size) => {
+        if (size === 0) return '0 Б';
+        const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
+        const i = Math.floor(Math.log(size) / Math.log(1024));
+        const formattedSize = (size / Math.pow(1024, i)).toFixed(2);
+        return `${formattedSize} ${sizes[i]}`;
+    };
+
     useEffect(() => {
         if (image === null) fetchImage();
 
@@ -173,7 +181,7 @@ const DatasetPage = () => {
                         <h1 id='datasetTitle'>{dataset.title}</h1>
                         <div id='tags'>
                             {dataset.geography_and_places.length >0 && dataset.geography_and_places.map((tag, index) => ( 
-                                tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
+                                tag !== "" && <span key={index} className='datasetTag capitalize'>{tag}</span>
                             ))}
                             {dataset.language.length > 0 && dataset.language.map((tag, index) => ( 
                                 tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
@@ -273,8 +281,7 @@ const DatasetPage = () => {
                                                                 {Object.entries(files).map(([fileName, fileSize], subIndex) => (
                                                                     <div key={subIndex} className='file' id='fileInFolder'>
                                                                         {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                        
-                                                                        <p className='fileDownload'>{fileName} - {fileSize}</p>
+                                                                        <p className='fileDownload'>{fileName} - {formatFileSize(fileSize)}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>

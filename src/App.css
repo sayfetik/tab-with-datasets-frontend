@@ -119,3 +119,6 @@ top: 50%;
 transform: translateY(-50%);
 pointer-events: none;
 }
+.warning {
+  color: rgb(225, 0, 0);
+}

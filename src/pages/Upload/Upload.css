@@ -275,11 +275,10 @@ padding: 0px 10px;
   justify-content: end;
 }
 #descriptionChoice {
-  border: 1px solid #d4bbe6;
+  border: none;
   color: #c59ce2;
 }
 #descriptionChosen {
-  background-color: white;
   color: #b575e3;
-  border: 1px solid #b575e3
+  border: none;
 }

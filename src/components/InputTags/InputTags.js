@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/*import React, { useState, useEffect } from 'react';
 import './InputTags.css'
 
 const InputTags = ({tags, setTags}) => {
@@ -62,4 +62,4 @@ const InputTags = ({tags, setTags}) => {
   );
 };
 
-export default InputTags;
+export default InputTags;*/
