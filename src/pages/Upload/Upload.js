@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Back, UploadFile, Header, Notification, BigInput, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
+import { Input, Back, UploadFile, Header, Notification, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../components/Notification/NotificationContext';
@@ -11,12 +11,10 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
     const navigate = useNavigate();
 
     const [isGenerateDesc, setIsGenerateDesc] = useState(false);
-    const [descriptionState, setStateDescription] = useState(true);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
     const [tagsState, setStateTags] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
-    const [isLoadingTags, setIsLoadingTags] = useState(false);
 
     const [description, setDescription] = useState('');
     const [smallDescription, setSmallDescription] = useState('');
@@ -56,8 +54,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
 
     const areAllInputsFilledForDesc = collectionMethod && dataStructure && useCases;
 
-    const areRequiredInputsFilled = isGenerateDesc && (titleOfDataset && generatedDescription && generatedSmallDescription && (Ggeography_and_places || Glanguage || Gdata_type || Gtask || Gtechnique || Gsubject))
-    || !isGenerateDesc && ((titleOfDataset && description && smallDescription && (geography_and_places || language || data_type || task || technique || subject)));
+    const areRequiredInputsFilled = ((isGenerateDesc && (titleOfDataset && generatedDescription && generatedSmallDescription && (Ggeography_and_places || Glanguage || Gdata_type || Gtask || Gtechnique || Gsubject)))
+    || (!isGenerateDesc && ((titleOfDataset && description && smallDescription && (geography_and_places || language || data_type || task || technique || subject)))));
 
     const upload = () => {
         if (files.length === 0) {

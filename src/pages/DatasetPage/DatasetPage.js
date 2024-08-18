@@ -291,7 +291,7 @@ const DatasetPage = () => {
                                                         return (
                                                             <div key={index} className='file'>
                                                                 {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                <p className='fileDownload'>{folderName} - {files}</p>
+                                                                <p className='fileDownload'>{folderName} - {formatFileSize(files)}</p>
                                                             </div>
                                                         );
                                                     }

@@ -22,7 +22,7 @@ const AutoResizeTextarea = ({value, setValue, textLimit, placeholder}) => {
 
   return (
     <div>
-      {textLimit != 0 ? 
+      {textLimit !== 0 ? 
         <div>
           <textarea
             id='descriptionInput'

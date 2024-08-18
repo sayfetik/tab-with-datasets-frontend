@@ -4,7 +4,7 @@ import { useNotification } from '../../components/Notification/NotificationConte
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 
-const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit}) => {
+const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimit, frequencyLimit}) => {
     const { state: dataset } = useLocation();
     const { showNotification } = useNotification();
     const navigate = useNavigate();
