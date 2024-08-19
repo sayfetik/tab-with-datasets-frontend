@@ -273,11 +273,12 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
                 <div id='rightContainer'>
                     <div className='inputLabel'>Описание *</div>
                     <div className='row'>
-                        <button id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
-                            Добавить своё описание</button>
-                        <div className='inputLabel' style={{marginBottom: '15px'}}>или</div>
+                    <p style={{marginBottom: '15px'}}>Выберите:</p>
+                        <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
+                            добавить своё описание</button>
+                        <p style={{marginBottom: '15px'}}>или</p>
                         <button id={isGenerateDesc ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={()=>{setIsGenerateDesc(true)}}>
-                            Сгенерировать с помощью ИИ</button>
+                            сгенерировать с помощью ИИ</button>
                     </div>
 
                     {!isGenerateDesc && <div>

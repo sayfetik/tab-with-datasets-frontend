@@ -10,7 +10,16 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     const [totalFileSize, setTotalFileSize] = useState(0);
     const [imageSize, setImageSize] = useState(0);
     const [fileSizes, setFileSizes] = useState(filesSizes);
-    let warningState = false;
+    let warningFileLimitState = false;
+    let warningImageLimitState = false;
+    
+    useEffect(()=> {
+        if (totalFileSize > 5*1024*1024*1024) warningFileLimitState = true;
+    }, [fileSizes])
+
+    useEffect(()=> {
+        if (imageSize > 100*1024*1024) warningImageLimitState = true;
+    }, [fileSizes])
 
     useEffect(()=>{
         setTotalFileSize(calculateTotalFileSize(fileSizes))
@@ -34,12 +43,6 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
         return Object.values(fileSizes).reduce((total, size) => total + size, 0);
     };
 
-    
-    useEffect(()=> {
-        console.log(filesStructure);
-        console.log(fileSizes);
-        if (totalFileSize > 5*1024*1024*1024) warningState = true;
-    }, [fileSizes])
 
     const handleFileAdding = (event) => {
         const selectedFiles = Array.from(event.target.files);
@@ -160,20 +163,36 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     return (
         <div className='uploadPage'>
             <h1>{pageLabel}</h1>
+            <div className='dropFile'>Загрузите файлы</div>
             <div className='uploadFilesContainer'>
                 <div className='uploadFile'>
-                    <div className='dropFile'>Загрузите файлы json, csv или один архив с файлами</div>
                     <input
                         type="file"
                         id='chooseFiles'
                         style={{ display: 'none' }}
                         onChange={handleFileAdding}
                         multiple
+                        accept=".json,.csv"
                     />
                     <button className='seeFiles' onClick={() => {
                         document.getElementById('chooseFiles').click();
                     }}>Просмотр файлов</button>
                     <div className='limitFile'>{formatFileSize(totalFileSize)} / 5 ГБ</div>
+                </div>
+                
+                <div className='uploadedFilesSection'>
+                    <div className='uploadedFilesTitle'>Загруженные файлы</div>
+                    <div className='uploadedFilesContainer'>
+                        {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
+                            <UploadedFile 
+                                key={index} 
+                                fileName={fileName} 
+                                fileSize={formatFileSize(fileSize)} 
+                                index={index}
+                                handleDeleteFile={handleDeleteFile} 
+                            />
+                        ))}
+                    </div>
                 </div>
 
                 <div>
@@ -229,23 +248,9 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                             )}
                         </div>
                     )}
-
-                    <div className='uploadedFilesSection'>
-                        <div className='uploadedFilesTitle'>Загруженные файлы</div>
-                        <div className='uploadedFilesContainer'>
-                            {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
-                                <UploadedFile 
-                                    key={index} 
-                                    fileName={fileName} 
-                                    fileSize={formatFileSize(fileSize)} 
-                                    index={index}
-                                    handleDeleteFile={handleDeleteFile} 
-                                />
-                            ))}
-                        </div>
-                    </div>
                     
-                    {warningState && <p className='warning'>* Размер загружаемых файлов превышает лимит</p>}
+                    {warningFileLimitState && <p className='warning'>* Размер загружаемых файлов превышает лимит</p>}
+                    {warningImageLimitState && <p className='warning'>* Размер обложки превышает лимит</p>}
                 </div>
             </div>
         </div>

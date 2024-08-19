@@ -265,7 +265,7 @@ padding: 0px 10px;
 }
 #descriptionChoice, #descriptionChosen {
   margin: 3px 15px 15px 0px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: none;
   font-weight: 600;
   border-radius: 20px;
@@ -275,10 +275,11 @@ padding: 0px 10px;
   justify-content: end;
 }
 #descriptionChoice {
-  border: none;
+  border: 1px solid #d4bbe6;
   color: #c59ce2;
 }
 #descriptionChosen {
+  background-color: white;
   color: #b575e3;
-  border: none;
+  border: 1px solid #b575e3
 }
