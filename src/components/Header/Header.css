@@ -221,7 +221,7 @@ button, select {
 button, input {
     overflow: visible;
 }
-button, input, optgroup, select, textarea {
+button, input, optgroup, select {
     color: inherit;
     font-family: inherit;
     font-size: inherit;

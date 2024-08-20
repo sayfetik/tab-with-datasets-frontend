@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AutoresizeTextarea.css'
 
-const AutoResizeTextarea = ({value, setValue, textLimit, placeholder}) => {
+const AutoResizeTextarea = ({value, setValue, textLimit, placeholder, label}) => {
   const [description, setDescription] = useState(value);
+  const textareaRef = useRef(null);
 
   useEffect(() => {
     setValue(description);
-    textareaRef.current.style.height = 'auto';
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
   }, [description]);
-
-  const textareaRef = useRef(null);
 
   const handleChange = (event) => {
     if (event.target.value.length <= textLimit) {
@@ -22,10 +23,11 @@ const AutoResizeTextarea = ({value, setValue, textLimit, placeholder}) => {
 
   return (
     <div>
+      {label && <div id='inputLabel'>{label}</div>}
       {textLimit !== 0 ? 
-        <div>
+        <div className='row'>
           <textarea
-            id='descriptionInput'
+            id='textarea'
             placeholder={placeholder}
             value={description}
             maxLength={textLimit}
@@ -38,7 +40,7 @@ const AutoResizeTextarea = ({value, setValue, textLimit, placeholder}) => {
         </div>
         :
         <textarea
-          id='descriptionInput'
+          id='textarea'
           placeholder={placeholder}
           value={description}
           onChange={handleChange}

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Input, Back, UploadFile, Header, Notification, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
+import { Back, UploadFile, Header, Notification, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../../components/Notification/NotificationContext';
 import sparklesIcon from '../../img/sparkles.png';
 import loadingGif from '../../img/loading.gif';
 
-const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit}) => {
+const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
@@ -211,41 +211,41 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
             <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={{}} />
             <div className='metadataSection'>
                 <div>
-                    <Input
+                    <AutoResizeTextarea
                         label="Название *"
                         placeholder="Введите название"
                         value={titleOfDataset}
-                        onChange={(e) => setTitleOfDataset(e.target.value)}
+                        setValue={setTitleOfDataset}
                         textLimit={titleLimit}
                     />
                     <div className='metadataLabel'>Видимость *</div>
-                    <select className="visible" id="metadataField" defaultValue={'public'} onChange={(e)=>setVisibility(e.target.value)}>
+                    <select className="selectionInput" defaultValue={'public'} onChange={(e)=>setVisibility(e.target.value)}>
                         <option value="private">Приватный</option>
                         <option value="public">Публичный</option>
                     </select>
-                    <Input
+                    <AutoResizeTextarea
                         label="Авторы"
                         placeholder="Введите автора"
                         value={authors}
-                        onChange={(e) => setAuthors(e.target.value)}
-                        textLimit={0}
+                        setValue={setAuthors}
+                        textLimit={authorsLimit}
                     />
-                    <Input
+                    <AutoResizeTextarea
                         label="Источник"
                         placeholder="Введите источник"
                         value={dataSource}
-                        onChange={(e) => setDataSource(e.target.value)}
+                        setValue={setDataSource}
                         textLimit={sourceLimit}
                         />
-                    <Input
+                    <AutoResizeTextarea
                         label="Частота обновлений"
                         placeholder="Введите частоту обновлений"
                         value={expectedUpdateFrequency}
-                        onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
+                        setValue={setExpectedUpdateFrequency}
                         textLimit={frequencyLimit}
                         />
                     <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
-                    <select defaultValue={"No license specified"} onChange={(e) => setLicense(e.target.value)} className="visible" id="metadataField">
+                    <select defaultValue={"No license specified"} onChange={(e) => setLicense(e.target.value)} className="selectionInput">
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                         <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
@@ -261,17 +261,17 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
                         <option value="Additional License Coverage Options">Additional License Coverage Options</option>
                         <option value="No license specified">No license specified</option>
                     </select>
-                    <Input
+                    <AutoResizeTextarea
                         label="DOI"
                         placeholder="Укажите doi"
                         value={doi}
-                        onChange={(e) => setDoi(e.target.value)}
-                        textLimit={0}
+                        setValue={setDoi}
+                        textLimit={doiLimit}
                     />
                 </div>
 
                 <div id='rightContainer'>
-                    <div className='inputLabel'>Описание *</div>
+                    <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                     <div className='row'>
                     <p style={{marginBottom: '15px'}}>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
@@ -342,9 +342,9 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimi
 
                     {isGenerateDesc && <div>
                     <div>
-                        <AutoResizeTextarea placeholder="Введите информацию о том, как были получены данные" value={collectionMethod} setValue={setCollectionMethod} textLimit={descriptionFieldsLimit}/>
-                        <AutoResizeTextarea placeholder="Опишите структуру данных" value={dataStructure} setValue={setDataStructure} textLimit={descriptionFieldsLimit}/>
-                        <AutoResizeTextarea placeholder="Опишите применение датасета" value={useCases} setValue={setUseCases} textLimit={descriptionFieldsLimit}/>
+                        <AutoResizeTextarea placeholder="Введите информацию о том, как были получены данные" value={collectionMethod} setValue={setCollectionMethod} textLimit={descriptionFieldsLimit} label=''/>
+                        <AutoResizeTextarea placeholder="Опишите структуру данных" value={dataStructure} setValue={setDataStructure} textLimit={descriptionFieldsLimit} label=''/>
+                        <AutoResizeTextarea placeholder="Опишите применение датасета" value={useCases} setValue={setUseCases} textLimit={descriptionFieldsLimit} label=''/>
 
                         <div id='rowContunuieLoading'>
                             <button id='continuie' onClick={generateDescription}>

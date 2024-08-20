@@ -3,33 +3,42 @@ import './UploadFile.css';
 import UploadedFile from '../UploadedFile/UploadedFile';
 import deleteIcon from '../../img/delete.png';
 import JSZip from 'jszip';
+import uploadIcon from '../../img/upload.png';
 
 const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes }) => {
+    const beginFilesSizes = filesSizes;
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
     const [isZipUploaded, setIsZipUploaded] = useState(false);
+    const [uploadFilesChoice, setuploadFilesChoice] = useState(true);
     const [totalFileSize, setTotalFileSize] = useState(0);
     const [imageSize, setImageSize] = useState(0);
     const [fileSizes, setFileSizes] = useState(filesSizes);
-    let warningFileLimitState = false;
-    let warningImageLimitState = false;
+
+    const [warningFileLimitState, setwarningFileLimitState] = useState(false);
+    const [warningImageLimitState, setwarningImageLimitState] = useState(false);
+    const [warningInvalidZip, setwarningInvalidZip] = useState(false);
+    const [warningZips, setwarningZips] = useState(false);
     
     useEffect(()=> {
-        if (totalFileSize > 5*1024*1024*1024) warningFileLimitState = true;
-    }, [fileSizes])
+        if (totalFileSize > 5*1024*1024*1024) setwarningFileLimitState(true);
+        setwarningFileLimitState(false);
+        setwarningInvalidZip(false);
+        setwarningZips(false);
 
-    useEffect(()=> {
-        if (imageSize > 100*1024*1024) warningImageLimitState = true;
-    }, [fileSizes])
+        if (imageSize > 100*1024*1024) setwarningImageLimitState(true);
+        setwarningImageLimitState(false);
+    }, [fileSizes, image])
 
     useEffect(()=>{
         setTotalFileSize(calculateTotalFileSize(fileSizes))
     }, [pageLabel])
 
-    const isValidFile = (file) => {
-        const validExtensions = ['.csv', '.json'];
-        const fileExtension = file.name.slice((file.name.lastIndexOf(".") - 1 >>> 0) + 2);
-        return validExtensions.includes(`.${fileExtension}`);
-    };
+    useEffect(()=>{
+        setFiles([]);
+        setFileSizes({})
+        setTotalFileSize(calculateTotalFileSize(beginFilesSizes))
+        setIsZipUploaded(false)
+    }, [uploadFilesChoice])
 
     const formatFileSize = (size) => {
         if (size === 0) return '0 Б';
@@ -43,19 +52,13 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
         return Object.values(fileSizes).reduce((total, size) => total + size, 0);
     };
 
-
     const handleFileAdding = (event) => {
         const selectedFiles = Array.from(event.target.files);
         const zipFile = selectedFiles.find(file => file.name.endsWith('.zip'));
 
         if (zipFile) {
-            if (files.length > 0 && !isZipUploaded) {
-                alert('Сначала удалите загруженные файлы перед загрузкой ZIP архива.');
-                return;
-            }
-
             if (isZipUploaded) {
-                alert('Вы можете загрузить только один ZIP архив.');
+                setwarningZips(true);
                 return;
             }
 
@@ -84,34 +87,23 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                         updatedFileSizes[zipFile.name] = zipFile.size;
                         setFileSizes(updatedFileSizes);
                     } else {
-                        alert('ZIP архив должен содержать только CSV или JSON файлы.');
+                        setwarningInvalidZip(true);
                     }
                 });
             };
             reader.readAsArrayBuffer(zipFile);
         } else {
-            if (isZipUploaded) {
-                alert('Вы можете загрузить только один ZIP архив.');
-                return;
-            }
-
-            const validFiles = selectedFiles.filter(isValidFile);
-            if (validFiles.length !== selectedFiles.length) {
-                alert('Разрешены только CSV и JSON файлы.');
-                return;
-            }
-
             // Обновляем состояние файлов и общий размер
-            setFiles(prevFiles => [...prevFiles, ...validFiles]);
+            setFiles(prevFiles => [...prevFiles, ...selectedFiles]);
 
             const updatedStructure = { ...filesStructure };
-            validFiles.forEach(file => {
+            selectedFiles.forEach(file => {
                 updatedStructure[file.name] = true;
             });
             setFilesStructure(updatedStructure);
 
             const updatedFileSizes = { ...fileSizes };
-            validFiles.forEach(file => {
+            selectedFiles.forEach(file => {
                 updatedFileSizes[file.name] = file.size;
             });
             setFileSizes(updatedFileSizes);
@@ -163,56 +155,17 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     return (
         <div className='uploadPage'>
             <h1>{pageLabel}</h1>
-            <div className='dropFile'>Загрузите файлы</div>
-            <div className='uploadFilesContainer'>
-                <div className='uploadFile'>
-                    <input
-                        type="file"
-                        id='chooseFiles'
-                        style={{ display: 'none' }}
-                        onChange={handleFileAdding}
-                        multiple
-                        accept=".json,.csv"
-                    />
-                    <button className='seeFiles' onClick={() => {
-                        document.getElementById('chooseFiles').click();
-                    }}>Просмотр файлов</button>
-                    <div className='limitFile'>{formatFileSize(totalFileSize)} / 5 ГБ</div>
-                </div>
-                
-                <div className='uploadedFilesSection'>
-                    <div className='uploadedFilesTitle'>Загруженные файлы</div>
-                    <div className='uploadedFilesContainer'>
-                        {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
-                            <UploadedFile 
-                                key={index} 
-                                fileName={fileName} 
-                                fileSize={formatFileSize(fileSize)} 
-                                index={index}
-                                handleDeleteFile={handleDeleteFile} 
-                            />
-                        ))}
-                    </div>
-                </div>
-
+            <div style={{margin: '15px'}}></div>
+            
+            <div className='metadataSection'>
                 <div>
-                    <div className='coverImageText'>Обложка для датасета</div>
+                    <div id='filesSectionTitle'>Обложка для датасета <span style={{marginLeft: '20px'}} className='limitFile'>{formatFileSize(imageSize)} / 100 МБ</span></div>
                     {!image && (
-                        <div>
-                            <div className='uploadImage' id='datasetImageUpload'>
-                                <div className='dropImage'>Загрузить обложку</div>
-                                <input
-                                    type="file"
-                                    id='chooseImage'
-                                    style={{ display: 'none' }}
-                                    onChange={handleImageAdding}
-                                    accept="image/*"
-                                />
-                                <button className='seeImage' onClick={() => {
-                                    document.getElementById('chooseImage').click();
-                                }}>Просмотр файлов</button>
-                                <div className='limitImage'>{formatFileSize(imageSize)} / 100 МБ</div>
-                            </div>
+                        <div className='uploadImage'>
+                            <img src={uploadIcon}></img>
+                            <input type="file" id='chooseImage' style={{ display: 'none' }} onChange={handleImageAdding} accept="image/*"/>
+                            <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseImage').click()}}>выберите файлы</span></p>
+                            
                         </div>
                     )}
                     {image && (
@@ -229,19 +182,17 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                                 src={URL.createObjectURL(image)}
                                 alt="Uploaded cover"
                                 id='coverPreviewImage'
-                                style={{
-                                    filter: showDeleteIcon ? 'brightness(70%)' : 'none',
-                                }}
+                                style={{ filter: showDeleteIcon ? 'brightness(70%)' : 'none' }}
                             />
                             {showDeleteIcon && (
                                 <img src={deleteIcon} alt='Удалить обложку датасета'
-                                style={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    width: '40px',
-                                    transform: 'translate(-50%, -50%)',
-                                    cursor: 'pointer',
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        width: '40px',
+                                        transform: 'translate(-50%, -50%)',
+                                        cursor: 'pointer',
                                 }}
                                 onClick={handleDeleteImage}
                             />
@@ -249,8 +200,50 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                         </div>
                     )}
                     
-                    {warningFileLimitState && <p className='warning'>* Размер загружаемых файлов превышает лимит</p>}
-                    {warningImageLimitState && <p className='warning'>* Размер обложки превышает лимит</p>}
+                    {warningImageLimitState && <p className='warning'>Размер обложки превышает лимит</p>}
+                </div>
+                <div id='rightContainer'>
+                        <div id='filesSectionTitle' className='row'>
+                            Загрузите датасет *
+                            <button style={{marginLeft: '10px'}} id={uploadFilesChoice ? 'uploadChosen' : 'uploadChoice'} onClick={()=>{setuploadFilesChoice(true)}}>
+                                json, csv</button>
+                            <p>или</p>
+                            <button id={uploadFilesChoice ? 'uploadChoice' : 'uploadChosen'} style={{marginLeft: '15px'}} onClick={()=>{setuploadFilesChoice(false)}}>
+                                zip</button>
+                        </div>
+                        <div className='row' id='filesPart'>
+                            {uploadFilesChoice && <div className='uploadFile'>
+                                <input type="file" id='chooseFiles' style={{ display: 'none' }} onChange={handleFileAdding} multiple accept=".json,.csv"/>
+                                <img src={uploadIcon}></img>
+                                <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseFiles').click()}}>выберите файлы</span></p>
+                                <div className='limitFile'></div>
+                            </div>}
+
+                            {!uploadFilesChoice && <div className='uploadFile'>
+                                <input type="file" id='chooseZip' style={{ display: 'none' }} onChange={handleFileAdding} multiple accept=".zip"/>
+                                <img src={uploadIcon}></img>
+                                <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseZip').click()}}>выберите zip</span></p>
+                            </div>}
+
+                            <div className='uploadedFilesSection'>
+                                <div style={{margin: '5px'}}></div>
+                                <div id='inputLabel' style={{display: 'flex', justifyContent: 'space-between'}}>Загруженные файлы <span>{formatFileSize(totalFileSize)} / 5 ГБ</span></div>
+                                <div className='uploadedFilesContainer'>
+                                    {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
+                                        <UploadedFile 
+                                            key={index} 
+                                            fileName={fileName} 
+                                            fileSize={formatFileSize(fileSize)} 
+                                            index={index}
+                                            handleDeleteFile={handleDeleteFile} 
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                    </div>
+                    {warningFileLimitState && <p className='warning'>Размер загружаемых файлов превышает лимит</p>}
+                    {warningInvalidZip && <p className='warning'>ZIP архив должен содержать только JSON или CSV файлы.</p>}
+                    {warningZips && <p className='warning'>Вы можете загрузить только один ZIP архив.</p>}
                 </div>
             </div>
         </div>

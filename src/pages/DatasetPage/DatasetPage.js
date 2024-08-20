@@ -369,7 +369,7 @@ const DatasetPage = () => {
                                 title={dataset.title}
                                 authors={dataset.authors}
                                 numberOfFiles={dataset.number_of_files}
-                                lastChangeDatetime={dataset.last_change_datetime}
+                                lastChangeDatetime={dataset.last_change_date}
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
                                 smallDescription={dataset.small_description}
