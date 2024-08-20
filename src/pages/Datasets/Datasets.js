@@ -71,6 +71,10 @@ const Datasets = () => {
     };
 
     useEffect(() => {
+        handleSearch();
+    }, [datasets])
+
+    useEffect(() => {
         let sorted = [...datasets];
         switch(selectedOption) {
             case 'byRelevance':
@@ -128,7 +132,7 @@ const Datasets = () => {
                                 setSubject={setSubject}
                                 applyChanges={handleSearch}
                                 />
-                                <select className="visible" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+                                <select className="selectionInput" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                     <option value="byRelevance">By relevance</option>
                                     <option value="byRating">By rating</option>
                                     <option value="byUsabilityRating">By usability rating</option>
