@@ -123,3 +123,6 @@ pointer-events: none;
   margin-top: 5px;
   color: rgb(225, 0, 0);
 }
+.displayNone {
+  display: none;
+}

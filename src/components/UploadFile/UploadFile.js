@@ -155,79 +155,65 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     return (
         <div className='uploadPage'>
             <h1>{pageLabel}</h1>
-            <div style={{margin: '15px'}}></div>
             
-            <div className='metadataSection'>
+            <div className='filesSection'>
                 <div>
-                    <div id='filesSectionTitle'>Обложка для датасета <span style={{marginLeft: '20px'}} className='limitFile'>{formatFileSize(imageSize)} / 100 МБ</span></div>
+                    <div id='filesSectionTitle'>Обложка для датасета <span className='limitFile'>{formatFileSize(imageSize)} / 100 МБ</span></div>
                     {!image && (
                         <div className='uploadImage'>
                             <img src={uploadIcon}></img>
-                            <input type="file" id='chooseImage' style={{ display: 'none' }} onChange={handleImageAdding} accept="image/*"/>
+                            <input type="file" id='chooseImage' className='displayNone' onChange={handleImageAdding} accept="image/*"/>
                             <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseImage').click()}}>выберите файлы</span></p>
-                            
                         </div>
                     )}
                     {image && (
-                        <div
-                            id='datasetImageUpload'
-                            onMouseEnter={() => setShowDeleteIcon(true)}
-                            onMouseLeave={() => setShowDeleteIcon(false)}
-                            style={{
-                                position: 'relative',
-                                display: 'inline-block',
-                            }}
-                        >
+                        <div id='datasetImageUpload' >
                             <img
+                                onMouseEnter={() => setShowDeleteIcon(true)}
+                                onMouseLeave={() => setShowDeleteIcon(false)}
+                                style={{ filter: showDeleteIcon ? 'brightness(70%)' : 'none' }}
                                 src={URL.createObjectURL(image)}
                                 alt="Uploaded cover"
                                 id='coverPreviewImage'
-                                style={{ filter: showDeleteIcon ? 'brightness(70%)' : 'none' }}
                             />
                             {showDeleteIcon && (
                                 <img src={deleteIcon} alt='Удалить обложку датасета'
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '50%',
-                                        width: '40px',
-                                        transform: 'translate(-50%, -50%)',
-                                        cursor: 'pointer',
-                                }}
-                                onClick={handleDeleteImage}
-                            />
+                                    onMouseEnter={() => setShowDeleteIcon(true)}
+                                    onMouseLeave={() => setShowDeleteIcon(false)}
+                                    id='deleteImageIcon'
+                                    onClick={handleDeleteImage}
+                                />
                             )}
                         </div>
                     )}
                     
                     {warningImageLimitState && <p className='warning'>Размер обложки превышает лимит</p>}
                 </div>
-                <div id='rightContainer'>
-                        <div id='filesSectionTitle' className='row'>
+                <div>
+                        <div id='filesSectionTitle'>
                             Загрузите датасет *
-                            <button style={{marginLeft: '10px'}} id={uploadFilesChoice ? 'uploadChosen' : 'uploadChoice'} onClick={()=>{setuploadFilesChoice(true)}}>
+                            <button id={uploadFilesChoice ? 'uploadChosen' : 'uploadChoice'} onClick={()=>{setuploadFilesChoice(true)}}>
                                 json, csv</button>
                             <p>или</p>
-                            <button id={uploadFilesChoice ? 'uploadChoice' : 'uploadChosen'} style={{marginLeft: '15px'}} onClick={()=>{setuploadFilesChoice(false)}}>
+                            <button id={uploadFilesChoice ? 'uploadChoice' : 'uploadChosen'} onClick={()=>{setuploadFilesChoice(false)}}>
                                 zip</button>
                         </div>
-                        <div className='row' id='filesPart'>
+                        <div id='filesPart'>
                             {uploadFilesChoice && <div className='uploadFile'>
-                                <input type="file" id='chooseFiles' style={{ display: 'none' }} onChange={handleFileAdding} multiple accept=".json,.csv"/>
+                                <input type="file" id='chooseFiles' className='displayNone' onChange={handleFileAdding} multiple accept=".json,.csv"/>
                                 <img src={uploadIcon}></img>
                                 <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseFiles').click()}}>выберите файлы</span></p>
                                 <div className='limitFile'></div>
                             </div>}
 
                             {!uploadFilesChoice && <div className='uploadFile'>
-                                <input type="file" id='chooseZip' style={{ display: 'none' }} onChange={handleFileAdding} multiple accept=".zip"/>
+                                <input type="file" id='chooseZip' className='displayNone' onChange={handleFileAdding} multiple accept=".zip"/>
                                 <img src={uploadIcon}></img>
                                 <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseZip').click()}}>выберите zip</span></p>
                             </div>}
 
                             <div className='uploadedFilesSection'>
-                                <div style={{margin: '5px'}}></div>
-                                <div id='inputLabel' style={{display: 'flex', justifyContent: 'space-between'}}>Загруженные файлы <span>{formatFileSize(totalFileSize)} / 5 ГБ</span></div>
+                                <div id='inputLabel' className='rowSpaceBetween'>Загруженные файлы <span>{formatFileSize(totalFileSize)} / 5 ГБ</span></div>
                                 <div className='uploadedFilesContainer'>
                                     {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
                                         <UploadedFile 

@@ -28,7 +28,7 @@ const DatasetCard = ({
 
     useEffect(() => {
         if (image === null) fetchImage();
-    })
+    }, [image])
 
     const getFileWord = (number) => {
         if (11 <= number % 100 && number % 100 <= 14) {
@@ -44,31 +44,10 @@ const DatasetCard = ({
             }
         }
     };
-
-    const [isHovered, setIsHovered] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(false);
-    let hoverTimer = null;
-
-    const handleMouseEnter = () => {
-        setIsExpanded(true);
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        clearTimeout(hoverTimer);
-        setIsExpanded(false);
-        setIsHovered(false);
-    };
     
     return (
         <div id='hover'>
-            <div
-                id='datasetCard'
-                onClick={() => {navigate(`/dataset/${id}`)}}
-                className={isExpanded ? 'expanded' : ''} 
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
+            <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}}>
                 <img id='datasetImage' src={image} alt='Dataset cover'></img>
                 <h3 id='datasetTitleOnCard'>{title}</h3>
                 <div id='cardInfo'>
@@ -82,26 +61,6 @@ const DatasetCard = ({
                     </div>
                 </div>
                 <p id='datasetCardDescription'>{smallDescription}</p>
-            </div>
-
-            <div
-                id='datasetCardInvisible'
-                onClick={() => {navigate(`/dataset/${id}`)}}
-                onMouseEnter={handleMouseEnter} 
-                onMouseLeave={handleMouseLeave}
-            >  
-                <img id='datasetImage' src={image} alt='Dataset cover'></img>
-                <h3 id='datasetTitleOnCard'>{title}</h3>
-                <div id='cardInfo'>
-                    <p className='fieldInfo' id='authors'>{authors}</p>
-                    <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDate}</p>
-                    <div className='rowSpaceBetween'>
-                        <p className='fieldInfo'>{downloadsNumber} скачиваний</p>
-                        <div className='row'>
-                            <p className='fieldInfo'>{size} ({getFileWord(numberOfFiles)})</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         

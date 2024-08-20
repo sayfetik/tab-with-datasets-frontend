@@ -1,27 +1,21 @@
-#datasetCard, #datasetCardInvisible {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#datasetCard {
     margin: 1%;
     background-color: white;
     border-radius: 50px;
-    padding: 2%;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
     width: 100%;
-    height: fit-content;
     z-index: 1000;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-    padding: 10%;
+    padding: 8% 10%;
 }
 #datasetCard:hover {
     position: absolute;
-    margin: 0;
-    width: 22%;
-    padding: 2.5%;
-}
-#datasetCardInvisible {
-    display: none;
+    width: 20%;
+    padding: 1.5% 2%;
+    z-index: 1000;
+    margin: -1%;
+    #datasetCardDescription {
+        display: flex;
+    }
 }
 #hover {
     width: 22%;
@@ -54,14 +48,7 @@
         padding: 8%;
     }
 }
-#datasetCard.expanded {
-    z-index: 1000; /* Ensure it appears on top */
-    #datasetCardInvsible {
-        display: block;
-    };
-    margin: -2%;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-}
+
 #datasetImage {
     width: 100%;
     height: auto;
@@ -75,16 +62,11 @@
     width: 100%;
     position: relative;
 }
-
 #datasetCardDescription {
     display: none;
     border-radius: 5px;
     color: #3b4168;
 }
-#datasetCard.expanded #datasetCardDescription {
-    display: block;
-}
-
 #nameOfDataset {
     font-weight: 700;
     font-size: 25px;

@@ -38,9 +38,8 @@
 }
 
 .metadataSection {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 @media screen and (max-width: 800px) {
   .metadataSection {

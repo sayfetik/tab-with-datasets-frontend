@@ -1,6 +1,5 @@
 .uploadFile, .uploadImage {
     padding: 15px;
-    margin-right: 20px;
     background-color: #EFF8FE;
     height: 200px;
     border-radius: 20px;
@@ -10,10 +9,32 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    width: 100%;
+}
+.uploadFile {
+    width: 90%;
 }
 .uploadImage {
-    width: 450px;
+    width: 75%;
+}
+.filesSection {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  margin-top: 15px;
+}
+#filesPart {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media screen and (max-width: 1200px) {
+    #filesPart, .filesSection {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .uploadFile, .uploadImage {
+        margin-bottom: 10px;
+        width: 100%;
+    }
 }
 .seeFiles, .seeImage {
     color: #0071CE;
@@ -25,6 +46,7 @@
     font-size: 17px;
     font-weight: 500;
     color: #3E456F;
+    margin-left: 20px;
 }
 .fieldInfo {
     line-height: 28px;
@@ -75,7 +97,7 @@
     }
 }
 .uploadedFilesSection {
-    padding: 5px 25px 15px 25px;
+    padding: 10px 25px 15px 25px;
     border-radius: 20px;
     border: 1px solid #3E456F;
     color: #3E456F;
@@ -99,6 +121,8 @@
     line-height: 48px;
     font-size: 20px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
 }
 .uploadPage {
     margin-bottom: 40px;
@@ -117,18 +141,13 @@
     margin-bottom: 20px;
 }
 #datasetImageUpload {
-    width: 100%;
-    height: 200px;
+    height: 190px;
     border-radius: 20px;
-    border: 2px dashed #3E456F;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    display: inline-block;
 }
 #uploadChoice, #uploadChosen {
-    margin: 3px 15px 0px 0px;
-    padding: 5px 10px;
+    margin: 3px 15px 0px 10px;
     border: none;
     font-weight: 600;
     border-radius: 20px;
@@ -140,9 +159,19 @@
   #uploadChoice {
     border: none;
     color: #0071CE;
+    padding: 5px 2px 5px 10px;
   }
   #uploadChosen {
     background-color: white;
     color: #0071CE;
-    border: 1px solid #0071CE
+    border: 1px solid #0071CE;
+    padding: 5px 10px;
+  }
+  #deleteImageIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
   }
