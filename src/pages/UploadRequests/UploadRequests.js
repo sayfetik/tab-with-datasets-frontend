@@ -15,16 +15,17 @@ import stage3 from '../../img/stage3.png';
 import failedStageIcon from '../../img/failStage.png';
 
 const UploadRequests = () => {
-    const [openStageIndex, setOpenStageIndex] = useState(null);
+    // Состояние для отслеживания открытых секций
+    const [openStageIndex, setOpenStageIndex] = useState([]);
 
     const toggleStage = (index) => {
-    // Если нажата секция, которая уже открыта, закрываем её
-    if (openStageIndex === index) {
-        setOpenStageIndex(null);
-    } else {
+        // Если секция уже открыта, закрываем её
+        if (openStageIndex.includes(index)) {
+        setOpenStageIndex(openStageIndex.filter((i) => i !== index));
+        } else {
         // Открываем новую секцию
-        setOpenStageIndex(index);
-    }
+        setOpenStageIndex([...openStageIndex, index]);
+        }
     };
 
     const requests = [
@@ -155,7 +156,7 @@ const UploadRequests = () => {
         }
     },
     {
-        request_id: 2,
+        request_id: 3,
         stage_id: 1,
         datetime: ['1time', '2time', null, null, null],
         report: {
@@ -192,7 +193,7 @@ const UploadRequests = () => {
         },
         dataset: {
             id: 2,
-            title: 'datasetName2',
+            title: 'datasetName3',
             description: 'desctription',
             small_description: 'small description',
             geography_and_places: ['global'],
@@ -261,36 +262,36 @@ const UploadRequests = () => {
                                     />
                                 </div>
                             </div>
-                            {openStageIndex === index && <div className='fullStages'>
+                            {openStageIndex.includes(index) && <div className='fullStages'>
                                 <div className='stages'>
-                                    <div className='succesStageNet'></div>
+                                    <div className='successStageNet'></div>
                                     <div id='stageStatus'>
                                         <img src={successStageIcon} className='stageStatusIcon'/>
                                         <p className='successfulStage'>На проверке</p>
                                     </div>
 
-                                    <div className='succesStageNet'></div>
+                                    <div className='successStageNet'></div>
                                     <div id='stageStatus'>
                                         <img src={successStageIcon} className='stageStatusIcon'/>
                                         <p className='successfulStage'>Сканирование не безопасность</p>
                                         <button className='report'>Подробнее</button>
                                     </div>
 
-                                    <div className='succesStageNet'></div>
+                                    <div className='successStageNet'></div>
                                     <div id='stageStatus'>
                                         <img src={successStageIcon} className='stageStatusIcon'/>
                                         <p className='successfulStage'>Анонимизация датасета, защита персональных данных</p>
                                         <button className='report'>Подробнее</button>
                                     </div>
 
-                                    <div className='succesStageNet'></div>
+                                    <div className='successStageNet'></div>
                                     <div id='stageStatus'>
                                         <img src={successStageIcon} className='stageStatusIcon'/>
                                         <p className='successfulStage'>Подготовка датасета к использованию, предобработка данных</p>
                                         <button className='report'>Подробнее</button>
                                     </div>
                                     
-                                    <div className='succesStageNet'></div>
+                                    <div className='successStageNet'></div>
                                     <div id='stageStatus'>
                                         <img src={successStageIcon} className='stageStatusIcon'/>
                                         <p className='successfulStage'>Датасет загружен</p>
@@ -348,7 +349,7 @@ const UploadRequests = () => {
                                     />
                                 </div>
                             </div>
-                            {openStageIndex === index && <div className='fullStages'>
+                            {openStageIndex.includes(index) && <div className='fullStages'>
                                 <div className='stages'>
                                     <div className={request.stage_id < 0 && 'notStartedStageNet' || request.stage_id === 0 && 'startedStageNet' || request.stage_id > 0 && 'successStageNet'}></div>
                                     <div id='stageStatus'>
