@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css'
 import Icon from '../Icon/Icon';
 import idhLogo from '../../img/idhLogo.png'
 import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../img/menuIcon.png';
+import accountImage from '../../img/accountImage.png'
+import arrowDownIcon from '../../img/arrowDown.png'
+import arrowUpIcon from '../../img/arrowUp.png'
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const [menuState, setMenuState] = useState(false);
 
     return (
         <div id="header">
@@ -143,11 +148,22 @@ const Header = () => {
         </div>
         <div className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
-            <button className="Button_enterBtn__4ReAZ" type="button">Вход</button>
+            <button id="accountButton" type="button">
+              <img id='accountImage' alt='account' src={accountImage}/>
+              Администратор
+              {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>}
+              {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon} onClick={()=>{setMenuState(false)}}/>}
+            </button>
+            
+            {menuState && 
+              <div className='options'>
+                  <button className='option' onClick={()=>{navigate('/')}}>Поиск</button>
+                  <button className='option' onClick={()=>{navigate('/uploadRequests')}}>Заявки на загрузку</button>
+              </div>}
           </div>
         </div>
         </header>
-        
+
         <div id='smallHeader'>
         <a href="https://unionepro.ru">
           <div className="logo">

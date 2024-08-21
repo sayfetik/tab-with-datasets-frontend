@@ -12,14 +12,6 @@ body {
   font-variant: tabular-nums;
   line-height: 1.5715;
 }
-button {
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  border-radius: 10px !important;
-}
-button:hover {
-  transform: scale(1.03);
-}
 *, :after, :before {
   box-sizing: border-box;
 }
@@ -125,4 +117,34 @@ pointer-events: none;
 }
 .displayNone {
   display: none;
+}
+.blueButton,.lightBlueButton, .whiteBlueButton {
+  border: none;
+  background-color: #0071CE;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 0px 0px 0px 20px;
+}
+.lightBlueButton {
+  padding: 5px 20px;
+  background-color: #D3EBFF;
+  color: #0071CE;
+}
+.whiteBlueButton {
+  padding: 4px 15px;
+  background-color: white;
+  color: #0071CE;
+  border: 1px solid #0071CE;
+}
+#plusIcon {
+  width: 20px;
+  margin-right: 10px;
+}
+.rotate180 {
+  transform: rotate(180deg);
 }
