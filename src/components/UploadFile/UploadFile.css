@@ -175,3 +175,15 @@
     transform: translate(-50%, -50%);
     cursor: pointer;
   }
+  #folder {
+    color: #3E456F;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 4px;
+  }
+  #labelUploadedFiles {
+    color: #3E456F;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }

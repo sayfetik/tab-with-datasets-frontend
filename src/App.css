@@ -118,7 +118,7 @@ pointer-events: none;
 .displayNone {
   display: none;
 }
-.blueButton,.lightBlueButton, .whiteBlueButton {
+.blueButton,.lightBlueButton, .whiteBlueButton, .lightRedButton {
   border: none;
   background-color: #0071CE;
   color: white;
@@ -130,10 +130,14 @@ pointer-events: none;
   border-radius: 10px;
   margin: 0px 0px 0px 20px;
 }
-.lightBlueButton {
+.lightBlueButton, .lightRedButton {
   padding: 5px 20px;
   background-color: #D3EBFF;
   color: #0071CE;
+}
+.lightRedButton {
+  background-color: #FFE5E5;
+  color: #FF0000;
 }
 .whiteBlueButton {
   padding: 4px 15px;

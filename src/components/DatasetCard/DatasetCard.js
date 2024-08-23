@@ -19,8 +19,8 @@ const DatasetCard = ({
 
     const fetchImage = async () => {
         try {
-            const imageUrl = await BackendConnector.getImage(id);
-            setImage(imageUrl);
+            const imageData = await BackendConnector.getImage(id);
+            setImage(imageData.imageUrl);
         } catch (error) {
             console.error('Error fetching image:', error);
         }

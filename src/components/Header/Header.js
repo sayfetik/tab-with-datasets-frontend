@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom';
 import './Header.css'
+import {BackendConnector} from '../../components'
 import Icon from '../Icon/Icon';
 import idhLogo from '../../img/idhLogo.png'
-import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../img/menuIcon.png';
 import accountImage from '../../img/accountImage.png'
 import arrowDownIcon from '../../img/arrowDown.png'
@@ -12,6 +13,22 @@ const Header = () => {
   const navigate = useNavigate();
 
   const [menuState, setMenuState] = useState(false);
+
+  
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+        try {
+            const data = await BackendConnector.fetchUploadRequests(1);
+            setRequests(data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
+    };
+
+    fetchRequests();
+}, [menuState]);
 
     return (
         <div id="header">
@@ -158,7 +175,7 @@ const Header = () => {
             {menuState && 
               <div className='options'>
                   <button className='option' onClick={()=>{navigate('/')}}>Поиск</button>
-                  <button className='option' onClick={()=>{navigate('/uploadRequests')}}>Заявки на загрузку</button>
+                  <button className='option' onClick={()=>{navigate('/uploadRequests', { state: requests })}}>Заявки на загрузку</button>
               </div>}
           </div>
         </div>

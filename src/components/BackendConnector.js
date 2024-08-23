@@ -17,6 +17,8 @@ export default class BackendConnector {
     static generateSmallDescription_endpoint = 'api/summarize_description';
     static generateTags_endpoint = 'api/generate_tags';
     static tagsSuggestions_endpoint = 'api/search_tags';
+    static uploadRequests_endpoint = 'api/fetch_upload_request_status';
+    static uploadRequestPreview_endpoint ='api/fetch_upload_request_dataset_preview';
 
     static results_amount_limit = 12;
 
@@ -184,7 +186,7 @@ export default class BackendConnector {
             }
 
             const imageUrl = URL.createObjectURL(response.data);
-            return imageUrl;
+            return { imageUrl, imageSize: response.data.size };;
         } catch (error) {
             console.error('Error:', error);
             return null;
@@ -305,5 +307,13 @@ export default class BackendConnector {
             console.error('Error fetching suggestions:', error);
             return [];
         }
+    }
+
+    static async fetchUploadRequestPreview(request_id) {
+        return await this.get(`${this.uploadRequestPreview_endpoint}/${request_id}`);
+    }
+
+    static async fetchUploadRequests(account_id) {
+        return await this.get(`${this.uploadRequests_endpoint}/${account_id}`);
     }
 }

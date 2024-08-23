@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import downloadIconWhite from '../../img/downloadWhite.png';
 import folderDarkIcon from '../../img/folderDark.png';
-import downloadIconBlack from '../../img/downloadBlack.png';
-import line from '../../img/lineDark.png'
 import star from '../../img/star.png'
 import './DatasetPage.css'
 import { Back, Header, Icon, DatasetCard, BackendConnector, Download } from '../../components'
@@ -16,8 +14,8 @@ const DatasetPage = () => {
 
     const fetchImage = async () => {
         try {
-            const imageUrl = await BackendConnector.getImage(id);
-            setImage(imageUrl);
+            const imageData = await BackendConnector.getImage(id);
+            setImage(imageData.imageUrl);
         } catch (error) {
             console.error('Error fetching image:', error);
         }
@@ -84,13 +82,12 @@ const DatasetPage = () => {
         size: '',
         size_bytes: 0,
         rating: 0,
-        files_structure: {}
+        files_structure: {},
     });
         
     const navigate = useNavigate();
 
     const handleEditClick = () => {
-        console.log(dataset);
         navigate('/editDataset', { state: dataset });
       };
 
@@ -266,16 +263,13 @@ const DatasetPage = () => {
                                     </div>
                                     <div className='files'>
                                         {(() => {
-                                            // Check if files_structure is an object and not null
                                             if (typeof dataset.files_structure === 'object' && dataset.files_structure !== null) {
-                                                // Iterate through the entries of files_structure
                                                 return Object.entries(dataset.files_structure).map(([folderName, files], index) => {
-                                                    // Check if the current entry is an object (folder)
                                                     if (typeof files === 'object' && files !== null) {
                                                         return (
                                                             <div key={index}>
                                                                 <div className='row'>
-                                                                    <img id="folderIcon" src={folderDarkIcon} />
+                                                                    <img id="folderIcon" src={folderDarkIcon}  alt="Folder"/>
                                                                     <p id='folderName'>{folderName}</p>
                                                                 </div>
                                                                 {Object.entries(files).map(([fileName, fileSize], subIndex) => (
@@ -287,10 +281,8 @@ const DatasetPage = () => {
                                                             </div>
                                                         );
                                                     } else {
-                                                        // If it's not an object, treat it as a flat structure
                                                         return (
                                                             <div key={index} className='file'>
-                                                                {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
                                                                 <p className='fileDownload'>{folderName} - {formatFileSize(files)}</p>
                                                             </div>
                                                         );
@@ -298,7 +290,7 @@ const DatasetPage = () => {
                                                 });
                                             } else {
                                                 // Handle the case where files_structure is not a valid object
-                                                return <p>No files available.</p>;
+                                                return <p>No files</p>;
                                             }
                                         })()}
                                     </div>

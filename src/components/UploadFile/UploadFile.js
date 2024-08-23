@@ -1,23 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './UploadFile.css';
 import UploadedFile from '../UploadedFile/UploadedFile';
 import deleteIcon from '../../img/delete.png';
 import JSZip from 'jszip';
 import uploadIcon from '../../img/upload.png';
+import folderDarkIcon from '../../img/folderDark.png';
 
-const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes }) => {
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize }) => {
     const beginFilesSizes = filesSizes;
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
     const [isZipUploaded, setIsZipUploaded] = useState(false);
     const [uploadFilesChoice, setuploadFilesChoice] = useState(true);
     const [totalFileSize, setTotalFileSize] = useState(0);
-    const [imageSize, setImageSize] = useState(0);
+    const [imageSize, setImageSize] = useState(initialImageSize);
     const [fileSizes, setFileSizes] = useState(filesSizes);
+    const previousUploadFilesChoice = useRef(uploadFilesChoice);
 
     const [warningFileLimitState, setwarningFileLimitState] = useState(false);
     const [warningImageLimitState, setwarningImageLimitState] = useState(false);
     const [warningInvalidZip, setwarningInvalidZip] = useState(false);
     const [warningZips, setwarningZips] = useState(false);
+
+    useEffect(() => {
+        const hasZipFile = Object.keys(fileSizes).some(fileName => fileName.endsWith('.zip'));
+        if (hasZipFile) {
+            setIsZipUploaded(true);
+            setuploadFilesChoice(false);
+        } else {
+            setIsZipUploaded(false);
+            setuploadFilesChoice(true);
+        }
+    }, []);
     
     useEffect(()=> {
         if (totalFileSize > 5*1024*1024*1024) setwarningFileLimitState(true);
@@ -33,12 +46,17 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
         setTotalFileSize(calculateTotalFileSize(fileSizes))
     }, [pageLabel])
 
-    useEffect(()=>{
-        setFiles([]);
-        setFileSizes({})
-        setTotalFileSize(calculateTotalFileSize(beginFilesSizes))
-        setIsZipUploaded(false)
-    }, [uploadFilesChoice])
+    useEffect(() => {
+        // Проверяем, изменилось ли значение uploadFilesChoice
+        if (previousUploadFilesChoice.current !== uploadFilesChoice) {
+            setFiles([]);
+            setFileSizes({});
+            setTotalFileSize(calculateTotalFileSize(beginFilesSizes));
+            setIsZipUploaded(false);
+        }
+        // Обновляем ref на текущее значение
+        previousUploadFilesChoice.current = uploadFilesChoice;
+    }, [uploadFilesChoice]);
 
     const formatFileSize = (size) => {
         if (size === 0) return '0 Б';
@@ -49,7 +67,19 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     };
 
     const calculateTotalFileSize = (fileSizes) => {
-        return Object.values(fileSizes).reduce((total, size) => total + size, 0);
+        let totalSize = 0;
+
+        const addSizes = (sizes) => {
+            if (typeof sizes === 'object' && sizes !== null) {
+                Object.values(sizes).forEach((size) => {
+                    if (typeof size === 'number') totalSize += size;
+                    else addSizes(size);
+                });
+            }
+        };
+
+        addSizes(fileSizes);
+        return totalSize;
     };
 
     const handleFileAdding = (event) => {
@@ -140,13 +170,27 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     const handleImageAdding = (event) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
-            setImage(selectedImage);
+            const imageUrl = URL.createObjectURL(selectedImage); // Создаем URL для изображения
+            setImage(imageUrl); // Устанавливаем URL в состояние
             setImageSize(selectedImage.size);
             setShowDeleteIcon(false);
+        } else {
+            console.error('No file selected');
         }
     };
 
+    useEffect(() => {
+        return () => {
+            if (image) {
+                URL.revokeObjectURL(image);
+            }
+        };
+    }, [image]);
+
     const handleDeleteImage = () => {
+        if (image) {
+            URL.revokeObjectURL(image);
+        }
         setImage(null);
         setImageSize(0);
         setShowDeleteIcon(false);
@@ -172,7 +216,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                                 onMouseEnter={() => setShowDeleteIcon(true)}
                                 onMouseLeave={() => setShowDeleteIcon(false)}
                                 style={{ filter: showDeleteIcon ? 'brightness(70%)' : 'none' }}
-                                src={URL.createObjectURL(image)}
+                                src={image}
                                 alt="Uploaded cover"
                                 id='coverPreviewImage'
                             />
@@ -213,17 +257,49 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                             </div>}
 
                             <div className='uploadedFilesSection'>
-                                <div id='inputLabel' className='rowSpaceBetween'>Загруженные файлы <span>{formatFileSize(totalFileSize)} / 5 ГБ</span></div>
+                                <div id='labelUploadedFiles' className='rowSpaceBetween'>
+                                    Загруженные файлы <span id='folder'>{formatFileSize(totalFileSize)} / 5 ГБ</span>
+                                </div>
                                 <div className='uploadedFilesContainer'>
-                                    {Object.entries(fileSizes).map(([fileName, fileSize], index) => (
-                                        <UploadedFile 
-                                            key={index} 
-                                            fileName={fileName} 
-                                            fileSize={formatFileSize(fileSize)} 
-                                            index={index}
-                                            handleDeleteFile={handleDeleteFile} 
-                                        />
-                                    ))}
+                                    {(() => {
+                                        if (typeof fileSizes === 'object' && fileSizes !== null) {
+                                            return Object.entries(fileSizes).map(([folderName, files], index) => {
+                                                if (typeof files === 'object' && files !== null) {
+                                                    return (
+                                                        <div key={index}>
+                                                            <div className='row' style={{marginBottom: '10px', marginLeft: '10px'}}>
+                                                                <img width='15px' src={folderDarkIcon} alt="Folder" />
+                                                                <p id='folder'>{folderName}:</p>
+                                                            </div>
+                                                            {Object.entries(files).map(([fileName, fileSize], subIndex) => (
+                                                                <UploadedFile 
+                                                                    key={subIndex} // Изменено на subIndex
+                                                                    fileName={fileName} 
+                                                                    fileSize={formatFileSize(fileSize)} 
+                                                                    index={subIndex} // Используйте subIndex для уникальности
+                                                                    handleDeleteFile={handleDeleteFile} 
+                                                                />
+                                                            ))}
+                                                        </div>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <div key={index}>
+                                                            <UploadedFile 
+                                                                key={index} 
+                                                                fileName={folderName} 
+                                                                fileSize={formatFileSize(files)} 
+                                                                index={index}
+                                                                handleDeleteFile={handleDeleteFile} 
+                                                            />
+                                                        </div>
+                                                    );
+                                                }
+                                            });
+                                        } else {
+                                            return <p>No files</p>;
+                                        }
+                                    })()}
                                 </div>
                             </div>
                     </div>

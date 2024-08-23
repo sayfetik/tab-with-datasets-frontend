@@ -4,7 +4,7 @@ import { useNotification } from '../../components/Notification/NotificationConte
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 
-const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLimit, frequencyLimit}) => {
+const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit}) => {
     const { state: dataset } = useLocation();
     const { showNotification } = useNotification();
     const navigate = useNavigate();
@@ -32,16 +32,22 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLi
 
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
+    const [imageSize, setImageSize] = useState(null);
     const [filesStructure, setFilesStructure] = useState(dataset.files_structure);
 
-    const fetchImage = async () => {
-        try {
-            const imageUrl = await BackendConnector.getImage(dataset.id);
-            setImage(imageUrl);
-        } catch (error) {
-            console.error('Error fetching image:', error);
-        }
-    };
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const imageData = await BackendConnector.getImage(dataset.id);
+                setImage(imageData.imageUrl);
+                setImageSize(imageData.imageSize)
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+
+        fetchImage();
+    }, []);
 
     useEffect(() => {
         const resetFilesStructure = {};
@@ -92,44 +98,44 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, sourceLi
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize}/>
             <div className='metadataSection'>
             <div>
-                    <Input
+                    <AutoResizeTextarea
                         label="Название *"
                         placeholder="Введите название"
                         value={titleOfDataset}
-                        onChange={(e) => setTitleOfDataset(e.target.value)}
+                        setValue={setTitleOfDataset}
                         textLimit={titleLimit}
                     />
                     <div className='metadataLabel'>Видимость *</div>
-                    <select className="visible" id="metadataField" value={visibility} onChange={(e)=>setVisibility(e.target.value)}>
+                    <select className="selectionInput" value={visibility} onChange={(e)=>setVisibility(e.target.value)}>
                         <option value="private">Приватный</option>
                         <option value="public">Публичный</option>
                     </select>
-                    <Input
+                    <AutoResizeTextarea
                         label="Авторы"
                         placeholder="Введите автора"
                         value={authors}
-                        onChange={(e) => setAuthors(e.target.value)}
-                        textLimit={0}
+                        setValue={setAuthors}
+                        textLimit={authorsLimit}
                     />
-                    <Input
+                    <AutoResizeTextarea
                         label="Источник"
                         placeholder="Введите источник"
                         value={dataSource}
-                        onChange={(e) => setDataSource(e.target.value)}
+                        setValue={setDataSource}
                         textLimit={sourceLimit}
                         />
-                    <Input
+                    <AutoResizeTextarea
                         label="Частота обновлений"
                         placeholder="Введите частоту обновлений"
                         value={expectedUpdateFrequency}
-                        onChange={(e) => setExpectedUpdateFrequency(e.target.value)}
+                        setValue={setExpectedUpdateFrequency}
                         textLimit={frequencyLimit}
                         />
-                    <div className='metadataLabel' onChange={(e)=>setLicense(e.target.value)}>Лицензия</div>
-                    <select className="visible" value={license} id="metadataField">
+                    <div className='metadataLabel'>Лицензия</div>
+                    <select className="selectionInput" value={license} onChange={(e)=>setLicense(e.target.value)}>
                         <option value="Public Domain">Public Domain Mark - Public Domain</option>
                         <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                         <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>

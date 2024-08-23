@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UnsuccessUpload, Search, Upload, DatasetPage, Datasets, EditPage, UploadRequests } from './pages';
+import { UnsuccessUpload, Search, Upload, DatasetPage, Datasets, EditPage, UploadRequests, RequestPreview } from './pages';
 import { Notification, NotificationProvider, ScrollToTop } from './components';
+import { RequestPage } from '@mui/icons-material';
 
 const App = () => {
   const descriptionLimit = 1000;
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/upload" element={<Upload doiLimit={doiLimit} descriptionLimit={descriptionLimit} smallDescriptionLimit={smallDescriptionLimit} titleLimit={titleLimit} authorsLimit={authorsLimit} sourceLimit={sourceLimit} frequencyLimit={frequencyLimit} descriptionFieldsLimit={descriptionFieldsLimit}/>} />
           <Route path="/unsuccessUpload" element={<UnsuccessUpload />} />
           <Route path='/datasets' element={<Datasets />} />
+          <Route path='/requestPreview' element={<RequestPreview />} />
           <Route path='/uploadRequests' element={<UploadRequests />} />
           <Route path='/editDataset' element={<EditPage doiLimit={doiLimit} descriptionLimit={descriptionLimit} smallDescriptionLimit={smallDescriptionLimit} titleLimit={titleLimit} authorsLimit={authorsLimit} sourceLimit={sourceLimit} frequencyLimit={frequencyLimit} descriptionFieldsLimit={descriptionFieldsLimit}/>} />
         </Routes>
