@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Back, UploadFile, Header, Notification, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
+import { Back, UploadFile, Header, BackendConnector, InputTagFilter, AutoResizeTextarea} from '../../components';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
-import { useNotification } from '../../components/Notification/NotificationContext';
 import sparklesIcon from '../../img/sparkles.png';
 import loadingGif from '../../img/loading.gif';
 
 const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
-    const { showNotification } = useNotification();
     const navigate = useNavigate();
 
     const [isGenerateDesc, setIsGenerateDesc] = useState(false);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
     const [tagsState, setStateTags] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
 
     const [description, setDescription] = useState('');
@@ -51,6 +50,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [useCases, setUseCases] = useState('');
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageSize, setImageSize] = useState(null);
 
     const areAllInputsFilledForDesc = collectionMethod && dataStructure && useCases;
 
@@ -66,11 +67,15 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             alert('Пожалуйста, заполните обязательные поля, чтобы продолжить');
             return;
         }
+        navigate(`/uploadRequests`);
+
+        setIsUploading(true);
         let payload;
 
         if (isGenerateDesc) {
             payload = {
                 title: titleOfDataset,
+                small_description: generatedSmallDescription,
                 visibility,
                 authors,
                 data_source: dataSource,
@@ -78,7 +83,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 expected_update_frequency: expectedUpdateFrequency,
                 license,
                 description: generatedDescription,
-                small_description: generatedSmallDescription,
                 tags: {
                     geography_and_places: Ggeography_and_places,
                     language: Glanguage,
@@ -109,12 +113,10 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 }
             }
         }; 
-        BackendConnector.upload(payload, files, image)
+        BackendConnector.upload(payload, files, imageFile)
             .then(response => {
                 console.log(response);
-                navigate(`/dataset/${response.id}`);
-                console.log(payload);
-                showNotification("Датасет успешно загружен!");
+                setIsUploading(false)
             })
             .catch(error => {
                 console.error(error);
@@ -208,7 +210,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Новый датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={{}} />
+            <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={{}} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             <div className='metadataSection'>
                 <div>
                     <AutoResizeTextarea
@@ -416,7 +418,9 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                     <div id='saveButtons'>
                         {/*<button className='saveDraft' onClick={()=>{console.log(subject);}}>Сохранить черновик</button>*/}
                         {areRequiredInputsFilled &&  (
-                            <div className="wrapper">
+                            <div className="wrapper row">
+                                
+                                {isUploading && <img src={loadingGif} alt="Loading..." style={{ marginRight: '20px', width: '30px', height: '30px' }} />}
                                 <button className="cta" onClick={upload}>
                                     <span className='uploadDataset'>Загрузить датасет</span>
                                     <span id='arrowsAnimation'>
@@ -448,11 +452,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                     </svg>
                                     </span>
                                 </button>
-                                {showNotification && (
-                                    <Notification
-                                        message="Это уведомление!"
-                                    />
-                                )}
                             </div>
                         )}
                     </div>

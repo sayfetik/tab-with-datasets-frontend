@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Header, UploadRequest, RequestCard } from '../../components';
+import { Header, UploadRequest, RequestCard, BackendConnector } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
 
 const UploadRequests = () => {
-    const { state: requests } = useLocation();
+    const [requests, setRequests] = useState([]);
+    useEffect(() => {
+        const fetchRequests = async () => {
+            try {
+                const data = await BackendConnector.fetchUploadRequests(1);
+                setRequests(data);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+    
+        fetchRequests();
+    }, []);
+
     const [openStageIndex, setOpenStageIndex] = useState([]);
     const [view, setView] = useState('list');
     const navigate = useNavigate();

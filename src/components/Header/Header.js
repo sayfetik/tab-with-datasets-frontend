@@ -11,10 +11,7 @@ import arrowUpIcon from '../../img/arrowUp.png'
 
 const Header = () => {
   const navigate = useNavigate();
-
   const [menuState, setMenuState] = useState(false);
-
-  
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {

@@ -87,7 +87,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
         <div id='datasetListItem'>
             <div id='briefDatasetListItem'>
                 <div className='row'>
-                    <p id='datasetTitleList'>{request.request_id}</p>
+                    <p id='datasetTitleList'>{dataset.title}</p>
                     {request.sending?.status === 'in_progress' && (
                         <div id='status'>
                             <p className={request.sending.status}> На проверке </p>
@@ -132,10 +132,10 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                     )}
                 </div>
                 <div className='rightSectionList'>
-                    {request.uploading?.status === 'done' && <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>}
+                    <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>
                     {request.uploading?.status === 'done' && <button className='lightBlueButton' onClick={handleEditClick}>Редактировать</button>}
                     {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
-                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} />
+                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} back={false}/>
                     <img
                         src={arrowDown}
                         className={isOpen ? 'statusIcon rotate180' : 'statusIcon'}

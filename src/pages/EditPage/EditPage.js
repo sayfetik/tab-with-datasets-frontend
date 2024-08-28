@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Back, Header, Notification, UploadFile, InputTagFilter, BackendConnector, AutoResizeTextarea } from '../../components';
-import { useNotification } from '../../components/Notification/NotificationContext';
+import { Input, Back, Header, UploadFile, InputTagFilter, BackendConnector, AutoResizeTextarea } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 
 const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit}) => {
     const { state: dataset } = useLocation();
-    const { showNotification } = useNotification();
     const navigate = useNavigate();
-    const navigationButtonClick = () => {
-      navigate(-1);
-      showNotification("Датасет успешно обновлён!");
-    };
 
     const [titleOfDataset, setTitleOfDataset] = useState(dataset.title);
     const [visibility, setVisibility] = useState(dataset.visibility);
@@ -83,11 +77,11 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                     subject: subject
                 }
             };
+            navigate(`/uploadRequests`);
             const files_updates = filesStructure;
-            BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, imageFile)
+            BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, image)
                 .then(response => {
                     console.log(response);
-                    navigate(`/dataset/${dataset.id}`)
                 })
                 .catch(error => {
                     console.error(error);
@@ -100,7 +94,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} imageFile = {imageFile}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             <div className='metadataSection'>
             <div>
                     <AutoResizeTextarea
@@ -241,11 +235,6 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                                     </svg>
                                     </span>
                                 </button>
-                                {showNotification && (
-                                    <Notification
-                                    message="Это уведомление!"
-                                    />
-                                )}
                             </div>
                     </div>
                 </div>

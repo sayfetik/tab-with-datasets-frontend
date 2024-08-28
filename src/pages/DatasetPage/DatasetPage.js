@@ -210,7 +210,7 @@ const DatasetPage = () => {
                             <div className='row'>
                                 <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
                                 <button id='deleteDatasetButton' onClick={handleDeleteClick}>Удалить</button>
-                                <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} />
+                                <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} back={true}/>
                             </div>
                         </div>
                         
