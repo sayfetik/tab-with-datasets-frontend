@@ -6,14 +6,15 @@ import JSZip from 'jszip';
 import uploadIcon from '../../img/upload.png';
 import folderDarkIcon from '../../img/folderDark.png';
 
-const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize }) => {
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize, initialImageFile }) => {
     const beginFilesSizes = filesSizes;
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
     const [isZipUploaded, setIsZipUploaded] = useState(false);
     const [uploadFilesChoice, setuploadFilesChoice] = useState(true);
     const [totalFileSize, setTotalFileSize] = useState(0);
-    const [imageSize, setImageSize] = useState(initialImageSize);
+    const [imageSize, setImageSize] = useState(initialImageSize || 0);
     const [fileSizes, setFileSizes] = useState(filesSizes);
+    const [imageFile, setImageFile] = useState(initialImageFile);
     const previousUploadFilesChoice = useRef(uploadFilesChoice);
 
     const [warningFileLimitState, setwarningFileLimitState] = useState(false);
@@ -174,6 +175,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
             setImage(imageUrl); // Устанавливаем URL в состояние
             setImageSize(selectedImage.size);
             setShowDeleteIcon(false);
+            setImageFile(selectedImage)
         } else {
             console.error('No file selected');
         }
@@ -188,12 +190,11 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     }, [image]);
 
     const handleDeleteImage = () => {
-        if (image) {
-            URL.revokeObjectURL(image);
-        }
+        if (image) URL.revokeObjectURL(image);
         setImage(null);
         setImageSize(0);
         setShowDeleteIcon(false);
+        setImageFile(null);
     };
 
     return (

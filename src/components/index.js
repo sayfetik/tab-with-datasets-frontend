@@ -19,3 +19,6 @@ export { default as AutoResizeTextarea } from './AutoresizeTextarea/AutoresizeTe
 export { default as RequestReport } from './RequestReport/RequestReport'
 export { default as UploadRequest} from './UploadRequest/UploadRequest'
 export { default as AnonReport } from './AnonReport/AnonReport'
+export { default as RequestCard} from './RequestCard/RequestCard'
+export { default as RequestFullModal } from './RequestFullModal/RequestFullModal'
+export { default as DeleteVerification} from './DeleteVerification/DeleteVerification'

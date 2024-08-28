@@ -32,6 +32,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
 
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
     const [imageSize, setImageSize] = useState(null);
     const [filesStructure, setFilesStructure] = useState(dataset.files_structure);
 
@@ -40,7 +41,8 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             try {
                 const imageData = await BackendConnector.getImage(dataset.id);
                 setImage(imageData.imageUrl);
-                setImageSize(imageData.imageSize)
+                setImageSize(imageData.imageSize);
+                setImageFile(imageData.imageFile)
             } catch (error) {
                 console.error('Error fetching image:', error);
             }
@@ -82,7 +84,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                 }
             };
             const files_updates = filesStructure;
-            BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, image)
+            BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, imageFile)
                 .then(response => {
                     console.log(response);
                     navigate(`/dataset/${dataset.id}`)
@@ -98,7 +100,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} imageFile = {imageFile}/>
             <div className='metadataSection'>
             <div>
                     <AutoResizeTextarea

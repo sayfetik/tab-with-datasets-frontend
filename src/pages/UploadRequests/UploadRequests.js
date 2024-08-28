@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Header, UploadRequest } from '../../components';
+import { Header, UploadRequest, RequestCard } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
 
 const UploadRequests = () => {
     const { state: requests } = useLocation();
     const [openStageIndex, setOpenStageIndex] = useState([]);
-    
+    const [view, setView] = useState('list');
+    const navigate = useNavigate();
+
     const toggleStage = (index) => {
         if (openStageIndex.includes(index)) {
             setOpenStageIndex(openStageIndex.filter((i) => i !== index));
@@ -16,6 +18,10 @@ const UploadRequests = () => {
         }
     };
 
+    // Проверка на наличие requests
+    if (!requests || !Array.isArray(requests)) {
+        return <div>No requests available</div>; // Сообщение, если запросы отсутствуют
+    }
 
     return (
         <div>
@@ -24,11 +30,11 @@ const UploadRequests = () => {
                 <div className='rowSpaceBetween' id='pageLabel'>
                     <h1>Заявки на загрузку</h1>
                     <div className='row'>
-                        <select className='selectionInput' id='datasetForm'>
-                            <option>Список</option>
-                            <option>Карточки</option>
+                        <select className='selectionInput' onChange={(e)=>{setView(e.target.value)}} defaultValue='list' id='datasetForm'>
+                            <option value='list'>Список</option>
+                            <option value='cards'>Карточки</option>
                         </select>
-                        <button className='blueButton'>
+                        <button className='blueButton' onClick={() => { navigate('/upload') }}>
                             <img src={plusWhiteIcon} id='plusIcon' alt="Добавить новый датасет" />
                             Новый датасет
                         </button>
@@ -36,22 +42,10 @@ const UploadRequests = () => {
                 </div>
 
                 <h2 className='subSectionRequests'>Загруженные</h2>
-                <div className='datasetsList'>
-                    {requests.map((request, index) => (
-                        request.uploading.status === 'done' &&
-                            <UploadRequest
-                                key={index}
-                                request={request}
-                                toggleStage={toggleStage}
-                                isOpen={openStageIndex.includes(request.request_id)}
-                            />
-                    ))}
-                </div>
-
-                <h2 className='subSectionRequests'>Загружаются</h2>
-                <div className='datasetsList'>
-                    {requests.map((request, index) => (
-                            request.uploading.status != 'done' &&
+                {view === 'list' ?
+                    <div className='datasetsList'>
+                        {requests.map((request, index) => (
+                            request.uploading.status === 'done' &&
                                 <UploadRequest
                                     key={index}
                                     request={request}
@@ -59,7 +53,33 @@ const UploadRequests = () => {
                                     isOpen={openStageIndex.includes(request.request_id)}
                                 />
                         ))}
-                </div>
+                    </div>
+                    :
+                    <div id='cards'>
+                        {requests.map((request, index) => (
+                            request.uploading.status === 'done' && <RequestCard key={index} request={request}/>
+                        ))}
+                    </div>}
+
+                {requests.filter(item => item.uploading && item.uploading.status !== 'done').length !==0 && <h2 className='subSectionRequests'>Загружаются</h2>}
+                {view === 'list' ?
+                    <div className='datasetsList'>
+                        {requests.map((request, index) => (
+                            request.uploading.status !== 'done' &&
+                                <UploadRequest
+                                    key={index}
+                                    request={request}
+                                    toggleStage={toggleStage}
+                                    isOpen={openStageIndex.includes(request.request_id)}
+                                />
+                            ))}
+                    </div>
+                    :
+                    <div id='cards'>
+                        {requests.map((request, index) => (
+                            request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
+                        ))}
+                    </div>}
             </div>
         </div>
     );

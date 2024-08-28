@@ -4,13 +4,14 @@ import downloadIconWhite from '../../img/downloadWhite.png';
 import folderDarkIcon from '../../img/folderDark.png';
 import star from '../../img/star.png'
 import './DatasetPage.css'
-import { Back, Header, Icon, DatasetCard, BackendConnector, Download } from '../../components'
+import { Back, Header, Icon, DatasetCard, BackendConnector, Download, DeleteVerification } from '../../components'
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
     const [image, setImage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteVerification, setisDeleteVerification] = useState(false);
 
     const fetchImage = async () => {
         try {
@@ -91,16 +92,8 @@ const DatasetPage = () => {
         navigate('/editDataset', { state: dataset });
       };
 
-    const handleDeleteClick = (event) => {
-        event.preventDefault();
-        BackendConnector.delete(dataset.id)
-            .then(response => {
-                console.log(response);
-                navigate(-1);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    const handleDeleteClick = () => {
+        setisDeleteVerification(true);
     }
 
     const handleDownloadClick = async () => {
@@ -171,8 +164,8 @@ const DatasetPage = () => {
                         <div className='rowSpaceBetween'>
                             <p className='author'>{dataset.owner}</p>
                             {dataset.visibility === "private" ?
-                                <div id='visibilityLabel'>Private</div>
-                                : <div id='visibilityLabel'>Public</div>
+                                <div id='visibilityLabel'>Приватный</div>
+                                : <div id='visibilityLabel'>Публичный</div>
                             }
                         </div>
                         <h1 id='datasetTitle'>{dataset.title}</h1>
@@ -217,6 +210,7 @@ const DatasetPage = () => {
                             <div className='row'>
                                 <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
                                 <button id='deleteDatasetButton' onClick={handleDeleteClick}>Удалить</button>
+                                <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} />
                             </div>
                         </div>
                         

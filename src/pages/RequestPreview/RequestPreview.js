@@ -31,10 +31,6 @@ const RequestPreview = () => {
     });
     const { state: request_id } = useLocation();
 
-    useEffect(() => {
-        console.log(dataset)
-    });
-
     const formatFileSize = (size) => {
         if (size === 0) return '0 Б';
         const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
@@ -106,8 +102,8 @@ const RequestPreview = () => {
                         <div className='rowSpaceBetween'>
                             <p className='author'>{dataset.owner}</p>
                             {dataset.visibility === "private" ?
-                                <div id='visibilityLabel'>Private</div>
-                                : <div id='visibilityLabel'>Public</div>
+                                <div id='visibilityLabel'>Приватный</div>
+                                : <div id='visibilityLabel'>Публичный</div>
                             }
                         </div>
                         <h1 id='datasetTitle'>{dataset.title}</h1>

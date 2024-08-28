@@ -15,6 +15,9 @@ body {
 *, :after, :before {
   box-sizing: border-box;
 }
+button {
+  border-radius: 10px !important;
+}
 :root {
   --font-header: "Montserrat", sans-serif;
   --font-content: "IBM Plex sans", sans-serif;
