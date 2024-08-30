@@ -1,0 +1,61 @@
+.reportWindow {
+    background-color: #fff;
+    padding: 25px 40px;
+    border-radius: 15px;
+    width: fit-content;
+    min-width: 40%;
+    max-width: 90%;
+    max-height: 60%;
+}
+.reportHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items:first baseline;
+    margin-bottom: 15px;
+}
+#warningButtons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+.report-close-button {
+    border: none;
+    font-size: 25px;
+    color: #3E456F;
+}
+.reportFile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    padding: 5px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+#reportFileName {
+    font-size: 17px;
+    font-weight: 600;
+    margin-right: 20px;
+}
+.reportWarning {
+    color: #D80000;
+}
+#reportLabel {
+    margin-right: 20px;
+}
+#backToFiles {
+    border: none;
+    color: #3E456F;
+    display: flex;
+    align-items: center;
+}
+#backToFilesButtonLabel {
+    font-size: 16px;
+    margin-left: 5px;
+}
+.line {
+    display: flex;
+}
+#showFile {
+    font-size: 16px;
+}

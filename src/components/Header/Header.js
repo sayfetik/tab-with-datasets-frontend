@@ -162,17 +162,17 @@ const Header = () => {
         </div>
         <div className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
-            <button id="accountButton" type="button">
+            <div id="accountButton">
               <img id='accountImage' alt='account' src={accountImage}/>
               Администратор
               {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>}
               {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon} onClick={()=>{setMenuState(false)}}/>}
-            </button>
+            </div>
             
             {menuState && 
               <div className='options'>
-                  <button className='option' onClick={()=>{navigate('/')}}>Поиск</button>
-                  <button className='option' onClick={()=>{navigate('/uploadRequests', { state: requests })}}>Заявки на загрузку</button>
+                  <div className='option' onClick={()=>{navigate('/')}}>Поиск</div>
+                  <div className='option' onClick={()=>{navigate('/uploadRequests', { state: requests })}}>Заявки на загрузку</div>
               </div>}
           </div>
         </div>

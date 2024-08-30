@@ -17,7 +17,7 @@ const UploadRequests = () => {
         };
     
         fetchRequests();
-    }, []);
+    }, [requests]);
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
     const [view, setView] = useState('list');
@@ -33,7 +33,11 @@ const UploadRequests = () => {
 
     // Проверка на наличие requests
     if (!requests || !Array.isArray(requests)) {
-        return <div>No requests available</div>; // Сообщение, если запросы отсутствуют
+        return <div id='unsuccessUpload'>
+                    <div id='mainSectionUnsuccess'>
+                        <h2>Произошла ошибка. Повторите попытку</h2>
+                    </div>
+                </div>;
     }
 
     return (
@@ -74,11 +78,11 @@ const UploadRequests = () => {
                         ))}
                     </div>}
 
-                {requests.filter(item => item.uploading && item.uploading.status !== 'done').length !==0 && <h2 className='subSectionRequests'>Загружаются</h2>}
+                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h2 className='subSectionRequests'>Загружаются</h2>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (
-                            request.uploading.status !== 'done' &&
+                            request.uploading.status != 'done' &&
                                 <UploadRequest
                                     key={index}
                                     request={request}
@@ -90,7 +94,7 @@ const UploadRequests = () => {
                     :
                     <div id='cards'>
                         {requests.map((request, index) => (
-                            request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
+                            request.uploading.status != 'done' && <RequestCard key={index} request={request}/>
                         ))}
                     </div>}
             </div>

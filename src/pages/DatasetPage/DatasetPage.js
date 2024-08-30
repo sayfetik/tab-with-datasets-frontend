@@ -191,7 +191,7 @@ const DatasetPage = () => {
                         </div>
                         <div>
                             <div id='downloadRationgSection'>
-                                <button id='downloadButton'>
+                                <button className='blueButton' style={{margin: '0px 20px 0px 0px'}}>
                                     <span id='downloadLabel' onClick={handleDownloadClick}>Скачать</span>
                                     <Icon image={downloadIconWhite} />
                                 </button>
@@ -208,8 +208,8 @@ const DatasetPage = () => {
                                 </div>
                             </div>
                             <div className='row'>
-                                <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
-                                <button id='deleteDatasetButton' onClick={handleDeleteClick}>Удалить</button>
+                                <button className='lightBlueButton' style={{margin: '0', padding: '10px 20px'}} onClick={handleEditClick}>Редактировать</button>
+                                <button className='lightRedButton' onClick={handleDeleteClick} style={{padding: '10px 20px'}}>Удалить</button>
                                 <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} back={true}/>
                             </div>
                         </div>
@@ -295,34 +295,34 @@ const DatasetPage = () => {
                     
                     <div id='metainfo'>
                         <h3 className='metaWhite' id='meta'>Метаданные</h3>
-                        <div className='infoContainer'>
+                        {dataset.owner && <div className='infoContainer'>
                             <h4 className='metaWhite'>Владельцы</h4>
                             <p className='metaWhite'>{dataset.owner}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.authors && <div className='infoContainer'>
                             <h4 className='metaWhite'>Авторы</h4>
                             <p className='metaWhite'>{dataset.authors}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.data_source && <div className='infoContainer'>
                             <h4 className='metaWhite'>Источник</h4>
                             <p className='metaWhite'>{dataset.data_source}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.license && <div className='infoContainer'>
                             <h4 className='metaWhite'>Лицензия</h4>
                             <p className='metaWhite'>{dataset.license}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.expected_update_frequency && <div className='infoContainer'>
                             <h4 className='metaWhite'>Ожидаемая частота обновления</h4>
                             <p className='metaWhite'>{dataset.expected_update_frequency}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.last_change_date && <div className='infoContainer'>
                             <h4 className='metaWhite'>Последнее изменение</h4>
                             <p className='metaWhite'>{dataset.last_change_date}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.doi && <div className='infoContainer'>
                             <h4 className='metaWhite'>DOI</h4>
                             <p className='metaWhite'>{dataset.doi}</p>
-                        </div>
+                        </div>}
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Количество скачиваний</h4>
                             <p className='metaWhite'>{dataset.downloads_number}</p>
