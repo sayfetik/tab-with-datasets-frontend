@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RequestReport, AnonReport } from '../..';
+import { RequestReport, AnonReport, RequestStatus } from '../..';
 import { useParams, useNavigate } from 'react-router-dom';
 import plusWhiteIcon from '../../../img/plusWhite.png';
 import datasetUploadedIcon from '../../../img/datasetUploaded.png';
@@ -40,53 +40,12 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
             <div id='briefDatasetListItem'>
                 <div className='row'>
                     <p id='datasetTitleList' style={{marginRight: '30px'}}>{request.dataset_title}</p>
-                    {request.sending?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.sending.status}> На проверке </p>
-                            <img src={stage1} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.metadata_securing?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.metadata_securing.status}> Сканирование метаданных</p>
-                            <img src={request.metadata_securing.status === 'failed' ? stage2 : stage1} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.files_securing?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.files_securing.status}> Сканирование на безопасность</p>
-                            <img src={request.files_securing.status === 'failed' ? stage2 : stage1} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.anonymizing?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.anonymizing.status}> Анонимизация датасета, защита персональных данных</p>
-                            <img src={stage2} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.cleaning?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.cleaning.status}> Подготовка датасета к использованию, предобработка данных</p>
-                            <img src={stage3} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.uploading?.status === 'in_progress' && (
-                        <div id='status'>
-                            <p className={request.uploading.status}> Датасет загружен</p>
-                            <img src={stage3} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
-                    {request.uploading?.status === 'done' && (
-                        <div id='status'>
-                            <p className={request.uploading.status}> Датасет загружен</p>
-                            <img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />
-                        </div>
-                    )}
+                    <RequestStatus request={request} />
                 </div>
                 
                 <button className="report-close-button" onClick={onClose}>&times;</button>
             </div>
-          <div className='fullStages'>
+            <div className='fullStages'>
                     <div className='stages'>
                     {request.sending && (
                         <>
@@ -137,11 +96,11 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                             <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
-                                isOpen={isSecuringReportOpen}    
-                                onClose={()=>{setisSecuringReportOpen(false)}}
-                                report={request.files_securing.files}     
-                                warning={true}
-                                label='Файлы с подозрениями на нарушение безопасности'                      
+                                    isOpen={isSecuringReportOpen}    
+                                    onClose={()=>{setisSecuringReportOpen(false)}}
+                                    report={request.files_securing.files}     
+                                    warning={true}
+                                    label='Файлы с подозрениями на нарушение безопасности'                      
                                 />
                             </div>
                             )}
@@ -159,12 +118,13 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                             <p className={request.anonymizing.status}>Анонимизация датасета, защита персональных данных</p>
                             {request.anonymizing.status === 'done' && (
                                 <>
-                                <button className='showReportButton' onClick={() => setisAnonymizingReportOpen(true)}>Подробнее</button>
+                                {Object.keys(request.anonymizing.category).length !== 0 &&<button className='showReportButton' onClick={() => setisAnonymizingReportOpen(true)}>Подробнее</button>}
                                 <AnonReport
                                     isOpen={isAnonymizingReportOpen}    
                                     onClose={()=>{setisAnonymizingReportOpen(false)}}
                                     report={request.anonymizing.category}     
-                                    warning={false}                    
+                                    warning={false}
+                                    label='Изменённые файлы'                      
                                 />
                                 </>
                             )}
