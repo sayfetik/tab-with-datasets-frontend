@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { RequestReport } from '../..';
-import './UploadRequest.css';
 import not_started from '../../img/notStartedStage.png';
 import in_progress from '../../img/startedStage.png';
 import failed from '../../img/failStage.png';
 import done from '../../img/successStage.png';
+import {RequestReport} from '../../components';
 
 
 const RequestStage = ({ stage, stageTitle, reportTitle }) => {

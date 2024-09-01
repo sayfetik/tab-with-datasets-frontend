@@ -32,10 +32,25 @@ const UploadRequests = () => {
     };
 
     // Проверка на наличие requests
-    if (!requests || !Array.isArray(requests)) {
-        return <div id='unsuccessUpload'>
-                    <div id='mainSectionUnsuccess'>
-                        <h2>Произошла ошибка. Повторите попытку</h2>
+    if (!requests) {
+        return <div>
+                    <Header />
+                    <div id='uploadRequests'>
+                        <div className='rowSpaceBetween' id='pageLabel'>
+                            <h1>Заявки на загрузку</h1>
+                            <div className='row'>
+                                <select className='selectionInput' onChange={(e)=>{setView(e.target.value)}} defaultValue='list' id='datasetForm'>
+                                    <option value='list'>Список</option>
+                                    <option value='cards'>Карточки</option>
+                                </select>
+                                <button className='blueButton' onClick={() => { navigate('/upload') }}>
+                                    <img src={plusWhiteIcon} id='plusIcon' alt="Добавить новый датасет" />
+                                    Новый датасет
+                                </button>
+                            </div>
+                        </div>
+                        <div style={{marginBottom: '30px'}}></div>
+                        <h3>Загрузите датасет и он появится тут!</h3>
                     </div>
                 </div>;
     }
@@ -58,7 +73,7 @@ const UploadRequests = () => {
                     </div>
                 </div>
 
-                <h2 className='subSectionRequests'>Загруженные</h2>
+                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h2 className='subSectionRequests'>Загруженные</h2>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (

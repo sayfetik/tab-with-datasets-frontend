@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { DatasetCard, Back, Header, Filters, BackendConnector, Alert } from '../../components'
 import './Datasets.css'
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
@@ -9,6 +10,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Datasets = () => {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const {
         searchString: searchQuery,
         geography_and_places: initialGeography,
@@ -148,7 +150,7 @@ const Datasets = () => {
                             <button type='submit' id='searchButton'>Найти</button>
                             <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                         </form>
-                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={window.location.reload} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
+                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{navigate('/')}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
                     </div>
                     <div id='cardsContainer'>
                         {!noDatasets ?

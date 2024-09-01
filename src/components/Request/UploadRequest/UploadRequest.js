@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RequestReport, AnonReport, BackendConnector, DeleteVerification, RequestStatus } from '../..';
+import { RequestReport, AnonReport, BackendConnector, DeleteVerification, RequestStatus } from '../../../components';
 import { useParams, useNavigate } from 'react-router-dom';
 import './UploadRequest.css';
 import redTrash from '../../../img/trashRed.png';
@@ -79,7 +79,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
 
     return (
         <div id='datasetListItem'>
-            <div id='briefDatasetListItem'>
+            <div id='briefDatasetListItem' onClick={() => toggleStage(request.request_id)}>
                 <div className='row'>
                     <p id='datasetTitleList' style={{marginRight: '30px'}}>{request.dataset_title}</p>
                     <RequestStatus request={request}/>
@@ -96,7 +96,6 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                     <img
                         src={arrowDown}
                         className={isOpen ? 'statusIcon rotate180' : 'statusIcon'}
-                        onClick={() => toggleStage(request.request_id)}
                         alt="Подробнее о стадиях"
                     />
                 </div>
@@ -153,11 +152,11 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                             <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
-                                isOpen={isSecuringReportOpen}    
-                                onClose={()=>{setisSecuringReportOpen(false)}}
-                                report={request.files_securing.files}     
-                                warning={true}
-                                label='Файлы с подозрениями на нарушение безопасности'                      
+                                    isOpen={isSecuringReportOpen}    
+                                    onClose={()=>{setisSecuringReportOpen(false)}}
+                                    report={request.files_securing.files}     
+                                    warning={true}
+                                    label='Файлы с подозрениями на нарушение безопасности'                      
                                 />
                             </div>
                             )}
@@ -179,8 +178,9 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                                 <AnonReport
                                     isOpen={isAnonymizingReportOpen}    
                                     onClose={()=>{setisAnonymizingReportOpen(false)}}
-                                    report={request.anonymizing.category}    
-                                    warning={false}                    
+                                    report={request.anonymizing.category}     
+                                    warning={false}
+                                    label='Изменённые файлы'                      
                                 />
                                 </>
                             )}

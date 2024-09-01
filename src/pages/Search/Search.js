@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Search.css';
-import { Header, Filters } from '../../components'
+import { Header, Filters } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png';
 import { IconButton } from '@mui/material';
