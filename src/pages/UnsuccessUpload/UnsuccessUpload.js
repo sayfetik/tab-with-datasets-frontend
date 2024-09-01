@@ -15,8 +15,8 @@ const UnsuccessUpload = () => {
                     <Back />
                     <div id='mainSectionUnsuccess'>
                         <h1>Произошла ошибка</h1>
-                        <button id='repeatUpload' onClick={goBack}>Повторить загрузку датасета</button>
-                        <button id='onMain' onClick={()=>{navigate('/')}}>На главную</button>
+                        <button className='blueButton' onClick={goBack}>Повторить загрузку датасета</button>
+                        <button className='lightBlueButton' onClick={()=>{navigate('/')}}>На главную</button>
                     </div>
                 </div>
             </div>

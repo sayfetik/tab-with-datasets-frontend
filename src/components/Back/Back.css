@@ -3,6 +3,7 @@
     align-items: center;
     padding-top: 50px;
     margin-bottom: 10px;
+    width: fit-content;
 }
 .back button {
     color: #3E456F;

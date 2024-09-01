@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './Header.css'
+import {BackendConnector} from '../../components'
 import Icon from '../Icon/Icon';
 import idhLogo from '../../img/idhLogo.png'
-import { useNavigate } from 'react-router-dom';
 import menuIcon from '../../img/menuIcon.png';
+import accountImage from '../../img/accountImage.png'
+import arrowDownIcon from '../../img/arrowDown.png'
+import arrowUpIcon from '../../img/arrowUp.png'
 
 const Header = () => {
   const navigate = useNavigate();
+  const [menuState, setMenuState] = useState(false);
+  const [requests, setRequests] = useState([]);
+
+  const toggleMenu = () => {
+    setMenuState(!menuState)
+  }
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+        try {
+            const data = await BackendConnector.fetchUploadRequests(1);
+            setRequests(data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
+    };
+
+    fetchRequests();
+}, [menuState]);
 
     return (
         <div id="header">
@@ -141,13 +164,24 @@ const Header = () => {
               <span className="NavMenu_itemLabel__kbH6O">InnoDataHub</span>
             </p>
         </div>
-        <div className="NavProfile_commonsNavProfile__zg+C8">
+        <div onClick={toggleMenu} className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
-            <button className="Button_enterBtn__4ReAZ" type="button">Вход</button>
+            <div id="accountButton">
+              <img id='accountImage' alt='account' src={accountImage}/>
+              Администратор
+              {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon}/>}
+              {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon}/>}
+            </div>
+            
+            {menuState && 
+              <div className='options'>
+                  <div className='option' onClick={()=>{navigate('/')}}>Поиск</div>
+                  <div className='option' onClick={()=>{navigate('/uploadRequests', { state: requests })}}>Заявки на загрузку</div>
+              </div>}
           </div>
         </div>
         </header>
-        
+
         <div id='smallHeader'>
         <a href="https://unionepro.ru">
           <div className="logo">

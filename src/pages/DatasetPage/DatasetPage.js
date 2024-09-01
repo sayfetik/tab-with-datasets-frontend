@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import downloadIconWhite from '../../img/downloadWhite.png';
 import folderDarkIcon from '../../img/folderDark.png';
-import downloadIconBlack from '../../img/downloadBlack.png';
-import line from '../../img/lineDark.png'
 import star from '../../img/star.png'
 import './DatasetPage.css'
-import { Back, Header, Icon, DatasetCard, BackendConnector, Download } from '../../components'
+import { Back, Header, Icon, DatasetCard, BackendConnector, Download, DeleteVerification } from '../../components'
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
     const [image, setImage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteVerification, setisDeleteVerification] = useState(false);
 
     const fetchImage = async () => {
         try {
-            const imageUrl = await BackendConnector.getImage(id);
-            setImage(imageUrl);
+            const imageData = await BackendConnector.getImage(id);
+            setImage(imageData.imageUrl);
         } catch (error) {
             console.error('Error fetching image:', error);
         }
@@ -84,26 +83,17 @@ const DatasetPage = () => {
         size: '',
         size_bytes: 0,
         rating: 0,
-        files_structure: {}
+        files_structure: {},
     });
         
     const navigate = useNavigate();
 
     const handleEditClick = () => {
-        console.log(dataset);
         navigate('/editDataset', { state: dataset });
       };
 
-    const handleDeleteClick = (event) => {
-        event.preventDefault();
-        BackendConnector.delete(dataset.id)
-            .then(response => {
-                console.log(response);
-                navigate(-1);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    const handleDeleteClick = () => {
+        setisDeleteVerification(true);
     }
 
     const handleDownloadClick = async () => {
@@ -174,8 +164,8 @@ const DatasetPage = () => {
                         <div className='rowSpaceBetween'>
                             <p className='author'>{dataset.owner}</p>
                             {dataset.visibility === "private" ?
-                                <div id='visibilityLabel'>Private</div>
-                                : <div id='visibilityLabel'>Public</div>
+                                <div id='visibilityLabel'>Приватный</div>
+                                : <div id='visibilityLabel'>Публичный</div>
                             }
                         </div>
                         <h1 id='datasetTitle'>{dataset.title}</h1>
@@ -201,7 +191,7 @@ const DatasetPage = () => {
                         </div>
                         <div>
                             <div id='downloadRationgSection'>
-                                <button id='downloadButton'>
+                                <button className='blueButton' style={{margin: '0px 20px 0px 0px'}}>
                                     <span id='downloadLabel' onClick={handleDownloadClick}>Скачать</span>
                                     <Icon image={downloadIconWhite} />
                                 </button>
@@ -218,8 +208,9 @@ const DatasetPage = () => {
                                 </div>
                             </div>
                             <div className='row'>
-                                <button id='editDatasetButton' onClick={handleEditClick}>Редактировать</button>
-                                <button id='deleteDatasetButton' onClick={handleDeleteClick}>Удалить</button>
+                                <button className='lightBlueButton' style={{margin: '0', padding: '10px 20px'}} onClick={handleEditClick}>Редактировать</button>
+                                <button className='lightRedButton' onClick={handleDeleteClick} style={{padding: '10px 20px'}}>Удалить</button>
+                                <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset} back={true}/>
                             </div>
                         </div>
                         
@@ -266,16 +257,13 @@ const DatasetPage = () => {
                                     </div>
                                     <div className='files'>
                                         {(() => {
-                                            // Check if files_structure is an object and not null
                                             if (typeof dataset.files_structure === 'object' && dataset.files_structure !== null) {
-                                                // Iterate through the entries of files_structure
                                                 return Object.entries(dataset.files_structure).map(([folderName, files], index) => {
-                                                    // Check if the current entry is an object (folder)
                                                     if (typeof files === 'object' && files !== null) {
                                                         return (
                                                             <div key={index}>
                                                                 <div className='row'>
-                                                                    <img id="folderIcon" src={folderDarkIcon} />
+                                                                    <img id="folderIcon" src={folderDarkIcon}  alt="Folder"/>
                                                                     <p id='folderName'>{folderName}</p>
                                                                 </div>
                                                                 {Object.entries(files).map(([fileName, fileSize], subIndex) => (
@@ -287,10 +275,8 @@ const DatasetPage = () => {
                                                             </div>
                                                         );
                                                     } else {
-                                                        // If it's not an object, treat it as a flat structure
                                                         return (
                                                             <div key={index} className='file'>
-                                                                {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
                                                                 <p className='fileDownload'>{folderName} - {formatFileSize(files)}</p>
                                                             </div>
                                                         );
@@ -298,7 +284,7 @@ const DatasetPage = () => {
                                                 });
                                             } else {
                                                 // Handle the case where files_structure is not a valid object
-                                                return <p>No files available.</p>;
+                                                return <p>No files</p>;
                                             }
                                         })()}
                                     </div>
@@ -309,34 +295,34 @@ const DatasetPage = () => {
                     
                     <div id='metainfo'>
                         <h3 className='metaWhite' id='meta'>Метаданные</h3>
-                        <div className='infoContainer'>
+                        {dataset.owner && <div className='infoContainer'>
                             <h4 className='metaWhite'>Владельцы</h4>
                             <p className='metaWhite'>{dataset.owner}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.authors && <div className='infoContainer'>
                             <h4 className='metaWhite'>Авторы</h4>
                             <p className='metaWhite'>{dataset.authors}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.data_source && <div className='infoContainer'>
                             <h4 className='metaWhite'>Источник</h4>
                             <p className='metaWhite'>{dataset.data_source}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.license && <div className='infoContainer'>
                             <h4 className='metaWhite'>Лицензия</h4>
                             <p className='metaWhite'>{dataset.license}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.expected_update_frequency && <div className='infoContainer'>
                             <h4 className='metaWhite'>Ожидаемая частота обновления</h4>
                             <p className='metaWhite'>{dataset.expected_update_frequency}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.last_change_date && <div className='infoContainer'>
                             <h4 className='metaWhite'>Последнее изменение</h4>
                             <p className='metaWhite'>{dataset.last_change_date}</p>
-                        </div>
-                        <div className='infoContainer'>
+                        </div>}
+                        {dataset.doi && <div className='infoContainer'>
                             <h4 className='metaWhite'>DOI</h4>
                             <p className='metaWhite'>{dataset.doi}</p>
-                        </div>
+                        </div>}
                         <div className='infoContainer'>
                             <h4 className='metaWhite'>Количество скачиваний</h4>
                             <p className='metaWhite'>{dataset.downloads_number}</p>
@@ -369,7 +355,7 @@ const DatasetPage = () => {
                                 title={dataset.title}
                                 authors={dataset.authors}
                                 numberOfFiles={dataset.number_of_files}
-                                lastChangeDatetime={dataset.last_change_datetime}
+                                lastChangeDatetime={dataset.last_change_date}
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
                                 smallDescription={dataset.small_description}

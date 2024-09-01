@@ -1,0 +1,28 @@
+#uploadRequests {
+    padding: 70px 148px;
+}
+.subSectionRequests {
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+#pageLabel {
+    margin-bottom: 15px;
+}
+#datasetForm {
+    width: 200px;
+}
+.datasetsList {
+  margin: 10px 0px;
+}
+#profileImage {
+    width: 90px;
+    margin-right: 25px;
+}
+#requestsLabel {
+    font-size: 30px;
+}
+.profile {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}

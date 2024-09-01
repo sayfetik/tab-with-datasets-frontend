@@ -10,18 +10,17 @@
     -o-background-size: cover;
 }
 #metainfo {
-    background-color: #9EB3E8;
+    background-color: #D3EBFF;
     width: fit-content;
-    color: white;
     padding: 30px 45px 30px 45px;
-    border-radius: 50px;
+    border-radius: 20px;
     height: fit-content;
 }
 #meta {
     margin-bottom: 10px;
 }
 .metaWhite {
-    color: white;
+    color: #0071CE;
 }
 .infoContainer {
     margin-bottom: 10px;
@@ -116,9 +115,9 @@
 }
 #filesSection {
     background-color: white;
-    border-radius: 40px;
+    border-radius: 20px;
     margin-bottom: 50px;
-    box-shadow: 0 10px 3px rgba(223, 183, 241), 10px 10px 3px 0 rgba(223, 183, 241);
+    box-shadow: 0 5px 1px #0071CE, 6px 5px 5px 0 #0071CE;
 }
 #filesHeaderWithBottomDivider {
     padding: 20px;
@@ -126,7 +125,7 @@
     justify-content: space-between;
     background-color: transparent;
     padding-bottom: 15px;
-    border-bottom:  solid 2px #3E456F;
+    border-bottom:  solid 1px #3E456F;
 }
 #filesHeader {
     padding: 20px;
@@ -170,10 +169,10 @@
     margin-bottom: 20px;
 }
 #visibilityLabel {
-    color: white;
+    color: #0071CE;
     font-size: 16px;
     font-weight: 600;
-    background-color: rgba(223, 183, 241);
+    background-color: #D3EBFF;
     padding: 12px;
     border-radius: 10px;
     height: fit-content;

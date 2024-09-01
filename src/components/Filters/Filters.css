@@ -14,7 +14,7 @@
   
   .modal-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 40px;
     border-radius: 30px;
     width: 50%;
     max-width: 90%;
@@ -30,7 +30,7 @@
   .modal-close-button {
     background: none;
     border: none;
-    font-size: 1.5em;
+    font-size: 25px;
     cursor: pointer;
   }
   

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Filters.css';
-import InputTagFilter from '../InputTagFilter/InputTagFilter';
+import InputTagFilter from '../InputTag/InputTag';
 
 const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language, setLanguage, data_type, setData_type, task, setTask, technique, setTechnique, subject, setSubject, applyChanges }) => {
   const [localGeography, setLocalGeography] = useState(geography_and_places);
@@ -33,9 +33,7 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
       <div className="modal-content">
         <div className="modal-header">
           <h2>Фильтры</h2>
-          <button className="modal-close-button" onClick={onClose}>
-            &times;
-          </button>
+          <button className="modal-close-button" onClick={onClose}>&times;</button>
         </div>
         <div>
           <label>
@@ -48,7 +46,7 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
           </label>
         </div>
         <div id='applyFiltersLayout'>
-          <button id='applyFilters' onClick={applyFilters}>Apply Filters</button>
+          <button className='blueButton' onClick={applyFilters}>Применить</button>
         </div>
       </div>
     </div>

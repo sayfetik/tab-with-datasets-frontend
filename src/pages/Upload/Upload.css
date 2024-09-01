@@ -38,9 +38,8 @@
 }
 
 .metadataSection {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 @media screen and (max-width: 800px) {
   .metadataSection {
@@ -51,14 +50,14 @@
     padding: 0px;
   }
 }
-#descriptionInputContainer {
+/*#descriptionInputContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: end;
   margin-bottom: 0px;
   margin-top: 10px;
-}
+}*/
 #generateDescButton {
   margin: 0px 15px 10px 0px;
   padding: 13px 20px;
@@ -87,33 +86,13 @@
   align-items: center;
   justify-content: end;
 }
-#descWithButton {
+/*#descWithButton {
   display: flex;
   flex-direction: column;
 }
-#descriptionInput {
-  width: 100%;
-  height: fit-content;
-  margin: 0px;
-  color: #3E456F;
-}
 .metadataBigItem {
   width: 100%;
-}
-#descriptionInput {
-  padding: 10px 20px;
-  border: solid rgba(228, 231, 242, 1);
-  border-width: 1px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: none;
-  font-size: 16px;
-}
-#descriptionInput:focus {
-  border: solid rgba(0, 113, 206, 1);
-  outline: none;
-  border-width: 1px;
-}
+}*/
 #saveButtons {
   margin-top: 40px;
   display: flex;
@@ -121,7 +100,6 @@
 }
 .uploadDataset { 
   border: none;
-  background-color: #3E456F;
   color: white;
   font-weight: 600;
   border-radius: 40px;
@@ -145,15 +123,14 @@
 .cta {
   border: none;
   display: flex;
-  padding: 15px 33px 15px 25px;
+  padding: 10px 30px 10px 22px;
   align-items: center;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-size: 40px;
   color: white;
-  background-color: #3E456F;
+  background-color: #0071CE;
   transition: 1s;
-  box-shadow: 6px 6px 0 black;
   border-radius: 50px;
 }
 
@@ -163,7 +140,6 @@
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0 #D19DEA;
 }
 
 .cta span:nth-child(2) {
@@ -217,7 +193,7 @@ path.two {
         fill: white;
     }
     50% {
-        fill: #D19DEA;
+        fill: white;
     }
     100% {
         fill: white;
@@ -260,12 +236,9 @@ padding: 0px 10px;
 #smallDescriptionContainer {
   margin-bottom: 10px;
 }
-.inputLabel {
-  margin-bottom: 8px;
-}
 #descriptionChoice, #descriptionChosen {
   margin: 3px 15px 15px 0px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: none;
   font-weight: 600;
   border-radius: 20px;
@@ -276,9 +249,10 @@ padding: 0px 10px;
 }
 #descriptionChoice {
   border: none;
-  color: #c59ce2;
+  color: #b575e3;
 }
 #descriptionChosen {
+  background-color: white;
   color: #b575e3;
-  border: none;
+  border: 1px solid #b575e3
 }

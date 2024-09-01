@@ -17,6 +17,8 @@ export default class BackendConnector {
     static generateSmallDescription_endpoint = 'api/summarize_description';
     static generateTags_endpoint = 'api/generate_tags';
     static tagsSuggestions_endpoint = 'api/search_tags';
+    static uploadRequests_endpoint = 'api/fetch_upload_request_status';
+    static uploadRequestPreview_endpoint ='api/fetch_upload_request_dataset_preview';
 
     static results_amount_limit = 12;
 
@@ -97,30 +99,56 @@ export default class BackendConnector {
             formData.append('files', uploadingFiles[i]);
         }
         
-        if (uploadingImage) {
-            formData.append('image', uploadingImage);
-        }  
+        if (uploadingImage) formData.append('image', uploadingImage);
 
         return await this.post(this.upload_endpoint, formData);
     }
 
     static async update(id, uploading_metadata, files_updates, updatingFiles, updatingImage) {
         const formData = new FormData();
-
+    
+        // Добавление метаданных в форму
         formData.append('uploading_metadata', JSON.stringify(uploading_metadata));
         formData.append('files_updates', JSON.stringify(files_updates));
-
+    
+        // Добавление файлов в форму
         for (let i = 0; i < updatingFiles.length; i++) {
             formData.append('files', updatingFiles[i]);
         }
-
-        if (updatingImage) {
+    
+        // Добавление изображения, если оно есть
+        if (updatingImage && updatingImage instanceof File) {
             formData.append('image', updatingImage);
+        } else {
+            console.error('Файл изображения не выбран или неверный формат');
         }
-
-        const api_url = `${this.update_endpoint}/${id}`;
-
-        return await this.post(api_url, formData);
+        
+        
+    
+        const api_url = `${this.host}/${this.update_endpoint}/${id}`;
+    
+        try {
+            const response = await fetch(api_url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    // Важно: не устанавливайте Content-Type, чтобы браузер сам его определил
+                    // 'Content-Type': 'multipart/form-data' 
+                }
+            });
+    
+            // Проверка на успешный ответ
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            // Получение данных из ответа
+            const responseData = await response.json();
+            return responseData;
+        } catch (error) {
+            console.error('Ошибка при выполнении POST-запроса:', error);
+            throw error; // Пробрасываем ошибку дальше
+        }
     }
 
   static async get(endpoint) {
@@ -184,7 +212,7 @@ export default class BackendConnector {
             }
 
             const imageUrl = URL.createObjectURL(response.data);
-            return imageUrl;
+            return { imageUrl: imageUrl, imageSize: response.data.size, imageFile: response };
         } catch (error) {
             console.error('Error:', error);
             return null;
@@ -305,5 +333,13 @@ export default class BackendConnector {
             console.error('Error fetching suggestions:', error);
             return [];
         }
+    }
+
+    static async fetchUploadRequestPreview(request_id) {
+        return await this.get(`${this.uploadRequestPreview_endpoint}/${request_id}`);
+    }
+
+    static async fetchUploadRequests(account_id) {
+        return await this.get(`${this.uploadRequests_endpoint}/${account_id}`);
     }
 }

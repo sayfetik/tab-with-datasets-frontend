@@ -1,30 +1,25 @@
-#datasetCard, #datasetCardInvisible {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#datasetCard {
     margin: 1%;
     background-color: white;
-    border-radius: 50px;
-    padding: 2%;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
+    border-radius: 20px;
     width: 100%;
-    height: fit-content;
-    z-index: 1000;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-    padding: 10%;
+    height: 95%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
 }
 #datasetCard:hover {
     position: absolute;
-    margin: 0;
-    width: 22%;
-    padding: 2.5%;
-}
-#datasetCardInvisible {
-    display: none;
+    width: 25.15%;
+    height: auto;
+    margin: -0.001%;
+    #datasetCardDescription {
+        display: flex;
+    }
 }
 #hover {
-    width: 22%;
+    width: 30.5%;
     margin: 1%;
 }
 
@@ -54,43 +49,25 @@
         padding: 8%;
     }
 }
-#datasetCard.expanded {
-    z-index: 1000; /* Ensure it appears on top */
-    #datasetCardInvsible {
-        display: block;
-    };
-    margin: -2%;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
-}
+
 #datasetImage {
-    width: 100%;
+    width: 90px;
+    height: 90px;
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 4;
     object-fit: cover;
-    border-radius: 50px;
-    margin-bottom: 20px;    
+    border-radius: 10px;
+    margin-right: 20px;    
 }
 #cardInfo {
     margin-top: 10px;
     width: 100%;
     position: relative;
 }
-
 #datasetCardDescription {
     display: none;
     border-radius: 5px;
     color: #3b4168;
-}
-#datasetCard.expanded #datasetCardDescription {
-    display: block;
-}
-
-#nameOfDataset {
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 25px;
-    width: 250px;
-    color: #3E456F;
 }
 .fieldInfo {
     margin-right: 7px;
@@ -102,15 +79,13 @@
 #renewData {
     color: #6b7092;
 }
-#datasetTitleOnCard {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 #authors {
     width: 100%;
 }
 #datasetCardDescription {
     margin-top: 10px;
+}
+#datasetTitleOnCard {
+    overflow-wrap: break-word;
+    font-size: 21px;
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './InputTagFilter.css';
+import './InputTag.css';
 import BackendConnector from '../BackendConnector';
 
-const InputTagFilter = ({ label, tags, setTags }) => {
+const InputTag = ({ label, tags, setTags }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -20,7 +20,7 @@ const InputTagFilter = ({ label, tags, setTags }) => {
 
   useEffect(() => {
     const fetchSuggestions = async () => {
-      if (inputValue.length >= 3) {
+      if (inputValue.length > 0) {
         try {
           const fetchedSuggestions = await BackendConnector.fetchSuggestions(category, inputValue);
           setSuggestions(fetchedSuggestions);
@@ -51,11 +51,6 @@ const InputTagFilter = ({ label, tags, setTags }) => {
     setTags(newTags);
   };
 
-  const clearInput = () => {
-    setInputValue('');
-    setSuggestions([]);
-  };
-
   return (
     <div id='inputTagsFilter'>
       <div className="input-container">
@@ -65,7 +60,6 @@ const InputTagFilter = ({ label, tags, setTags }) => {
           onChange={handleInputChange}
           placeholder={label}
         />
-        <button id='deleteTagButton' className='clearTagInput' onClick={clearInput}>&times;</button>
       </div>
       
       <div className='tagsDisplay'>
@@ -79,7 +73,7 @@ const InputTagFilter = ({ label, tags, setTags }) => {
           </ul>
         )}
         {tags.map((tag, index) => (
-          <div id='tagFilter' className={label==='География данных' && tag != 'global' ? 'capitalize' : ''} key={`${tag}-${index}`}>
+          <div id='tag' className={label==='География данных' && tag != 'global ' ? 'capitalize lightBlueButton' : 'lightBlueButton'} key={`${tag}-${index}`}>
             {tag}
             <button id='deleteTagButton' onClick={() => handleRemoveTag(index)}>&times;</button>
           </div>
@@ -89,4 +83,4 @@ const InputTagFilter = ({ label, tags, setTags }) => {
   );
 };
 
-export default InputTagFilter;
+export default InputTag;
