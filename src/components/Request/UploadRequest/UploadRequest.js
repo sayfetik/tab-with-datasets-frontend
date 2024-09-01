@@ -174,7 +174,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                             <p className={request.anonymizing.status}>Анонимизация датасета, защита персональных данных</p>
                             {request.anonymizing.status === 'done' && (
                                 <>
-                                <button className='showReportButton' onClick={() => setisAnonymizingReportOpen(true)}>Подробнее</button>
+                                {Object.keys(request.anonymizing.category).length !== 0 &&<button className='showReportButton' onClick={() => setisAnonymizingReportOpen(true)}>Подробнее</button>}
                                 <AnonReport
                                     isOpen={isAnonymizingReportOpen}    
                                     onClose={()=>{setisAnonymizingReportOpen(false)}}

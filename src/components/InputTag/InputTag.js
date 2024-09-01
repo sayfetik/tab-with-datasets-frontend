@@ -20,7 +20,7 @@ const InputTag = ({ label, tags, setTags }) => {
 
   useEffect(() => {
     const fetchSuggestions = async () => {
-      if (inputValue.length >= 3) {
+      if (inputValue.length > 0) {
         try {
           const fetchedSuggestions = await BackendConnector.fetchSuggestions(category, inputValue);
           setSuggestions(fetchedSuggestions);
@@ -66,14 +66,14 @@ const InputTag = ({ label, tags, setTags }) => {
         {suggestions.length > 0 && (
           <ul className='rowTags'>
             {suggestions.map((suggestion, index) => (
-              <li id='tagFilterSuggestion' className={label==='География данных' && suggestion != 'global' ? 'lightBlueButton capitalize' : 'lightBlueButton'} key={`${suggestion}-${index}`} onClick={() => handleTagSelect(suggestion)}>
+              <li id='tagFilterSuggestion' className={label==='География данных' && suggestion != 'global' ? 'capitalize' : ''} key={`${suggestion}-${index}`} onClick={() => handleTagSelect(suggestion)}>
                 {suggestion}
               </li>
             ))}
           </ul>
         )}
         {tags.map((tag, index) => (
-          <div id='tagFilter' className={label==='География данных' && tag != 'global' ? 'capitalize' : ''} key={`${tag}-${index}`}>
+          <div id='tag' className={label==='География данных' && tag != 'global ' ? 'capitalize lightBlueButton' : 'lightBlueButton'} key={`${tag}-${index}`}>
             {tag}
             <button id='deleteTagButton' onClick={() => handleRemoveTag(index)}>&times;</button>
           </div>

@@ -12,19 +12,23 @@
     margin-left: 5px;
     margin-bottom: 5px;
 }
-#tagFilterSuggestion {
-    padding: 5px 15px;
+#tag,#tagFilterSuggestion {
+    padding: 4px 12px;
     color: #0071CE;
     border-radius: 20px;
-    cursor: pointer;    
+    cursor: pointer;
     width: fit-content;
     cursor: pointer;
     font-size: 16px;
+    font-weight: 500;
     display: flex;
     align-items: center;
     margin-left: 5px;
     margin-bottom: 5px;
     position: relative;
+}
+#tagFilterSuggestion {
+    border: 1px solid #0071CE;
 }
 .clearTagInput {
     margin-right: 5px;

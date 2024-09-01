@@ -62,10 +62,14 @@ const InputMetadata = ({
                 <option value="never">Никогда</option>
                 <option value="onceWeek">Раз в неделю</option>
                 <option value="twiceWeek">2 раза в неделю</option>
+                <option value="threeAWeek">3 раза в неделю</option>
                 <option value="onceMonth">Раз в месяц</option>
                 <option value="twiceMonth">2 раза в месяц</option>
+                <option value="threeAMonth">3 раза в месяц</option>
                 <option value="onceYear">Раз в год</option>
                 <option value="twiceYear">2 раза в год</option>
+                <option value="threeAYear">3 раза в год</option>
+                <option value="fourAYear">4 раза в год</option>
             </select>
             
             <div className='metadataLabel'>Лицензия</div>

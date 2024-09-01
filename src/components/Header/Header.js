@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Header.css'
 import {BackendConnector} from '../../components'
 import Icon from '../Icon/Icon';
@@ -13,6 +13,10 @@ const Header = () => {
   const navigate = useNavigate();
   const [menuState, setMenuState] = useState(false);
   const [requests, setRequests] = useState([]);
+
+  const toggleMenu = () => {
+    setMenuState(!menuState)
+  }
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -160,13 +164,13 @@ const Header = () => {
               <span className="NavMenu_itemLabel__kbH6O">InnoDataHub</span>
             </p>
         </div>
-        <div className="NavProfile_commonsNavProfile__zg+C8">
+        <div onClick={toggleMenu} className="NavProfile_commonsNavProfile__zg+C8">
           <div className="NavProfile_wrapper__8vQYw">
             <div id="accountButton">
               <img id='accountImage' alt='account' src={accountImage}/>
               Администратор
-              {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>}
-              {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon} onClick={()=>{setMenuState(false)}}/>}
+              {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon}/>}
+              {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon}/>}
             </div>
             
             {menuState && 

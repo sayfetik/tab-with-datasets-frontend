@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Header, UploadRequest, RequestCard, BackendConnector } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
+import accountImage from '../../img/accountImage.png'
 
 const UploadRequests = () => {
     const [requests, setRequests] = useState([]);
@@ -37,7 +38,7 @@ const UploadRequests = () => {
                     <Header />
                     <div id='uploadRequests'>
                         <div className='rowSpaceBetween' id='pageLabel'>
-                            <h1>Заявки на загрузку</h1>
+                            <h2>Заявки на загрузку</h2>
                             <div className='row'>
                                 <select className='selectionInput' onChange={(e)=>{setView(e.target.value)}} defaultValue='list' id='datasetForm'>
                                     <option value='list'>Список</option>
@@ -59,8 +60,12 @@ const UploadRequests = () => {
         <div>
             <Header />
             <div id='uploadRequests'>
+                <div className='profile'>
+                    <img src={accountImage} id='profileImage' />
+                    <h2>Администратор</h2>
+                </div>
                 <div className='rowSpaceBetween' id='pageLabel'>
-                    <h1>Заявки на загрузку</h1>
+                    <h3 id='requestsLabel'>Заявки на загрузку</h3>
                     <div className='row'>
                         <select className='selectionInput' onChange={(e)=>{setView(e.target.value)}} defaultValue='list' id='datasetForm'>
                             <option value='list'>Список</option>
@@ -73,7 +78,7 @@ const UploadRequests = () => {
                     </div>
                 </div>
 
-                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h2 className='subSectionRequests'>Загруженные</h2>}
+                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h3  className='subSectionRequests'>Загруженные</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (
@@ -93,7 +98,7 @@ const UploadRequests = () => {
                         ))}
                     </div>}
 
-                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h2 className='subSectionRequests'>Загружаются</h2>}
+                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h3 className='subSectionRequests'>Загружаются</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (

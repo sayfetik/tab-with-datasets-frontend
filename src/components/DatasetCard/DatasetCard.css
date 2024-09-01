@@ -1,24 +1,25 @@
 #datasetCard {
     margin: 1%;
     background-color: white;
-    border-radius: 50px;
+    border-radius: 20px;
     width: 100%;
-    z-index: 1000;
+    height: 95%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    padding: 8% 10%;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
 }
 #datasetCard:hover {
     position: absolute;
-    width: 20%;
-    padding: 1.5% 2%;
-    margin: -0.8%;
-    z-index: 1000;
+    width: 25.15%;
+    height: auto;
+    margin: -0.001%;
     #datasetCardDescription {
         display: flex;
     }
 }
 #hover {
-    width: 22%;
+    width: 30.5%;
     margin: 1%;
 }
 
@@ -50,12 +51,13 @@
 }
 
 #datasetImage {
-    width: 100%;
+    width: 90px;
+    height: 90px;
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 4;
     object-fit: cover;
-    border-radius: 50px;
-    margin-bottom: 20px;    
+    border-radius: 10px;
+    margin-right: 20px;    
 }
 #cardInfo {
     margin-top: 10px;
@@ -67,13 +69,6 @@
     border-radius: 5px;
     color: #3b4168;
 }
-#nameOfDataset {
-    font-weight: 700;
-    font-size: 25px;
-    line-height: 25px;
-    width: 250px;
-    color: #3E456F;
-}
 .fieldInfo {
     margin-right: 7px;
     width: fit-content;
@@ -84,15 +79,13 @@
 #renewData {
     color: #6b7092;
 }
-#datasetTitleOnCard {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 #authors {
     width: 100%;
 }
 #datasetCardDescription {
     margin-top: 10px;
+}
+#datasetTitleOnCard {
+    overflow-wrap: break-word;
+    font-size: 21px;
 }

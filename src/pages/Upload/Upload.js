@@ -10,6 +10,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const navigate = useNavigate();
     const [warningUploadState, setWarningUploadState] = useState(false);
     const [warningUpload, setWarningUpload] = useState('');
+    const [warningGeneration, setwarningGeneration] = useState(false);
 
     const [isGenerateDesc, setIsGenerateDesc] = useState(false);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
@@ -266,11 +267,13 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 </div>
                             </div>
                             {description && 
+                            <div>
                                 <div id='rowContunuieLoading'>
                                     <button id='continuie' onClick={generateSmallDescAndTags}>
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание и теги</button>
                                     {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                                </div>
                                 </div>
                             }
                         </div>
