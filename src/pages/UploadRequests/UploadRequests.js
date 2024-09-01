@@ -38,12 +38,8 @@ const UploadRequests = () => {
                     <Header />
                     <div id='uploadRequests'>
                         <div className='rowSpaceBetween' id='pageLabel'>
-                            <h2>Заявки на загрузку</h2>
+                            <h3 id='requestsLabel'>Заявки на загрузку</h3>
                             <div className='row'>
-                                <select className='selectionInput' onChange={(e)=>{setView(e.target.value)}} defaultValue='list' id='datasetForm'>
-                                    <option value='list'>Список</option>
-                                    <option value='cards'>Карточки</option>
-                                </select>
                                 <button className='blueButton' onClick={() => { navigate('/upload') }}>
                                     <img src={plusWhiteIcon} id='plusIcon' alt="Добавить новый датасет" />
                                     Новый датасет
@@ -51,7 +47,7 @@ const UploadRequests = () => {
                             </div>
                         </div>
                         <div style={{marginBottom: '30px'}}></div>
-                        <h3>Загрузите датасет и он появится тут!</h3>
+                        <h3 className='subSectionRequests'>Загрузите датасет и он появится тут!</h3>
                     </div>
                 </div>;
     }
