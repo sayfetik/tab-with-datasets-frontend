@@ -3,7 +3,7 @@ import './DeleteVerification.css';
 import { BackendConnector } from '../../components';
 import { useNavigate } from 'react-router-dom';
 
-const DeleteVerification = ({ isOpen, onClose, dataset }) => {
+const DeleteVerification = ({ isOpen, onClose, dataset, back }) => {
     const navigate = useNavigate();
   if (!isOpen) {
     return null;
@@ -14,7 +14,8 @@ const DeleteVerification = ({ isOpen, onClose, dataset }) => {
     BackendConnector.delete(dataset.id)
         .then(response => {
             console.log(response);
-            navigate(-1);
+            if (back) navigate(-1);
+            else onClose();
         })
         .catch(error => {
             console.error(error);

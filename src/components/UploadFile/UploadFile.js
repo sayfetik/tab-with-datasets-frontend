@@ -6,7 +6,7 @@ import JSZip from 'jszip';
 import uploadIcon from '../../img/upload.png';
 import folderDarkIcon from '../../img/folderDark.png';
 
-const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize, initialImageFile }) => {
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize, setInitialImageSize, initialImageFile, setInitialImageFile }) => {
     const beginFilesSizes = filesSizes;
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
     const [isZipUploaded, setIsZipUploaded] = useState(false);

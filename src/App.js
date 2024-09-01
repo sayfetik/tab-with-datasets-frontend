@@ -24,7 +24,6 @@ const App = () => {
           <Route path="/" element={<Search />} />
           <Route path="/dataset/:id" element={<DatasetPage />} />
           <Route path="/upload" element={<Upload doiLimit={doiLimit} descriptionLimit={descriptionLimit} smallDescriptionLimit={smallDescriptionLimit} titleLimit={titleLimit} authorsLimit={authorsLimit} sourceLimit={sourceLimit} frequencyLimit={frequencyLimit} descriptionFieldsLimit={descriptionFieldsLimit}/>} />
-          <Route path="/unsuccessUpload" element={<UnsuccessUpload />} />
           <Route path='/datasets' element={<Datasets />} />
           <Route path='/requestPreview' element={<RequestPreview />} />
           <Route path='/uploadRequests' element={<UploadRequests />} />

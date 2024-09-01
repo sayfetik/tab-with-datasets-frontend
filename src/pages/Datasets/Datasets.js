@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { DatasetCard, Back, Header, Filters, BackendConnector } from '../../components'
+import { DatasetCard, Back, Header, Filters, BackendConnector, Alert } from '../../components'
 import './Datasets.css'
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import searchIcon from '../../img/search.png'
 import _ from 'lodash';
@@ -9,9 +10,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Datasets = () => {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const {
         searchString: searchQuery,
-        datasets: initialDatasets,
         geography_and_places: initialGeography,
         language: initialLanguage,
         data_type: initialDataType,
@@ -19,9 +20,9 @@ const Datasets = () => {
         technique: initialTechnique,
         subject: initialSubject,
     } = state;
-    const [datasets, setDatasets] = useState(initialDatasets || []);
+    const [datasets, setDatasets] = useState([]);
     const [searchString, setSearchString] = useState(searchQuery || '');
-    const [sortedData, setSortedData] = useState(initialDatasets || []);
+    const [sortedData, setSortedData] = useState([]);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
     const [isModalOpen, setIsModalOpen] = useState(false);
     
@@ -32,10 +33,17 @@ const Datasets = () => {
     const [technique, setTechnique] = useState(initialTechnique || []);
     const [subject, setSubject] = useState(initialSubject || []);
 
+    const [warningSearch, setwarningSearch] = useState(false);
+    const [alertState, setalertState] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [noDatasets, setnoDatasets] = useState(false);
+    const [blueButton, setblueButton] = useState('');
+    const [lightBlueButton, setlightBlueButton] = useState('');
+
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
         if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
-            alert('Введите запрос в поле поиска или укажите теги для фильтрации датасетов');
+            setwarningSearch(true);
             return;
         }
         try {
@@ -49,20 +57,18 @@ const Datasets = () => {
                 subject: subject
             };
 
-            if (searchString.length > 0) {
-                data = await BackendConnector.searchByQuery(searchString, filters);
-            } else {
-                data = await BackendConnector.searchByTags(filters);
-            }
+            if (searchString.length > 0) data = await BackendConnector.searchByQuery(searchString, filters);
+            else data = await BackendConnector.searchByTags(filters);
 
             if (data && data.length > 0) {
                 setDatasets(data);
                 setSortedData(data);
-            } else {
-                console.log('No data returned from the server');
-            }
+            } else setnoDatasets(true);
         } catch (error) {
-            alert("Error fetching datasets: " + error);
+            setalertState(true);
+            setErrorMessage(error);
+            setblueButton('Подождать')
+            setlightBlueButton('Попробовать ещё раз');
         }
     };
 
@@ -72,7 +78,7 @@ const Datasets = () => {
 
     useEffect(() => {
         handleSearch();
-    }, [datasets])
+    }, [])
 
     useEffect(() => {
         let sorted = [...datasets];
@@ -106,11 +112,13 @@ const Datasets = () => {
                     <div className='searchFiltersSort'>
                         <form id='inputSearchDatasets' onSubmit={handleSearch} onKeyDown={handleKeyDown}>
                             <input
-                                type='text' 
-                                id="sortInput"
+                                style={{width: '90%'}}
+                                type='text'
+                                id={warningSearch ? 'wrongInput' : 'correctInput'}
                                 placeholder='Поиск по каталогу датасетов'
-                                value={searchString}
-                                onChange={(e) => setSearchString(e.target.value)} 
+                                value={warningSearch? 'Введите запрос в поле или укажите фильтры' : searchString}
+                                onChange={(e) => setSearchString(e.target.value)}
+                                onClick={()=>{setwarningSearch(false)}}
                             />
                             <div id='filterIcon'>
                                 <IconButton aria-controls="filter-menu" aria-haspopup="true" onClick={() => setIsModalOpen(true)}><FilterListIcon /></IconButton>
@@ -142,11 +150,12 @@ const Datasets = () => {
                             <button type='submit' id='searchButton'>Найти</button>
                             <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                         </form>
+                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{navigate('/')}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
                     </div>
                     <div id='cardsContainer'>
-                        <div id='cards'>
-                            {sortedData.length > 0 ? (
-                                sortedData.map(dataset => (
+                        {!noDatasets ?
+                            <div id='cards'>
+                                {sortedData.map(dataset => (
                                     <DatasetCard
                                         key={dataset.id}
                                         id={dataset.id}
@@ -157,13 +166,13 @@ const Datasets = () => {
                                         downloadsNumber={dataset.downloads_number}
                                         size={dataset.size}
                                         smallDescription={dataset.small_description}
-                                    />
-                                ))
-                            ) : ( 
-                                <p>No datasets found</p>
-                            )}   
-                        </div>
+                                    />))}
+                            </div>
+                            :
+                            <h3>Ничего не удалось найти по Вашему запросу</h3>
+                        }
                     </div>
+                    
                 </div>
             </div>
         );

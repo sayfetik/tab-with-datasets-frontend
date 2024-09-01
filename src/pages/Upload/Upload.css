@@ -100,7 +100,6 @@
 }
 .uploadDataset { 
   border: none;
-  background-color: #3E456F;
   color: white;
   font-weight: 600;
   border-radius: 40px;
@@ -124,15 +123,14 @@
 .cta {
   border: none;
   display: flex;
-  padding: 15px 33px 15px 25px;
+  padding: 10px 30px 10px 22px;
   align-items: center;
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-size: 40px;
   color: white;
-  background-color: #3E456F;
+  background-color: #0071CE;
   transition: 1s;
-  box-shadow: 6px 6px 0 black;
   border-radius: 50px;
 }
 
@@ -142,7 +140,6 @@
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0 #D19DEA;
 }
 
 .cta span:nth-child(2) {
@@ -196,7 +193,7 @@ path.two {
         fill: white;
     }
     50% {
-        fill: #D19DEA;
+        fill: white;
     }
     100% {
         fill: white;

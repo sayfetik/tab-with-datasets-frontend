@@ -15,9 +15,6 @@ body {
 *, :after, :before {
   box-sizing: border-box;
 }
-button {
-  border-radius: 10px !important;
-}
 :root {
   --font-header: "Montserrat", sans-serif;
   --font-content: "IBM Plex sans", sans-serif;
@@ -48,7 +45,7 @@ p {
     font-weight: 400;
 }
 
-.input input[type="text"], #datasets input[type="text"], #inputTagsFilter input[type="search"] {
+.input input[type="text"], #inputTagsFilter input[type="search"] {
   padding: 21px;
   border: solid rgba(228, 231, 242, 1);
   border-width: 1px;
@@ -134,7 +131,6 @@ pointer-events: none;
   margin: 0px 0px 0px 20px;
 }
 .lightBlueButton, .lightRedButton {
-  padding: 5px 20px;
   background-color: #D3EBFF;
   color: #0071CE;
 }
@@ -154,4 +150,15 @@ pointer-events: none;
 }
 .rotate180 {
   transform: rotate(180deg);
+}
+button {
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  border-radius: 8px !important;
+}
+button:active {
+  transform: scale(0.95);
+}
+button:hover {
+  filter: brightness(0.95);
 }

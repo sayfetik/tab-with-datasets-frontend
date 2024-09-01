@@ -48,8 +48,10 @@ const DatasetCard = ({
     return (
         <div id='hover'>
             <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}}>
-                <img id='datasetImage' src={image} alt='Dataset cover'></img>
-                <h3 id='datasetTitleOnCard'>{title}</h3>
+                <div style={{display: 'flex'}}>
+                    <img id='datasetImage' src={image} alt='Dataset cover'></img>
+                    <h3 id='datasetTitleOnCard'>{title}</h3>
+                </div>
                 <div id='cardInfo'>
                     <p className='fieldInfo' id='authors'>{authors}</p>
                     <p className='fieldInfo' id='renewData'>Обновлён {lastChangeDate}</p>
