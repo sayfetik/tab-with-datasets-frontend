@@ -8,12 +8,14 @@
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
+    z-index: 1;
 }
 #datasetCard:hover {
     position: absolute;
-    width: 25.15%;
+    width: 25%;
     height: auto;
-    margin: -0.001%;
+    margin: 5px;
+    z-index: 1000;
     #datasetCardDescription {
         display: flex;
     }
