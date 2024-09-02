@@ -7,18 +7,19 @@ import accountImage from '../../img/accountImage.png'
 
 const UploadRequests = () => {
     const [requests, setRequests] = useState([]);
+
+    const fetchRequests = async () => {
+        try {
+            const data = await BackendConnector.fetchUploadRequests(1);
+            setRequests(data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchRequests = async () => {
-            try {
-                const data = await BackendConnector.fetchUploadRequests(1);
-                setRequests(data);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
-    
         fetchRequests();
-    }, [requests]);
+    }, []);
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
     const [view, setView] = useState('list');

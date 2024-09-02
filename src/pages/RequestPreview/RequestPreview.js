@@ -100,7 +100,7 @@ const RequestPreview = () => {
                 <div id='datasetInfoHeader'>
                     <div id='mainInfo'>
                         <div className='rowSpaceBetween'>
-                            <p className='author'>{dataset.owner}</p>
+                            <p className='author'>{dataset.title}</p>
                             {dataset.visibility === "private" ?
                                 <div id='visibilityLabel'>Приватный</div>
                                 : <div id='visibilityLabel'>Публичный</div>

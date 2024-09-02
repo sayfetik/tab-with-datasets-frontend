@@ -282,7 +282,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                             <div id='smallDescriptionContainer'>
                                 <div id='descriptionInputContainer'>
                                     <div className='metadataBigItem'>
-                                        <div className='inputLabel'>Краткое описание</div>
+                                        <div id='inputLabel'>Краткое описание</div>
                                         <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                                     </div>
                                 </div>
