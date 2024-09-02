@@ -14,6 +14,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
     const [isSecuringReportOpen, setisSecuringReportOpen] = useState(false);
     const [isMetadataSecuringReportOpen, setisMetadataSecuringReportOpen] = useState(false);
     const [isAnonymizingReportOpen, setisAnonymizingReportOpen] = useState(false);
+    const [image_securing, setisImage_securingReportOpen] = useState(false);
     const [isCleaningReportOpen, setisCleaningReportOpen] = useState(false);
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
     const [dataset, setDataset] = React.useState({
@@ -85,10 +86,10 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                     <RequestStatus request={request}/>
                 </div>
                 <div className='rightSectionList'>
-                        {request.uploading?.status === 'done' ?
+                        {request.uploading?.status === 'done' &&
                             <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>
-                            :
-                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>
+                            /*:
+                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>*/
 }
                     {request.uploading?.status === 'done' && <button style={{padding: '5px 20px'}} className='lightBlueButton' onClick={handleEditClick}>Редактировать</button>}
                     {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
@@ -123,7 +124,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                             <div id='stageStatus'>
                             <img src={statusImages[request.metadata_securing.status]} className='stageStatusIcon' alt="Статус" />
                             <p className={request.metadata_securing.status}>Сканирование метаданных</p>
-                            {request.metadata_securing?.status === 'failed' && (
+                            {/*request.metadata_securing?.status === 'failed' && (
                                 <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
@@ -134,9 +135,35 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                                     label='Файлы с подозрениями на нарушение заполненных метаданных'                      
                                 />
                                 </div>
-                            )}
+                            )*/}
                             </div>
                             {request.metadata_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.metadata_securing.finished_at_date} {request.metadata_securing.finished_at_time}</p>}
+                        </div>
+                        </>
+                    )}
+
+                    
+                    {request.image_securing && (
+                        <>
+                        <div className='not_startedNet'></div>
+                        <div className='row'>
+                            <div id='stageStatus'>
+                            <img src={statusImages['done']} className='stageStatusIcon' alt="Статус" />
+                            <p className='done'>Сканирование обложки на безопасность</p>
+                            {/*request.image_securing?.status === 'failed' && (
+                                <div style={{height: '20px'}}>
+                                <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
+                                <RequestReport
+                                    isOpen={image_securing}    
+                                    onClose={()=>{setisImage_securingReportOpen(false)}}
+                                    report={request.image_securing.files}     
+                                    warning={true}
+                                    label='Файлы с подозрениями на нарушение заполненных метаданных'                      
+                                />
+                                </div>
+                            )*/}
+                            </div>
+                            {request.image_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.image_securing.finished_at_date} {request.image_securing.finished_at_time}</p>}
                         </div>
                         </>
                     )}
@@ -148,7 +175,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                         <div id='stageStatus'>
                             <img src={statusImages[request.files_securing.status]} className='stageStatusIcon' alt="Статус" />
                             <p className={request.files_securing.status}>Сканирование на безопасность</p>
-                            {request.files_securing.status === 'failed' && (
+                            {/*request.files_securing.status === 'failed' && request.files_securing.files.length !== 0 && (
                             <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
@@ -159,7 +186,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                                     label='Файлы с подозрениями на нарушение безопасности'                      
                                 />
                             </div>
-                            )}
+                            )*/}
                         </div>
                         {request.files_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.files_securing.finished_at_date} {request.files_securing.finished_at_time}</p>}
                         </div>

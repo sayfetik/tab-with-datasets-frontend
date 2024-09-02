@@ -19,7 +19,7 @@
 .filesSection {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 #filesPart {
   display: grid;
@@ -125,7 +125,7 @@
     align-items: center;
 }
 .uploadPage {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 .uploadedImagePreview {
     margin-top: 20px;
@@ -186,4 +186,7 @@
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: 500;
+  }
+  #requiredFieldsLabel {
+    color: #0071CE;
   }

@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RequestReport, AnonReport, RequestStatus } from '../..';
-import { useParams, useNavigate } from 'react-router-dom';
-import plusWhiteIcon from '../../../img/plusWhite.png';
-import datasetUploadedIcon from '../../../img/datasetUploaded.png';
-import redTrash from '../../../img/trashRed.png';
-import arrowDown from '../../../img/arrowDown.png';
+import { useNavigate } from 'react-router-dom';
 import not_started from '../../../img/notStartedStage.png';
 import in_progress from '../../../img/startedStage.png';
 import failed from '../../../img/failStage.png';
 import done from '../../../img/successStage.png';
-import stage1 from '../../../img/stage0.png';
-import stage2 from '../../../img/stage1.png';
-import stage3 from '../../../img/stage2.png';
-import stage4 from '../../../img/stage3.png';
 import './RequestFullModal.css'
 
 
@@ -20,6 +12,7 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
     const [isSecuringReportOpen, setisSecuringReportOpen] = useState(false);
     const [isMetadataSecuringReportOpen, setisMetadataSecuringReportOpen] = useState(false);
     const [isAnonymizingReportOpen, setisAnonymizingReportOpen] = useState(false);
+    const [image_securing, setisImage_securingReportOpen] = useState(false);
     const [isCleaningReportOpen, setisCleaningReportOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -67,7 +60,7 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                             <div id='stageStatus'>
                             <img src={statusImages[request.metadata_securing.status]} className='stageStatusIcon' alt="Статус" />
                             <p className={request.metadata_securing.status}>Сканирование метаданных</p>
-                            {request.metadata_securing?.status === 'failed' && (
+                            {/*request.metadata_securing?.status === 'failed' && (
                                 <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
@@ -78,9 +71,35 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                                     label='Файлы с подозрениями на нарушение заполненных метаданных'                      
                                 />
                                 </div>
-                            )}
+                            )*/}
                             </div>
                             {request.metadata_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.metadata_securing.finished_at_date} {request.metadata_securing.finished_at_time}</p>}
+                        </div>
+                        </>
+                    )}
+
+                    
+                    {request.image_securing && (
+                        <>
+                        <div className='not_startedNet'></div>
+                        <div className='row'>
+                            <div id='stageStatus'>
+                            <img src={statusImages['done']} className='stageStatusIcon' alt="Статус" />
+                            <p className='done'>Сканирование обложки на безопасность</p>
+                            {/*request.image_securing?.status === 'failed' && (
+                                <div style={{height: '20px'}}>
+                                <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
+                                <RequestReport
+                                    isOpen={image_securing}    
+                                    onClose={()=>{setisImage_securingReportOpen(false)}}
+                                    report={request.image_securing.files}     
+                                    warning={true}
+                                    label='Файлы с подозрениями на нарушение заполненных метаданных'                      
+                                />
+                                </div>
+                            )*/}
+                            </div>
+                            {request.image_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.image_securing.finished_at_date} {request.image_securing.finished_at_time}</p>}
                         </div>
                         </>
                     )}
@@ -92,7 +111,7 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                         <div id='stageStatus'>
                             <img src={statusImages[request.files_securing.status]} className='stageStatusIcon' alt="Статус" />
                             <p className={request.files_securing.status}>Сканирование на безопасность</p>
-                            {request.files_securing.status === 'failed' && (
+                            {/*request.files_securing.status === 'failed' && request.files_securing.files.length !== 0 && (
                             <div style={{height: '20px'}}>
                                 <button className='showReportButton' onClick={() => setisSecuringReportOpen(true)}>Подробнее</button>
                                 <RequestReport
@@ -103,7 +122,7 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
                                     label='Файлы с подозрениями на нарушение безопасности'                      
                                 />
                             </div>
-                            )}
+                            )*/}
                         </div>
                         {request.files_securing.finished_at_date!== 'None' && <p className='stageDate'>{request.files_securing.finished_at_date} {request.files_securing.finished_at_time}</p>}
                         </div>
