@@ -21,6 +21,7 @@ const RequestReport = ({ isOpen, onClose, report, warning, label }) => {
             case '[PHONE]': return 'номера телефонов';
             case '[EMAIL]': return 'адреса электронных почт';
             case '[OTHER]': return 'персональные данные';
+            case '[LOCATION]': return 'местоположения';
             default: return str; // Return the original string if no match
         }
     }
