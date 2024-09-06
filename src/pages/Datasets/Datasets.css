@@ -1,9 +1,11 @@
 #datasets {
     padding: 0% 10% 10% 8%;
-    background-image: url('../../img/uploadBackground.png');
+    /*background-image: url('../../img/background.png');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
+    height: 150%;
+    width: 100%;*/
 }
 #sort {
     width: 200px;

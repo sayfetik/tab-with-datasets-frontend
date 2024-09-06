@@ -64,6 +64,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
 
     const statusImages = {
         'not_started': not_started,
+        'not started': not_started,
         'in_progress': in_progress,
         'done': done,
         'failed': failed,
@@ -198,7 +199,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                         <div className='row'>
                             <div id='stageStatus'>
                             <img src={statusImages[request.anonymizing.status]} className='stageStatusIcon' alt="Статус" />
-                            <p className={request.anonymizing.status}>Анонимизация датасета, защита персональных данных</p>
+                            <p className={request.anonymizing.status === "not started" ? 'not_started': request.anonymizing.status}>Анонимизация датасета, защита персональных данных</p>
                             {request.anonymizing.status === 'done' && (
                                 <>
                                 {Object.keys(request.anonymizing.category).length !== 0 &&<button className='showReportButton' onClick={() => setisAnonymizingReportOpen(true)}>Подробнее</button>}
@@ -223,7 +224,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                         <div className='row'>
                             <div id='stageStatus'>
                             <img src={statusImages[request.cleaning.status]} className='stageStatusIcon' alt="Статус" />
-                            <p className={request.cleaning.status}>Подготовка датасета к использованию, предобработка данных</p>
+                            <p className={request.cleaning.status === "not started" ? 'not_started': request.anonymizing.status}>Подготовка датасета к использованию, предобработка данных</p>
                             </div>
                             {request.cleaning.finished_at_date!== 'None' && <p className='stageDate'>{request.cleaning.finished_at_date} {request.cleaning.finished_at_time}</p>}
                         </div>
