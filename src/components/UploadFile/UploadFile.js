@@ -367,7 +367,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                     {warningInvalidZip && <p className='warning'>ZIP архив должен содержать только JSON или CSV файлы.</p>}
                     {warningZips && <p className='warning'>Вы можете загрузить только один ZIP архив.</p>}
                     {warningFiles && <p className='warning'>Вы можете загрузить только JSON или CSV файлы.</p>}
-                    {warningFilesAndZip && <p className='warning'>Вы можете загрузить JSON/CSV файлы или один ZIP.</p>}
+                    {warningFilesAndZip && <p className='warning'>Вы можете загрузить JSON,CSV файлы или один ZIP.</p>}
                 </div>
             </div>
         </div>
