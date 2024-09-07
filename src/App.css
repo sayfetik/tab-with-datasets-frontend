@@ -11,6 +11,19 @@ body {
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5715;
+  background:
+    radial-gradient(
+        50% 50% at -10% 60%,
+        rgba(201, 184, 239, 0.84) 0%,
+        rgba(245, 245, 245, 0) 100%
+      )
+      fixed,
+    radial-gradient(
+        50% 50% at 100% 100%,
+        #c8d8ff 0%,
+        rgba(245, 245, 245, 0) 100%
+      )
+      fixed;
 }
 *, :after, :before {
   box-sizing: border-box;

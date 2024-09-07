@@ -1,62 +1,60 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import datasetUploadedIcon from '../../img/datasetUploaded.png';
+import failed from '../../img/failStage.png';
 import stage1 from '../../img/stage0.png';
 import stage2 from '../../img/stage1.png';
 import stage3 from '../../img/stage2.png';
 import stage4 from '../../img/stage3.png';
-import failed from '../../img/failStage.png';
+import { ProgressCircle } from '..';
 
 const RequestStatus = ({ request }) => {
+    const statuses = [
+        request.sending?.status,
+        request.image_securing?.status,
+        request.metadata_securing?.status,
+        request.files_securing?.status,
+        request.anonymizing?.status,
+        request.cleaning?.status,
+        request.uploading?.status
+    ];
     
-useEffect(()=>{
-    console.log(request.metadata_securing)
-})
+    const stages = [
+        'На проверке',
+        'Сканирование обложки на безопасность',
+        'Сканирование метаданных',
+        'Сканирование датасета на безопасность',
+        'Анонимизация датасета, защита персональных данных',
+        'Подготовка датасета к использованию, предобработка данных',
+        'Датасет загружен'
+    ];
+
+    const hasFailed = statuses.includes('failed');
+    const allDone = statuses.every(status => status === 'done');
+    
+    const formatInProgressStages = () => {
+        if (statuses[6] === 'done') return <p className='done'>{stages[6]}</p>;
+
+        if (hasFailed) {
+            const failedIndices = statuses.map((status, index) => (status === 'failed' ? index : -1)).filter(index => index !== -1);
+            return <p className='failed'>{failedIndices.map(index => stages[index]).join(', ')}</p>
+        }
+
+        const inProgressIndices = statuses.map((status, index) => (status === 'in_progress' ? index : -1)).filter(index => index !== -1);
+        return <p className='in_progress'>{inProgressIndices.map(index => stages[index]).join(', ')}</p>
+    };
+
     return (
         <div className='row' style={{margin: '0'}}>
-            {request.sending?.status === 'in_progress' && (
-                <div id='status'>
-                    <p className={request.sending.status}> На проверке </p>
-                    <img src={stage1} className='statusIcon' alt="Статус" />
-                </div>
-            )}
-            {(request.metadata_securing.status === 'in_progress' || request.metadata_securing.status === 'failed')&& (
-                <div id='status'>
-                    <p className={request.metadata_securing.status}> Сканирование метаданных</p>
-                    <img src={request.metadata_securing.status === 'failed' ? failed : stage1} className={request.metadata_securing.status === 'failed' ? 'statusIconSmaller' :'statusIcon'} alt="Статус" />
-                </div>
-            )}
-            {(request.files_securing?.status === 'in_progress' || request.files_securing?.status === 'failed') && (
-                <div id='status'>
-                    <p className={request.files_securing.status}> Сканирование на безопасность</p>
-                    <img src={request.files_securing.status === 'failed' ? failed : stage1} className={request.files_securing.status === 'failed' ? 'statusIconSmaller' :'statusIcon'} alt="Статус" />
-                </div>
-            )}
-            {request.anonymizing?.status === 'in_progress' && (
-                <div id='status'>
-                    <p className={request.anonymizing.status}> Анонимизация датасета, защита персональных данных</p>
-                    <img src={stage2} className='statusIcon' alt="Статус" />
-                </div>
-            )}
-            {request.cleaning?.status === 'in_progress' && (
-                <div id='status'>
-                    <p className={request.cleaning.status}> Подготовка датасета к использованию, предобработка данных</p>
-                    <img src={stage3} className='statusIcon' alt="Статус" />
-                </div>
-            )}
-            {request.uploading?.status === 'in_progress' && (
-                <div id='status'>
-                    <p className={request.uploading.status}> Датасет загружается</p>
-                    <img src={stage4} className='statusIcon' alt="Статус" />
-                </div>
-            )}
-            {request.uploading?.status === 'done' && (
-                <div id='status'>
-                    <p className={request.uploading.status}> Датасет загружен</p>
-                    <img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />
-                </div>
-            )}
+            <div id='status'>
+                {formatInProgressStages()}
+                {
+                    hasFailed ? (<img src={failed} className='statusIcon' alt="Статус" />)
+                    : statuses[6] === 'done' ? (<img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />)
+                    : <ProgressCircle statuses={statuses} />
+                }
+            </div>
         </div>
     );
-}
+};
 
 export default RequestStatus;
