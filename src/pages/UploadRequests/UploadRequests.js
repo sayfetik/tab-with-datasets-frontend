@@ -90,10 +90,12 @@ const UploadRequests = () => {
                         ))}
                     </div>
                     :
-                    <div id='cards'>
-                        {requests.map((request, index) => (
-                            request.uploading.status === 'done' && <RequestCard key={index} request={request}/>
-                        ))}
+                    <div id='cardsContainer'>
+                        <div id='cards'>
+                            {requests.map((request, index) => (
+                                request.uploading.status === 'done' && <RequestCard key={index} request={request}/>
+                            ))}
+                        </div>
                     </div>}
 
                 {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h3 className='subSectionRequests'>Загружаются</h3>}
@@ -110,10 +112,12 @@ const UploadRequests = () => {
                             ))}
                     </div>
                     :
-                    <div id='cards'>
-                        {requests.map((request, index) => (
-                            request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
-                        ))}
+                    <div id='cardsContainer'>
+                        <div id='cards'>
+                            {requests.map((request, index) => (
+                                request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
+                            ))}
+                        </div>
                     </div>}
             </div>
         </div>

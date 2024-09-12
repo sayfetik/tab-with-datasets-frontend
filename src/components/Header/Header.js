@@ -27,7 +27,6 @@ const Header = () => {
             console.error("Error fetching data: ", error);
         }
     };
-
     fetchRequests();
 }, [menuState]);
 

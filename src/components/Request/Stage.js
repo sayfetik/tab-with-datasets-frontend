@@ -1,10 +1,7 @@
 import React from 'react';
 
-
-// Компонент для отображения этапов
 const Stage = ({ stage, stageName, statusImages, setisReportOpen, reportOpen, reportComponent, label }) => {
 const hasReport = () => {
-    // Проверяем наличие и непустоту объектов files и category
     return (stage.files && Object.keys(stage.files).length > 0) || (stage.category && Object.keys(stage.category).length > 0);
     };
     
@@ -15,7 +12,9 @@ const hasReport = () => {
         <div id='stageStatus'>
           <img src={statusImages[stage.status]} className='stageStatusIcon' alt="Статус" />
           <p className={stage.status}>{stageName}</p>
-          {hasReport() && (
+          {(stageName === 'Сканирование метаданных') ? <p style={{marginLeft: '10px'}} className='failed'>({stage.files[0].reason})</p>
+          :
+          hasReport() && (
             <div style={{ height: '20px' }}>
               <button className='showReportButton' onClick={() => setisReportOpen(true)}>Подробнее</button>
               {

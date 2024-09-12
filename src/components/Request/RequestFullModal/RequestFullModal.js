@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stages, RequestStatus } from '../..';
-import { useNavigate } from 'react-router-dom';
 import not_started from '../../../img/notStartedStage.png';
 import in_progress from '../../../img/startedStage.png';
 import failed from '../../../img/failStage.png';

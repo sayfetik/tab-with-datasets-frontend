@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Stages, BackendConnector, DeleteVerification, RequestStatus } from '../..';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './UploadRequest.css';
 import redTrash from '../../../img/trashRed.png';
 import arrowDown from '../../../img/arrowDown.png';
@@ -11,11 +11,11 @@ import done from '../../../img/successStage.png';
 
 
 const UploadRequest = ({ request, toggleStage, isOpen }) => {
-    const [isSecuringReportOpen, setisSecuringReportOpen] = useState(false);
+    /*const [isSecuringReportOpen, setisSecuringReportOpen] = useState(false);
     const [isMetadataSecuringReportOpen, setisMetadataSecuringReportOpen] = useState(false);
     const [isAnonymizingReportOpen, setisAnonymizingReportOpen] = useState(false);
     const [image_securing, setisImage_securingReportOpen] = useState(false);
-    const [isCleaningReportOpen, setisCleaningReportOpen] = useState(false);
+    const [isCleaningReportOpen, setisCleaningReportOpen] = useState(false);*/
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
     const [dataset, setDataset] = React.useState({
         id: '',
@@ -86,11 +86,12 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
                     <RequestStatus request={request}/>
                 </div>
                 <div className='rightSectionList'>
-                        {request.uploading?.status === 'done' &&
+                {request.uploading?.status === 'done' && <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>}
+                        {/*request.uploading?.status === 'done' ?
                             <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>
-                            /*:
-                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>*/
-}
+                            :
+                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>
+    */}
                     {request.uploading?.status === 'done' && <button style={{padding: '5px 20px'}} className='lightBlueButton' onClick={handleEditClick}>Редактировать</button>}
                     {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
                     <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} back={false}/>
