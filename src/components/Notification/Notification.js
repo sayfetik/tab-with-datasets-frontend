@@ -8,7 +8,7 @@ const Notification = () => {
   if (!notification) return null;
 
   return (
-    <div style={{ 
+    <div style={{
       position: 'fixed', 
       display: 'flex',
       alignItems: 'center',

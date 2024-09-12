@@ -1,0 +1,13 @@
+.completedProcess, .noProcess {
+    font-size: 17px;
+}
+.completedProcess {
+    color: #00BA55;
+  }
+.noProcess {
+    color: #D80000;
+}
+.iconCompletedProcess {
+    width: 20px;
+    margin: 0px 20px 0px 15px;
+}

@@ -31,7 +31,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
-    const [imageSize, setImageSize] = useState(null);
+    const [imageSize, setImageSize] = useState(0);
     const [filesStructure, setFilesStructure] = useState(dataset.files_structure);
 
     useEffect(() => {
@@ -48,6 +48,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
 
         fetchImage();
     }, []);
+    
 
     useEffect(() => {
         const resetFilesStructure = {};

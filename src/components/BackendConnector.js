@@ -4,9 +4,11 @@ export default class BackendConnector {
     static host = 'http://10.100.30.74';
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
+    static search_endpoint = 'api/search';
     static searchByQuery_endpoint = 'api/search_by_query';
     static searchByTags_endpoint = 'api/search_by_tags';
-    static download_endpoint = 'api/download';
+    static download_initial_dataset_endpoint = 'api/download_initial_dataset';
+    static download_cleaned_dataset_endpoint = 'api/download_cleaned_dataset';
     static description_endpoint = 'api/generate_description';
     static tags_endpoint = 'api/generate_tags';
     static upload_endpoint = 'api/upload';
@@ -19,6 +21,8 @@ export default class BackendConnector {
     static tagsSuggestions_endpoint = 'api/search_tags';
     static uploadRequests_endpoint = 'api/get_upload_requests';
     static uploadRequestPreview_endpoint ='api/preview_upload_request';
+    static codeInitialDataset_endpoint = 'api/get_code_for_downloading_initial_dataset';
+    static codeAdvancedDataset_endpoint ='api/get_code_for_downloading_cleaned_dataset';
 
     static results_amount_limit = 12;
 
@@ -65,18 +69,36 @@ export default class BackendConnector {
     }
 
     static async recommend(id) {
-        return await this.get(`${this.recommend_endpoint}/${id}/4`);
+        return await this.get(`${this.recommend_endpoint}/${id}/2`);
     }
 
-    static async search(search_query) {
-        return await this.get(`${this.search_endpoint}/${search_query}/${this.results_amount_limit}`);
+    static async download_code_initial_dataset(id) {
+        return await this.get(`${this.codeInitialDataset_endpoint}/${id}`);
     }
 
-    static async download(id) {
+    static async download_code_cleaned_dataset(id) {
+        return await this.get(`${this.codeAdvancedDataset_endpoint}/${id}`);
+    }
+
+    static async download_initial_dataset(id) {
         try {
             const response = await axios({
                 method: 'get',
-                url: `${this.host}/${this.download_endpoint}/${id}`,
+                url: `${this.host}/${this.download_initial_dataset_endpoint}/${id}`,
+                responseType: 'blob'
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error downloading file:', error);
+            return null;
+        }
+    }
+
+    static async download_cleaned_dataset(id) {
+        try {
+            const response = await axios({
+                method: 'get',
+                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}`,
                 responseType: 'blob'
             });
             return response.data;
@@ -151,12 +173,13 @@ export default class BackendConnector {
         }
     }
 
-  static async get(endpoint) {
+    static async get(endpoint) {
         try {
             const response = await axios({
                 method: 'get',
                 url: `${this.host}/${endpoint}`
             });
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -196,7 +219,6 @@ export default class BackendConnector {
     
     static async getImage(id) {
         const url = `${this.host}/${this.getImage_endpoint}/${id}`;
-
         try {
             const response = await axios({
                 method: 'get',
@@ -206,21 +228,19 @@ export default class BackendConnector {
                     'accept': 'application/json'
                 }
             });
-
-            if (response.status !== 200) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+    
+            if (response.status !== 200) throw new Error(`HTTP error! status: ${response.status}`);
 
             const imageUrl = URL.createObjectURL(response.data);
-            return { imageUrl: imageUrl, imageSize: response.data.size, imageFile: response };
+            return { imageUrl: imageUrl, imageSize: parseInt(response.data.size, 10), imageFile: response.data };
         } catch (error) {
             console.error('Error:', error);
             return null;
         }
     }
 
-    static async searchByQuery(searchString, filters) {
-        const url = `${this.host}/${this.searchByQuery_endpoint}/${searchString}/36`;
+    static async search(searchString, filters) {
+        const url = `${this.host}/${this.search_endpoint}/${searchString}/36`;
         const requestBody = filters;
         const response = await fetch(url, {
             method: 'POST',
@@ -237,7 +257,7 @@ export default class BackendConnector {
         return await response.json();
     }
 
-    static async searchByTags(filters) {
+    /*static async searchByTags(filters) {
         const url = `${this.host}/${this.searchByTags_endpoint}/36`;
         const requestBody = filters;
         const response = await fetch(url, {
@@ -253,7 +273,7 @@ export default class BackendConnector {
         }
 
         return await response.json();
-    }
+    }*/
 
     static async  generateDescription(collectionMethod, dataStructure, useCases) {
         const url = `${this.host}/${this.generateDescription_endpoint}`;

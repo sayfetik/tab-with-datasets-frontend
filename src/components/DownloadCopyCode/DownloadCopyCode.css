@@ -1,0 +1,39 @@
+.modal-content-copy-code {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+  }
+#blueCode, #purpleCode {
+    padding: 10px;
+    padding-right: 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+#purpleCode {
+    background-color: #E9DFFF;
+    color: #7B61FF;
+  }
+#blueCode {
+    background-color: #D3EBFF;
+    color: #0071CE;
+}
+.codeLabel {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.tooltip {
+    position: absolute;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    color: #fff;
+    padding: 8px 20px 8px 2px;
+    border-radius: 10px;
+    top: 120%;
+    left: 90%; /* Center horizontally */
+    transform: translateX(-50%);
+    z-index: 1001; /* Ensure it appears above other elements */
+    white-space: nowrap; /* Prevent text from wrapping */
+}

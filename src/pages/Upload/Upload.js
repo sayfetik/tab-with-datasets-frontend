@@ -55,7 +55,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [files, setFiles] = useState([]);
     const [image, setImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
-    const [imageSize, setImageSize] = useState(null);
+    const [imageSize, setImageSize] = useState(0);
 
     const areAllInputsFilledForDesc = collectionMethod && dataStructure && useCases;
 

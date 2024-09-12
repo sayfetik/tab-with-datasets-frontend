@@ -1,12 +1,22 @@
 .reportWindow {
     background-color: #fff;
-    padding: 25px 40px;
+    padding: 25px 40px; /* Отступы внутри модального окна */
     border-radius: 15px;
     width: fit-content;
     min-width: 40%;
     max-width: 90%;
-    max-height: 60%;
-    overflow-y: scroll;
+    max-height: 80vh; /* Используйте vh для обеспечения корректной высоты окна */
+    overflow: hidden; /* Убираем скролл с самого модального окна */
+    display: flex;
+    flex-direction: column; /* Позволяет размещать элементы вертикально */
+}
+
+/* CSS для контейнера скролла */
+.scroll {
+    flex: 1; /* Позволяет .scroll занимать все доступное пространство */
+    overflow-y: auto; /* Добавляем вертикальный скролл при необходимости */
+    margin-right: 5px; /* Отступ справа для скролл-бара */
+    margin-top: 15px; /* Отступ сверху для разделения с заголовком */
 }
 .reportHeader {
     display: flex;
@@ -32,6 +42,7 @@
     padding: 5px 15px;
     border-radius: 10px;
     margin-bottom: 10px;
+    margin-right: 10px;
 }
 #reportFileName {
     font-size: 17px;
