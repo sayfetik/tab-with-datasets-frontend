@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Header, UploadRequest, RequestCard, BackendConnector } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
@@ -18,7 +18,8 @@ const UploadRequests = () => {
     };
 
     useEffect(() => {
-        fetchRequests();
+        const intervalId = setInterval(fetchRequests, 5000);
+        return () => clearInterval(intervalId);
     }, []);
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
@@ -58,7 +59,7 @@ const UploadRequests = () => {
             <Header />
             <div id='uploadRequests'>
                 <div className='profile'>
-                    <img src={accountImage} id='profileImage' />
+                    <img src={accountImage} id='profileImage' alt=''/>
                     <h2>Администратор</h2>
                 </div>
                 <div className='rowSpaceBetween' id='pageLabel'>
@@ -99,7 +100,7 @@ const UploadRequests = () => {
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (
-                            request.uploading.status != 'done' &&
+                            request.uploading.status !== 'done' &&
                                 <UploadRequest
                                     key={index}
                                     request={request}
@@ -111,7 +112,7 @@ const UploadRequests = () => {
                     :
                     <div id='cards'>
                         {requests.map((request, index) => (
-                            request.uploading.status != 'done' && <RequestCard key={index} request={request}/>
+                            request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
                         ))}
                     </div>}
             </div>

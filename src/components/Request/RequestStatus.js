@@ -25,6 +25,7 @@ const RequestStatus = ({ request }) => {
         'Сканирование датасета на безопасность',
         'Анонимизация датасета, защита персональных данных',
         'Подготовка датасета к использованию, предобработка данных',
+        'Загрузка датасета на платформу',
         'Датасет загружен'
     ];
 
@@ -32,7 +33,7 @@ const RequestStatus = ({ request }) => {
     const allDone = statuses.every(status => status === 'done');
     
     const formatInProgressStages = () => {
-        if (statuses[6] === 'done') return <p className='done'>{stages[6]}</p>;
+        if (statuses[6] === 'done') return <p className='done'>{stages[7]}</p>;
 
         if (hasFailed) {
             const failedIndices = statuses.map((status, index) => (status === 'failed' ? index : -1)).filter(index => index !== -1);
@@ -48,7 +49,7 @@ const RequestStatus = ({ request }) => {
             <div id='status'>
                 {formatInProgressStages()}
                 {
-                    hasFailed ? (<img src={failed} className='statusIcon' alt="Статус" />)
+                    hasFailed ? (<img src={failed} className='statusIconSmaller' alt="Статус" />)
                     : statuses[6] === 'done' ? (<img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />)
                     : <ProgressCircle statuses={statuses} />
                 }

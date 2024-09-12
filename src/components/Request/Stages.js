@@ -67,13 +67,19 @@ const Stages = ({ request, statusImages }) => {
             statusImages={statusImages}
           />
         )}
-        {request.uploading && (
+        {request.uploading && request.uploading.status !== 'done' ? 
+          <Stage
+            stage={request.uploading}
+            stageName="Загрузка датасета на платформу"
+            statusImages={statusImages}
+          />
+          :
           <Stage
             stage={request.uploading}
             stageName="Датасет загружен"
             statusImages={statusImages}
           />
-        )}
+        }
       </div>
     );
   };

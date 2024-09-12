@@ -85,6 +85,11 @@ p {
   display: flex;
   align-items: center;
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 select {
   padding: 10px 20px;
   border-radius: 30px;
@@ -131,7 +136,7 @@ pointer-events: none;
 .displayNone {
   display: none;
 }
-.blueButton,.lightBlueButton, .whiteBlueButton, .lightRedButton {
+.blueButton, .lightBlueButton, .purpleButton, .whitePurpleButton, .lightPurpleButton, .whiteRedButton, .whiteBlueButton, .lightRedButton {
   border: none;
   background-color: #0071CE;
   color: white;
@@ -143,19 +148,57 @@ pointer-events: none;
   border-radius: 10px;
   margin: 0px 0px 0px 20px;
 }
-.lightBlueButton, .lightRedButton {
+.lightBlueButton {
   background-color: #D3EBFF;
   color: #0071CE;
+}
+.lightBlueButton:hover {
+  background-color: #c3e2fc;
+  filter: brightness(1) !important;
 }
 .lightRedButton {
   background-color: #FFE5E5;
   color: #FF0000;
+}
+.lightPurpleButton {
+  background-color: #E9DFFF;
+  color: #7B61FF;
+}
+.lightPurpleButton:hover {
+  background-color: #e2d5fc;
+  filter: brightness(1) !important;
 }
 .whiteBlueButton {
   padding: 4px 15px;
   background-color: white;
   color: #0071CE;
   border: 1px solid #0071CE;
+}
+.whiteBlueButton:hover {
+  background-color: #ecf7ff;
+  filter: brightness(1) !important;
+}
+.whitePurpleButton {
+  padding: 4px 15px;
+  background-color: white;
+  color: #7B61FF;
+  border: 1px solid #7B61FF;
+}
+.whitePurpleButton:hover {
+  background-color: #f2eefd;
+  filter: brightness(1) !important;
+}
+.purpleButton {
+  padding: 4px 15px;
+  background-color: #7B61FF;
+  color: white;
+  border: 1px solid #7B61FF;
+}
+.whiteRedButton {
+  padding: 4px 15px;
+  background-color: white;
+  color: #FF0000;
+  border: 1px solid #FF0000;
 }
 #plusIcon {
   width: 20px;
