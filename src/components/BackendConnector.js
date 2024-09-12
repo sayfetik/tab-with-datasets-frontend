@@ -22,7 +22,7 @@ export default class BackendConnector {
     static uploadRequests_endpoint = 'api/get_upload_requests';
     static uploadRequestPreview_endpoint ='api/preview_upload_request';
     static codeInitialDataset_endpoint = 'api/get_code_for_downloading_initial_dataset';
-    static codeAdvancedDataset_endpoint ='api/get_code_for_downloading_cleaned_datasett';
+    static codeAdvancedDataset_endpoint ='api/get_code_for_downloading_cleaned_dataset';
 
     static results_amount_limit = 12;
 

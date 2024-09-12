@@ -111,7 +111,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                                 <button className='purpleButton' style={{ margin: '0px', padding: '4px 11.5px' }} onClick={copyCleanedCode}>Код скопирован!</button>
                             }
                         </div>
-                        <pre id='purpleCode'>{initialCode}</pre>
+                        <pre id='purpleCode'>{cleanedCode}</pre>
                     </div>
                 </div>
             </div>
