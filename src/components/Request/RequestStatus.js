@@ -1,10 +1,4 @@
 import React from 'react';
-import datasetUploadedIcon from '../../img/datasetUploaded.png';
-import failed from '../../img/failStage.png';
-import stage1 from '../../img/stage0.png';
-import stage2 from '../../img/stage1.png';
-import stage3 from '../../img/stage2.png';
-import stage4 from '../../img/stage3.png';
 import { ProgressCircle } from '..';
 
 const RequestStatus = ({ request }) => {
@@ -30,7 +24,7 @@ const RequestStatus = ({ request }) => {
     ];
 
     const hasFailed = statuses.includes('failed');
-    const allDone = statuses.every(status => status === 'done');
+    //const allDone = statuses.every(status => status === 'done');
     
     const formatInProgressStages = () => {
         if (statuses[6] === 'done') return <p className='done'>{stages[7]}</p>;
@@ -48,11 +42,7 @@ const RequestStatus = ({ request }) => {
         <div className='row' style={{margin: '0'}}>
             <div id='status'>
                 {formatInProgressStages()}
-                {
-                    hasFailed ? (<img src={failed} className='statusIconSmaller' alt="Статус" />)
-                    : statuses[6] === 'done' ? (<img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />)
-                    : <ProgressCircle statuses={statuses} />
-                }
+                <ProgressCircle statuses={statuses} />
             </div>
         </div>
     );

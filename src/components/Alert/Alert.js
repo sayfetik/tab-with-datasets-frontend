@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Alert.css'
 
 const Alert = ({ message, blueButton, blueButtonFunc, lightBlueButton, lightBlueButtonFunc, onClose, isOpen }) => {
@@ -13,8 +13,8 @@ const Alert = ({ message, blueButton, blueButtonFunc, lightBlueButton, lightBlue
                 <button className="modal-close-button" onClick={onClose}>&times;</button>
             </div>
             <div className="buttonContainer">
-                <button className="blueButton" onClick={blueButtonFunc}>{blueButton}</button>
-                <button className="lightBlueButton" onClick={lightBlueButtonFunc}>{lightBlueButton}</button>
+                {blueButton && <button className="blueButton" onClick={blueButtonFunc}>{blueButton}</button>}
+                {lightBlueButton && <button className="lightBlueButton" onClick={lightBlueButtonFunc}>{lightBlueButton}</button>}
             </div>
         </div>
         </div>

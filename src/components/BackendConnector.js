@@ -179,7 +179,6 @@ export default class BackendConnector {
                 method: 'get',
                 url: `${this.host}/${endpoint}`
             });
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -275,7 +274,7 @@ export default class BackendConnector {
         return await response.json();
     }*/
 
-    static async  generateDescription(collectionMethod, dataStructure, useCases) {
+    static async generateDescription(collectionMethod, dataStructure, useCases) {
         const url = `${this.host}/${this.generateDescription_endpoint}`;
         const requestBody = {
             actions_taken_to_collect_and_process_the_dataset: collectionMethod,
@@ -355,7 +354,7 @@ export default class BackendConnector {
         }
     }
 
-    static async fetchUploadRequestPreview(request_id) {
+    static async previewUploadRequest(request_id) {
         return await this.get(`${this.uploadRequestPreview_endpoint}/${request_id}`);
     }
 

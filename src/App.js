@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UnsuccessUpload, Search, Upload, DatasetPage, Datasets, EditPage, UploadRequests, RequestPreview } from './pages';
-import { Notification, NotificationProvider, ScrollToTop } from './components';
-import { RequestPage } from '@mui/icons-material';
+import { Search, Upload, DatasetPage, Datasets, EditPage, UploadRequests, RequestPreview } from './pages';
+import { NotificationProvider, ScrollToTop } from './components';
 
 const App = () => {
   const descriptionLimit = 1000;
@@ -19,7 +18,6 @@ const App = () => {
       <NotificationProvider>
       <Router>
         <ScrollToTop />
-        <Notification />
         <Routes>
           <Route path="/" element={<Search />} />
           <Route path="/dataset/:id" element={<DatasetPage />} />

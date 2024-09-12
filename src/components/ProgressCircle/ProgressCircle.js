@@ -1,7 +1,6 @@
 import React from 'react';
 import datasetUploadedIcon from '../../img/datasetUploaded.png';
 import failed from '../../img/failStage.png';
-import { withTheme } from '@emotion/react';
 
 const ProgressCircle = ({ statuses }) => {
   const totalStages = 7;
@@ -9,13 +8,10 @@ const ProgressCircle = ({ statuses }) => {
   const progress = (completedStages / totalStages) * 100;
   const hasFailed = statuses.includes('failed');
 
-  /*if (hasFailed) {
-    return <img src={failed} className='statusIconSmaller' alt="Статус" />;
-  }*/
-
-  if (completedStages === totalStages) {
-    return <img src={datasetUploadedIcon} className='statusIcon' alt="Статус" />;
+  if (statuses[6]==='done') {
+    return <img src={datasetUploadedIcon} className='statusIcon' alt="" />;
   }
+  if (hasFailed) return <img src={failed} className='statusIconSmaller' alt="Статус" />
 
   return (
     <div style={{ position: 'relative', width: '20px', height: '20px', marginLeft: '3px' }}>

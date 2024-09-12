@@ -5,12 +5,19 @@ import helpPurple from '../../img/helpPurple.png';
 import { BackendConnector, ProccessStages } from '..';
 
 const DownloadCopyCode = ({ isOpen, onClose, id }) => {
-    const [initialCode, setinitialCode] = useState('');
-    const [cleanedCode, setcleanedCode] = useState('');
+    const [initialCode, setinitialCode] = useState('Произошла ошибка. Повторите попытку позже');
+    const [cleanedCode, setcleanedCode] = useState('Произошла ошибка. Повторите попытку позже');
     const [isCopiedInitialCode, setisCopiedInitialCode] = useState(false);
     const [isCopiedCleanedCode, setisCopiedCleanedCode] = useState(false);
     const [showTooltipBlue, setShowTooltipBlue] = useState(false);
     const [showTooltipPurple, setShowTooltipPurple] = useState(false);
+    const [errorBaseCode, seterrorBaseCode] = useState(false);
+    const [errorCleanedCode, seterrorCleanedCode] = useState(false);
+
+    useEffect(()=>{
+        seterrorBaseCode(false);
+        seterrorCleanedCode(false);
+      })
 
     useEffect(() => {
         const getCleanedInitialCode = async () => {
@@ -18,6 +25,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                 const data = await BackendConnector.download_code_initial_dataset(id);
                 setinitialCode(formatCode(data));
             } catch (error) {
+                seterrorBaseCode(true);
                 console.error('Error downloading file:', error);
             }
         };
@@ -27,6 +35,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                 const data = await BackendConnector.download_code_cleaned_dataset(id);
                 setcleanedCode(formatCode(data));
             } catch (error) {
+                seterrorCleanedCode(true);
                 console.error('Error downloading file:', error);
             }
         };

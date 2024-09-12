@@ -7,6 +7,9 @@ export const NotificationProvider = ({ children }) => {
 
   const showNotification = (message) => {
     setNotification(message);
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000); // Уведомление исчезает через 3 секунды
   };
 
   const hideNotification = () => {

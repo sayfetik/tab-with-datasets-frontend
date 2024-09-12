@@ -25,7 +25,6 @@ export { default as DeleteVerification} from './DeleteVerification/DeleteVerific
 export { default as InputMetadata } from './InputMetadata'
 export { default as Alert } from './Alert/Alert'
 export { default as RequestStatus} from './Request/RequestStatus'
-export { default as RequestStage } from './Request/RequestStage'
 export { default as Stages } from './Request/Stages'
 export { default as Stage } from './Request/Stage'
 export { default as ProgressCircle } from './ProgressCircle/ProgressCircle'

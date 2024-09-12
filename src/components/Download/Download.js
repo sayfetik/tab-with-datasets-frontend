@@ -1,4 +1,4 @@
-import {React, useState } from 'react';
+import {React, useEffect, useState } from 'react';
 import './Download.css';
 import downloadBlue from '../../img/downloadBlue.png';
 import downloadPurple from '../../img/downloadPurple.png';
@@ -9,6 +9,13 @@ import { ProccessStages, BackendConnector } from '..';
 const Download = ({ isOpen, onClose, id }) => {
   const [loadingBase, setloadingBase] = useState(false);
   const [loadingAdvanced, setloadingAdvanced] = useState(false);
+  const [errorBase, seterrorBase] = useState(false);
+  const [errorAdvanced, seterrorAdvanced] = useState(false);
+
+  useEffect(()=>{
+    seterrorBase(false);
+    seterrorAdvanced(false);
+  })
 
   if (!isOpen) {
     return null;
@@ -19,25 +26,6 @@ const Download = ({ isOpen, onClose, id }) => {
         setloadingBase(true);
         const blob = await BackendConnector.download_initial_dataset(id);
         if (blob) {
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'file.zip'); // Specify the filename here
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-        }
-    } catch (error) {
-        console.error('Error downloading file:', error);
-    }
-    setloadingBase(false);
-};
-
-const handleDownloadCleanedDsClick = async () => {
-  try {
-    setloadingAdvanced(true);
-      const blob = await BackendConnector.download_cleaned_dataset(id);
-      if (blob) {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
@@ -45,9 +33,30 @@ const handleDownloadCleanedDsClick = async () => {
           document.body.appendChild(link);
           link.click();
           link.remove();
-      }
-  } catch (error) {
+        }
+    } catch (error) {
+      seterrorBase(true);
       console.error('Error downloading file:', error);
+    }
+    setloadingBase(false);
+};
+
+const handleDownloadCleanedDsClick = async () => {
+  try {
+    setloadingAdvanced(true);
+    const blob = await BackendConnector.download_cleaned_dataset(id);
+    if (blob) {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.zip'); // Specify the filename here
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+  } catch (error) {
+    console.error('Error downloading file:', error);
+    seterrorAdvanced(true);
   }
   setloadingAdvanced(false);
 };
@@ -69,6 +78,7 @@ const handleDownloadCleanedDsClick = async () => {
                     <button className='lightBlueButton' id='downloadDataset' onClick={handleDownloadInitialDsClick}>Скачать</button>
                     {loadingBase && <img src={blueLoading} width='30px' height='30px' alt=''/>}
                   </div>
+                  {errorBase && <p className='warning'>Произошла ошибка. Повторите попытку позже</p>}
                 </div>
 
                 <div>
@@ -81,6 +91,7 @@ const handleDownloadCleanedDsClick = async () => {
                     <button className='lightPurpleButton' id='downloadDataset' onClick={handleDownloadCleanedDsClick}>Скачать</button>
                     {loadingAdvanced && <img src={purpleLoading} width='30px' height='30px' alt=''/>}
                   </div>
+                  {errorAdvanced && <p className='warning'>Произошла ошибка. Повторите попытку позже</p>}
                 </div>
               </div>
           <div>
