@@ -4,13 +4,15 @@ import downloadIconWhite from '../../img/downloadWhite.png';
 import folderDarkIcon from '../../img/folderDark.png';
 import star from '../../img/star.png'
 import './DatasetPage.css'
-import { Back, Header, Icon, DatasetCard, BackendConnector, Download, DeleteVerification } from '../../components'
+import copyBlue from '../../img/copyBlue.png'
+import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification } from '../../components'
 
 const DatasetPage = () => {
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
     const [image, setImage] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+    const [isCopyCodeOpen, setIsCopyCodeOpen] = useState(false);
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
 
     const fetchImage = async () => {
@@ -96,23 +98,6 @@ const DatasetPage = () => {
         setisDeleteVerification(true);
     }
 
-    const handleDownloadClick = async () => {
-        try {
-            const blob = await BackendConnector.download(dataset.id);
-            if (blob) {
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'file.zip'); // Specify the filename here
-                document.body.appendChild(link);
-                link.click();
-                link.remove();
-            }
-        } catch (error) {
-            console.error('Error downloading file:', error);
-        }
-    };
-
     const getFileWord = (number) => {
         if (11 <= number % 100 && number % 100 <= 14) {
             return `${number} файлов`;
@@ -191,13 +176,23 @@ const DatasetPage = () => {
                         </div>
                         <div>
                             <div id='downloadRationgSection'>
-                                <button className='blueButton' style={{margin: '0px 20px 0px 0px'}}>
-                                    <span id='downloadLabel' onClick={handleDownloadClick}>Скачать</span>
-                                    <Icon image={downloadIconWhite} />
+                                <button className='blueButton' id='downloadButton' onClick={() => setIsDownloadOpen(true)}>
+                                    <span id='downloadLabel'>Скачать</span>
+                                    <img src={downloadIconWhite} id='downloadIcon' alt=''/>
+                                </button>
+                                <button className='lightBlueButton' id='copyCodeButton' onClick={() => setIsCopyCodeOpen(true)}>
+                                <span id='copyCodeLabel'>Скопировать код для скачивания</span>
+                                    <img src={copyBlue} id='copyCodeIcon' alt=''/>
                                 </button>
                                 <Download
-                                    isOpen={isModalOpen}
-                                    onClose={() => setIsModalOpen(false)}
+                                    isOpen={isDownloadOpen}
+                                    onClose={() => setIsDownloadOpen(false)}
+                                    id={dataset.id}
+                                />
+                                <DownloadCopyCode
+                                    isOpen={isCopyCodeOpen}
+                                    onClose={() => setIsCopyCodeOpen(false)}
+                                    id={dataset.id}
                                 />
                                 <div>
                                     <div id='ratingLabel'>
@@ -208,8 +203,8 @@ const DatasetPage = () => {
                                 </div>
                             </div>
                             <div className='row'>
-                                <button className='lightBlueButton' style={{margin: '0', padding: '10px 20px'}} onClick={handleEditClick}>Редактировать</button>
-                                <button className='lightRedButton' onClick={handleDeleteClick} style={{padding: '10px 20px'}}>Удалить</button>
+                                <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
+                                <button className='whiteRedButton' onClick={handleDeleteClick} style={{padding: '8px 16px'}}>Удалить</button>
                                 <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} back={true}/>
                             </div>
                         </div>

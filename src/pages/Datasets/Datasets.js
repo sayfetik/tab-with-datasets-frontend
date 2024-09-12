@@ -47,7 +47,6 @@ const Datasets = () => {
             return;
         }
         try {
-            let data;
             const filters = {
                 geography_and_places: geography_and_places,
                 language: language,
@@ -57,8 +56,7 @@ const Datasets = () => {
                 subject: subject
             };
 
-            if (searchString.length > 0) data = await BackendConnector.searchByQuery(searchString, filters);
-            else data = await BackendConnector.searchByTags(filters);
+            const data = await BackendConnector.search(searchString, filters);
 
             if (data && data.length > 0) {
                 setDatasets(data);
