@@ -66,10 +66,10 @@ const RequestCard = ({ request }) => {
     }
 
     return (
-        <div id='hover' style={{marginLeft: '0',marginRight: '0'}}>
+        <div id='hover'>
             <div id='requestCard'>
                 <div style={{display: 'flex'}}>
-                    <img id='datasetImage' src={default_image} alt='Dataset cover'></img>
+                    <img id='datasetImage' src={default_image} alt='Ошибка загрузки изображения'></img>
                     <h3 id='datasetTitleOnCard'>{request.dataset_title}</h3>
                 </div>
                 <div id='cardInfo'>
@@ -82,7 +82,12 @@ const RequestCard = ({ request }) => {
                     <RequestFullModal request={request} isOpen={fullStages} onClose={()=>{setfullStages(false)}} />
 
                     <div className='rowSpaceBetween'>
-                        {request.uploading?.status === 'done' && <button className='whiteBlueButton' style={{marginLeft: '0', marginBottom: '8px', marginTop: '8px'}} onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>}
+                        {request.uploading?.status === 'done' && <button style={{marginLeft: '0px'}} className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>}
+                        {/*request.uploading?.status === 'done' ?
+                            <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>
+                            :
+                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>
+    */}
                         <div className='row'>
                             {request.uploading?.status === 'done' && <button className='lightBlueButton' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
                             {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}

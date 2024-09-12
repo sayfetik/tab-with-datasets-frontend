@@ -24,7 +24,7 @@ const Stages = ({ request, statusImages }) => {
             setisReportOpen={setisMetadataSecuringReportOpen}
             reportOpen={isMetadataSecuringReportOpen}
             reportComponent={<RequestReport />}
-            label='Файлы с подозрениями на нарушение заполненных метаданных'
+            label='Поля с подозрениями на нарушение заполненных метаданных'
           />
         )}
         {request.image_securing && (

@@ -1,0 +1,22 @@
+#notification {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 70px;
+    right: 20px; 
+    background-color: #E1C5F5; 
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3E456F;
+}
+#closeNotificationButton {
+    margin: 0px 10px;
+    border: none;
+    font-weight: 700;
+    width: 20px;
+    height: 20px
+}

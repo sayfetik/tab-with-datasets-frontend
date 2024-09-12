@@ -14,7 +14,6 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     const [totalFileSize, setTotalFileSize] = useState(0);
     const [imageSize, setImageSize] = useState(initialImageSize!==0? initialImageSize : 0);
     const [fileSizes, setFileSizes] = useState(filesSizes);
-    const [imageFile, setImageFile] = useState(initialImageFile);
     const previousUploadFilesChoice = useRef(uploadFilesChoice);
 
     const [warningFileLimitState, setwarningFileLimitState] = useState(false);
@@ -48,6 +47,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
             setIsZipUploaded(false);
             setuploadFilesChoice(true);
         }
+        setTotalFileSize(calculateTotalFileSize(fileSizes))
     }, []);
     
     useEffect(()=> {
@@ -60,6 +60,8 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
 
         if (imageSize > 100*1024*1024) setwarningImageLimitState(true);
         setwarningImageLimitState(false);
+        
+        if (image) URL.revokeObjectURL(image);
     }, [fileSizes, image])
 
     useEffect(() => {
@@ -68,19 +70,13 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
         }
     }, [initialImageSize]);
 
-    useEffect(()=>{
-        setTotalFileSize(calculateTotalFileSize(fileSizes))
-    }, [pageLabel])
-
     useEffect(() => {
-        // Проверяем, изменилось ли значение uploadFilesChoice
         if (previousUploadFilesChoice.current !== uploadFilesChoice) {
             setFiles([]);
             setFileSizes({});
             setTotalFileSize(calculateTotalFileSize(beginFilesSizes));
             setIsZipUploaded(false);
         }
-        // Обновляем ref на текущее значение
         previousUploadFilesChoice.current = uploadFilesChoice;
     }, [uploadFilesChoice]);
 
@@ -232,25 +228,15 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                 setImage(imageUrl);
                 setImageSize(selectedImage.size);
                 setShowDeleteIcon(false);
-                setImageFile(selectedImage);
             } else setwarningImage(true);
-        } else console.error('No file selected');
+        }
     };
-
-    useEffect(() => {
-        return () => {
-            if (image) {
-                URL.revokeObjectURL(image);
-            }
-        };
-    }, [image]);
 
     const handleDeleteImage = () => {
         if (image) URL.revokeObjectURL(image);
         setImage(null);
         setImageSize(0);
         setShowDeleteIcon(false);
-        setImageFile(null);
     };
 
     return (
@@ -263,7 +249,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                     <div id='filesSectionTitle'>Обложка для датасета <span className='limitFile'>{formatFileSize(imageSize)} / 100 МБ</span></div>
                     {!image && (
                         <div className='uploadImage'>
-                            <img src={uploadIcon}></img>
+                            <img src={uploadIcon} alt=''></img>
                             <input type="file" id='chooseImage' className='displayNone' onChange={handleImageAdding} accept="image/*"/>
                             <p className='dropFile'>Перетащите файлы сюда <br/>или <span className='seeFiles' onClick={() => {document.getElementById('chooseImage').click()}}>
                                 <br/>выберите файлы JPEG или PNG</span></p>
@@ -305,7 +291,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                         <div id='filesPart' onDrop={handleFileDrop} onDragOver={handleDragOver}>
                             {uploadFilesChoice && <div className='uploadFile'>
                                 <input type="file" id='chooseFiles' className='displayNone' onChange={handleFileAdding} multiple accept=".json,.csv"/>
-                                <img src={uploadIcon}></img>
+                                <img src={uploadIcon} alt=''></img>
                                 <p className='dropFile'>Переместите файлы сюда <br/>или <span className='seeFiles' onClick={() => {document.getElementById('chooseFiles').click()}}>
                                     <br/>выберите файлы JSON или CSV</span></p>
                                 <div className='limitFile'></div>
@@ -313,7 +299,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
 
                             {!uploadFilesChoice && <div className='uploadFile' onDrop={handleFileAdding} onDragOver={handleFileAdding}>
                                 <input type="file" id='chooseZip' className='displayNone' onChange={handleFileAdding} multiple accept=".zip"/>
-                                <img src={uploadIcon}></img>
+                                <img src={uploadIcon} alt=''></img>
                                 <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseZip').click()}}>выберите zip</span></p>
                             </div>}
 

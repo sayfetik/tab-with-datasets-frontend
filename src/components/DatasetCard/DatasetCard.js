@@ -17,18 +17,18 @@ const DatasetCard = ({
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
 
-    const fetchImage = async () => {
-        try {
-            const imageData = await BackendConnector.getImage(id);
-            setImage(imageData.imageUrl);
-        } catch (error) {
-            console.error('Error fetching image:', error);
-        }
-    };
-
     useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const imageData = await BackendConnector.getImage(id);
+                setImage(imageData.imageUrl);
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+
         if (image === null) fetchImage();
-    }, [image])
+    }, [image, id])
 
     const getFileWord = (number) => {
         if (11 <= number % 100 && number % 100 <= 14) {
@@ -49,7 +49,7 @@ const DatasetCard = ({
         <div id='hover'>
             <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}}>
                 <div style={{display: 'flex'}}>
-                    <img id='datasetImage' src={image} alt='Dataset cover'></img>
+                    <img id='datasetImage' src={image} alt='Ошибка загрузки изображения'></img>
                     <h3 id='datasetTitleOnCard'>{title}</h3>
                 </div>
                 <div id='cardInfo'>
@@ -68,7 +68,5 @@ const DatasetCard = ({
         
     );
 }
-
-
 
 export default DatasetCard
