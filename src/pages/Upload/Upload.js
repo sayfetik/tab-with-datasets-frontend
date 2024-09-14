@@ -8,16 +8,14 @@ import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
 const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
     const navigate = useNavigate();
-    const [warningUploadState, setWarningUploadState] = useState(false);
-    const [warningUpload, setWarningUpload] = useState('');
-    const [warningGeneration, setwarningGeneration] = useState(false);
 
     const [isGenerateDesc, setIsGenerateDesc] = useState(false);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
     const [tagsState, setStateTags] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    const [isLoadingSmallDesc, setIsLoadingSmallDesc] = useState(false);
+    const [GisLoadingSmallDescTags, GsetIsLoadingSmallDescTags] = useState(false);
+    const [isLoadingSmallDescTags, setIsLoadingSmallDescTags] = useState(false);
 
     const [description, setDescription] = useState('');
     const [smallDescription, setSmallDescription] = useState('');
@@ -56,6 +54,12 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [image, setImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [imageSize, setImageSize] = useState(0);
+    
+    const [warningUploadState, setWarningUploadState] = useState(false);
+    const [warningUpload, setWarningUpload] = useState('');
+    const [warningDescriptionGeneration, setwarningDescriptionGeneration] = useState(false);
+    const [warningSmallDescGeneration, setwarningSmallDescGeneration] = useState(false);
+    const [GwarningSmallDescGeneration, GsetwarningSmallDescGeneration] = useState(false);
 
     const areAllInputsFilledForDesc = collectionMethod && dataStructure && useCases;
 
@@ -135,55 +139,76 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
     useEffect(()=>{
         setWarningUploadState(false);
-    },[titleOfDataset, visibility, authors, dataSource, expectedUpdateFrequency, license, doi, description, smallDescription, files, image])
+        setwarningDescriptionGeneration(false);
+        setwarningSmallDescGeneration(false);
+        GsetwarningSmallDescGeneration(false);
+    },[titleOfDataset, visibility, authors, dataSource, expectedUpdateFrequency, license, doi, description, smallDescription, generatedDescription, generatedSmallDescription, files, image, collectionMethod, useCases, dataStructure])
 
     const generateDescription = async (e) => {
+        if (e) e.preventDefault();
         if (!areAllInputsFilledForDesc) {
-            alert('Заполните все обязательные поля с данными для генерации описания');
+            setwarningDescriptionGeneration(true);
             return;
         }
-        if (e) e.preventDefault();
         try {
             setIsLoading(true);
-            const data = await BackendConnector.generateDescription(collectionMethod, dataStructure, useCases);
+            const data = await BackendConnector.generateDescription(titleOfDataset, collectionMethod, dataStructure, useCases);
             if (data.text.text && data.text.text.length > 0) {
                 setGeneratedDescription(data.text.text);
                 setGeneratedDescriptionState(true);
             } else {
-                alert('No data returned from the server');
+                console.log('No data returned from the server for the description');
             }
             setIsLoading(false);
         } catch (error) {
-            alert("Error fetching datasets: " + error);
+            console.log(error);
             setIsLoading(false);
         }
     };
 
     const generateSmallDescAndTags = async (e) => {
+        if (isGenerateDesc) {
+            if (generatedDescription === '') {
+                GsetwarningSmallDescGeneration(true);
+                return;
+            }
+        } else {
+            if (description === '') {
+                setwarningSmallDescGeneration(true);
+                return;
+            }
+        }
         generateSmallDescription();
         generateTags();
     }
 
     const generateSmallDescription = async (e) => {
         if (e) e.preventDefault();
+        setwarningSmallDescGeneration(false);
+        GsetwarningSmallDescGeneration(false);
+        
+        if (isGenerateDesc) GsetIsLoadingSmallDescTags(true);
+        else setIsLoadingSmallDescTags(true);
+
         try {
             let data;
-            setIsLoadingSmallDesc(true);
             if (isGenerateDesc) {
                 data = await BackendConnector.generateSmallDescription(generatedDescription);
             } else {
                 data = await BackendConnector.generateSmallDescription(description);
             }
             if (data.text && data.text.length > 0) {
-                if (!isGenerateDesc) setSmallDescription(data.text);
-                else setGeneratedSmallDescription(data.text)
+                if (!isGenerateDesc) {
+                    setSmallDescription(data.text);
+                }
+                else {
+                    setGeneratedSmallDescription(data.text);
+                }
             } else {
-                alert('No data returned from the server');
+                console.log('No data returned from the server for the small description');
             }
-            setIsLoadingSmallDesc(false);
         } catch (error) {
-            alert("Error fetching datasets: " + error);
-            setIsLoadingSmallDesc(false);
+            console.log(error);
         }
     };
 
@@ -198,6 +223,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 set_Gtechnique(data.technique);
                 set_Gtask(data.task);
                 set_Gsubject(data.subject);
+                setGeneratedTagsState(true);
+                setGeneratedSmallDescriptionState(true);
             } else {
                 const data = await BackendConnector.generateTags(description);
                 set_geography_and_places(data.geography_and_places);
@@ -206,17 +233,14 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 set_technique(data.technique);
                 set_task(data.task);
                 set_subject(data.subject);
+                setStateTags(true);
+                setStateSmallDescription(true);
             }
         } catch (error) {
-            alert("Error fetching datasets: " + error);
-        }
-        if (isGenerateDesc) {
-            setGeneratedTagsState(true);
-            setGeneratedSmallDescriptionState(true);
-        } else {
-            setStateTags(true);
-            setStateSmallDescription(true);
-        }
+            console.log(error);
+        }        
+        if (isGenerateDesc) GsetIsLoadingSmallDescTags(false);
+        else setIsLoadingSmallDescTags(false);
     };
 
     return (
@@ -249,7 +273,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             />
 
                 <div id='rightContainer'>
-                    <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                     <div className='row'>
                     <p style={{marginBottom: '15px'}}>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
@@ -261,37 +284,35 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
                     {!isGenerateDesc && <div>
                         <div>
+                        <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
                                     <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
                                 </div>
-                            </div>
-                            {description && 
+                            </div> 
                             <div>
                                 <div id='rowContunuieLoading'>
                                     <button id='continuie' onClick={generateSmallDescAndTags}>
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание и теги</button>
-                                    {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                                        {warningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
+                                        {isLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
                                 </div>
                                 </div>
-                            }
                         </div>
 
                         {smallDescriptionState && (
                             <div id='smallDescriptionContainer'>
-                                <div id='descriptionInputContainer'>
                                     <div className='metadataBigItem'>
-                                        <div id='inputLabel'>Краткое описание</div>
+                                        <div id='inputLabel'>Краткое описание *</div>
                                         <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                                     </div>
-                                </div>
                             </div>
                         )}
                         
                         {tagsState && (
                             <div id='tagTypesContainer'>
-                                <span className='inputLabel'>Теги</span>
+                                <span className='inputLabel'>Теги *</span>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>География данных</p>
                                     <InputTagFilter label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
@@ -322,32 +343,36 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
                     {isGenerateDesc && <div>
                     <div>
+                        <p id='inputLabel'>Введите данные о датасете для генерации описания с помощью ИИ:</p>
                         <AutoResizeTextarea placeholder="Введите информацию о том, как были получены данные" value={collectionMethod} setValue={setCollectionMethod} textLimit={descriptionFieldsLimit} label=''/>
                         <AutoResizeTextarea placeholder="Опишите структуру данных" value={dataStructure} setValue={setDataStructure} textLimit={descriptionFieldsLimit} label=''/>
                         <AutoResizeTextarea placeholder="Опишите применение датасета" value={useCases} setValue={setUseCases} textLimit={descriptionFieldsLimit} label=''/>
 
-                        {collectionMethod && dataStructure && useCases && <div id='rowContunuieLoading'>
+                        <div id='rowContunuieLoading'>
                             <button id='continuie' onClick={generateDescription}>
                                 <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                 Сгенерировать описание
                             </button>
+                            {warningDescriptionGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните все поля для генерации описания</p>}
                             {isLoading && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-                        </div>}
+                        </div>  
                     </div>
 
                     {generatedDescriptionState && (<div>
                         <div id='descriptionInputContainer'>
+                            <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                             <div className='metadataBigItem'>
                                 <AutoResizeTextarea placeholder="Введите описание датасета" value={generatedDescription} setValue={setGeneratedDescription} textLimit={descriptionLimit}/>
                             </div>
                         </div>
-                        {generatedDescription && <div id='rowContunuieLoading'>
+                       <div id='rowContunuieLoading'>
                             <button id='continuie' onClick={generateSmallDescAndTags}>
                                 <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                 Сгенерировать краткое описание и теги
                             </button>
-                            {isLoadingSmallDesc && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
-                        </div>}
+                            {GwarningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
+                            {GisLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                        </div>
                     </div>)}
 
                     {generatedSmallDescriptionState && (

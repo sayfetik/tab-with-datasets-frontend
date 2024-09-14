@@ -1,13 +1,5 @@
 .upload {
   padding: 0% 10% 10% 8%;
-  background-image: url('../../img/uploadBackground.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -130,7 +122,6 @@
   font-size: 40px;
   color: white;
   background-color: #0071CE;
-  transition: 1s;
   border-radius: 50px;
 }
 
@@ -255,4 +246,22 @@ padding: 0px 10px;
   background-color: white;
   color: #b575e3;
   border: 1px solid #b575e3
+}
+
+.progressBar {
+  background-color: white;
+  border-radius: 10px;
+  height: 15px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-top: 40px;
+  border: 1px solid #0071CE;
+}
+.progress {
+  background-color: #0071CE;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+  transition: width 0.6s ease;
+  position: relative;
 }

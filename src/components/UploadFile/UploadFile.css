@@ -190,3 +190,6 @@
   #requiredFieldsLabel {
     color: #0071CE;
   }
+  .metadataBigItem {
+    z-index: 1;
+  }

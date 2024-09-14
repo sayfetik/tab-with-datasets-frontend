@@ -39,7 +39,7 @@ const InputMetadata = ({
                 textLimit={titleLimit}
             />
             <div className='metadataLabel'>Видимость *</div>
-            <select className="selectionInput" value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+            <select className="selectionInput" style={{width: '470px'}} value={visibility} onChange={(e) => setVisibility(e.target.value)}>
                 <option value="private">Приватный</option>
                 <option value="public">Публичный</option>
             </select>
@@ -58,7 +58,7 @@ const InputMetadata = ({
                 textLimit={sourceLimit}
             />
             <div className='metadataLabel'>Частота обновлений</div>
-            <select value={expectedUpdateFrequency} onChange={(e) => setExpectedUpdateFrequency(e.target.value)} className="selectionInput">
+            <select value={expectedUpdateFrequency} style={{width: '470px'}} onChange={(e) => setExpectedUpdateFrequency(e.target.value)} className="selectionInput">
                 <option value="never">Никогда</option>
                 <option value="onceWeek">Раз в неделю</option>
                 <option value="twiceWeek">2 раза в неделю</option>
@@ -73,7 +73,7 @@ const InputMetadata = ({
             </select>
             
             <div className='metadataLabel'>Лицензия</div>
-            <select value={license} onChange={(e) => setLicense(e.target.value)} className="selectionInput">
+            <select value={license} style={{width: '470px'}} onChange={(e) => setLicense(e.target.value)} className="selectionInput">
                 <option value="Public Domain">Public Domain Mark - Public Domain</option>
                 <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                 <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
