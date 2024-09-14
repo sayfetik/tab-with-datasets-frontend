@@ -256,27 +256,10 @@ export default class BackendConnector {
         return await response.json();
     }
 
-    /*static async searchByTags(filters) {
-        const url = `${this.host}/${this.searchByTags_endpoint}/36`;
-        const requestBody = filters;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        return await response.json();
-    }*/
-
-    static async generateDescription(collectionMethod, dataStructure, useCases) {
+    static async generateDescription(title, collectionMethod, dataStructure, useCases) {
         const url = `${this.host}/${this.generateDescription_endpoint}`;
         const requestBody = {
+            title: title,
             actions_taken_to_collect_and_process_the_dataset: collectionMethod,
             detailed_description_of_content: dataStructure,
             potential_use_cases: useCases
