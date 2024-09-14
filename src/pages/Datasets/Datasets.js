@@ -42,6 +42,7 @@ const Datasets = () => {
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
+        setnoDatasets(false);
         if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
             setwarningSearch(true);
             return;
