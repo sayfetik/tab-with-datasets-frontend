@@ -296,6 +296,7 @@ export default class BackendConnector {
             throw new Error('Network response was not ok');
         }
 
+        console.log(response)
         return await response.json();
     };
     
