@@ -17,7 +17,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
     useEffect(()=>{
         seterrorBaseCode(false);
         seterrorCleanedCode(false);
-      })
+    })
 
     useEffect(() => {
         const getCleanedInitialCode = async () => {

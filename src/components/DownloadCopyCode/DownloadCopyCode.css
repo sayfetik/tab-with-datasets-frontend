@@ -9,14 +9,23 @@
     border-radius: 10px;
     font-size: 16px;
     font-weight: 500;
+    height: 320px; /* Фиксированная высота */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 #purpleCode {
     background-color: #E9DFFF;
     color: #7B61FF;
   }
+#purpleCode::-webkit-scrollbar-thumb {
+    background-color: #9e8aff; /* Цвет ползунка */
+}
 #blueCode {
     background-color: #D3EBFF;
     color: #0071CE;
+}
+#blueCode::-webkit-scrollbar-thumb {
+    background-color: #4889bf; /* Цвет ползунка */
 }
 .codeLabel {
     margin-bottom: 10px;
