@@ -66,7 +66,7 @@ const RequestCard = ({ request }) => {
     }
 
     return (
-        <div id='hover'>
+        <div id='hoverRequest'>
             <div id='requestCard'>
                 <div style={{display: 'flex'}}>
                     <img id='datasetImage' src={default_image} alt='Ошибка загрузки изображения'></img>
@@ -76,8 +76,7 @@ const RequestCard = ({ request }) => {
                     <RequestStatus request={request} />
                     <button id='showStagesButton' onClick={() => setfullStages(true)}>
                         Подробнее о загрузке
-                        {!menuState && <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>}
-                        {menuState && <img alt='down' id='arrowInAccount' src={arrowUpIcon} onClick={()=>{setMenuState(false)}}/>}
+                        <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>
                     </button>
                     <RequestFullModal request={request} isOpen={fullStages} onClose={()=>{setfullStages(false)}} />
 
@@ -90,7 +89,7 @@ const RequestCard = ({ request }) => {
     */}
                         <div className='row'>
                             {request.uploading?.status === 'done' && <button className='lightBlueButton' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
-                            {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
+                            {request.uploading?.status === 'done' && <img src={redTrash} style={{marginRight: '0px'}} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
                             <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} />
                         </div>
                     </div>

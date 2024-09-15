@@ -1,5 +1,5 @@
 #requestCard {
-    margin: 1%;
+    margin: 1% 0px 0px 0px;
     background-color: white;
     border-radius: 20px;
     width: 100%;
@@ -9,6 +9,10 @@
     display: flex;
     flex-direction: column;
     z-index: 1;
+}
+#hoverRequest {
+    width: 30.5%;
+    margin: 1% 2.5% 0px 0px;
 }
 #showStagesButton {
     border: none;
