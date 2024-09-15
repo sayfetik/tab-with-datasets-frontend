@@ -24,6 +24,7 @@
 #cards {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 #cardsContainer {
     width: 100%;

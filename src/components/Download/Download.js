@@ -29,7 +29,7 @@ const Download = ({ isOpen, onClose, id }) => {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', 'file.zip'); // Specify the filename here
+          link.setAttribute('download', 'dataset_base.zip'); // Specify the filename here
           document.body.appendChild(link);
           link.click();
           link.remove();
@@ -49,7 +49,7 @@ const handleDownloadCleanedDsClick = async () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'file.zip'); // Specify the filename here
+      link.setAttribute('download', 'dataset_cleaned.zip'); // Specify the filename here
       document.body.appendChild(link);
       link.click();
       link.remove();

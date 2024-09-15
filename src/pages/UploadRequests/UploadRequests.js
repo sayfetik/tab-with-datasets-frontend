@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header, UploadRequest, RequestCard, BackendConnector } from '../../components';
+import { Header, UploadRequest, RequestCard, BackendConnector, Icon } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
-import accountImage from '../../img/accountImage.png'
+import accountImage from '../../img/accountImage.png';
+import back from '../../img/back.png';
 
 const UploadRequests = () => {
+    const navigate = useNavigate();
+        
     const [requests, setRequests] = useState([]);
 
     const fetchRequests = async () => {
@@ -24,7 +27,6 @@ const UploadRequests = () => {
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
     const [view, setView] = useState('list');
-    const navigate = useNavigate();
 
     const toggleStage = (index) => {
         if (openStageIndex.includes(index)) {
@@ -37,6 +39,10 @@ const UploadRequests = () => {
     // Проверка на наличие requests
     if (!requests) {
         return <div>
+                    <div className='back' onClick={()=>{navigate('/')}}>
+                        <Icon image={back} />
+                        <button>На главную</button>
+                    </div>
                     <Header />
                     <div id='uploadRequests'>
                         <div className='rowSpaceBetween' id='pageLabel'>
@@ -58,6 +64,10 @@ const UploadRequests = () => {
         <div>
             <Header />
             <div id='uploadRequests'>
+                <div className='back'onClick={()=>{navigate('/')}} style={{marginBottom: '40px'}}>
+                    <Icon image={back} />
+                    <button style={{whiteSpace: 'nowrap'}}>На главную</button>
+                </div>
                 <div className='profile'>
                     <img src={accountImage} id='profileImage' alt=''/>
                     <h2>Администратор</h2>
@@ -98,7 +108,7 @@ const UploadRequests = () => {
                         </div>
                     </div>}
 
-                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h3 className='subSectionRequests'>Загружаются</h3>}
+                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h3 className='subSectionRequests' style={{marginTop: '30px'}}>Загружаются</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (
