@@ -10,8 +10,17 @@ const hasReport = () => {
       <div className='not_startedNet'></div>
       <div className='row'>
         <div id='stageStatus'>
-          <img src={statusImages[stage.status]} className='stageStatusIcon' alt="Статус" />
-          <p className={stage.status}>{stageName}</p>
+          {stageName==="Сканирование обложки на безопасность" || stageName==="На проверке" ?
+          <div className='row'>
+            <img src={statusImages['done']} className='stageStatusIcon' alt="Статус" />
+            <p className='done'>{stageName}</p>
+          </div>
+          :
+          <div className='row'>
+            <img src={statusImages[stage.status]} className='stageStatusIcon' alt="Статус" />
+            <p className={stage.status}>{stageName}</p>
+          </div>}
+          
           {(stageName === 'Сканирование метаданных') ?
           hasReport() && <p style={{marginLeft: '10px'}} className='in_progress'>(Несоответствие ожидаемой смысловой нагрузке)</p>
           :
