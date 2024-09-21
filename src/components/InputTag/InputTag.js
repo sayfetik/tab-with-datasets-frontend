@@ -55,8 +55,8 @@ const InputTag = ({ label, tags, setTags }) => {
 
   return (
     <div>
-      <div id={'inputTagsFilter'}>
-        <div className="input-container" style={{marginRight: '10px'}}>
+      <div id='inputTagsFilter'>
+        <div className="input-container">
           <input
             type="search"
             value={inputValue}

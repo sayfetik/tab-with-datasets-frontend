@@ -10,7 +10,7 @@ import failed from '../../../img/failStage.png';
 import done from '../../../img/successStage.png';
 
 
-const UploadRequest = ({ request, toggleStage, isOpen }) => {
+const UploadRequest = ({ request, toggleStage, isOpen, fetchPreview }) => {
     /*const [isSecuringReportOpen, setisSecuringReportOpen] = useState(false);
     const [isMetadataSecuringReportOpen, setisMetadataSecuringReportOpen] = useState(false);
     const [isAnonymizingReportOpen, setisAnonymizingReportOpen] = useState(false);
@@ -57,7 +57,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
             }
         };
 
-        fetchDatasetPreview();
+        if (fetchPreview) fetchDatasetPreview();
     }, [request.request_id]);
 
     const navigate = useNavigate();
@@ -82,7 +82,7 @@ const UploadRequest = ({ request, toggleStage, isOpen }) => {
         <div id='datasetListItem'>
             <div id='briefDatasetListItem' onClick={() => toggleStage(request.request_id)}>
                 <div className='row'>
-                    <p id='datasetTitleList' style={{marginRight: '30px'}}>{request.dataset_title}</p>
+                    <p id='datasetTitleList' style={{marginRight: '30px', maxWidth: '80%'}}>{request.dataset_title}</p>
                     <RequestStatus request={request}/>
                 </div>
                 <div className='rightSectionList'>

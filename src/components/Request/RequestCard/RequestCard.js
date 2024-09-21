@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 import { BackendConnector, RequestFullModal, DeleteVerification, RequestStatus } from '../..';
 import default_image from '../../../img/default_image.jpg';
 import redTrash from '../../../img/trashRed.png';
-import arrowDownIcon from '../../../img/arrowDown.png'
-import arrowUpIcon from '../../../img/arrowUp.png'
+import arrowDownIcon from '../../../img/arrowDown.png';
+import arrowUpIcon from '../../../img/arrowUp.png';
+import editBlueIcon from '../../../img/editBlue.png';
 
-const RequestCard = ({ request }) => {
+const RequestCard = ({ request, fetchPreview }) => {
     const navigate = useNavigate();
     const [menuState, setMenuState] = useState(false);
     const [fullStages, setfullStages] = useState(false);
@@ -54,7 +55,7 @@ const RequestCard = ({ request }) => {
             }
         };
 
-        fetchDatasetPreview();
+        if (fetchPreview) fetchDatasetPreview();
     }, [request.request_id]);
 
     const handleEditClick = () => {
@@ -88,7 +89,8 @@ const RequestCard = ({ request }) => {
                             <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>
     */}
                         <div className='row'>
-                            {request.uploading?.status === 'done' && <button className='lightBlueButton' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
+                            {request.uploading?.status === 'done' && <button className='lightBlueButton' id='editButtonOnRequest' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
+                            {request.uploading?.status === 'done' && <img src={editBlueIcon} id='editIcon'/>}
                             {request.uploading?.status === 'done' && <img src={redTrash} style={{marginRight: '0px'}} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
                             <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} />
                         </div>
