@@ -25,6 +25,7 @@
     align-items: center;
     margin: 5px 0px 5px 5px;
     position: relative;
+    white-space: nowrap;
 }
 #tagFilterSuggestion {
     border: 1px solid #0071CE;
@@ -48,6 +49,7 @@
 .input-container {
     display: flex;
     align-items: baseline;
+    margin-right: 10px;
 }
 .selectTags {
     padding: 4px 10px;
@@ -95,6 +97,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    width: 500px;
 }
   
 #deleteTagButton {

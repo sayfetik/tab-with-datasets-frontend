@@ -39,12 +39,12 @@ const UploadRequests = () => {
     // Проверка на наличие requests
     if (!requests) {
         return <div>
-                    <div className='back' onClick={()=>{navigate('/')}}>
-                        <Icon image={back} />
-                        <button>На главную</button>
-                    </div>
                     <Header />
                     <div id='uploadRequests'>
+                        <div className='back' onClick={()=>{navigate('/')}} style={{marginBottom: '40px', }}>
+                            <Icon image={back} />
+                            <button>На главную</button>
+                        </div>
                         <div className='rowSpaceBetween' id='pageLabel'>
                             <h3 id='requestsLabel'>Заявки на загрузку</h3>
                             <div className='row'>
@@ -59,6 +59,17 @@ const UploadRequests = () => {
                     </div>
                 </div>;
     }
+
+    const failedRequests = requests.filter(request => {
+        return Object.values(request).some(stage => stage.status === 'failed');
+      });
+    
+    const inProgressRequests = requests.filter(request => {
+    const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
+    const isUploadingNotDone = request.uploading.status !== 'done';
+    
+    return !hasFailedStage && isUploadingNotDone;
+    });
 
     return (
         <div>
@@ -86,7 +97,53 @@ const UploadRequests = () => {
                     </div>
                 </div>
 
-                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h3  className='subSectionRequests'>Загруженные</h3>}
+                
+                {inProgressRequests.length !==0 && <h3 className='subSectionRequests'>Загружаются</h3>}
+                {view === 'list' ?
+                    <div className='datasetsList'>
+                        {inProgressRequests.map((request, index) => (
+                            <UploadRequest
+                                key={index}
+                                request={request}
+                                toggleStage={toggleStage}
+                                isOpen={openStageIndex.includes(request.request_id)}
+                                fetchPreview={false}
+                            />
+                        ))}
+                    </div>
+                    :
+                    <div id='cardsContainer'>
+                        <div id='cards'>
+                            {inProgressRequests.map((request, index) => (
+                                <RequestCard key={index} request={request} fetchPreview={false}/>
+                            ))}
+                        </div>
+                    </div>}
+
+                {failedRequests.length !==0 && <h3  className='subSectionRequests' style={{marginTop: '30px'}}>Загрузка приостановлена</h3>}
+                {view === 'list' ?
+                    <div className='datasetsList'>
+                        {failedRequests.map((request, index) => (
+                            <UploadRequest
+                                key={index}
+                                request={request}
+                                toggleStage={toggleStage}
+                                isOpen={openStageIndex.includes(request.request_id)}
+                                fetchPreview={false}
+                            />
+                        ))}
+                    </div>
+                    :
+                    <div id='cardsContainer'>
+                        <div id='cards'>
+                            {failedRequests.map((request, index) => (
+                                <RequestCard key={index} request={request} fetchPreview={false}/>
+                            ))}
+                        </div>
+                    </div>}
+                    
+
+                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h3  className='subSectionRequests' style={{marginTop: '30px'}}>Загруженные</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (
@@ -96,6 +153,7 @@ const UploadRequests = () => {
                                     request={request}
                                     toggleStage={toggleStage}
                                     isOpen={openStageIndex.includes(request.request_id)}
+                                    fetchPreview={true}
                                 />
                         ))}
                     </div>
@@ -103,29 +161,7 @@ const UploadRequests = () => {
                     <div id='cardsContainer'>
                         <div id='cards'>
                             {requests.map((request, index) => (
-                                request.uploading.status === 'done' && <RequestCard key={index} request={request}/>
-                            ))}
-                        </div>
-                    </div>}
-
-                {requests.filter(item => item.uploading.status !== 'done').length !==0 && <h3 className='subSectionRequests' style={{marginTop: '30px'}}>Загружаются</h3>}
-                {view === 'list' ?
-                    <div className='datasetsList'>
-                        {requests.map((request, index) => (
-                            request.uploading.status !== 'done' &&
-                                <UploadRequest
-                                    key={index}
-                                    request={request}
-                                    toggleStage={toggleStage}
-                                    isOpen={openStageIndex.includes(request.request_id)}
-                                />
-                            ))}
-                    </div>
-                    :
-                    <div id='cardsContainer'>
-                        <div id='cards'>
-                            {requests.map((request, index) => (
-                                request.uploading.status !== 'done' && <RequestCard key={index} request={request}/>
+                                request.uploading.status === 'done' && <RequestCard key={index} request={request} fetchPreview={true}/>
                             ))}
                         </div>
                     </div>}

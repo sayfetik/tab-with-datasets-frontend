@@ -519,13 +519,12 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                             </span>
                         </button>
                         :
-                        <button className="cta" style={{backgroundColor: 'grey', padding: '15px 22px'}} onClick={upload}>
+                        <button className="cta" style={{backgroundColor: 'grey', padding: '15px 22px'}}>
                             <span className='uploadDataset'>Загрузить датасет</span>
                         </button>
                         }
                     </div>
                 </div>
-                {warningUploadState && <p style={{textAlign: 'right', marginTop: '10px'}} className='warning'>{warningUpload}</p>}
             </div>
             :
             <div className='rowSpaceBetween'>
@@ -564,7 +563,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                         }
                     </div>
                 </div>
-                {warningUploadState && <p style={{textAlign: 'right', marginTop: '10px'}} className='warning'>{warningUpload}</p>}
             </div>
             }         
         </div>
