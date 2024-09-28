@@ -5,8 +5,9 @@
     margin-bottom: 15px;
     font-size: 24px;
 }
-#pageLabel {
-    margin-bottom: 15px;
+.subSectionRequestsCards {
+    margin-bottom: 0px;
+    font-size: 24px;
 }
 #datasetForm {
     width: 200px;
@@ -22,7 +23,16 @@
     font-size: 30px;
 }
 .profile {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
+}
+#loadingGifRequests {
+    margin-left: 8px;
+    margin-bottom: -2px;
+    width: 18px;
+}
+#loadingRequests {
+    font-size: 20px;
+    font-weight: 600;
 }
