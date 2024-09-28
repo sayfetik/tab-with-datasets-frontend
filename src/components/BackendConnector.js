@@ -14,7 +14,7 @@ export default class BackendConnector {
     static upload_endpoint = 'api/upload';
     static update_endpoint = 'api/update';
     static delete_endpoint = 'api/delete';
-    static getImage_endpoint = 'api/get_image'
+    static getImage_endpoint = 'api/get_image';
     static generateDescription_endpoint = 'api/generate_description';
     static generateSmallDescription_endpoint = 'api/summarize_description';
     static generateTags_endpoint = 'api/generate_tags';
@@ -69,7 +69,7 @@ export default class BackendConnector {
     }
 
     static async recommend(id) {
-        return await this.get(`${this.recommend_endpoint}/${id}/2`);
+        return await this.get(`${this.recommend_endpoint}/${id}/9`);
     }
 
     static async download_code_initial_dataset(id) {

@@ -5,6 +5,7 @@ import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
 import accountImage from '../../img/accountImage.png';
 import back from '../../img/back.png';
+import loadingDarkGif from '../../img/loadingDark.gif';
 
 const UploadRequests = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const UploadRequests = () => {
     const fetchRequests = async () => {
         try {
             const data = await BackendConnector.fetchUploadRequests(1);
-            setRequests(data);
+            setRequests(data.reverse());
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
@@ -97,8 +98,12 @@ const UploadRequests = () => {
                     </div>
                 </div>
 
+                {requests.length === 0 && <div className='row'>
+                    <h3 id='loadingRequests'>Загрузка</h3>
+                    <img src={loadingDarkGif} id='loadingGifRequests'/>
+                </div>}
                 
-                {inProgressRequests.length !==0 && <h3 className='subSectionRequests'>Загружаются</h3>}
+                {inProgressRequests.length !==0 && <h3 className={view === 'list' ? 'subSectionRequests' : 'subSectionRequestsCards'}>Загружаются</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {inProgressRequests.map((request, index) => (
@@ -120,7 +125,7 @@ const UploadRequests = () => {
                         </div>
                     </div>}
 
-                {failedRequests.length !==0 && <h3  className='subSectionRequests' style={{marginTop: '30px'}}>Загрузка приостановлена</h3>}
+                {failedRequests.length !==0 && <h3  className={view === 'list' ? 'subSectionRequests' : 'subSectionRequestsCards'} style={{marginTop: '30px'}}>Загрузка приостановлена</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {failedRequests.map((request, index) => (
@@ -143,7 +148,7 @@ const UploadRequests = () => {
                     </div>}
                     
 
-                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h3  className='subSectionRequests' style={{marginTop: '30px'}}>Загруженные</h3>}
+                {requests.filter(item => item.uploading.status === 'done').length !==0 && <h3  className={view === 'list' ? 'subSectionRequests' : 'subSectionRequestsCards'} style={{marginTop: '30px'}}>Загруженные</h3>}
                 {view === 'list' ?
                     <div className='datasetsList'>
                         {requests.map((request, index) => (

@@ -265,3 +265,8 @@ padding: 0px 10px;
   transition: width 0.6s ease;
   position: relative;
 }
+.generationText {
+  color: #b575e3;
+  font-weight: 500;
+  margin: 0px 0px 5px 10px;
+}

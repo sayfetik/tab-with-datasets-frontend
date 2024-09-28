@@ -252,10 +252,6 @@ const RequestPreview = () => {
                                 <p className='metaWhite'>{dataset.downloads_number}</p>
                             </div>
                             <div className='infoContainer'>
-                                <h4 className='metaWhite'>Подробность описания</h4>
-                                <p className='metaWhite'>{dataset.usability_rating}%</p>
-                            </div>
-                            <div className='infoContainer'>
                                 <h4 className='metaWhite'>Размер</h4>
                                 <p className='metaWhite'>{dataset.size}</p>
                             </div>
