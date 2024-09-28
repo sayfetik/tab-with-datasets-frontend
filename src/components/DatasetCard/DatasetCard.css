@@ -33,25 +33,25 @@
         width: 30%;
     }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1300px) {
     #hover {
         width: 45%;
     }
     #datasetCard:hover {
-        width: 45%;
-        padding: 5%;
+        width: 37%;
+        padding: 2%;
     }
     #datasetTitleOnCard {
         font-size: 16px;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 900px) {
     #hover {
         width: 80%;
     }
     #datasetCard:hover {
-        width: 80%;
-        padding: 8%;
+        width: 66%;
+        padding: 2.5% 4%;
     }
     #datasetTitleOnCard {
         font-size: 10px;
@@ -101,5 +101,19 @@
 @media screen and (max-width: 1500px){
     #datasetTitleOnCard {
         font-size: 18px;
+    }
+    #datasetImage {
+        width: 70px;
+        height: 70px;
+    }
+}
+@media screen and (max-width: 1300px){
+    .fieldInfo {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 900px){
+    #datasetTitleOnCard {
+        font-size: 15px;
     }
 }

@@ -365,7 +365,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание и теги</button>
                                         {warningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
-                                        {isLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                                        {/*isLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
+                                        {isLoadingSmallDescTags && <p className='generationText'>Генерация...</p>}
                                 </div>
                                 </div>
                         </div>
@@ -423,7 +424,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 Сгенерировать описание
                             </button>
                             {warningDescriptionGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните все поля для генерации описания</p>}
-                            {isLoading && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                            {/*isLoading && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
+                            {isLoading && <p className='generationText'>Генерация...</p>}
                         </div>  
                     </div>
 
@@ -440,7 +442,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 Сгенерировать краткое описание и теги
                             </button>
                             {GwarningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
-                            {GisLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />}
+                            {/*GisLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
+                            {GisLoadingSmallDescTags && <p className='generationText'>Генерация...</p>}
                         </div>
                     </div>)}
 

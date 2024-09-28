@@ -47,18 +47,14 @@ const UploadRequest = ({ request, toggleStage, isOpen, fetchPreview }) => {
         files_structure: {},
     });
 
-    useEffect(() => {
-        const fetchDatasetPreview = async () => {
-            try {
-                const data = await BackendConnector.preview(request.request_id);
-                setDataset(data);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
-
-        if (fetchPreview) fetchDatasetPreview();
-    }, [request.request_id]);
+    const fetchDatasetPreview = async () => {
+        try {
+            const data = await BackendConnector.preview(request.request_id);
+            setDataset(data);
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+        }
+    };
 
     const navigate = useNavigate();
 
@@ -70,6 +66,7 @@ const UploadRequest = ({ request, toggleStage, isOpen, fetchPreview }) => {
     };
     
     const handleEditClick = () => {
+        fetchDatasetPreview();
         navigate('/editDataset', { state: dataset });
       };
 
