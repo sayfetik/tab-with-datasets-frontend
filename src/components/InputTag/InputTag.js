@@ -11,19 +11,37 @@ const InputTag = ({ label, tags, setTags }) => {
     seterrorSuggestions(false);
   })
 
-  let category = "";
+  const category = {
+    "География данных": "geography_and_places",
+    "Язык": "language",
+    "Тип данных": "data_type",
+    "Задача": "task",
+    "Техника": "technique",
+    "Предмет": "subject"
+  }
+
+  const placeholder = {
+    "География данных": "Введите страну",
+    "Язык": "Укажите язык данных",
+    "Тип данных": "Введите тип",
+    "Задача": "Введите задачу",
+    "Техника": "Укажите технику",
+    "Предмет": "Введите категорию"
+  }
+
+  /*let category = "";
   if (label === "География данных") category = "geography_and_places";
   else if (label === "Язык") category = "language";
   else if (label === "Тип данных") category = "data_type";
   else if (label === "Задача") category = "task";
   else if (label === "Техника") category = "technique";
-  else category = "subject";
+  else category = "subject";*/
 
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (inputValue.length > 0) {
         try {
-          const fetchedSuggestions = await BackendConnector.fetchSuggestions(category, inputValue);
+          const fetchedSuggestions = await BackendConnector.fetchSuggestions(category[label], inputValue);
           setSuggestions(fetchedSuggestions);
         } catch (error) {
           seterrorSuggestions(true);
@@ -34,7 +52,7 @@ const InputTag = ({ label, tags, setTags }) => {
       }
     };
     fetchSuggestions();
-  }, [inputValue, category]);
+  }, [inputValue]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -61,7 +79,7 @@ const InputTag = ({ label, tags, setTags }) => {
             type="search"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder={label}
+            placeholder={placeholder[label]}
           />
         </div>
         

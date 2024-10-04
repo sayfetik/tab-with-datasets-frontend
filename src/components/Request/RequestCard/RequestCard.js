@@ -92,7 +92,7 @@ const RequestCard = ({ request, fetchPreview }) => {
                             {request.uploading?.status === 'done' && <button className='lightBlueButton' id='editButtonOnRequest' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
                             {request.uploading?.status === 'done' && <img src={editBlueIcon} id='editIcon'/>}
                             {request.uploading?.status === 'done' && <img src={redTrash} style={{marginRight: '0px'}} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
-                            <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} />
+                            <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} />
                         </div>
                     </div>
                 </div>

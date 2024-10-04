@@ -12,6 +12,7 @@
 #metainfo {
     background-color: #D3EBFF;
     width: fit-content;
+    max-width: 30%;
     padding: 30px 45px 30px 45px;
     border-radius: 20px;
     height: fit-content;
@@ -221,6 +222,9 @@
     padding-left: 13px;
     margin-left: 10px;
     border-left: 1px solid #3E456F;
+}
+.folderMargin {
+    margin-top: 8px;
 }
 #folderIcon {
     width: 20px;

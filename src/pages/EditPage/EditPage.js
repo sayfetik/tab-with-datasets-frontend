@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Back, Header, UploadFile, InputTagFilter, BackendConnector, AutoResizeTextarea, InputMetadata } from '../../components';
+import { Back, Header, UploadFile, InputTag, BackendConnector, AutoResizeTextarea, InputMetadata } from '../../components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 import loadingOnBlue from '../../img/loadingOnBlue.gif'
@@ -157,27 +157,27 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                         <span id='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
-                                <InputTagFilter label="География данных" tags={geography_and_places} setTags={setLocalGeography}/>
+                                <InputTag label="География данных" tags={geography_and_places} setTags={setLocalGeography}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Язык</p>
-                                <InputTagFilter label="Язык" tags={language} setTags={setLocalLanguage}/>
+                                <InputTag label="Язык" tags={language} setTags={setLocalLanguage}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Тип данных</p>
-                                <InputTagFilter label="Тип данных" tags={data_type} setTags={setLocalDataType}/>
+                                <InputTag label="Тип данных" tags={data_type} setTags={setLocalDataType}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Задача</p>
-                                <InputTagFilter label="Задача" tags={task} setTags={setLocalTask}/>
+                                <InputTag label="Задача" tags={task} setTags={setLocalTask}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Техника</p>
-                                <InputTagFilter label="Техника" tags={technique} setTags={setLocalTechnique}/>
+                                <InputTag label="Техника" tags={technique} setTags={setLocalTechnique}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Предмет</p>
-                                <InputTagFilter label="Предмет" tags={subject} setTags={setLocalSubject}/>
+                                <InputTag label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
                     </div>
 

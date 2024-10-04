@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Filters.css';
-import InputTagFilter from '../InputTag/InputTag';
+import InputTag from '../InputTag/InputTag';
 
 const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language, setLanguage, data_type, setData_type, task, setTask, technique, setTechnique, subject, setSubject, applyChanges }) => {
   const [localGeography, setLocalGeography] = useState(geography_and_places);
@@ -37,12 +37,12 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
         </div>
         <div>
           <label>
-            <InputTagFilter label="География данных" tags={localGeography} setTags={setLocalGeography} />
-            <InputTagFilter label="Язык" tags={localLanguage} setTags={setLocalLanguage} />
-            <InputTagFilter label="Тип данных" tags={localDataType} setTags={setLocalDataType} />
-            <InputTagFilter label="Задача" tags={localTask} setTags={setLocalTask} />
-            <InputTagFilter label="Техника" tags={localTechnique} setTags={setLocalTechnique} />
-            <InputTagFilter label="Область" tags={localSubject} setTags={setLocalSubject} />
+            <InputTag label="География данных" tags={localGeography} setTags={setLocalGeography} />
+            <InputTag label="Язык" tags={localLanguage} setTags={setLocalLanguage} />
+            <InputTag label="Тип данных" tags={localDataType} setTags={setLocalDataType} />
+            <InputTag label="Задача" tags={localTask} setTags={setLocalTask} />
+            <InputTag label="Техника" tags={localTechnique} setTags={setLocalTechnique} />
+            <InputTag label="Область" tags={localSubject} setTags={setLocalSubject} />
           </label>
         </div>
         <div id='applyFiltersLayout'>

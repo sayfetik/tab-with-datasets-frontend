@@ -184,14 +184,14 @@ const RequestPreview = () => {
                                                         if (typeof files === 'object' && files !== null) {
                                                             return (
                                                                 <div key={index}>
-                                                                    <div className='row'>
+                                                                    <div className='row folderMargin'>
                                                                         <img id="folderIcon" src={folderDarkIcon} />
                                                                         <p id='folderName'>{folderName}</p>
                                                                     </div>
                                                                     {Object.entries(files).map(([fileName, fileSize], subIndex) => (
                                                                         <div key={subIndex} className='file' id='fileInFolder'>
                                                                             {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                            <p className='fileDownload'>{fileName} - {formatFileSize(fileSize)}</p>
+                                                                            <p className='fileDownload'>{fileName} {fileSize} && (- {formatFileSize(fileSize)})</p>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -218,7 +218,6 @@ const RequestPreview = () => {
                         </div>
                         
                         <div id='metainfo'>
-                            <h3 className='metaWhite' id='meta'>Метаданные</h3>
                             <div className='infoContainer'>
                                 <h4 className='metaWhite'>Владельцы</h4>
                                 <p className='metaWhite'>{dataset.owner}</p>

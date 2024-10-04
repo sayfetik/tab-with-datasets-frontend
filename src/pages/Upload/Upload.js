@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Back, UploadFile, Header, BackendConnector, InputTagFilter, AutoResizeTextarea, InputMetadata} from '../../components';
+import { Back, UploadFile, Header, BackendConnector, InputTag, AutoResizeTextarea, InputMetadata} from '../../components';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
 import sparklesIcon from '../../img/sparkles.png';
-import loadingGif from '../../img/loading.gif';
 import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
 const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
@@ -100,7 +99,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
         setEmptyFields(newEmptyFields);
     };    
     
-      // Функция для вывода пустых полей
       const showEmptyFields = () => {
         getEmptyFields();
         if (emptyFields.length > 0) setemptyFieldsMessage(`Для загрузки датасета Вам осталось заполнить: ${emptyFields.join(', ')}`);
@@ -123,7 +121,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
         GsetEmptyFields(newEmptyFields);
     };
     
-      // Функция для вывода пустых полей
       const GshowEmptyFields = () => {
         GgetEmptyFields();
         if (GemptyFields.length > 0) GsetemptyFieldsMessage(`Для загрузки датасета Вам осталось заполнить: ${GemptyFields.join(', ')}`);
@@ -385,27 +382,27 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 <span className='inputLabel'>Теги *</span>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>География данных</p>
-                                    <InputTagFilter label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
+                                    <InputTag label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                                 </div>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>Язык</p>
-                                    <InputTagFilter label="Язык" tags={language} setTags={set_language}/>
+                                    <InputTag label="Язык" tags={language} setTags={set_language}/>
                                 </div>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>Тип данных</p>
-                                    <InputTagFilter label="Тип данных" tags={data_type} setTags={set_data_type}/>
+                                    <InputTag label="Тип данных" tags={data_type} setTags={set_data_type}/>
                                 </div>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>Задача</p>
-                                    <InputTagFilter label="Задача" tags={task} setTags={set_task}/>
+                                    <InputTag label="Задача" tags={task} setTags={set_task}/>
                                 </div>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>Техника</p>
-                                    <InputTagFilter label="Техника" tags={technique} setTags={set_technique}/>
+                                    <InputTag label="Техника" tags={technique} setTags={set_technique}/>
                                 </div>
                                 <div id='tagType'>
                                     <p id='tagTypeLabel'>Предмет</p>
-                                    <InputTagFilter label="Предмет" tags={subject} setTags={set_subject}/>
+                                    <InputTag label="Предмет" tags={subject} setTags={set_subject}/>
                                 </div>
                             </div>
                         )}
@@ -463,27 +460,27 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                             <span className='inputLabel'>Теги *</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
-                                <InputTagFilter label="География данных" tags={Ggeography_and_places} setTags={set_Ggeography_and_places}/>
+                                <InputTag label="География данных" tags={Ggeography_and_places} setTags={set_Ggeography_and_places}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Язык</p>
-                                <InputTagFilter label="Язык" tags={Glanguage} setTags={set_Glanguage}/>
+                                <InputTag label="Язык" tags={Glanguage} setTags={set_Glanguage}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Тип данных</p>
-                                <InputTagFilter label="Тип данных" tags={Gdata_type} setTags={set_Gdata_type}/>
+                                <InputTag label="Тип данных" tags={Gdata_type} setTags={set_Gdata_type}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Задача</p>
-                                <InputTagFilter label="Задача" tags={Gtask} setTags={set_Gtask}/>
+                                <InputTag label="Задача" tags={Gtask} setTags={set_Gtask}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Техника</p>
-                                <InputTagFilter label="Техника" tags={Gtechnique} setTags={set_Gtechnique}/>
+                                <InputTag label="Техника" tags={Gtechnique} setTags={set_Gtechnique}/>
                             </div>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>Предмет</p>
-                                <InputTagFilter label="Предмет" tags={Gsubject} setTags={set_Gsubject}/>
+                                <InputTag label="Предмет" tags={Gsubject} setTags={set_Gsubject}/>
                             </div>
                         </div>
                     )}

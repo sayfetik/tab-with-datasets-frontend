@@ -22,7 +22,7 @@ const UploadRequests = () => {
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchRequests, 5000);
+        const intervalId = setInterval(fetchRequests, 10000);
         return () => clearInterval(intervalId);
     }, []);
 

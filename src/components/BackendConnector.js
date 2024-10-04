@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default class BackendConnector {
-    static host = 'http://10.100.30.74';
+    static host = process.env.REACT_APP_HOST_URL;
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
     static search_endpoint = 'api/search';

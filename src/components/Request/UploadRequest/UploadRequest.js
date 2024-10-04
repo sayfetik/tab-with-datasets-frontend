@@ -91,7 +91,7 @@ const UploadRequest = ({ request, toggleStage, isOpen, fetchPreview }) => {
     */}
                     {request.uploading?.status === 'done' && <button style={{padding: '5px 20px'}} className='lightBlueButton' onClick={handleEditClick}>Редактировать</button>}
                     {request.uploading?.status === 'done' && <img src={redTrash} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
-                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} back={false}/>
+                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} back={false}/>
                     <img
                         src={arrowDown}
                         className={isOpen ? 'statusIcon rotate180' : 'statusIcon'}

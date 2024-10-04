@@ -184,16 +184,8 @@ const DatasetPage = () => {
                                     <span id='copyCodeLabel'>Скопировать код для скачивания</span>
                                         <img src={copyBlue} id='copyCodeIcon' alt=''/>
                                     </button>
-                                    <Download
-                                        isOpen={isDownloadOpen}
-                                        onClose={() => setIsDownloadOpen(false)}
-                                        id={dataset.id}
-                                    />
-                                    <DownloadCopyCode
-                                        isOpen={isCopyCodeOpen}
-                                        onClose={() => setIsCopyCodeOpen(false)}
-                                        id={dataset.id}
-                                    />
+                                    <Download isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id}/>
+                                    <DownloadCopyCode isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
                                     <div>
                                         <div id='ratingLabel'>
                                             <img src={star} width='17px' height='17px' alt=''/>
@@ -205,7 +197,7 @@ const DatasetPage = () => {
                                 <div className='row'>
                                     <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
                                     <button className='whiteRedButton' onClick={handleDeleteClick} style={{padding: '8px 16px'}}>Удалить</button>
-                                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} dataset={dataset.id} back={true}/>
+                                    <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={dataset.id} back={true}/>
                                 </div>
                             </div>
                             
@@ -257,14 +249,14 @@ const DatasetPage = () => {
                                                         if (typeof files === 'object' && files !== null) {
                                                             return (
                                                                 <div key={index}>
-                                                                    <div className='row'>
+                                                                    <div className='row folderMargin'>
                                                                         <img id="folderIcon" src={folderDarkIcon}  alt="Folder"/>
                                                                         <p id='folderName'>{folderName}</p>
                                                                     </div>
                                                                     {Object.entries(files).map(([fileName, fileSize], subIndex) => (
                                                                         <div key={subIndex} className='file' id='fileInFolder'>
                                                                             {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                            <p className='fileDownload'>{fileName} - {formatFileSize(fileSize)}</p>
+                                                                            <p className='fileDownload'>{fileName} {fileSize} && (- {formatFileSize(fileSize)})</p>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -289,7 +281,6 @@ const DatasetPage = () => {
                         </div>
                         
                         <div id='metainfo'>
-                            <h3 className='metaWhite' id='meta'>Метаданные</h3>
                             {dataset.owner && <div className='infoContainer'>
                                 <h4 className='metaWhite'>Владельцы</h4>
                                 <p className='metaWhite'>{dataset.owner}</p>
