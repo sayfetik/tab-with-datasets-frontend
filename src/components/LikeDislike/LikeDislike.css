@@ -1,0 +1,39 @@
+.likeDislike {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+.like, .dislike, .clicked {
+    color: #3E456F;
+    transition: color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.like:hover, .dislike:hover {
+    color: black;
+}
+.clicked {
+    color: #0071CE;
+}
+.num_of_likes {
+    font-weight: 500;
+    color: currentColor;
+}
+.likeIcon, .dislikeIcon {
+    color: currentColor;
+}
+#reportButton {
+    color: #3E456F;
+    height: fit-content;
+    padding: 5px 10px;
+    border: 1px solid #0071CE;
+    color: #0071CE;
+    font-weight: 500;
+    margin-left: 20px;
+    transition: box-shadow 0.2s ease;
+}
+#reportButton:hover {
+    background-color: #EFF8FE;
+}

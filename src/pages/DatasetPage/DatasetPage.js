@@ -5,7 +5,8 @@ import folderDarkIcon from '../../img/folderDark.png';
 import star from '../../img/star.png'
 import './DatasetPage.css'
 import copyBlue from '../../img/copyBlue.png'
-import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification } from '../../components'
+import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike } from '../../components'
+import like_icon from '../../img/like.svg';
 
 const DatasetPage = () => {
     const { id } = useParams();
@@ -112,7 +113,7 @@ const DatasetPage = () => {
         }
     };
 
-    function getFileCountString(folderCount, fileCount) {
+    const getFileCountString = (folderCount, fileCount) => {
         const getFolderWord = (count) => {
           if (count % 10 === 1 && count % 100 !== 11) {
             return 'папка';
@@ -186,19 +187,15 @@ const DatasetPage = () => {
                                     </button>
                                     <Download isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id}/>
                                     <DownloadCopyCode isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
-                                    <div>
-                                        <div id='ratingLabel'>
-                                            <img src={star} width='17px' height='17px' alt=''/>
-                                            <p id='rating'>{dataset.rating}</p>
-                                        </div>
-                                        <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
-                                    </div>
+                                    <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
                                 </div>
-                                <div className='row'>
+                                {/*<div className='row'>
                                     <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
                                     <button className='whiteRedButton' onClick={handleDeleteClick} style={{padding: '8px 16px'}}>Удалить</button>
                                     <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={dataset.id} back={true}/>
-                                </div>
+                                </div>*/
+                                }
+                                <LikeDislike />
                             </div>
                             
                         </div>

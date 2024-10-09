@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Back, UploadFile, Header, BackendConnector, InputTag, AutoResizeTextarea, InputMetadata} from '../../components';
+import { Back, UploadFile, Header, BackendConnector, InputTag, AutoResizeTextarea, InputMetadata, GenerationAnimation} from '../../components';
 import './Upload.css';
 import { useNavigate } from 'react-router-dom';
 import sparklesIcon from '../../img/sparkles.png';
@@ -99,13 +99,13 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
         setEmptyFields(newEmptyFields);
     };    
     
-      const showEmptyFields = () => {
-        getEmptyFields();
-        if (emptyFields.length > 0) setemptyFieldsMessage(`Для загрузки датасета Вам осталось заполнить: ${emptyFields.join(', ')}`);
-        else setemptyFieldsMessage('Вы заполнили все поля и можете загружать датасет!');
-      };
+    const showEmptyFields = () => {
+    getEmptyFields();
+    if (emptyFields.length > 0) setemptyFieldsMessage(`Для загрузки датасета Вам осталось заполнить: ${emptyFields.join(', ')}`);
+    else setemptyFieldsMessage('Вы заполнили все поля и можете загружать датасет!');
+    };
 
-      const GgetEmptyFields = () => {
+    const GgetEmptyFields = () => {
         const newEmptyFields = [];
     
         if (generatedDescription.length === 0) newEmptyFields.push(requiredFields.description);
@@ -121,7 +121,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
         GsetEmptyFields(newEmptyFields);
     };
     
-      const GshowEmptyFields = () => {
+    const GshowEmptyFields = () => {
         GgetEmptyFields();
         if (GemptyFields.length > 0) GsetemptyFieldsMessage(`Для загрузки датасета Вам осталось заполнить: ${GemptyFields.join(', ')}`);
         else GsetemptyFieldsMessage('Вы заполнили все поля и можете загружать датасет!');
@@ -362,8 +362,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание и теги</button>
                                         {warningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
-                                        {/*isLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
-                                        {isLoadingSmallDescTags && <p className='generationText'>Генерация...</p>}
+                                        {isLoadingSmallDescTags && <GenerationAnimation/>}
                                 </div>
                                 </div>
                         </div>
@@ -421,8 +420,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 Сгенерировать описание
                             </button>
                             {warningDescriptionGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните все поля для генерации описания</p>}
-                            {/*isLoading && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
-                            {isLoading && <p className='generationText'>Генерация...</p>}
+                            {isLoading && <GenerationAnimation />}
                         </div>  
                     </div>
 
@@ -439,8 +437,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                 Сгенерировать краткое описание и теги
                             </button>
                             {GwarningSmallDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Заполните поле "Описание"</p>}
-                            {/*GisLoadingSmallDescTags && <img src={loadingGif} alt="Loading..." style={{ width: '30px', height: '30px' }} />*/}
-                            {GisLoadingSmallDescTags && <p className='generationText'>Генерация...</p>}
+                            {GisLoadingSmallDescTags && <GenerationAnimation />}
                         </div>
                     </div>)}
 

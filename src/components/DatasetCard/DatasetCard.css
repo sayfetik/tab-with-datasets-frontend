@@ -27,7 +27,7 @@
     z-index: 1000;
     background-color: white;
     transition: all 0.7s ease;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); /* Смещаем тень вниз */
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 

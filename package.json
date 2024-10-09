@@ -6,6 +6,10 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.14.5",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@floating-ui/react": "^0.26.24",
+    "@iconify-icon/react": "^2.1.0",
+    "@mantine/core": "^7.13.2",
+    "@mantine/hooks": "^7.13.2",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
     "@testing-library/jest-dom": "^5.17.0",
@@ -52,7 +56,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "gh-pages": "^6.1.1",
+    "sass-loader": "^16.0.2"
   },
   "homepage": "https://tab-with-datasets-beta"
 }
