@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Tabs } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { Header, UploadRequest, RequestCard, BackendConnector, Icon, RequestList } from '../../components';
@@ -11,10 +11,9 @@ import loadingDarkGif from '../../img/loadingDark.gif';
 const UploadRequests = () => {
     const navigate = useNavigate();
     const [requests, setRequests] = useState([]);
-    const [openStageIndex, setOpenStageIndex] = useState([]);
     const [view, setView] = useState('list');
     const [isError, setError] = useState(false);
-    const [isLoading, setisLoading] = useState(false);
+    const [isLoading, setisLoading] = useState(true);
 
     const fetchRequests = async () => {
         try {
@@ -24,27 +23,35 @@ const UploadRequests = () => {
             console.error("Error fetching data: ", error);
             setError(true);
         }
+        setisLoading(false);
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchRequests, 10000);
-        return () => clearInterval(intervalId);
+        fetchRequests();
     }, []);
 
-    const failedRequests = requests.filter(request => {
-        return Object.values(request).some(stage => stage.status === 'failed');
-    });
+    const failedRequests = useMemo(() => {
+        return requests.filter(request => 
+            Object.values(request).some(stage => stage.status === 'failed')
+        );
+    }, [requests]);
     
-    const inProgressRequests = requests.filter(request => {
-        const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
-        const isUploadingNotDone = request.uploading.status !== 'done';
-        return !hasFailedStage && isUploadingNotDone;
-    });
-    const uploadedRequests = requests.filter(request => {
-        const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
-        const isUploadingDone = request.uploading.status === 'done';
-        return !hasFailedStage && isUploadingDone;
-    });
+    const inProgressRequests = useMemo(() => {
+        return requests.filter(request => {
+            const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
+            const isUploadingNotDone = request.uploading.status !== 'done';
+            return !hasFailedStage && isUploadingNotDone;
+        });
+    }, [requests]);
+    
+    const uploadedRequests = useMemo(() => {
+        return requests.filter(request => {
+            const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
+            const isUploadingDone = request.uploading.status === 'done';
+            return !hasFailedStage && isUploadingDone;
+        });
+    }, [requests]);
+    
 
     return (
         <div>
@@ -73,7 +80,7 @@ const UploadRequests = () => {
                     </div>
                 </div>
                 
-                <Tabs defaultValue="gallery" classNames={{tabLabel: 'tabLabel', list: 'tabList', tab: 'tab'}}>
+                <Tabs defaultValue="in_progress" classNames={{tabLabel: 'tabLabel', list: 'tabList', tab: 'tab'}}>
                     <Tabs.List>
                         <Tabs.Tab value="in_progress">
                         Загружаются

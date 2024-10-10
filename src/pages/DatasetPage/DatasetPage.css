@@ -1,6 +1,5 @@
 #datasetPage {
-    padding: 0% 10% 100px 8%;
-    background-image: url('../../img/datasetPageBackground.png');
+    padding: 0% 10% 90px 8%;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -13,8 +12,8 @@
     background-color: #D3EBFF;
     width: fit-content;
     max-width: 30%;
-    padding: 30px 45px 30px 45px;
-    border-radius: 20px;
+    padding: 25px 35px;
+    border-radius: 15px;
     height: fit-content;
 }
 #meta {
@@ -36,18 +35,16 @@
 #datasetInfo {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
+    margin-top: 40px;
     padding-top: 50px;
     border-top: solid 1px #7a80a4;
-    margin-bottom: 50px;
 }
 #datasetCoverImage {
-    border-radius: 50px;
-    width: 35%;
+    border-radius: 30px;
+    width: 25%;
     height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: 50px;
     margin-bottom: 25px;
 }
 #mainInfo {
@@ -59,16 +56,29 @@
 }
 #downloadButton, #copyCodeButton {
     margin: 0;
+    display: flex;
+    justify-content: center;
     padding: 8px 20px 8px 24px;
 }
 #downloadButton {
     border-top-right-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+    width: fit-content;
 }
 #copyCodeButton {
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
     margin-right: 20px;
+    width: fit-content;
+}
+#downloadSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+#downloadButtons {
+    display: flex;
+    align-items: center;
 }
 #copyCodeLabel, #downloadLabel {
     font-size: 17px;
@@ -94,7 +104,7 @@
 }
 .datasetTag {
     border: solid 1px #3E456F;
-    border-radius: 20px;
+    border-radius: 15px;
     color: #3E456F;
     font-size: 14px;
     font-weight: 500;
@@ -172,22 +182,17 @@
 #numOfDownloads {
     font-weight: 500;
     color: #5C659D;
-    width: 200px;
-}
-#downloadRationgSection {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
 }
 #visibilityLabel {
-    color: #0071CE;
+    color: #3E456F;
     font-size: 16px;
     font-weight: 600;
-    background-color: #D3EBFF;
-    padding: 12px;
+    padding: 5px;
     border-radius: 10px;
+    width: fit-content;
     height: fit-content;
     line-height: 5px;
+    margin-bottom: 10px;
 }
 #editDatasetButton {
     display: flex;
@@ -241,4 +246,45 @@
 }
 .capitalize {
     text-transform: capitalize;
+}
+@media screen and (max-width: 1250px) {
+    #datasetCoverImage {
+        width: 300px;
+        height: 200px;
+    }
+    #mainInfo {
+        margin-left: 30px;
+    }
+    #metainfo {
+        max-width: 100%;
+    }
+}
+@media screen and (max-width: 1070px) {
+    #datasetInfo {
+        flex-direction: column-reverse;
+    }
+    #metainfo {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: 960px) {
+    #downloadSection {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+}
+@media screen and (max-width: 880px) {
+    #downloadSection {
+        flex-direction: row;
+        gap: 0px;
+        align-items: center;
+    }
+    #datasetCoverImage {
+        display: none;
+    }
+    #mainInfo {
+        margin-left: 0px;
+    }
 }
