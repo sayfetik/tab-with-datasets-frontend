@@ -1,5 +1,5 @@
 #datasets {
-    padding: 0% 10% 10% 8%;
+    padding: 0% 10% 160px 8%;
 }
 #sort {
     width: 300px;
@@ -28,4 +28,7 @@
 }
 #cardsContainer {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -15,7 +15,7 @@
     border-bottom-right-radius: 0px;
 }
 #hover {
-    width: 30%;
+    width: 31%;
     margin: 1%;
 }
 #datasetCardDescription {
@@ -23,45 +23,11 @@
     color: #3b4168;
     position: absolute;
     padding: 0px 30px 20px 30px;
-    width: 24.6%;
+    width: 25.44%;
     z-index: 1000;
     background-color: white;
     transition: all 0.7s ease;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-}
-
-
-@media screen and (max-width: 1300px) {
-    #hover {
-        width: 30%;
-    }
-    #datasetCard:hover {
-        width: 30%;
-    }
-}
-@media screen and (max-width: 1300px) {
-    #hover {
-        width: 45%;
-    }
-    #datasetCard:hover {
-        width: 37%;
-        padding: 2%;
-    }
-    #datasetTitleOnCard {
-        font-size: 16px;
-    }
-}
-@media screen and (max-width: 900px) {
-    #hover {
-        width: 80%;
-    }
-    #datasetCard:hover {
-        width: 66%;
-        padding: 2.5% 4%;
-    }
-    #datasetTitleOnCard {
-        font-size: 10px;
-    }
 }
 #datasetImage {
     width: 90px;
@@ -90,10 +56,12 @@
     width: 100%;
 }
 #datasetTitleOnCard {
-    overflow-wrap: break-word;
-    font-size: 21px;
+    font-size: 20px;
     position: relative;
-    margin-right: 15px;
+    margin-right: 10px;
+    height: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 @media screen and (max-width: 1500px){
     #datasetTitleOnCard {
@@ -104,13 +72,22 @@
         height: 70px;
     }
 }
-@media screen and (max-width: 1300px){
-    .fieldInfo {
-        font-size: 14px;
+@media screen and (max-width: 1300px) {
+    #hover {
+        width: 48%;
+    }
+    #datasetCardDescription {
+        width: 39.4%;
+    }
+    #datasetTitleOnCard {
+        font-size: 17px;
     }
 }
-@media screen and (max-width: 900px){
-    #datasetTitleOnCard {
-        font-size: 15px;
+@media screen and (max-width: 850px) {
+    #hover {
+        width: 90%;
+    }
+    #datasetCardDescription {
+        width: 73.9%;
     }
 }
