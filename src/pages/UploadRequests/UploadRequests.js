@@ -73,9 +73,12 @@ const UploadRequests = () => {
                             <option value='list'>Список</option>
                             <option value='cards'>Карточки</option>
                         </select>
-                        <button className='blueButton' onClick={() => { navigate('/upload') }}>
+                        <button className='blueButton' id='newDatasetButtonBig' onClick={() => { navigate('/upload') }}>
                             <img src={plusWhiteIcon} id='plusIcon' alt="Добавить новый датасет" />
                             Новый датасет
+                        </button>
+                        <button className='blueButton' id='newDatasetButtonSmall' onClick={() => { navigate('/upload') }}>
+                            <img src={plusWhiteIcon} id='plusIcon' alt="Добавить новый датасет" />
                         </button>
                     </div>
                 </div>

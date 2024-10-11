@@ -4,31 +4,7 @@ import folderDarkIcon from '../../img/folderDark.png';
 import { Back, Header, BackendConnector } from '../../components'
 
 const RequestPreview = () => {
-    const [dataset, setDataset] = React.useState({
-        id: '',
-        title: '',
-        description: '',
-        small_description: '',
-        tags: [],
-        geography_and_places: [],
-        language: [],
-        data_type: [],
-        task: [],
-        technique: [],
-        subject: [],
-        owner: '',
-        authors: '',
-        data_source: '',
-        license: '',
-        number_of_files: 0,
-        doi: '',
-        expected_update_frequency: '',
-        visibility: '',
-        usability_rating: 0,
-        size: '',
-        size_bytes: 0,
-        files_structure: {}
-    });
+    const [dataset, setDataset] = useState();
     const { state: request_id } = useLocation();
 
     const formatFileSize = (size) => {
@@ -50,6 +26,7 @@ const RequestPreview = () => {
         };
 
         fetchDatasetPreview();
+        console.log(dataset)
     }, []);
 
     const getFileWord = (number) => {

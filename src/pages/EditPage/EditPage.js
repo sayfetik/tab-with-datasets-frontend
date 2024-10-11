@@ -111,49 +111,51 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             <Header />
             <div className='upload'>
             <Back />
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
-            <div className='metadataSection'>
-            <InputMetadata
-                titleOfDataset={titleOfDataset}
-                setTitleOfDataset={setTitleOfDataset}
-                visibility={visibility}
-                setVisibility={setVisibility}
-                authors={authors}
-                setAuthors={setAuthors}
-                dataSource={dataSource}
-                setDataSource={setDataSource}
-                expectedUpdateFrequency={expectedUpdateFrequency}
-                setExpectedUpdateFrequency={setExpectedUpdateFrequency}
-                license={license}
-                setLicense={setLicense}
-                doi={doi}
-                setDoi={setDoi}
-                titleLimit={titleLimit}
-                authorsLimit={authorsLimit}
-                sourceLimit={sourceLimit}
-                frequencyLimit={frequencyLimit}
-                doiLimit={doiLimit}
-            />
 
-                <div id='rightContainer'>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
+            
+            <div className='metadataSection'>
+                <InputMetadata style={{width: '75%'}}
+                    titleOfDataset={titleOfDataset}
+                    setTitleOfDataset={setTitleOfDataset}
+                    visibility={visibility}
+                    setVisibility={setVisibility}
+                    authors={authors}
+                    setAuthors={setAuthors}
+                    dataSource={dataSource}
+                    setDataSource={setDataSource}
+                    expectedUpdateFrequency={expectedUpdateFrequency}
+                    setExpectedUpdateFrequency={setExpectedUpdateFrequency}
+                    license={license}
+                    setLicense={setLicense}
+                    doi={doi}
+                    setDoi={setDoi}
+                    titleLimit={titleLimit}
+                    authorsLimit={authorsLimit}
+                    sourceLimit={sourceLimit}
+                    frequencyLimit={frequencyLimit}
+                    doiLimit={doiLimit}
+                />
+
+                <div>
+                <div>
                     <div>
+                        <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                         <div id='descriptionInputContainer'>
                             <div className='metadataBigItem'>
-                                <div id='inputLabel'>Описание</div>
-                                <AutoResizeTextarea value={description} setValue={setDescription} textLimit={descriptionLimit}/>
+                                <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
                             </div>
                         </div>
-                        
                     </div>
-                    <div id='smallDescriptionContainer'>
-                            <div id='descriptionInputContainer'>
-                                <div className='metadataBigItem'>
-                                    <div id='inputLabel'>Краткое описание</div>
-                                    <AutoResizeTextarea value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
-                                </div>
+                        </div> 
+                        <div id='smallDescriptionContainer'>
+                            <div className='metadataBigItem'>
+                                <div id='inputLabel'>Краткое описание *</div>
+                                <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                             </div>
                         </div>
-                    <div>
+
+                    <div id='tagTypesContainer'>
                         <span id='inputLabel'>Теги</span>
                             <div id='tagType'>
                                 <p id='tagTypeLabel'>География данных</p>
@@ -180,8 +182,10 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                                 <InputTag label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
                     </div>
+                </div>
+            </div>
 
-                    <div id='saveButtons'>
+            <div id='saveButtons'>
                         {/*<button className='saveDraft' onClick={()=>{console.log(subject);}}>Сохранить черновик</button>*/}
                         <div className="wrapper row">
                             {isUploading ?
@@ -205,10 +209,8 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                             </button>
                             }
                         </div>
-                    </div>
-                    {warningUploadState && <p style={{textAlign: 'right', marginTop: '10px'}} className='warning'>{warningUpload}</p>}
-                </div>
             </div>
+            {warningUploadState && <p style={{textAlign: 'right', marginTop: '10px'}} className='warning'>{warningUpload}</p>}
         </div>
         </div>
     );

@@ -314,48 +314,51 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             <Header />
             <div className='upload'>
             <Back />
+            
             <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={{}} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
+            
             <div className='metadataSection'>
-            <InputMetadata
-                titleOfDataset={titleOfDataset}
-                setTitleOfDataset={setTitleOfDataset}
-                visibility={visibility}
-                setVisibility={setVisibility}
-                authors={authors}
-                setAuthors={setAuthors}
-                dataSource={dataSource}
-                setDataSource={setDataSource}
-                expectedUpdateFrequency={expectedUpdateFrequency}
-                setExpectedUpdateFrequency={setExpectedUpdateFrequency}
-                license={license}
-                setLicense={setLicense}
-                doi={doi}
-                setDoi={setDoi}
-                titleLimit={titleLimit}
-                authorsLimit={authorsLimit}
-                sourceLimit={sourceLimit}
-                frequencyLimit={frequencyLimit}
-                doiLimit={doiLimit}
-            />
+                <InputMetadata style={{width: '75%'}}
+                    titleOfDataset={titleOfDataset}
+                    setTitleOfDataset={setTitleOfDataset}
+                    visibility={visibility}
+                    setVisibility={setVisibility}
+                    authors={authors}
+                    setAuthors={setAuthors}
+                    dataSource={dataSource}
+                    setDataSource={setDataSource}
+                    expectedUpdateFrequency={expectedUpdateFrequency}
+                    setExpectedUpdateFrequency={setExpectedUpdateFrequency}
+                    license={license}
+                    setLicense={setLicense}
+                    doi={doi}
+                    setDoi={setDoi}
+                    titleLimit={titleLimit}
+                    authorsLimit={authorsLimit}
+                    sourceLimit={sourceLimit}
+                    frequencyLimit={frequencyLimit}
+                    doiLimit={doiLimit}
+                />
 
                 <div id='rightContainer'>
                     <div className='row'>
-                    <p style={{marginBottom: '15px'}}>Выберите:</p>
+                        <p style={{marginBottom: '15px'}}>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
                             добавить своё описание</button>
                         <p style={{marginBottom: '15px'}}>или</p>
                         <button id={isGenerateDesc ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={()=>{setIsGenerateDesc(true)}}>
-                            сгенерировать с помощью ИИ</button>
+                            сгенерировать</button>
                     </div>
 
-                    {!isGenerateDesc && <div>
+                    {!isGenerateDesc && 
+                    <div>
                         <div>
-                        <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
-                            <div id='descriptionInputContainer'>
-                                <div className='metadataBigItem'>
-                                    <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
-                                </div>
-                            </div> 
+                            <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
+                                <div id='descriptionInputContainer'>
+                                    <div className='metadataBigItem'>
+                                        <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
+                                    </div>
+                                </div> 
                             <div>
                                 <div id='rowContunuieLoading'>
                                     <button id='continuie' onClick={generateSmallDescAndTags}>
@@ -369,10 +372,10 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
                         {smallDescriptionState && (
                             <div id='smallDescriptionContainer'>
-                                    <div className='metadataBigItem'>
-                                        <div id='inputLabel'>Краткое описание *</div>
-                                        <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
-                                    </div>
+                                <div className='metadataBigItem'>
+                                    <div id='inputLabel'>Краткое описание *</div>
+                                    <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
+                                </div>
                             </div>
                         )}
                         
@@ -485,6 +488,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 }
                 </div>
             </div>
+
             {!isGenerateDesc ?
             <div className='rowSpaceBetween'>
                 <div style={{width: '84%', marginTop: '15px'}}>

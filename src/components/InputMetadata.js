@@ -32,6 +32,7 @@ const InputMetadata = ({
     return (
         <div>
             <AutoResizeTextarea
+                length='80%'
                 label="Название *"
                 placeholder="Введите название"
                 value={titleOfDataset}
@@ -39,12 +40,13 @@ const InputMetadata = ({
                 textLimit={titleLimit}
             />
             <div className='metadataLabel'>Видимость *</div>
-            <select className="selectionInput" style={{width: '470px'}} value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+            <select className="selectionInput" style={{width: '80%'}} value={visibility} onChange={(e) => setVisibility(e.target.value)}>
                 <option value="private">Приватный</option>
                 <option value="public">Публичный</option>
             </select>
             <AutoResizeTextarea
                 label="Авторы"
+                length='80%'
                 placeholder="Введите автора"
                 value={authors}
                 setValue={setAuthors}
@@ -52,13 +54,14 @@ const InputMetadata = ({
             />
             <AutoResizeTextarea
                 label="Источник"
+                length='80%'
                 placeholder="Введите источник"
                 value={dataSource}
                 setValue={setDataSource}
                 textLimit={sourceLimit}
             />
             <div className='metadataLabel'>Частота обновлений</div>
-            <select value={expectedUpdateFrequency} style={{width: '470px'}} onChange={(e) => setExpectedUpdateFrequency(e.target.value)} className="selectionInput">
+            <select value={expectedUpdateFrequency} style={{width: '80%'}} onChange={(e) => setExpectedUpdateFrequency(e.target.value)} className="selectionInput">
                 <option value="never">Никогда</option>
                 <option value="onceWeek">Раз в неделю</option>
                 <option value="twiceWeek">2 раза в неделю</option>
@@ -73,7 +76,7 @@ const InputMetadata = ({
             </select>
             
             <div className='metadataLabel'>Лицензия</div>
-            <select value={license} style={{width: '470px'}} onChange={(e) => setLicense(e.target.value)} className="selectionInput">
+            <select value={license} style={{width: '80%'}} onChange={(e) => setLicense(e.target.value)} className="selectionInput">
                 <option value="Public Domain">Public Domain Mark - Public Domain</option>
                 <option value="PDDL">Open Data Commons Public Domain Dedication and License - PDDL</option>
                 <option value="CC-BY">Creative Commons Attribution 4.0 International CC-BY</option>
@@ -90,6 +93,7 @@ const InputMetadata = ({
                 <option value="No license specified">No license specified</option>
             </select>
             <AutoResizeTextarea
+                length='80%'
                 label="DOI"
                 placeholder="Укажите doi"
                 value={doi}

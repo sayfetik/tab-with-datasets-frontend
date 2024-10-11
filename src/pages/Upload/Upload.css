@@ -23,21 +23,17 @@
     font-weight: 500;
     word-break: break-word;
   }
-  
-#rightContainer {
-  width: 100%;
-  padding-left: 10%;
-}
-
-.metadataSection {
+  .metadataSection {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1.5fr;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
   .metadataSection {
     display: flex;
     flex-direction: column;
   }
+}
+@media screen and (max-width: 800px) {
   #rightContainer {
     padding: 0px;
   }
