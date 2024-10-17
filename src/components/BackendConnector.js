@@ -28,8 +28,9 @@ export default class BackendConnector {
     static like_dataset_endpoint ='api/like_dataset';
     static dislike_dataset_endpoint ='api/dislike_dataset';
     static remove_rating_endpoint ='api/remove_rating';
-    static user_id = 1;
+    static highly_rated_datasets_endpoint ='api/get_highly_rated_datasets';
 
+    static user_id = 1;
     static results_amount_limit = 12;
 
     static async preview(id) {
@@ -373,5 +374,9 @@ export default class BackendConnector {
 
     static async remove_rating(dataset_id) {
         return await this.get(`${this.remove_rating_endpoint}/${dataset_id}?user_id=${this.user_id}`);
+    }
+
+    static async highly_rated_datasets() {
+        return await this.get(`${this.highly_rated_datasets_endpoint}/${this.results_amount_limit}`);
     }
 }

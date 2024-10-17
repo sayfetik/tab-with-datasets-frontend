@@ -69,7 +69,6 @@ const Datasets = () => {
             setblueButton('Подождать')
             setlightBlueButton('Попробовать ещё раз');
         }
-        console.log(datasets)
     };
 
     const handleKeyDown = (event) => {
