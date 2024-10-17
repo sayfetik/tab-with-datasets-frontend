@@ -215,6 +215,7 @@ padding: 0px 10px;
 #tagTypeLabel {
   width: 180px;
   padding-top: 7px;
+  font-weight: 500;
 }
 #rowContunuieLoading {
   display: flex;

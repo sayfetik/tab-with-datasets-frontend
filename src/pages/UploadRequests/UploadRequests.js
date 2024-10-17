@@ -1,58 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { Header, UploadRequest, RequestCard, BackendConnector, Icon, RequestList } from '../../components';
+import { Header, Icon, RequestList } from '../../components';
 import './UploadRequests.css';
 import plusWhiteIcon from '../../img/plusWhite.png';
 //import accountImage from '../../img/accountImage.png';
 import back from '../../img/back.png';
-import loadingDarkGif from '../../img/loadingDark.gif';
 
 const UploadRequests = () => {
     const navigate = useNavigate();
-    const [requests, setRequests] = useState([]);
     const [view, setView] = useState('list');
-    const [isError, setError] = useState(false);
-    const [isLoading, setisLoading] = useState(true);
-
-    const fetchRequests = async () => {
-        try {
-            const data = await BackendConnector.fetchUploadRequests(1);
-            setRequests(data.reverse());
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-            setError(true);
-        }
-        setisLoading(false);
-    };
-
     useEffect(() => {
-        fetchRequests();
-    }, []);
-
-    const failedRequests = useMemo(() => {
-        return requests.filter(request => 
-            Object.values(request).some(stage => stage.status === 'failed')
-        );
-    }, [requests]);
+        document.title = `Мои датасеты`;
+      }, []);
     
-    const inProgressRequests = useMemo(() => {
-        return requests.filter(request => {
-            const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
-            const isUploadingNotDone = request.uploading.status !== 'done';
-            return !hasFailedStage && isUploadingNotDone;
-        });
-    }, [requests]);
-    
-    const uploadedRequests = useMemo(() => {
-        return requests.filter(request => {
-            const hasFailedStage = Object.values(request).some(stage => stage.status === 'failed');
-            const isUploadingDone = request.uploading.status === 'done';
-            return !hasFailedStage && isUploadingDone;
-        });
-    }, [requests]);
-    
-
     return (
         <div>
             <Header />
@@ -97,15 +58,15 @@ const UploadRequests = () => {
                     </Tabs.List>
 
                     <Tabs.Panel value="in_progress" pt="xs">
-                        <RequestList requests={inProgressRequests} error={isError} view={view} loading={isLoading} />
+                        <RequestList type='uploading'view={view}  />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="stopped" pt="xs">
-                        <RequestList requests={failedRequests} error={isError} view={view} loading={isLoading} />
+                        <RequestList type='failed' view={view} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="uploaded" pt="xs">
-                        <RequestList requests={uploadedRequests} error={isError} view={view} loading={isLoading} />
+                        <RequestList type='uploaded' view={view} />
                     </Tabs.Panel>
                 </Tabs>
             </div>

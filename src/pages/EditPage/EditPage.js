@@ -6,6 +6,9 @@ import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
 const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, doiLimit}) => {
     const { state: dataset } = useLocation();
+    useEffect(() => {
+        document.title = `Редактировать датасет "${dataset.title}"`;
+      }, []);
     const navigate = useNavigate();
     const [warningUploadState, setWarningUploadState] = useState(false);
     const [warningUpload, setWarningUpload] = useState('');
@@ -158,27 +161,21 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                     <div id='tagTypesContainer'>
                         <span id='inputLabel'>Теги</span>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>География данных</p>
                                 <InputTag label="География данных" tags={geography_and_places} setTags={setLocalGeography}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Язык</p>
                                 <InputTag label="Язык" tags={language} setTags={setLocalLanguage}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Тип данных</p>
                                 <InputTag label="Тип данных" tags={data_type} setTags={setLocalDataType}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Задача</p>
                                 <InputTag label="Задача" tags={task} setTags={setLocalTask}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Техника</p>
                                 <InputTag label="Техника" tags={technique} setTags={setLocalTechnique}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Предмет</p>
                                 <InputTag label="Предмет" tags={subject} setTags={setLocalSubject}/>
                             </div>
                     </div>

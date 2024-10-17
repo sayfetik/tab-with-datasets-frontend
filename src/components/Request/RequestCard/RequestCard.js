@@ -6,7 +6,7 @@ import { BackendConnector, RequestFullModal, DeleteVerification, RequestStatus }
 import default_image from '../../../img/default_image.jpg';
 import redTrash from '../../../img/trashRed.png';
 import arrowDownIcon from '../../../img/arrowDown.png';
-import arrowUpIcon from '../../../img/arrowUp.png';
+import editIcon from '../../../img/editBlue.png';
 import editBlueIcon from '../../../img/editBlue.png';
 
 const RequestCard = ({ request, fetchPreview }) => {
@@ -67,33 +67,28 @@ const RequestCard = ({ request, fetchPreview }) => {
     }
 
     return (
-        <div id='hoverRequest'>
+        <div id='hover'>
             <div id='requestCard'>
                 <div style={{display: 'flex'}}>
                     <img id='datasetImage' src={default_image} alt='Ошибка загрузки изображения'></img>
-                    <h3 id='datasetTitleOnCard'>{request.dataset_title}</h3>
+                    {fetchPreview ?
+                        <p id='uploadedDatasetTitleList' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>{request.dataset_title}</p>
+                        :
+                        <p id='datasetTitleList'>{request.dataset_title}</p>
+                    }
                 </div>
                 <div id='cardInfo'>
                     <RequestStatus request={request} />
                     <button id='showStagesButton' onClick={() => setfullStages(true)}>
                         Подробнее о загрузке
-                        <img alt='down' id='arrowInAccount' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>
+                        <img alt='down' id='arrowDown' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>
                     </button>
                     <RequestFullModal request={request} isOpen={fullStages} onClose={()=>{setfullStages(false)}} />
-
-                    <div className='rowSpaceBetween'>
-                        {request.uploading?.status === 'done' && <button style={{marginLeft: '0px'}} className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>}
-                        {/*request.uploading?.status === 'done' ?
-                            <button className='whiteBlueButton' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>Посмотреть датасет</button>
-                            :
-                            <button className='whiteBlueButton' style={{marginRight: '15px'}} onClick={() => {navigate('/requestPreview', { state: {id: request.request_id} })}}>Предварительный просмотр</button>
-    */}
-                        <div className='row'>
-                            {request.uploading?.status === 'done' && <button className='lightBlueButton' id='editButtonOnRequest' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
-                            {request.uploading?.status === 'done' && <img src={editBlueIcon} id='editIcon'/>}
-                            {request.uploading?.status === 'done' && <img src={redTrash} style={{marginRight: '0px'}} id='trashIconList' alt="Удалить"  onClick={handleDeleteClick} />}
-                            <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} />
-                        </div>
+                    
+                    <div className='rowEditDeleteRequestCard'>
+                        {request.uploading?.status === 'done' && <button className='lightBlueButton' id='editButtonOnRequest' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
+                        {request.uploading?.status === 'done' && <button className='deleteButtonOnRequest' onClick={handleDeleteClick}><img src={redTrash} id='trashIconList' alt="Удалить" /></button>}
+                        <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} />
                     </div>
                 </div>
             </div>

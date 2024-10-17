@@ -19,11 +19,6 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
     setSubject(localSubject);
   }, [localGeography, localLanguage, localDataType, localTask, localTechnique, localSubject]);
 
-  const applyFilters = () => {
-    applyChanges();
-    onClose();
-  };
-
   if (!isOpen) {
     return null;
   }
@@ -33,7 +28,6 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
       <div className="modal-content">
         <div className="modal-header">
           <h2>Фильтры</h2>
-          <button className="modal-close-button" onClick={onClose}>&times;</button>
         </div>
         <div>
           <label>
@@ -42,11 +36,11 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
             <InputTag label="Тип данных" tags={localDataType} setTags={setLocalDataType} />
             <InputTag label="Задача" tags={localTask} setTags={setLocalTask} />
             <InputTag label="Техника" tags={localTechnique} setTags={setLocalTechnique} />
-            <InputTag label="Область" tags={localSubject} setTags={setLocalSubject} />
+            <InputTag label="Предмет" tags={localSubject} setTags={setLocalSubject} />
           </label>
         </div>
         <div id='applyFiltersLayout'>
-          <button className='blueButton' onClick={applyFilters}>Применить</button>
+          <button className='blueButton' onClick={onClose}>Применить</button>
         </div>
       </div>
     </div>

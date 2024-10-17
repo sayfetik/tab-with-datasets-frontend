@@ -7,6 +7,9 @@ import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
 const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
     const navigate = useNavigate();
+    useEffect(() => {
+        document.title = `Загрузить датасет`;
+      }, []);
 
     const [isGenerateDesc, setIsGenerateDesc] = useState(false);
     const [smallDescriptionState, setStateSmallDescription] = useState(false);
@@ -383,27 +386,21 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                             <div id='tagTypesContainer'>
                                 <span className='inputLabel'>Теги *</span>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>География данных</p>
                                     <InputTag label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                                 </div>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>Язык</p>
                                     <InputTag label="Язык" tags={language} setTags={set_language}/>
                                 </div>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>Тип данных</p>
                                     <InputTag label="Тип данных" tags={data_type} setTags={set_data_type}/>
                                 </div>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>Задача</p>
                                     <InputTag label="Задача" tags={task} setTags={set_task}/>
                                 </div>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>Техника</p>
                                     <InputTag label="Техника" tags={technique} setTags={set_technique}/>
                                 </div>
                                 <div id='tagType'>
-                                    <p id='tagTypeLabel'>Предмет</p>
                                     <InputTag label="Предмет" tags={subject} setTags={set_subject}/>
                                 </div>
                             </div>
@@ -414,8 +411,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                     <div>
                         <p id='inputLabel'>Введите данные о датасете для генерации описания с помощью ИИ:</p>
                         <AutoResizeTextarea placeholder="Введите информацию о том, как были получены данные" value={collectionMethod} setValue={setCollectionMethod} textLimit={descriptionFieldsLimit} label=''/>
-                        <AutoResizeTextarea placeholder="Опишите структуру данных" value={dataStructure} setValue={setDataStructure} textLimit={descriptionFieldsLimit} label=''/>
-                        <AutoResizeTextarea placeholder="Опишите применение датасета" value={useCases} setValue={setUseCases} textLimit={descriptionFieldsLimit} label=''/>
 
                         <div id='rowContunuieLoading'>
                             <button id='continuie' onClick={generateDescription}>
@@ -459,27 +454,21 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                         <div id='tagTypesContainer'>
                             <span className='inputLabel'>Теги *</span>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>География данных</p>
                                 <InputTag label="География данных" tags={Ggeography_and_places} setTags={set_Ggeography_and_places}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Язык</p>
                                 <InputTag label="Язык" tags={Glanguage} setTags={set_Glanguage}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Тип данных</p>
                                 <InputTag label="Тип данных" tags={Gdata_type} setTags={set_Gdata_type}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Задача</p>
                                 <InputTag label="Задача" tags={Gtask} setTags={set_Gtask}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Техника</p>
                                 <InputTag label="Техника" tags={Gtechnique} setTags={set_Gtechnique}/>
                             </div>
                             <div id='tagType'>
-                                <p id='tagTypeLabel'>Предмет</p>
                                 <InputTag label="Предмет" tags={Gsubject} setTags={set_Gsubject}/>
                             </div>
                         </div>

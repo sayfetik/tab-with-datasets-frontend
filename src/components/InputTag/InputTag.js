@@ -29,14 +29,6 @@ const InputTag = ({ label, tags, setTags }) => {
     "Предмет": "Введите категорию"
   }
 
-  /*let category = "";
-  if (label === "География данных") category = "geography_and_places";
-  else if (label === "Язык") category = "language";
-  else if (label === "Тип данных") category = "data_type";
-  else if (label === "Задача") category = "task";
-  else if (label === "Техника") category = "technique";
-  else category = "subject";*/
-
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (inputValue.length > 0) {
@@ -74,6 +66,7 @@ const InputTag = ({ label, tags, setTags }) => {
   return (
     <div>
       <div id='inputTagsFilter'>
+      <p id='tagTypeLabel'>{label}</p>
         <div className="input-container">
           <input
             type="search"

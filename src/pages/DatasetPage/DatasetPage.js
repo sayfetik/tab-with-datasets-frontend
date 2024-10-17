@@ -57,7 +57,7 @@ const DatasetPage = () => {
 
         fetchRecommendations();
         fetchDatasetPreview();
-    }, [id]);
+    }, [id, isCopyCodeOpen, isDownloadOpen]);
 
     const [dataset, setDataset] = React.useState({
         id: '',
@@ -87,6 +87,7 @@ const DatasetPage = () => {
         size_bytes: 0,
         rating: 0,
         files_structure: {},
+        user_reaction: ''
     });
 
     const handleEditClick = () => {
@@ -131,6 +132,10 @@ const DatasetPage = () => {
         if (counts.folders === 0) return `${counts.files} ${getFileWord(counts.files)}`;
         return `${counts.folders} ${getFolderWord(counts.folders)}, ${counts.files} ${getFileWord(counts.files)}`;
     };
+
+    useEffect(() => {
+        document.title = dataset.title;
+      }, []);
 
     return (
         <div>
@@ -184,7 +189,7 @@ const DatasetPage = () => {
                         </div>
                         <Download isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id}/>
                         <DownloadCopyCode isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
-                        <LikeDislike />
+                        <LikeDislike dataset_id={dataset.id} previousReaction={dataset.user_reaction}/>
                         
                         {/*<div className='row'>
                             <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>

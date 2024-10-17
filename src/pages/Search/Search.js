@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Search.css';
 import { Header, Filters } from '../../components';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,9 @@ import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Search = () => {
+    useEffect(() => {
+        document.title = `Поиск датасета`;
+      }, []);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');

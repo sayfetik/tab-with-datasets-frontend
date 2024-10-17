@@ -48,12 +48,16 @@ const UploadRequest = ({ request, toggleStage, isOpen, fetchPreview }) => {
         <div id='datasetListItem'>
             <div id='briefDatasetListItem' onClick={() => toggleStage(request.request_id)}>
                 <div className='rowTitleAndStatus'>
-                    <p id='datasetTitleList' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>{request.dataset_title}</p>
+                    {fetchPreview ?
+                        <p id='uploadedDatasetTitleList' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>{request.dataset_title}</p>
+                        :
+                        <p id='datasetTitleList'>{request.dataset_title}</p>
+                    }
                     <RequestStatus request={request}/>
                 </div>
                 <div className='rightSectionList'>
                     {request.uploading?.status === 'done' && <button onClick={handleDeleteClick} style={{border: 'none'}}><img src={redTrash} id='trashIconList' alt="Удалить" /></button>}
-                    {request.uploading?.status === 'done' && <button onClick={handleDeleteClick} style={{border: 'none'}}><img src={editIcon} id='editIconRequest' alt="Редактировать"  onClick={handleEditClick} /></button>}
+                    {request.uploading?.status === 'done' && <button onClick={handleEditClick} style={{border: 'none'}}><img src={editIcon} id='editIconRequest' alt="Редактировать"  onClick={handleEditClick} /></button>}
                     <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} back={false}/>
                     <img src={arrowDown} className={isOpen ? 'statusIcon rotate180' : 'statusIcon'} alt="Подробнее о стадиях"/>
                 </div>

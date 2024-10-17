@@ -20,14 +20,14 @@ const RequestStatus = ({ request }) => {
         'Анонимизация датасета, защита персональных данных',
         'Подготовка датасета к использованию, предобработка данных',
         'Загрузка датасета на платформу',
-        'Датасет загружен'
+        'Загружен'
     ];
 
     const hasFailed = statuses.includes('failed');
     //const allDone = statuses.every(status => status === 'done');
     
     const formatInProgressStages = () => {
-        if (statuses[6] === 'done') return /*<p id='requestStatus' className='done'>{stages[7]}</p>*/;
+        if (statuses[6] === 'done') return <p id='requestStatus' className='done'>{stages[7]}</p>;
 
         if (hasFailed) {
             const failedIndices = statuses.map((status, index) => (status === 'failed' ? index : -1)).filter(index => index !== -1);
@@ -42,7 +42,7 @@ const RequestStatus = ({ request }) => {
         <div className='row' style={{margin: '0'}}>
             <div id='status'>
                 {formatInProgressStages()}
-                {(statuses[6] !== 'done') && <ProgressCircle statuses={statuses} />}
+                {<ProgressCircle statuses={statuses} />}
             </div>
         </div>
     );

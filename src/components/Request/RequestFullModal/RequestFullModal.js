@@ -25,7 +25,6 @@ const RequestFullModal = ({ request, isOpen, onClose }) => {
             <div id='briefDatasetListItem'>
                 <div className='row'>
                     <p id='datasetTitleList' style={{marginRight: '30px'}}>{request.dataset_title}</p>
-                    <RequestStatus request={request} />
                 </div>
                 
                 <button className="report-close-button" onClick={onClose}>&times;</button>

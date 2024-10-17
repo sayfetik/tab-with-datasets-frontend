@@ -69,7 +69,7 @@ const Datasets = () => {
             setblueButton('Подождать')
             setlightBlueButton('Попробовать ещё раз');
         }
-        console.log(process.env)
+        console.log(datasets)
     };
 
     const handleKeyDown = (event) => {
@@ -103,6 +103,9 @@ const Datasets = () => {
         }
         setSortedData(sorted);
     }, [selectedOption]);
+    useEffect(() => {
+        document.title = searchString;
+      }, []);
 
         return (
             <div>
@@ -150,7 +153,7 @@ const Datasets = () => {
                             <button type='submit' id='searchButton'>Найти</button>
                             <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                         </form>
-                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{navigate('/')}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
+                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{handleSearch()}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
                     </div>
                     <div id='cardsContainer'>
                         {!noDatasets ?

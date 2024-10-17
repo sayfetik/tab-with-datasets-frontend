@@ -22,8 +22,8 @@ const Download = ({ isOpen, onClose, id }) => {
   }
 
   const handleDownloadInitialDsClick = async () => {
+    setloadingBase(true);
     try {
-        setloadingBase(true);
         const blob = await BackendConnector.download_initial_dataset(id);
         if (blob) {
           const url = window.URL.createObjectURL(blob);

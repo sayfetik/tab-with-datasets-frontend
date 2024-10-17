@@ -1,3 +1,5 @@
 .requestFullModal {
     padding: 20px 30px;
+    width: fit-content;
+    max-width: 90%;    
 }
