@@ -266,28 +266,26 @@ export default class BackendConnector {
         return await response.json();
     }
 
-    static async generateDescription(title, collectionMethod, dataStructure, useCases) {
+    static async generateDescription(parts, files) {
         const url = `${this.host}/${this.generateDescription_endpoint}`;
-        const requestBody = {
-            title: title,
-            actions_taken_to_collect_and_process_the_dataset: collectionMethod,
-            detailed_description_of_content: dataStructure,
-            potential_use_cases: useCases
-        };
+        const formData = new FormData();
+        formData.append('parts', JSON.stringify(parts));
+    
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+    
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+            body: formData
         });
-
+    
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
+    
         return await response.json();
-    };
+    }
     
     static async  generateSmallDescription(text) {
         const url = `${this.host}/${this.generateSmallDescription_endpoint}`;

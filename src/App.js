@@ -7,7 +7,7 @@ import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 
 const App = () => {
-  const descriptionLimit = 1000;
+  const descriptionLimit = 3000;
   const authorsLimit = 500;
   const smallDescriptionLimit = 600;
   const titleLimit = 100;
