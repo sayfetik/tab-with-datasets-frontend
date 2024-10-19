@@ -75,12 +75,12 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                         <div className='codeLabel'>
                             <div className='row'>
                                 <p id='datasetBaseClean'>Датасет с базовой обработкой</p>
-                                <img 
-                                    src={helpBlue} 
-                                    width='20px' 
-                                    height='20px' 
-                                    style={{ marginLeft: '10px' }} 
-                                    alt='' 
+                                <img
+                                    src={helpBlue}
+                                    width='20px'
+                                    height='20px'
+                                    style={{ marginLeft: '10px' }}
+                                    alt=''
                                     onMouseEnter={() => setShowTooltipBlue(true)} 
                                     onMouseLeave={() => setShowTooltipBlue(false)} 
                                 />
@@ -106,9 +106,9 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                                     width='20px' 
                                     height='20px' 
                                     style={{ marginLeft: '10px', marginRight: '10px' }} 
-                                    alt='' 
-                                    onMouseEnter={() => setShowTooltipPurple(true)} 
-                                    onMouseLeave={() => setShowTooltipPurple(false)} 
+                                    alt=''
+                                    onMouseEnter={() => setShowTooltipPurple(true)}
+                                    onMouseLeave={() => setShowTooltipPurple(false)}
                                 />
                                 {showTooltipPurple && (
                                     <div className="tooltip"><ProccessStages isBase={false}/></div>

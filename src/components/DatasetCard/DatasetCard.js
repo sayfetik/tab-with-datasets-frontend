@@ -16,6 +16,7 @@ const DatasetCard = ({
 }) => {
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
+    const [showSmallDescription, setshowSmallDescription] = useState(false);
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -47,7 +48,11 @@ const DatasetCard = ({
     
     return (
         <div id='hover'>
-            <div id='datasetCard' onClick={() => {navigate(`/dataset/${id}`)}}>
+            <div id='datasetCard'
+                onClick={() => {navigate(`/dataset/${id}`)}}
+                onMouseEnter={() => setshowSmallDescription(true)} 
+                onMouseLeave={() => setshowSmallDescription(false)} 
+            >
                 <div style={{display: 'flex'}}>
                     <img id='datasetImage' src={image} alt='Ошибка загрузки изображения'></img>
                     <h3 id='datasetTitleOnCard'>{title}</h3>
@@ -62,8 +67,9 @@ const DatasetCard = ({
                         </div>
                     </div>
                 </div>
-                <p id='datasetCardDescription'>{smallDescription}</p>
             </div>
+            {showSmallDescription &&
+                <div id='datasetCardDescription'><p>{smallDescription}</p></div>}
         </div>
         
     );

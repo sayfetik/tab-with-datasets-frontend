@@ -1,0 +1,63 @@
+.modal-report {
+    width: fit-content;
+}
+.reportLabel, .reportLabelWithoutMargin {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 18px;
+    width: 150px;
+}
+.reportLabelWithoutMargin {
+    margin: 10px 0px;
+}
+.reportButtons {
+    display: flex;
+    justify-content: end;
+}
+#submitReportButton {
+    padding: 8px 20px;
+}
+.reportField {
+    display: flex;
+    align-items: center;
+}
+.reportField .input {
+    width: 50px
+}
+.multiselect {
+    width: 400px;
+    margin-bottom: 15px;
+}
+.multiselectInput {
+    border: 1px solid rgba(40, 75, 203, 0.955);
+    border-radius: 10px;
+}
+.multiselect input {
+    font-size: 16px;
+    padding-left: 6px;
+}
+.multiselectPill {
+    background-color: #EFF8FE !important;
+    border-radius: 5px;
+    span {
+        color: #0071CE;
+        font-weight: 500;
+    }
+    path {
+        color: #0071CE;
+    }
+}
+.multiselectOption {
+    color: #3E456F !important;
+    border-bottom: 1px solid rgba(228, 231, 242, 1);
+    border-radius: 0px !important;
+}
+.multiselectOption:hover {
+    background-color: #EFF8FE !important;
+}
+.multiselectDropdown {
+    border-radius: 10px !important;
+    padding: 0px !important;
+    margin-top: 3px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+}

@@ -25,17 +25,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-@media screen and (max-width: 1200px) {
-    #filesPart, .filesSection {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-    .uploadFile, .uploadImage {
-        margin-bottom: 10px;
-        width: 100%;
-    }
-}
 .seeFiles, .seeImage {
     color: #0071CE;
 }
@@ -83,19 +72,6 @@
 .uploadFilesContainer {
     display: flex;
 }
-@media screen and (max-width: 700px) {
-    .uploadFilesContainer {
-        display: flex;
-        flex-direction: column;
-    }
-    .uploadFile, .uploadImage {
-        width: 100%;
-        margin-bottom: 40px;
-    }
-    #filesPart {
-        flex-direction: column;
-    }
-}
 .uploadedFilesSection {
     padding: 10px 25px 15px 25px;
     border-radius: 20px;
@@ -103,6 +79,7 @@
     color: #3E456F;
     background-color: white;
     overflow-y: scroll;
+    overflow-x: hidden;
     width: 100%;
     box-sizing: border-box;
     height: 200px;
@@ -148,6 +125,7 @@
 }
 #uploadChoice, #uploadChosen {
     margin: 3px 15px 0px 10px;
+    line-height: 18px;
     border: none;
     font-weight: 600;
     border-radius: 20px;
@@ -189,7 +167,34 @@
   }
   #requiredFieldsLabel {
     color: #0071CE;
-  }
-  .metadataBigItem {
-    z-index: 1;
-  }
+  }  
+@media screen and (max-width: 1200px) {
+    .filesSection {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .uploadImage {
+        width: 400px;
+        margin-bottom: 10px;
+    }
+    .uploadFile {
+        margin-bottom: 10px;
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .uploadFilesContainer {
+        display: flex;
+        flex-direction: column;
+    }
+    .uploadFile, .uploadImage {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+    #filesPart {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Stage, RequestReport, AnonReport } from '../../components';
+import { Stage, /*RequestReport,*/  AnonReport } from '../../components';
 
 const Stages = ({ request, statusImages }) => {
-    const [isSecuringReportOpen, setisSecuringReportOpen] = React.useState(false);
+    /*const [isSecuringReportOpen, setisSecuringReportOpen] = React.useState(false);
     const [isMetadataSecuringReportOpen, setisMetadataSecuringReportOpen] = React.useState(false);
+    const [isImage_securingReportOpen, setisImage_securingReportOpen] = React.useState(false);*/
     const [isAnonymizingReportOpen, setisAnonymizingReportOpen] = React.useState(false);
-    const [isImage_securingReportOpen, setisImage_securingReportOpen] = React.useState(false);
   
     return (
       <div className='stages'>
@@ -16,7 +16,7 @@ const Stages = ({ request, statusImages }) => {
             statusImages={statusImages}
           />
         )}
-        {request.metadata_securing && (
+        {/*request.metadata_securing && (
           <Stage
             stage={request.metadata_securing}
             stageName="Сканирование метаданных"
@@ -26,8 +26,8 @@ const Stages = ({ request, statusImages }) => {
             reportComponent={<RequestReport />}
             label='Поля с подозрениями на нарушение заполненных метаданных'
           />
-        )}
-        {request.image_securing && (
+        )*/}
+        {/*request.image_securing && (
           <Stage
             stage={request.image_securing}
             stageName="Сканирование обложки на безопасность"
@@ -37,8 +37,8 @@ const Stages = ({ request, statusImages }) => {
             reportComponent={<RequestReport />}
             label='Файлы с подозрениями на нарушение заполненных метаданных'
           />
-        )}
-        {request.files_securing && (
+        )*/}
+        {/*request.files_securing && (
           <Stage
             stage={request.files_securing}
             stageName="Сканирование датасета на безопасность"
@@ -48,7 +48,7 @@ const Stages = ({ request, statusImages }) => {
             reportComponent={<RequestReport />}
             label='Файлы с подозрениями на нарушение безопасности'
           />
-        )}
+        )*/}
         {request.anonymizing && (
           <Stage
             stage={request.anonymizing}
