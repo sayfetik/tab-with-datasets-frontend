@@ -29,7 +29,7 @@
     margin-bottom: 15px;
 }
 .multiselectInput {
-    border: 1px solid rgba(40, 75, 203, 0.955);
+    border: 1px solid rgba(228, 231, 242, 1) !important;
     border-radius: 10px;
 }
 .multiselect input {
@@ -48,7 +48,7 @@
     }
 }
 .multiselectOption {
-    color: #3E456F !important;
+    color: #3E456F ;
     border-bottom: 1px solid rgba(228, 231, 242, 1);
     border-radius: 0px !important;
 }

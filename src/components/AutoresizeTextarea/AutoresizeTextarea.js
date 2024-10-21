@@ -4,7 +4,7 @@ import { marked } from 'marked'; // Правильный импорт
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 
-const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, length, height, markdown = false }) => {
+const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, length, height, markdown }) => {
   const textareaRef = useRef(null);
   const [isEditing, setIsEditing] = useState(true); // Флаг редактирования
   const renderedRef = useRef(null); // Реф для отрисованного HTML
@@ -14,7 +14,13 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
       textareaRef.current.style.height = height || '50px';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [value]);
+  }, [value, isEditing]);
+
+  useEffect(() => {
+    if (!isEditing && renderedRef.current) {
+      renderedRef.current.innerHTML = renderMarkdownWithKaTeX(value);
+    }
+  }, [isEditing, value]);
 
   const handleChange = (event) => {
     if (event.target.value.length <= textLimit || textLimit === 0) {
