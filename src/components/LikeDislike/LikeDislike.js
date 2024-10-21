@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './LikeDislike.css';
 import { Icon } from '@iconify-icon/react';
-import { /*Report*/ BackendConnector } from '../';
+import { Report, BackendConnector } from '../';
 
 const LikeDislike = ({dataset_id, previousReaction}) => {
     const iconSize = "32";
     const [reaction, setReaction] = useState(previousReaction);
     const [showReactionWarning, setReactionWarning] = useState(false);
-    //const [isReportOpen, setisReportOpen] = useState(false);
+    const [isReportOpen, setisReportOpen] = useState(false);
 
     useEffect(() => {
         setReaction(previousReaction);
