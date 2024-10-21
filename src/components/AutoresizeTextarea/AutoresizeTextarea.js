@@ -66,7 +66,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
       <div>
       {label && <div id="inputLabel">{label}</div>}
       <div className="row">
-          {isEditing || value !== 0 ? (
+          {isEditing ? (
           <textarea
             id="textarea"
             placeholder={placeholder}
