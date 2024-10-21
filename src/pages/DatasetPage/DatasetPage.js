@@ -135,7 +135,7 @@ const DatasetPage = () => {
 
     useEffect(() => {
         document.title = dataset.title;
-      }, []);
+      }, [dataset]);
 
     return (
         <div>
