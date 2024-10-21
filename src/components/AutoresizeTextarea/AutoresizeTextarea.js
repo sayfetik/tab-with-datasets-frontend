@@ -11,7 +11,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = height || '50px';
+      textareaRef.current.style.height = '50px';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value, isEditing]);
@@ -20,7 +20,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
     if (!isEditing && renderedRef.current) {
       renderedRef.current.innerHTML = renderMarkdownWithKaTeX(value);
     }
-  }, [isEditing, value]);
+  }, [isEditing, value, renderedRef]);
 
   const handleChange = (event) => {
     if (event.target.value.length <= textLimit || textLimit === 0) {
@@ -66,7 +66,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
       <div>
       {label && <div id="inputLabel">{label}</div>}
       <div className="row">
-          {isEditing ? (
+          {isEditing || value !== 0 ? (
           <textarea
             id="textarea"
             placeholder={placeholder}

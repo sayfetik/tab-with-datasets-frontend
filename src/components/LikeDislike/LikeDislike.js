@@ -3,7 +3,7 @@ import './LikeDislike.css';
 import { Icon } from '@iconify-icon/react';
 import { Report, BackendConnector } from '../';
 
-const LikeDislike = ({dataset_id, previousReaction}) => {
+const LikeDislike = ({dataset_id, previousReaction, likes_amount, dislikes_amount}) => {
     const iconSize = "32";
     const [reaction, setReaction] = useState(previousReaction);
     const [showReactionWarning, setReactionWarning] = useState(false);
@@ -37,7 +37,7 @@ const LikeDislike = ({dataset_id, previousReaction}) => {
                     width={iconSize}
                     height={iconSize}
                 />
-                <p className='num_of_likes'>10</p>
+                <p className='num_of_likes'>{likes_amount}</p>
             </div>
             <div className={reaction === 'not_allowed' && 'not_allowed' || (reaction === 'disliked' ? 'clickedDisLike' : 'dislike')}>
                 <Icon
@@ -47,7 +47,7 @@ const LikeDislike = ({dataset_id, previousReaction}) => {
                     width={iconSize}
                     height={iconSize}
                 />
-                <p className='num_of_likes'>10</p>
+                <p className='num_of_likes'>{dislikes_amount}</p>
             </div>
             {/*<button id='reportButton' onClick={() => setisReportOpen(true)}>Пожаловаться</button>
             <Report isOpen={isReportOpen} onClose={() => setisReportOpen(false)}/>*/}

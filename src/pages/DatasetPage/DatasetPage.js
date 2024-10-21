@@ -87,7 +87,9 @@ const DatasetPage = () => {
         size_bytes: 0,
         rating: 0,
         files_structure: {},
-        user_reaction: ''
+        user_reaction: '',
+        likes_amount: 0,
+        dislikes_amount: 0
     });
 
     const handleEditClick = () => {
@@ -189,7 +191,7 @@ const DatasetPage = () => {
                         </div>
                         <Download isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id}/>
                         <DownloadCopyCode isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
-                        <LikeDislike dataset_id={dataset.id} previousReaction={dataset.user_reaction}/>
+                        <LikeDislike dataset_id={dataset.id} previousReaction={dataset.user_reaction} likes_amount={dataset.likes_amount} dislikes_amount={dataset.dislikes_amount} />
                         
                         {/*<div className='row'>
                             <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>

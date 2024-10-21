@@ -20,6 +20,7 @@ textarea {
   margin-bottom: 10px;
   color: #3E456F;
   padding: 10px 20px;
+  min-height: 50px;
   border: 1px solid rgba(228, 231, 242, 1);
   border-radius: 10px;
   background-color: #ffffff;

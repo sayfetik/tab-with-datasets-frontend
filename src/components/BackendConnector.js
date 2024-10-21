@@ -72,7 +72,9 @@ export default class BackendConnector {
             files: data.files || [],
             rating: data.rating || 0,
             files_structure: filesStructure || {},
-            user_reaction: responseData.rating || ''
+            user_reaction: responseData.rating || '',
+            likes_amount: data.likes_amont || 0,
+            dislikes_amount: data.dislikes_amont || 0
         };
     }
 
