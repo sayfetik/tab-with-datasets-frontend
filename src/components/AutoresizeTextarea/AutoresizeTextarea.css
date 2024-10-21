@@ -20,6 +20,7 @@ textarea {
   margin-bottom: 10px;
   color: #3E456F;
   padding: 10px 20px;
+  min-height: 50px;
   border: 1px solid rgba(228, 231, 242, 1);
   border-radius: 10px;
   background-color: #ffffff;
@@ -29,4 +30,81 @@ textarea {
 #textarea:focus {
   border: 1px solid rgba(0, 113, 206, 1);
   outline: none;
+}
+#textarea span,li,ul,p,strong {
+  color: #3E456F;
+}
+#textarea h1 {
+  font-size: 21px;
+  line-height: 25px;
+  color: #3E456F;
+}
+#textarea h2 {
+  font-size: 20px;
+  color: #3E456F;
+}
+#textarea h3 {
+  font-size: 18px;
+  color: #3E456F;
+}
+#textarea p, span {
+  font-size: 16px;
+  color: #3E456F;
+}
+#textarea code {
+  background-color: #3E456F;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: monospace;
+}
+#textarea pre {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+.katex {
+  font-size: 18px;
+  color: #3E456F;
+}
+.katex-display {
+  margin: 10px 0;
+}
+.katex-mathml {
+  display: none;
+}
+.katex-error {
+  color: red;
+  font-weight: bold;
+}
+/* Стили для общего контейнера формулы */
+.katex {
+  font-size: 20px;
+  color: #3E456F;
+}
+
+/* Стили для дробей (frac) */
+.katex .frac {
+  font-size: 18px;   /* Размер шрифта для дробей */
+  color: #3E456F;    /* Красный цвет для дробей */
+}
+
+/* Стили для биномиальных коэффициентов (binom) */
+.katex .mfrac .vlist-t, /* Для числителя */
+.katex .mfrac .vlist-s { /* Для знаменателя */
+  font-size: 18px !important;
+  color: #3E456F;
+}
+
+/* Стили для символов n и k в биномиальном коэффициенте */
+.katex .binom {
+  color: #3E456F;
+}
+
+/* Стили для равно (=) */
+.katex .rel {
+  color: #3E456F;
+  font-weight: bold;
 }

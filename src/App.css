@@ -2,7 +2,7 @@
 * {
   font-family: "IBM Plex Sans", sans-serif;
   background-color: transparent;
-  color: #3b4168;
+  color: #3E456F;
 }
 body {
   font-feature-settings: "tnum";
@@ -14,7 +14,7 @@ body {
   background:
     radial-gradient(
         50% 50% at -10% 60%,
-        rgba(201, 184, 239, 0.84) 0%,
+        rgba(190, 165, 244, 0.84) 0%,
         rgba(245, 245, 245, 0) 100%
       )
       fixed,
@@ -50,18 +50,28 @@ h3 {
 }
 h4 {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16px;
 }
 p {
     color: #3E456F;
     font-size: 16px;
     font-weight: 400;
 }
-
+@media screen and (max-width: 1400px) {
+  h1 {
+    font-size: 32px;
+    line-height: 35px;
+  }
+  h2 {
+      font-size: 25px;
+      font-size: 25px;
+      font-weight: 700;
+      color: #3E456F;
+  }
+}
 .input input[type="text"], #inputTagsFilter input[type="search"] {
   padding: 21px;
-  border: solid rgba(228, 231, 242, 1);
-  border-width: 1px;
+  border: 1px solid rgba(228, 231, 242, 1);
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: none;
@@ -69,12 +79,14 @@ p {
   font-size: 16px;
   color: #3E456F;
 }
+::placeholder {
+  color: #ADB5BD;
+}
 .input input[type="text"]:focus, #datasets input[type="text"]:focus, #inputTagsFilter input[type="search"]:focus  {
-  border: solid rgba(0, 113, 206, 1);
+  border: solid #0071CE;
   outline: none;
   border-width: 1px;
 }
-
 .rowSpaceBetween {
   display: flex;
   justify-content: space-between;
@@ -118,7 +130,7 @@ option:hover {
   background-position: right 15px center;
 }
 .selectionInput:focus {
-  border: solid rgba(0, 113, 206, 1);
+  border: solid #0071CE;
   outline: none;
   border-width: 1px;
 }
@@ -209,7 +221,7 @@ pointer-events: none;
 }
 button {
   cursor: pointer;
-  transition: transform 0.1s ease;
+  transition: transform 0.3s ease;
   border-radius: 8px !important;
 }
 button:active {

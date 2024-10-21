@@ -32,6 +32,7 @@ body::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 150px;
 }
 #datasetLabel {
     display: flex;
@@ -53,7 +54,7 @@ body::before {
     font-size: 16px;
 }
 #searchButton {
-    padding: 10px 20px 10px 20px;
+    padding: 0px 20px;
     border: none;
     background-color: #0071CE;
     color: white;
@@ -141,4 +142,37 @@ body::before {
 #wrongInput {
     color: rgb(225, 0, 0);
     border: 1px solid rgb(225, 0, 0);
+}
+#popularTopicsLabel {
+    font-size: 50px;
+    font-weight: 700;
+    width: fit-content;
+}
+#popularTopicsSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.topicsList {
+    display: flex;
+    width: 55%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#topic {
+    margin: 7px;
+    padding: 5px 18px;
+    border-radius: 50px !important;
+}
+#highlyRatedDatasetsSection {
+    margin-top: 60px;
+}
+#fireIcon {
+    width: 40px;
+}
+#highlyRatedDatasetsLabel {
+    font-size: 30px;
+    font-weight: 700;
+    width: fit-content;
+    margin-left: 20px;
 }

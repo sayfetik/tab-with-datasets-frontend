@@ -266,7 +266,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                             <img src={uploadIcon}></img>
                             <input type="file" id='chooseImage' className='displayNone' onChange={handleImageAdding} accept="image/*"/>
                             <p className='dropFile'>Перетащите файлы сюда <br/>или <span className='seeFiles' onClick={() => {document.getElementById('chooseImage').click()}}>
-                                <br/>выберите файлы JPEG или PNG</span></p>
+                                <br/>выберите JPEG или PNG</span></p>
                         </div>
                     )}
                     {image && (
@@ -319,7 +319,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
 
                             <div className='uploadedFilesSection'>
                                 <div id='labelUploadedFiles' className='rowSpaceBetween'>
-                                    Загруженные файлы <span id='folder'>{formatFileSize(totalFileSize)} / 5 ГБ</span>
+                                    Загружено <span id='folder'>{formatFileSize(totalFileSize)} / 5 ГБ</span>
                                 </div>
                                 <div className='uploadedFilesContainer'>
                                     {(() => {

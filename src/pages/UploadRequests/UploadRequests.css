@@ -1,5 +1,5 @@
 #uploadRequests {
-    padding: 10px 148px 100px 148px;
+    padding: 0% 10% 10% 8%;
 }
 .subSectionRequests {
     margin-bottom: 15px;
@@ -10,7 +10,7 @@
     font-size: 24px;
 }
 #datasetForm {
-    width: 200px;
+    width: 120px;
 }
 .datasetsList {
   margin: 10px 0px;
@@ -35,4 +35,73 @@
 #loadingRequests {
     font-size: 20px;
     font-weight: 600;
+}
+.tabLabel {
+    font-size: 20px;
+    font-weight: 600;
+    color: currentColor;
+}
+.tab {
+    border-radius: 0px !important;
+    margin-right: 20px;
+    border-bottom-width: 2px;
+    background-color: transparent !important;
+}
+.tab[aria-selected="false"] {
+    border-bottom: 2px solid #8b96ae;
+    color: #8b96ae;
+}
+.tab[aria-selected="true"] {
+    border-bottom: 2px solid #0071CE;
+    color: #0071CE;
+}
+.tab:hover[aria-selected="false"] {
+    color: #687692;
+    border-bottom: 2px solid #687692;
+}
+.tab:hover[aria-selected="true"] {
+    color: #0158a0;
+    border-bottom: 2px solid #0158a0;
+}
+.tabList::before {
+    border: none !important;
+}
+@media screen and (min-width: 900px) {
+    #newDatasetButtonBig {
+        display: flex;
+        align-items: center;
+    }
+    #newDatasetButtonSmall {
+        display: none;
+    }
+}
+@media screen and (max-width: 900px) {
+    #newDatasetButtonBig {
+        display: none;
+    }
+    #newDatasetButtonSmall {
+        display: block;
+    }
+    #plusIcon {
+        margin-right: 0px;
+        display: flex;
+        align-items: center;
+      }
+}
+@media screen and (max-width: 950px) {
+    .tabLabel {
+        font-size: 18px;
+        margin: 0;
+    }
+    .tab {
+        margin-right: 10px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .tabLabel {
+        font-size: 16px;
+    }
+    .tab {
+        margin-right: 8px;
+    }
 }

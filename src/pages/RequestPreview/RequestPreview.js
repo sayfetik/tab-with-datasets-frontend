@@ -4,31 +4,7 @@ import folderDarkIcon from '../../img/folderDark.png';
 import { Back, Header, BackendConnector } from '../../components'
 
 const RequestPreview = () => {
-    const [dataset, setDataset] = React.useState({
-        id: '',
-        title: '',
-        description: '',
-        small_description: '',
-        tags: [],
-        geography_and_places: [],
-        language: [],
-        data_type: [],
-        task: [],
-        technique: [],
-        subject: [],
-        owner: '',
-        authors: '',
-        data_source: '',
-        license: '',
-        number_of_files: 0,
-        doi: '',
-        expected_update_frequency: '',
-        visibility: '',
-        usability_rating: 0,
-        size: '',
-        size_bytes: 0,
-        files_structure: {}
-    });
+    const [dataset, setDataset] = useState();
     const { state: request_id } = useLocation();
 
     const formatFileSize = (size) => {
@@ -50,6 +26,7 @@ const RequestPreview = () => {
         };
 
         fetchDatasetPreview();
+        console.log(dataset)
     }, []);
 
     const getFileWord = (number) => {
@@ -184,14 +161,14 @@ const RequestPreview = () => {
                                                         if (typeof files === 'object' && files !== null) {
                                                             return (
                                                                 <div key={index}>
-                                                                    <div className='row'>
+                                                                    <div className='row folderMargin'>
                                                                         <img id="folderIcon" src={folderDarkIcon} />
                                                                         <p id='folderName'>{folderName}</p>
                                                                     </div>
                                                                     {Object.entries(files).map(([fileName, fileSize], subIndex) => (
                                                                         <div key={subIndex} className='file' id='fileInFolder'>
                                                                             {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                            <p className='fileDownload'>{fileName} - {formatFileSize(fileSize)}</p>
+                                                                            <p className='fileDownload'>{fileName} {fileSize} && (- {formatFileSize(fileSize)})</p>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -218,7 +195,6 @@ const RequestPreview = () => {
                         </div>
                         
                         <div id='metainfo'>
-                            <h3 className='metaWhite' id='meta'>Метаданные</h3>
                             <div className='infoContainer'>
                                 <h4 className='metaWhite'>Владельцы</h4>
                                 <p className='metaWhite'>{dataset.owner}</p>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default class BackendConnector {
-    static host = 'http://10.100.30.74';
+    static host = process.env.REACT_APP_HOST_URL;
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
     static search_endpoint = 'api/search';
@@ -19,15 +19,22 @@ export default class BackendConnector {
     static generateSmallDescription_endpoint = 'api/summarize_description';
     static generateTags_endpoint = 'api/generate_tags';
     static tagsSuggestions_endpoint = 'api/search_tags';
-    static uploadRequests_endpoint = 'api/get_upload_requests';
+    static uploading_requests_endpoint = 'api/get_uploading_requests';
+    static failed_requests_endpoint = 'api/get_failed_requests';
+    static uploaded_requests_endpoint = 'api/get_uploaded_requests';
     static uploadRequestPreview_endpoint ='api/preview_upload_request';
     static codeInitialDataset_endpoint = 'api/get_code_for_downloading_initial_dataset';
     static codeAdvancedDataset_endpoint ='api/get_code_for_downloading_cleaned_dataset';
+    static like_dataset_endpoint ='api/like_dataset';
+    static dislike_dataset_endpoint ='api/dislike_dataset';
+    static remove_rating_endpoint ='api/remove_rating';
+    static highly_rated_datasets_endpoint ='api/get_highly_rated_datasets';
 
+    static user_id = 1;
     static results_amount_limit = 12;
 
     static async preview(id) {
-        const url = `${this.host}/${this.preview_endpoint}/${id}`;
+        const url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${this.user_id}`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -64,7 +71,10 @@ export default class BackendConnector {
             size_bytes: data.size_bytes || 0,
             files: data.files || [],
             rating: data.rating || 0,
-            files_structure: filesStructure || {}
+            files_structure: filesStructure || {},
+            user_reaction: responseData.rating || '',
+            likes_amount: data.likes_amont || 0,
+            dislikes_amount: data.dislikes_amont || 0
         };
     }
 
@@ -84,7 +94,7 @@ export default class BackendConnector {
         try {
             const response = await axios({
                 method: 'get',
-                url: `${this.host}/${this.download_initial_dataset_endpoint}/${id}`,
+                url: `${this.host}/${this.download_initial_dataset_endpoint}/${id}?user_id=${this.user_id}`,
                 responseType: 'blob'
             });
             return response.data;
@@ -98,7 +108,7 @@ export default class BackendConnector {
         try {
             const response = await axios({
                 method: 'get',
-                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}`,
+                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}?user_id=${this.user_id}`,
                 responseType: 'blob'
             });
             return response.data;
@@ -239,7 +249,9 @@ export default class BackendConnector {
     }
 
     static async search(searchString, filters) {
-        const url = `${this.host}/${this.search_endpoint}/${searchString}/36`;
+        let url;
+        if (searchString!=='') url = `${this.host}${this.search_endpoint}/${searchString}/36`;
+        else url = `${this.host}${this.search_endpoint}/36`;
         const requestBody = filters;
         const response = await fetch(url, {
             method: 'POST',
@@ -256,28 +268,26 @@ export default class BackendConnector {
         return await response.json();
     }
 
-    static async generateDescription(title, collectionMethod, dataStructure, useCases) {
+    static async generateDescription(parts, files) {
         const url = `${this.host}/${this.generateDescription_endpoint}`;
-        const requestBody = {
-            title: title,
-            actions_taken_to_collect_and_process_the_dataset: collectionMethod,
-            detailed_description_of_content: dataStructure,
-            potential_use_cases: useCases
-        };
+        const formData = new FormData();
+        formData.append('parts', JSON.stringify(parts));
+    
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+    
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+            body: formData
         });
-
+    
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
+    
         return await response.json();
-    };
+    }
     
     static async  generateSmallDescription(text) {
         const url = `${this.host}/${this.generateSmallDescription_endpoint}`;
@@ -342,7 +352,31 @@ export default class BackendConnector {
         return await this.get(`${this.uploadRequestPreview_endpoint}/${request_id}`);
     }
 
-    static async fetchUploadRequests(account_id) {
-        return await this.get(`${this.uploadRequests_endpoint}/${account_id}`);
+    static async getUploadingRequests() {
+        return await this.get(`${this.uploading_requests_endpoint}/${this.user_id}`);
+    }
+
+    static async getFailedRequests() {
+        return await this.get(`${this.failed_requests_endpoint}/${this.user_id}`);
+    }
+
+    static async getUploadedRequests() {
+        return await this.get(`${this.uploaded_requests_endpoint}/${this.user_id}`);
+    }
+
+    static async like(dataset_id) {
+        return await this.get(`${this.like_dataset_endpoint}/${dataset_id}?user_id=${this.user_id}`);
+    }
+    
+    static async dislike(dataset_id) {
+        return await this.get(`${this.dislike_dataset_endpoint}/${dataset_id}?user_id=${this.user_id}`);
+    }
+
+    static async remove_rating(dataset_id) {
+        return await this.get(`${this.remove_rating_endpoint}/${dataset_id}?user_id=${this.user_id}`);
+    }
+
+    static async highly_rated_datasets() {
+        return await this.get(`${this.highly_rated_datasets_endpoint}/${this.results_amount_limit}`);
     }
 }

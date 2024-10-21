@@ -1,0 +1,59 @@
+.likeDislike {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+.like, .dislike, .clickedLike, .clickedDisLike, .not_allowed {
+    color: #3E456F;
+    transition: color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.like:hover, .dislike:hover {
+    color: black;
+}
+.clickedLike {
+    color: #0071CE;
+}
+.clickedDisLike {
+    color: #FF0000;
+}
+.clickedLike:hover {
+    color: #005da9;
+}
+.clickedDisLike:hover {
+    color: #d00101;
+}
+.not_allowed {
+    color: #A5A5A5;
+}
+.num_of_likes {
+    font-weight: 500;
+    color: currentColor;
+}
+.likeIcon, .dislikeIcon {
+    color: currentColor;
+}
+#reportButton {
+    color: #3E456F;
+    height: fit-content;
+    padding: 5px 10px;
+    border: 1px solid #0071CE;
+    color: #0071CE;
+    font-weight: 500;
+    margin-left: 20px;
+    transition: box-shadow 0.2s ease;
+}
+#reportButton:hover {
+    background-color: #EFF8FE;
+}
+#toolTipReactionWarning {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 15px;
+    position: absolute;
+    transform: translateX(22%);
+    border: 1px solid #0071CE;
+}
