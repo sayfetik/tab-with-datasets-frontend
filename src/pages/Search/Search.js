@@ -144,7 +144,7 @@ const Search = () => {
 
                 <div id='highlyRatedDatasetsSection'>
                     <div className='row' style={{marginBottom: '20px'}}>
-                        <img src={fireIcon} id='fireIcon'/>
+                        <img src={fireIcon} alt='' id='fireIcon'/>
                         <p id='highlyRatedDatasetsLabel'>Высокий рейтинг</p>
                     </div>
                     <div id='cardsContainer'>

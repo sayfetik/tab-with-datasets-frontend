@@ -36,6 +36,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
     const [imageFile, setImageFile] = useState(null);
     const [imageSize, setImageSize] = useState(0);
     const [filesStructure, setFilesStructure] = useState(dataset.files_structure);
+    const [fileSizes, setFileSizes] = useState(dataset.files_structure);
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -65,7 +66,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
 
     const update = () => {
         setWarningUploadState(false);
-        if (files.length === 0) {
+        if (fileSizes.length === 0) {
             setWarningUpload('Пожалуйста, загрузите файлы с данными датасета')
             setWarningUploadState(true);
             return;
@@ -115,7 +116,7 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             <div className='upload'>
             <Back />
 
-            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={dataset.files_structure} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
+            <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} fileSizes={fileSizes} setFileSizes={setFileSizes} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             
             <div className='metadataSection'>
                 <InputMetadata style={{width: '75%'}}

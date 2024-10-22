@@ -6,14 +6,13 @@ import JSZip from 'jszip';
 import uploadIcon from '../../img/upload.png';
 import folderDarkIcon from '../../img/folderDark.png';
 
-const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, filesSizes, initialImageSize, setInitialImageSize, initialImageFile, setInitialImageFile }) => {
-    const beginFilesSizes = filesSizes;
+const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStructure, setFilesStructure, fileSizes, setFileSizes, initialImageSize, setInitialImageSize, initialImageFile, setInitialImageFile }) => {
+    const beginFilesSizes = fileSizes;
     const [showDeleteIcon, setShowDeleteIcon] = useState(false);
     const [isZipUploaded, setIsZipUploaded] = useState(false);
     const [uploadFilesChoice, setuploadFilesChoice] = useState(true);
     const [totalFileSize, setTotalFileSize] = useState(0);
     const [imageSize, setImageSize] = useState(initialImageSize!==0? initialImageSize : 0);
-    const [fileSizes, setFileSizes] = useState(filesSizes);
     const [imageFile, setImageFile] = useState(initialImageFile);
     const previousUploadFilesChoice = useRef(uploadFilesChoice);
 
@@ -109,7 +108,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
     };
 
     const handleFileAdding = (event) => {
-        event.preventDefault(); // Останавливаем поведение по умолчанию
+        event.preventDefault();
 
         let selectedFiles = [];
 
@@ -210,7 +209,6 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
         delete updatedFileSizes[fileName]; // Удаляем файл из структуры
         setFileSizes(updatedFileSizes);
         
-        // Пересчитываем общий размер файлов
         const newTotalSize = calculateTotalFileSize(updatedFileSizes);
         setTotalFileSize(newTotalSize);
 
@@ -305,7 +303,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                         <div id='filesPart' onDrop={handleFileDrop} onDragOver={handleDragOver}>
                             {uploadFilesChoice && <div className='uploadFile'>
                                 <input type="file" id='chooseFiles' className='displayNone' onChange={handleFileAdding} multiple accept=".json,.csv"/>
-                                <img src={uploadIcon}></img>
+                                <img src={uploadIcon} alt=''></img>
                                 <p className='dropFile'>Переместите файлы сюда <br/>или <span className='seeFiles' onClick={() => {document.getElementById('chooseFiles').click()}}>
                                     <br/>выберите файлы JSON или CSV</span></p>
                                 <div className='limitFile'></div>
@@ -313,7 +311,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
 
                             {!uploadFilesChoice && <div className='uploadFile' onDrop={handleFileAdding} onDragOver={handleFileAdding}>
                                 <input type="file" id='chooseZip' className='displayNone' onChange={handleFileAdding} multiple accept=".zip"/>
-                                <img src={uploadIcon}></img>
+                                <img src={uploadIcon} alt=''></img>
                                 <p className='dropFile'>Переместите файлы сюда или <span className='seeFiles' onClick={() => {document.getElementById('chooseZip').click()}}>выберите zip</span></p>
                             </div>}
 
