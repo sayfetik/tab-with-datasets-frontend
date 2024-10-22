@@ -5,13 +5,11 @@ export default class BackendConnector {
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
     static search_endpoint = 'api/search';
-    static searchByQuery_endpoint = 'api/search_by_query';
-    static searchByTags_endpoint = 'api/search_by_tags';
     static download_initial_dataset_endpoint = 'api/download_initial_dataset';
     static download_cleaned_dataset_endpoint = 'api/download_cleaned_dataset';
     static description_endpoint = 'api/generate_description';
     static tags_endpoint = 'api/generate_tags';
-    static upload_endpoint = 'api/upload';
+    static upload_endpoint = `api/upload?user_id=${this.user_id}`;
     static update_endpoint = 'api/update';
     static delete_endpoint = 'api/delete';
     static getImage_endpoint = 'api/get_image';
@@ -72,7 +70,9 @@ export default class BackendConnector {
             files: data.files || [],
             rating: data.rating || 0,
             files_structure: filesStructure || {},
-            user_reaction: responseData.rating || ''
+            user_reaction: responseData.rating || '',
+            likes_amount: data.likes_amount || 0,
+            dislikes_amount: data.dislikes_amount || 0
         };
     }
 
@@ -117,7 +117,7 @@ export default class BackendConnector {
     }
 
     static async delete(id) {
-        return await this._delete(`${this.delete_endpoint}/${id}`);
+        return await this._delete(`${this.delete_endpoint}/${id}?user_id=${this.user_id}`);
     }
 
     static async upload(uploadingMetadata, uploadingFiles, uploadingImage) {
@@ -155,7 +155,7 @@ export default class BackendConnector {
         
         
     
-        const api_url = `${this.host}/${this.update_endpoint}/${id}`;
+        const api_url = `${this.host}/${this.update_endpoint}/${id}?user_id=${this.user_id}`;
     
         try {
             const response = await fetch(api_url, {
@@ -247,10 +247,8 @@ export default class BackendConnector {
     }
 
     static async search(searchString, filters) {
-        let url;
-        if (searchString!=='') url = `${this.host}${this.search_endpoint}/${searchString}/36`;
-        else url = `${this.host}${this.search_endpoint}/36`;
-        const requestBody = filters;
+        const url = `${this.host}/${this.search_endpoint}/36?search_string=${searchString}`;
+        const requestBody = filters
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -287,7 +285,7 @@ export default class BackendConnector {
         return await response.json();
     }
     
-    static async  generateSmallDescription(text) {
+    static async generateSmallDescription(text) {
         const url = `${this.host}/${this.generateSmallDescription_endpoint}`;
         const requestBody = {
             text: text

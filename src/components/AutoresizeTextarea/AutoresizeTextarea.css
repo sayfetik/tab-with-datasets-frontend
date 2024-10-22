@@ -20,6 +20,7 @@ textarea {
   margin-bottom: 10px;
   color: #3E456F;
   padding: 10px 20px;
+  min-height: 50px;
   border: 1px solid rgba(228, 231, 242, 1);
   border-radius: 10px;
   background-color: #ffffff;
@@ -32,6 +33,10 @@ textarea {
 }
 #textarea span,li,ul,p,strong {
   color: #3E456F;
+  padding-bottom: 2px;
+}
+#textarea ul, ol {
+  margin: 5px -15px;
 }
 #textarea h1 {
   font-size: 21px;
@@ -40,6 +45,7 @@ textarea {
 }
 #textarea h2 {
   font-size: 20px;
+  line-height: 23px;
   color: #3E456F;
 }
 #textarea h3 {

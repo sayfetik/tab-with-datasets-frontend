@@ -9,9 +9,12 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
   const [isEditing, setIsEditing] = useState(true); // Флаг редактирования
   const renderedRef = useRef(null); // Реф для отрисованного HTML
 
+  useEffect(()=>{
+    textareaRef.current.blur()
+  },[])
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = height || '50px';
+      textareaRef.current.style.height = '50px';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value, isEditing]);
@@ -20,7 +23,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
     if (!isEditing && renderedRef.current) {
       renderedRef.current.innerHTML = renderMarkdownWithKaTeX(value);
     }
-  }, [isEditing, value]);
+  }, [isEditing, value, renderedRef]);
 
   const handleChange = (event) => {
     if (event.target.value.length <= textLimit || textLimit === 0) {
@@ -42,11 +45,23 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
       breaks: true,
       sanitize: false,
     });
-
+  
+    // Заменяем \[...\] на $$...$$
+    text = text.replace(/\\\[(.*?)\\\]/g, (match, formula) => `$$${formula}$$`);
+  
     // Преобразуем Markdown в HTML
     let html = marked(text);
-
-    // Преобразуем формулы в LaTeX
+  
+    // Преобразуем блочные формулы $$...$$
+    html = html.replace(/\$\$([^\$]+)\$\$/g, (match, formula) => {
+      try {
+        return `<div class="katex-block">${katex.renderToString(formula, { displayMode: true, throwOnError: false })}</div>`;
+      } catch (error) {
+        return match; // Возвращаем исходный текст, если есть ошибка
+      }
+    });
+  
+    // Преобразуем встроенные формулы $...$
     html = html.replace(/\$([^\$]+)\$/g, (match, formula) => {
       try {
         return katex.renderToString(formula, { throwOnError: false });
@@ -54,9 +69,10 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
         return match; // Возвращаем исходный текст, если есть ошибка
       }
     });
-
+  
     return html;
   };
+  
 
   const counterColor = value.length < textLimit ? 'rgb(169, 169, 169)' : '#3E456F';
 
@@ -74,11 +90,28 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
             maxLength={textLimit}
             onChange={handleChange}
             onBlur={handleBlur}
+            autoFocus
             ref={textareaRef}
             style={length ? { width: length } : {}}
             onFocus={handleFocus}
           ></textarea>
-        ) : (
+        ) : 
+        value.length === 0 ?
+        (
+          <textarea
+            id="textarea"
+            placeholder={placeholder}
+            value={value}
+            maxLength={textLimit}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            ref={textareaRef}
+            style={length ? { width: length } : {}}
+            onFocus={handleFocus}
+          ></textarea>
+        )
+        :
+        (
           <div
             id="textarea"
             ref={renderedRef}

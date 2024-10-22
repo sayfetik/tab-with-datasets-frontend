@@ -38,6 +38,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [image, setImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [imageSize, setImageSize] = useState(0);
+    const [fileSizes, setFileSizes] = useState({});
     const [generatedDescription, setGeneratedDescription] = useState('');
     
     const [warningDescGeneration, setwarningDescGeneration] = useState(false);
@@ -230,7 +231,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             <div className='upload'>
             <Back />
             
-            <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} filesSizes={{}} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
+            <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} fileSizes={fileSizes} setFileSizes={setFileSizes} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             
             <div className='metadataSection'>
                 <InputMetadata style={{width: '75%'}}
@@ -270,7 +271,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                             <div className='inputLabel' style={{marginBottom: '8px'}}>Описание *</div>
                             <div id='descriptionInputContainer'>
                                 <div className='metadataBigItem'>
-                                    <AutoResizeTextarea placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
+                                    <AutoResizeTextarea markdown={true} placeholder="Введите описание датасета" value={description} setValue={setDescription} textLimit={descriptionLimit}/>
                                 </div>
                             </div>
                         </div>
