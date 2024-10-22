@@ -26,8 +26,9 @@ const Filters = ({ isOpen, onClose, geography_and_places, setGeography, language
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div className="modal-header">
+      <div className="modal-header">
           <h2>Фильтры</h2>
+          <button className="modal-close-button" onClick={onClose}>&times;</button>
         </div>
         <div>
           <label>
