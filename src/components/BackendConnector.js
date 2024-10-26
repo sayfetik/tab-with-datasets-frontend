@@ -1,6 +1,9 @@
 import axios from 'axios'
 
 export default class BackendConnector {
+    static user_id = 1;
+    static results_amount_limit = 12;
+
     static host = process.env.REACT_APP_HOST_URL;
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
@@ -27,9 +30,6 @@ export default class BackendConnector {
     static dislike_dataset_endpoint ='api/dislike_dataset';
     static remove_rating_endpoint ='api/remove_rating';
     static highly_rated_datasets_endpoint ='api/get_highly_rated_datasets';
-
-    static user_id = 1;
-    static results_amount_limit = 12;
 
     static async preview(id) {
         const url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${this.user_id}`;
@@ -69,7 +69,7 @@ export default class BackendConnector {
             size_bytes: data.size_bytes || 0,
             files: data.files || [],
             rating: data.rating || 0,
-            files_structure: filesStructure || {},
+            files_structure: data.files_structure || {},
             user_reaction: responseData.rating || '',
             likes_amount: data.likes_amount || 0,
             dislikes_amount: data.dislikes_amount || 0

@@ -44,16 +44,16 @@ const UploadRequests = () => {
                     </div>
                 </div>
                 
-                <Tabs defaultValue="in_progress" classNames={{tabLabel: 'tabLabel', list: 'tabList', tab: 'tab'}}>
+                <Tabs defaultValue="uploaded" classNames={{tabLabel: 'tabLabel', list: 'tabList', tab: 'tab'}}>
                     <Tabs.List>
+                        <Tabs.Tab value="uploaded">
+                        Загруженные
+                        </Tabs.Tab>
                         <Tabs.Tab value="in_progress">
                         Загружаются
                         </Tabs.Tab>
                         <Tabs.Tab value="stopped">
                         Загрузка приостановлена
-                        </Tabs.Tab>
-                        <Tabs.Tab value="uploaded">
-                        Загруженные
                         </Tabs.Tab>
                     </Tabs.List>
 

@@ -1,3 +1,4 @@
+import 'katex/dist/katex.min.css';
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import downloadIconWhite from '../../img/downloadWhite.png';
@@ -7,6 +8,11 @@ import './DatasetPage.css'
 import copyBlue from '../../img/copyBlue.png'
 import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike } from '../../components'
 import like_icon from '../../img/like.svg';
+import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import { marked } from 'marked';
+import katex from 'katex';
 
 const DatasetPage = () => {
     const navigate = useNavigate();
@@ -16,6 +22,43 @@ const DatasetPage = () => {
     const [isDownloadOpen, setIsDownloadOpen] = useState(false);
     const [isCopyCodeOpen, setIsCopyCodeOpen] = useState(false);
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
+
+    const renderMarkdownWithKaTeX = (text) => {
+        marked.setOptions({
+           gfm: true,
+           breaks: true,
+           sanitize: false,
+        });
+     
+        // Заменяем \[...\] на $$...$$
+        text = text.replace(/\\\[(.*?)\\\]/g, (match, formula) => `$$${formula}$$`);
+     
+        // Преобразуем Markdown в HTML
+        let html = marked(text);
+     
+        // Преобразуем блочные формулы $$...$$
+        html = html.replace(/\$\$([^\$]+)\$\$/g, (match, formula) => {
+           try {
+              return `<div class="katex-block">${katex.renderToString(formula, {
+                 displayMode: true,
+                 throwOnError: false,
+              })}</div>`;
+           } catch (error) {
+              return match; // Возвращаем исходный текст, если есть ошибка
+           }
+        });
+     
+        // Преобразуем встроенные формулы $...$
+        html = html.replace(/\$([^\$]+)\$/g, (match, formula) => {
+           try {
+              return katex.renderToString(formula, { throwOnError: false });
+           } catch (error) {
+              return match; // Возвращаем исходный текст, если есть ошибка
+           }
+        });
+     
+        return html;
+     };
 
     const formatFileSize = (size) => {
         if (size === 0) return '0 Б';
@@ -57,7 +100,7 @@ const DatasetPage = () => {
 
         fetchRecommendations();
         fetchDatasetPreview();
-    }, [id, isCopyCodeOpen, isDownloadOpen]);
+    }, [id]);
 
     const [dataset, setDataset] = React.useState({
         id: '',
@@ -205,7 +248,9 @@ const DatasetPage = () => {
                 <div id='datasetInfo'>
                     <div id='section'>
                         <h3 id='descriptionLabel'>Описание</h3>
-                        <p id='description'>{dataset.description}</p>
+                        <div id='textarea' style={{margin: '20px 0px', padding: '0', border: 'none', backgroundColor: 'transparent'}}
+                            dangerouslySetInnerHTML={{ __html: renderMarkdownWithKaTeX(dataset.description) }}
+                        />
                         <div id='filesSection'>
                             <div id={dataset.number_of_files === 0 ? 'filesHeader' : 'filesHeaderWithBottomDivider'} className='rowSpaceBetween'>
                                 <p className='author'>Данные ({getFileCountString(dataset.files_structure)})</p>
