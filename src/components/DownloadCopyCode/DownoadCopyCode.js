@@ -14,6 +14,20 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
     const [errorBaseCode, seterrorBaseCode] = useState(false);
     const [errorCleanedCode, seterrorCleanedCode] = useState(false);
 
+    useEffect(() => {
+        if (isCopiedInitialCode) {
+           const timer = setTimeout(() => setisCopiedInitialCode(false), 2000);
+           return () => clearTimeout(timer);
+        }
+     }, [isCopiedInitialCode]);
+  
+     useEffect(() => {
+        if (isCopiedCleanedCode) {
+           const timer = setTimeout(() => setisCopiedCleanedCode(false), 2000);
+           return () => clearTimeout(timer);
+        }
+     }, [isCopiedCleanedCode]);
+
     useEffect(()=>{
         seterrorBaseCode(false);
         seterrorCleanedCode(false);
