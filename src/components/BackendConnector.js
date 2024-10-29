@@ -4,7 +4,7 @@ export default class BackendConnector {
     static user_id = 1;
     static results_amount_limit = 12;
 
-    static host = process.env.REACT_APP_HOST_URL;
+    static host = 'http://10.100.30.74';
     static preview_endpoint = 'api/preview';
     static recommend_endpoint = 'api/recommend';
     static search_endpoint = 'api/search';
