@@ -10,10 +10,6 @@ const ProcessStages = ({ isBase }) => {
         <div>
             <div className='row editProcces'>
               <img src={checkGreen} className='iconCompletedProcess' alt=''/>
-              <p className='completedProcess'>сканирование безопасности</p>
-            </div>
-            <div className='row editProcces'>
-              <img src={checkGreen} className='iconCompletedProcess' alt=''/>
               <p className='completedProcess'>удаление персональных данных</p>
             </div>
             <div className='row editProcces'>
@@ -27,10 +23,6 @@ const ProcessStages = ({ isBase }) => {
         </div>
         :
         <div>
-            <div className='row editProcces'>
-              <img src={checkGreen} className='iconCompletedProcess' alt=''/>
-              <p className='completedProcess'>сканирование безопасности</p>
-            </div>
             <div className='row editProcces'>
               <img src={checkGreen} className='iconCompletedProcess' alt=''/>
               <p className='completedProcess'>удаление персональных данных</p>
