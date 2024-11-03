@@ -18,9 +18,8 @@ const initKeycloak = async () => {
   try {
     await keycloak.init({
       onLoad: 'check-sso', // или 'login-required' в зависимости от ваших нужд
-      silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`, // Убедитесь, что этот путь доступен
+      silentCheckSsoRedirectUri: `index.html`, // Убедитесь, что этот путь доступен
     });
-    console.log('Keycloak initialized');
   } catch (error) {
     console.error('Failed to initialize Keycloak', error);
   }
