@@ -119,7 +119,7 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
             onClick={handleFocus}
           />
         )}
-        <p id="textLimit">
+        <p id="textLimit" style={{ padding: '0'}}>
           <p style={{ color: counterColor }}>{value.length}</p>/{textLimit}
         </p>
       </div>

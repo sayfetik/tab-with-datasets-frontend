@@ -13,6 +13,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
     const [showTooltipPurple, setShowTooltipPurple] = useState(false);
     const [errorBaseCode, seterrorBaseCode] = useState(false);
     const [errorCleanedCode, seterrorCleanedCode] = useState(false);
+    const [authWarning, setauthWarning] = useState(false);
 
     useEffect(() => {
         if (isCopiedInitialCode) {

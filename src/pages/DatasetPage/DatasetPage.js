@@ -3,25 +3,24 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import downloadIconWhite from '../../img/downloadWhite.png';
 import folderDarkIcon from '../../img/folderDark.png';
-import star from '../../img/star.png'
 import './DatasetPage.css'
 import copyBlue from '../../img/copyBlue.png'
-import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike } from '../../components'
-import like_icon from '../../img/like.svg';
-import ReactMarkdown from 'react-markdown';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike, AuthAlert } from '../../components'
 import { marked } from 'marked';
 import katex from 'katex';
+import { useKeycloak } from '@react-keycloak/web'
 
 const DatasetPage = () => {
     const navigate = useNavigate();
+    const { keycloak } = useKeycloak()
+    const auth = keycloak.authenticated
     const { id } = useParams();
     const [datasets, setDatasets] = useState([]);
     const [image, setImage] = useState(null);
     const [isDownloadOpen, setIsDownloadOpen] = useState(false);
     const [isCopyCodeOpen, setIsCopyCodeOpen] = useState(false);
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
+    const [authWarning, setauthWarning] = useState(false);
 
     const renderMarkdownWithKaTeX = (text) => {
         marked.setOptions({
@@ -178,6 +177,11 @@ const DatasetPage = () => {
         return `${counts.folders} ${getFolderWord(counts.folders)}, ${counts.files} ${getFileWord(counts.files)}`;
     };
 
+    const handleCopyCodeClick = () => {
+        if (!auth) setauthWarning(true);
+        else setIsCopyCodeOpen(true)
+    }
+
     useEffect(() => {
         document.title = dataset.title;
       }, [dataset]);
@@ -225,16 +229,18 @@ const DatasetPage = () => {
                                     <span id='downloadLabel'>Скачать</span>
                                     <img src={downloadIconWhite} id='downloadIcon' alt=''/>
                                 </button>
-                                <button className='lightBlueButton' id='copyCodeButton' onClick={() => setIsCopyCodeOpen(true)}>
+                                <button className='lightBlueButton' id='copyCodeButton' onClick={handleCopyCodeClick}>
                                     <span id='copyCodeLabel'>Код для скачивания</span>
                                     <img src={copyBlue} id='copyCodeIcon' alt=''/>
                                 </button>
                             </div>
                             <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
                         </div>
-                        <Download isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id}/>
-                        <DownloadCopyCode isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
-                        <LikeDislike dataset_id={dataset.id} previousReaction={dataset.user_reaction} likes_amount={dataset.likes_amount} dislikes_amount={dataset.dislikes_amount} />
+                        <Download auth={auth} isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id} />
+                        <DownloadCopyCode auth={auth} isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
+                        {authWarning && <AuthAlert onClose={()=>setauthWarning(false)} isOpen={authWarning}/>}
+                            
+                        <LikeDislike auth={auth} dataset_id={dataset.id} previousReaction={dataset.user_reaction} likes_amount={dataset.likes_amount} dislikes_amount={dataset.dislikes_amount} />
                         
                         {/*<div className='row'>
                             <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
@@ -322,18 +328,18 @@ const DatasetPage = () => {
                     </div>
                 </div>
 
-                <div id='cardsRowSection'>
-                <div className='topicCardsInRow'>
-                    <h2>Похожее</h2>
-                    {/*<div id='seeAllIcon'>
-                        <p id='seeAll'>Смотреть все</p>
-                        <img src={arrowsIcon} width={"19px"} alt=''/>
-                        </div>*/}
-                </div>
+                
+                {datasets.length > 0 && (<div id='cardsRowSection'>
+                    <div className='topicCardsInRow'>
+                        <h2>Похожее</h2>
+                        {/*<div id='seeAllIcon'>
+                            <p id='seeAll'>Смотреть все</p>
+                            <img src={arrowsIcon} width={"19px"} alt=''/>
+                            </div>*/}
+                    </div>
 
-                <div id='cards'>
-                    {datasets.length > 0 ? (
-                        datasets.map(dataset => (
+                    <div id='cards'>
+                        {datasets.map(dataset => (
                             <DatasetCard
                                 key={dataset.id}
                                 id={dataset.id}
@@ -345,12 +351,10 @@ const DatasetPage = () => {
                                 size={dataset.size}
                                 smallDescription={dataset.small_description}
                             />
-                        ))
-                    ) : (
-                        <p>Error ocurred</p>
-                    )}       
-                </div>    
+                        ))}
+                    </div>
                 </div>
+            )}
                 </div>
                 :
                 <h3 style={{margin: '50px 0px 0px 80px'}}>Не удалось получить информацию о датасете. Повторите попытку позже</h3>

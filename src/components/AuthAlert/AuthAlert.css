@@ -1,0 +1,9 @@
+.modal-content-auth {
+    padding: 25px 40px 25px 40px;
+    width: fit-content;
+    background-color: white;
+    border-radius: 15px;
+}
+#authModalLabel {
+    margin-right: 30px;
+}

@@ -145,7 +145,6 @@ const Datasets = () => {
                                 <select className="selectionInput" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                     <option value="byRelevance">По релевантности</option>
                                     <option value="byRating">По рейтингу</option>
-                                    <option value="byUsabilityRating">По подробности описания</option>
                                     <option value="largeFirst">Сначала большие</option>
                                     <option value="smallFirst">Сначала маленькие</option>
                                 </select>

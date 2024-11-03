@@ -49,7 +49,7 @@ const RequestList = ({type, view}) => {
                 <img src={loadingDarkGif} id='loadingGifRequests'/>
             </div>)
         } else {
-            return <h3 id='loadingRequests' style={{marginTop: '15px'}}>Здесь пока пусто!</h3>
+            return <h3 id='loadingRequests' style={{marginTop: '15px'}}>Таких датасетов нет</h3>
         }
     }
 

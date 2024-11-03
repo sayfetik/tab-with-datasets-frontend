@@ -4,13 +4,14 @@ import downloadBlue from '../../img/downloadBlue.png';
 import downloadPurple from '../../img/downloadPurple.png';
 import blueLoading from '../../img/blueLoadingLine.gif';
 import purpleLoading from '../../img/purpleLoadingLine.gif';
-import { ProccessStages, BackendConnector } from '..';
+import { ProccessStages, BackendConnector, AuthAlert } from '..';
 
-const Download = ({ isOpen, onClose, id }) => {
+const Download = ({ isOpen, onClose, id, auth }) => {
   const [loadingBase, setloadingBase] = useState(false);
   const [loadingAdvanced, setloadingAdvanced] = useState(false);
   const [errorBase, seterrorBase] = useState(false);
   const [errorAdvanced, seterrorAdvanced] = useState(false);
+  const [authWarning, setauthWarning] = useState(false);
 
   useEffect(()=>{
     seterrorBase(false);
@@ -22,6 +23,10 @@ const Download = ({ isOpen, onClose, id }) => {
   }
 
   const handleDownloadInitialDsClick = async () => {
+    if (!auth) {
+      setauthWarning(true);
+      return
+    }
     setloadingBase(true);
     try {
         const blob = await BackendConnector.download_initial_dataset(id);
@@ -42,6 +47,10 @@ const Download = ({ isOpen, onClose, id }) => {
 };
 
 const handleDownloadCleanedDsClick = async () => {
+  if (!auth) {
+    setauthWarning(true);
+    return
+  }
   try {
     setloadingAdvanced(true);
     const blob = await BackendConnector.download_cleaned_dataset(id);
@@ -64,6 +73,7 @@ const handleDownloadCleanedDsClick = async () => {
   return (
     <div className="modal-overlay">
       <div className="modal-content-download">
+          {authWarning && <AuthAlert onClose={()=>setauthWarning(false)} isOpen={authWarning}/>}
           <div className="modal-header-download">
             <button className="modal-close-button" onClick={onClose}>&times;</button>
           </div>

@@ -14,6 +14,7 @@ textarea {
   display: flex;
   align-self: end;
   margin-bottom: 15px;
+  align-items: center;
 }
 #textarea {
   width: 100%;
@@ -31,7 +32,7 @@ textarea {
   border: 1px solid rgba(0, 113, 206, 1);
   outline: none;
 }
-#textarea span,li,ul,p,strong, ol, h1,h2,h3,h4,h5 {
+#textarea span,#textarea li,#textarea ul,#textarea p,#textarea strong, #textarea ol, #textarea h1,#textarea h2,#textarea h3,#textarea h4,#textarea h5, #textarea pre, #textarea code {
   color: #3E456F;
   padding-bottom: 2px;
 }

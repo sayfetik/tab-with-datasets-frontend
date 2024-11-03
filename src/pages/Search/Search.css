@@ -27,7 +27,7 @@ body::before {
     margin-right: 15px;
 }
 #searchSection {
-    height: 600px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -166,6 +166,7 @@ body::before {
 }
 #highlyRatedDatasetsSection {
     margin-top: 60px;
+    margin: 100px 0px 50px 15px;
 }
 #fireIcon {
     width: 40px;
@@ -174,5 +175,5 @@ body::before {
     font-size: 30px;
     font-weight: 700;
     width: fit-content;
-    margin-left: 20px;
+    margin: 0px 20px;
 }

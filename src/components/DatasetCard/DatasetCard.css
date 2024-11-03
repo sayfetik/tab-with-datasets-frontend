@@ -51,13 +51,20 @@
 }
 #renewData {
     color: #6b7092;
+    margin: 0;
 }
 #authors {
     width: 100%;
+    margin: 0;
+}
+#downloadsNumber {
+    margin: 0;
+    height: fit-content;
 }
 #datasetTitleOnCard {
     font-size: 20px;
-    position: relative;
+    position: relative;    
+    margin: 0;
     margin-right: 10px;
     height: 90px;
     overflow: hidden;

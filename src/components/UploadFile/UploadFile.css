@@ -95,7 +95,8 @@
     color: #3E456F;
     width: fit-content;
     height: fit-content;
-    line-height: 48px;
+    margin: 0;
+    margin-bottom: 10px;
     font-size: 20px;
     font-weight: 700;
     display: flex;

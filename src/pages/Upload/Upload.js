@@ -258,10 +258,10 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
                 <div id='rightContainer'>
                     <div className='row'>
-                        <p style={{marginBottom: '15px'}}>Выберите:</p>
+                        <p>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
                             добавить своё описание</button>
-                        <p style={{marginBottom: '15px'}}>или</p>
+                        <p >или</p>
                         <button id={isGenerateDesc ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={()=>{setIsGenerateDesc(true)}}>
                             сгенерировать</button>
                     </div>
@@ -285,9 +285,9 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                     <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                     Сгенерировать описание
                                 </button>
-                                {warningDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Введите название, информацию о том, как были получены данные, загрузите файлы</p>}
+                                {warningDescGeneration && <p className='warning'>Введите название, информацию о получении данных, загрузите файлы</p>}
                                 {isDescGenerating && <GenerationAnimation />}
-                                {errorDescritionGeneration && <p className='warning'style={{marginTop: '-8px'}}>Произошла ошибка. Попробуйте позже.</p>}
+                                {errorDescritionGeneration && <p className='warning'>Произошла ошибка. Попробуйте позже.</p>}
                             </div>
                             {isGDescrition && 
                             <div>
@@ -322,7 +322,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                         
                         {smallDescription.length > 0 &&
                             <div id='tagTypesContainer'>
-                                <span className='inputLabel'>Теги *</span>
+                                <span className='inputLabel' style={{marginBottom: '25px'}}>Теги *</span>
                                 <div id='tagType'>
                                     <InputTag label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                                 </div>

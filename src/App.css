@@ -3,6 +3,7 @@
   font-family: "IBM Plex Sans", sans-serif;
   background-color: transparent;
   color: #3E456F;
+  margin: 0;
 }
 body {
   font-feature-settings: "tnum";
@@ -47,6 +48,7 @@ h3 {
     font-size: 25px;
     line-height: 28px;
     color: #3E456F;
+    margin: 0;
 }
 h4 {
     font-weight: 700;

@@ -3,7 +3,7 @@ import './LikeDislike.css';
 import { Icon } from '@iconify-icon/react';
 import { Report, BackendConnector } from '../';
 
-const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amount }) => {
+const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amount, auth }) => {
     const iconSize = "32";
     const [reaction, setReaction] = useState(previousReaction);
     const [showReactionWarning, setReactionWarning] = useState(false);
@@ -78,7 +78,10 @@ const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amou
             <Report isOpen={isReportOpen} onClose={() => setisReportOpen(false)}/>*/}
             {reaction === 'not_allowed' && showReactionWarning && (
                 <div id='toolTipReactionWarning'>
-                    <p style={{ color: '#0071CE', fontWeight: '500' }}>Оценить датасет можно только после скачивания!</p>
+                    {auth?
+                    <p style={{ color: '#0071CE', fontWeight: '500' }}>Оценить датасет можно после скачивания!</p>
+                    :
+                    <p style={{ color: '#0071CE', fontWeight: '500' }}>Оценить датасет можно после авторизации и скачивания!</p>}
                 </div>
             )}
         </div>

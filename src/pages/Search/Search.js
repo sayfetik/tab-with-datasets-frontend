@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Search.css';
-import { Header, Filters, BackendConnector, DatasetCard } from '../../components';
+import { Header, Filters, BackendConnector, DatasetCard, AuthAlert } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../img/search.png';
 import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import fireIcon from '../../img/fireIcon.png';
+import { useKeycloak } from '@react-keycloak/web'
 
 const Search = () => {
+    const { keycloak } = useKeycloak()
+    const auth = keycloak.authenticated
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
     const [searchString, setSearchString] = useState('');
@@ -20,6 +23,7 @@ const Search = () => {
     const [datasets, setDatasets] = useState([]);
     const [noDatasets, setnoDatasets] = useState(false);
     const [warningSearch, setwarningSearch] = useState(false);
+    const [authWarning, setauthWarning] = useState(false);
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
@@ -84,6 +88,11 @@ const Search = () => {
         } catch (error) {
         }
     };
+
+    const handleUploadClick = () => {
+        if (!auth) setauthWarning(true);
+        else navigate('/upload');
+    }
     
     useEffect(() => {
         document.title = `Поиск датасета`;
@@ -130,7 +139,8 @@ const Search = () => {
                         <button type='submit' id='searchButton'>Найти</button>
                         <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                     </form>
-                    <button className='lightBlueButton' style={{padding: '10px 20px'}} onClick={() => { navigate('/upload') }}>+ Новый датасет</button>
+                    <button className='lightBlueButton' style={{padding: '10px 20px'}} onClick={()=>handleUploadClick()}>+ Новый датасет</button>
+                    {authWarning && <AuthAlert onClose={()=>setauthWarning(false)} isOpen={authWarning}/>}
                 </div>
 
                 <div id='popularTopicsSection'>
