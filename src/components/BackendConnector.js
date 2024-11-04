@@ -59,8 +59,7 @@ export default class BackendConnector {
     }
 
     static async preview(id) {
-        const user_id = await this.getUserId();
-        const url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${user_id}`;
+        const url = `${this.host}/${this.preview_endpoint}/${id}`;
         const response = await fetch(url);
 
         if (!response.ok) {

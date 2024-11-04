@@ -56,4 +56,5 @@
     position: absolute;
     transform: translateX(22%);
     border: 1px solid #0071CE;
+    margin-left: 10px;
 }
