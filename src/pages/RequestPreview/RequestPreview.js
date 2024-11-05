@@ -71,7 +71,6 @@ const RequestPreview = () => {
 
     return (
         <div>
-            <Header />
             {dataset ?
                 <div id='datasetPage'>
                     <Back />

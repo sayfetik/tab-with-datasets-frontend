@@ -23,7 +23,7 @@ const Header = () => {
         </div>
         <ProfileSection />
         </div>
-      <div id='warningNotification'>Сервис работает только из сети University Staff. Мы работаем над тем, чтобы он был доступен из всех сетей!</div>
+      <div id='warningNotification'>Сервис работает только из сети UniversityStaff, AOInnopolis. Мы работаем над тем, чтобы он был доступен из всех сетей!</div>
     </>
   )
 }

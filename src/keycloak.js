@@ -18,11 +18,16 @@ const initKeycloak = async () => {
   try {
     await keycloak.init({
       onLoad: 'check-sso', // или 'login-required' в зависимости от ваших нужд
-      silentCheckSsoRedirectUri: `index.html`, // Убедитесь, что этот путь доступен
+      // silentCheckSsoRedirectUri: `index.html`, // Убедитесь, что этот путь доступен
     });
   } catch (error) {
     console.error('Failed to initialize Keycloak', error);
   }
 };
+
+
+// useLayoutEffect(()=>{
+//     if (!keycloak)
+// })
 
 export { keycloak, initKeycloak };

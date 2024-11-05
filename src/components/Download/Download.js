@@ -4,14 +4,13 @@ import downloadBlue from '../../img/downloadBlue.png';
 import downloadPurple from '../../img/downloadPurple.png';
 import blueLoading from '../../img/blueLoadingLine.gif';
 import purpleLoading from '../../img/purpleLoadingLine.gif';
-import { ProccessStages, BackendConnector, AuthAlert } from '..';
+import { ProccessStages, BackendConnector } from '..';
 
-const Download = ({ isOpen, onClose, id, auth }) => {
+const Download = ({ isOpen, onClose, id, setdownloaded }) => {
   const [loadingBase, setloadingBase] = useState(false);
   const [loadingAdvanced, setloadingAdvanced] = useState(false);
   const [errorBase, seterrorBase] = useState(false);
   const [errorAdvanced, seterrorAdvanced] = useState(false);
-  const [authWarning, setauthWarning] = useState(false);
 
   useEffect(()=>{
     seterrorBase(false);
@@ -23,34 +22,34 @@ const Download = ({ isOpen, onClose, id, auth }) => {
   }
 
   const handleDownloadInitialDsClick = async () => {
-    if (!auth) {
-      setauthWarning(true);
-      return
-    }
+    setdownloaded(true);
     setloadingBase(true);
+
     try {
-        const blob = await BackendConnector.download_initial_dataset(id);
-        if (blob) {
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'dataset_base.zip'); // Specify the filename here
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
+        const response = await BackendConnector.download_initial_dataset(id);
+        if (response) {
+            const url = window.URL.createObjectURL(response.blob);
+            const link = document.createElement('a');
+            link.href = url;
+
+            let filename =  response.filename
+
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
         }
     } catch (error) {
-      seterrorBase(true);
-      console.error('Error downloading file:', error);
+        seterrorBase(true);
+        console.error('Error downloading file:', error);
     }
     setloadingBase(false);
 };
 
+
 const handleDownloadCleanedDsClick = async () => {
-  if (!auth) {
-    setauthWarning(true);
-    return
-  }
+  setdownloaded(true)
   try {
     setloadingAdvanced(true);
     const blob = await BackendConnector.download_cleaned_dataset(id);
@@ -73,7 +72,6 @@ const handleDownloadCleanedDsClick = async () => {
   return (
     <div className="modal-overlay">
       <div className="modal-content-download">
-          {authWarning && <AuthAlert onClose={()=>setauthWarning(false)} isOpen={authWarning}/>}
           <div className="modal-header-download">
             <button className="modal-close-button" onClick={onClose}>&times;</button>
           </div>

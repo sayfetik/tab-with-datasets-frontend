@@ -16,7 +16,6 @@ const UploadRequests = () => {
     
     return (
         <div>
-            <Header />
             <div id='uploadRequests'>
                 <div className='back'onClick={()=>{navigate('/')}} style={{marginBottom: '40px'}}>
                     <Icon image={back} />

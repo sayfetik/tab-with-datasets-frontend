@@ -1,16 +1,10 @@
 import axios from 'axios';
 import { keycloak } from '../keycloak';
-import { useUserProfile } from '../useUserProfile'
 
 export default class BackendConnector {
     // Метод для получения токена
-    static async getUserId() {
-        if (!keycloak.authenticated) {
-            throw new Error('User is not authenticated');
-        }
-        const token = keycloak.token;
-        const user_id = token;
-        return user_id;
+    static async getToken() {
+        return keycloak.token;
     }
 
     static results_amount_limit = 12;
@@ -42,10 +36,8 @@ export default class BackendConnector {
     static remove_rating_endpoint ='api/remove_rating';
     static highly_rated_datasets_endpoint ='api/get_highly_rated_datasets';
 
-
-    // Метод для выполнения запроса с токеном
     static async fetchWithToken(url, options) {
-        const token = await this.getUserId();
+        const token = await this.getToken();
         const headers = {
             ...options.headers,
             Authorization: `Bearer ${token}`,
@@ -59,16 +51,20 @@ export default class BackendConnector {
     }
 
     static async preview(id) {
-        const url = `${this.host}/${this.preview_endpoint}/${id}`;
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const token = await this.getToken();
+        let url = `${this.host}/${this.preview_endpoint}/${id}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const responseData = await response.json();
         const data = responseData.metadata;
-        const filesStructure = responseData.files_structure;
+    
         return {
             id: data.id || '',
             title: data.title || '',
@@ -99,7 +95,8 @@ export default class BackendConnector {
             files_structure: data.files_structure || {},
             user_reaction: responseData.rating || '',
             likes_amount: data.likes_amount || 0,
-            dislikes_amount: data.dislikes_amount || 0
+            dislikes_amount: data.dislikes_amount || 0,
+            isOwner: responseData.is_owner || false,
         };
     }
 
@@ -116,26 +113,47 @@ export default class BackendConnector {
     }
 
     static async download_initial_dataset(id) {
-        const user_id = await this.getUserId();
+        const token = await this.getToken();
+        const url = `${this.host}/${this.download_initial_dataset_endpoint}/${id}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
         try {
             const response = await axios({
                 method: 'get',
-                url: `${this.host}/${this.download_initial_dataset_endpoint}/${id}?user_id=${user_id}`,
-                responseType: 'blob'
+                url: url,
+                headers: headers,
+                responseType: 'blob',
             });
-            return response.data;
+    
+            let filename = 'base_dataset.zip';
+            const contentDisposition = response.headers['content-disposition'];
+    
+            if (contentDisposition) {
+                // Извлекаем имя файла с учетом кодировки utf-8
+                const match = contentDisposition.match(/filename\*?=\s*utf-8''([^;]+)/i);
+                if (match && match[1]) {
+                    // Декодируем имя файла, закодированное в формате URL
+                    filename = decodeURIComponent(match[1]);
+                }
+            } else {
+                console.warn('Content-Disposition header is missing. Using default filename.');
+            }
+    
+            return { filename, blob: response.data };
         } catch (error) {
             console.error('Error downloading file:', error);
             return null;
         }
     }
+    
 
     static async download_cleaned_dataset(id) {
-        const user_id = await this.getUserId();
+        const token = await this.getToken();
         try {
             const response = await axios({
                 method: 'get',
-                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}?user_id=${user_id}`,
+                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}`,
                 responseType: 'blob'
             });
             return response.data;
@@ -146,15 +164,15 @@ export default class BackendConnector {
     }
 
     static async delete(id) {
-        const user_id = await this.getUserId();
-        return await this._delete(`${this.delete_endpoint}/${id}?user_id=${user_id}`);
+        const token = await this.getToken();
+        return await this._delete(`${this.delete_endpoint}/${id}`);
     }
 
     static async upload(uploadingMetadata, uploadingFiles, uploadingImage) {
         const formData = new FormData();
         
-        const user_id = await this.getUserId();
-        const url = `${this.host}/${this.upload_endpoint}?user_id=${user_id}`;
+        const token = await this.getToken();
+        const url = `${this.host}/${this.upload_endpoint}`;
 
 
         formData.append('uploading_metadata', JSON.stringify(uploadingMetadata));
@@ -187,9 +205,9 @@ export default class BackendConnector {
             console.error('Файл изображения не выбран или неверный формат');
         }
         
-        const user_id = await this.getUserId();
+        const token = await this.getToken();
     
-        const api_url = `${this.host}/${this.update_endpoint}/${id}?user_id=${user_id}`;
+        const api_url = `${this.host}/${this.update_endpoint}/${id}`;
     
         try {
             const response = await fetch(api_url, {
@@ -280,8 +298,8 @@ export default class BackendConnector {
         }
     }
 
-    static async search(searchString, filters) {
-        const url = `${this.host}/${this.search_endpoint}/36?search_string=${searchString}`;
+    static async search(searchString, filters, num_of_res) {
+        const url = `${this.host}/${this.search_endpoint}/${num_of_res}?search_string=${searchString}`;
         const requestBody = filters
         const response = await fetch(url, {
             method: 'POST',
@@ -383,36 +401,36 @@ export default class BackendConnector {
     }
 
     static async getUploadingRequests() {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.uploading_requests_endpoint}/${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.uploading_requests_endpoint}`);
     }
 
     static async getFailedRequests() {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.failed_requests_endpoint}/${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.failed_requests_endpoint}`);
     }
 
     static async getUploadedRequests() {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.uploaded_requests_endpoint}/${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.uploaded_requests_endpoint}`);
     }
 
     static async like(dataset_id) {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.like_dataset_endpoint}/${dataset_id}?user_id=${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.like_dataset_endpoint}/${dataset_id}`);
     }
     
     static async dislike(dataset_id) {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.dislike_dataset_endpoint}/${dataset_id}?user_id=${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.dislike_dataset_endpoint}/${dataset_id}`);
     }
 
     static async remove_rating(dataset_id) {
-        const user_id = await this.getUserId();
-        return await this.get(`${this.remove_rating_endpoint}/${dataset_id}?user_id=${user_id}`);
+        const token = await this.getToken();
+        return await this.get(`${this.remove_rating_endpoint}/${dataset_id}`);
     }
 
-    static async highly_rated_datasets() {
-        return await this.get(`${this.highly_rated_datasets_endpoint}/${this.results_amount_limit}`);
+    static async highly_rated_datasets(results_limit) {
+        return await this.get(`${this.highly_rated_datasets_endpoint}/${results_limit}`);
     }
 }

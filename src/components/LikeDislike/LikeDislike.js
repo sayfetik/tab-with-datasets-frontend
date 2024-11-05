@@ -4,7 +4,7 @@ import { Icon } from '@iconify-icon/react';
 import { Report, BackendConnector } from '../';
 
 const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amount, auth }) => {
-    const iconSize = "32";
+    const iconSize = "26";
     const [reaction, setReaction] = useState(previousReaction);
     const [showReactionWarning, setReactionWarning] = useState(false);
     const [isReportOpen, setisReportOpen] = useState(false);
@@ -24,7 +24,6 @@ const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amou
         if (reaction === 'not_allowed') return;
 
         if (reaction === currentReaction) {
-            // Удаляем реакцию
             setReaction('');
             if (currentReaction === 'liked') {
                 setLikes(prevLikes => prevLikes - 1);
@@ -34,7 +33,6 @@ const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amou
                 BackendConnector.remove_rating(dataset_id);
             }
         } else {
-            // Устанавливаем новую реакцию
             setReaction(currentReaction);
             if (currentReaction === 'liked') {
                 setLikes(prevLikes => prevLikes + 1);
@@ -62,7 +60,7 @@ const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amou
                     width={iconSize}
                     height={iconSize}
                 />
-                <p className='num_of_likes'>{likes}</p>
+                {/* <p className='num_of_likes'>{likes}</p> */}
             </div>
             <div className={(reaction === 'not_allowed' && 'not_allowed') || (reaction === 'disliked' ? 'clickedDisLike' : 'dislike')}>
                 <Icon
@@ -72,16 +70,16 @@ const LikeDislike = ({ dataset_id, previousReaction, likes_amount, dislikes_amou
                     width={iconSize}
                     height={iconSize}
                 />
-                <p className='num_of_likes'>{dislikes}</p>
+                {/* <p className='num_of_likes'>{dislikes}</p> */}
             </div>
             {/*<button id='reportButton' onClick={() => setisReportOpen(true)}>Пожаловаться</button>
             <Report isOpen={isReportOpen} onClose={() => setisReportOpen(false)}/>*/}
             {reaction === 'not_allowed' && showReactionWarning && (
                 <div id='toolTipReactionWarning'>
                     {auth?
-                    <p style={{ color: '#0071CE', fontWeight: '500' }}>Оценить датасет можно после скачивания!</p>
+                    <p>Оценить датасет можно после скачивания!</p>
                     :
-                    <p style={{ color: '#0071CE', fontWeight: '500' }}>Оценить датасет можно после авторизации и скачивания!</p>}
+                    <p>Оценить датасет можно после авторизации и скачивания!</p>}
                 </div>
             )}
         </div>

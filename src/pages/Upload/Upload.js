@@ -139,6 +139,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             })
             .catch(error => {
                 console.error(error);
+                navigate('/error')
         }); 
     }
 
@@ -227,7 +228,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
     return (
         <div>
-            <Header />
             <div className='upload'>
             <Back />
             

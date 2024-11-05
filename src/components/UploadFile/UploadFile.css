@@ -49,7 +49,7 @@
 .seeFiles {
     width: fit-content;
     font-size: 18px;
-    font-weight: 450;
+    font-weight: 400;
     border: none;
 }
 @media screen and (max-width: 800px) {

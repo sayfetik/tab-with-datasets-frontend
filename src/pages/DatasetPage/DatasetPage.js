@@ -2,10 +2,9 @@ import 'katex/dist/katex.min.css';
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import downloadIconWhite from '../../img/downloadWhite.png';
-import folderDarkIcon from '../../img/folderDark.png';
 import './DatasetPage.css'
 import copyBlue from '../../img/copyBlue.png'
-import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike, AuthAlert } from '../../components'
+import { Back, Header, DownloadCopyCode, DatasetCard, BackendConnector, Download, DeleteVerification, LikeDislike, Files } from '../../components'
 import { marked } from 'marked';
 import katex from 'katex';
 import { useKeycloak } from '@react-keycloak/web'
@@ -20,8 +19,31 @@ const DatasetPage = () => {
     const [isDownloadOpen, setIsDownloadOpen] = useState(false);
     const [isCopyCodeOpen, setIsCopyCodeOpen] = useState(false);
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
-    const [authWarning, setauthWarning] = useState(false);
+    const [downloaded, setdownloaded] = useState(false);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const dataPreview = await BackendConnector.preview(id);
+                setDataset(dataPreview);
+
+                const imageData = await BackendConnector.getImage(id);
+                setImage(imageData.imageUrl);
+
+                const recommendations = await BackendConnector.recommend(id);
+                if (recommendations && recommendations.length > 0) {
+                    setDatasets(recommendations);
+                }
+
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+                navigate('/error')
+            }
+        };
+
+        fetchData();
+    }, [keycloak.authenticated, downloaded]);
+    
     const renderMarkdownWithKaTeX = (text) => {
         marked.setOptions({
            gfm: true,
@@ -59,48 +81,6 @@ const DatasetPage = () => {
         return html;
      };
 
-    const formatFileSize = (size) => {
-        if (size === 0) return '0 Б';
-        const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
-        const i = Math.floor(Math.log(size) / Math.log(1024));
-        const formattedSize = (size / Math.pow(1024, i)).toFixed(2);
-        return `${formattedSize} ${sizes[i]}`;
-    };
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const imageData = await BackendConnector.getImage(id);
-                setImage(imageData.imageUrl);
-            } catch (error) {
-                console.error('Error fetching image:', error);
-            }
-        };
-        if (image === null) fetchImage();
-
-        const fetchRecommendations = async () => {
-            try {
-                const data = await BackendConnector.recommend(id);
-                if (data && data.length > 0) setDatasets(data);
-                else console.log('No data returned from the server');
-            } catch (error) {
-                console.error("Error fetching datasets: ", error);
-            }
-        };
-
-        const fetchDatasetPreview = async () => {
-            try {
-                const data = await BackendConnector.preview(id);
-                setDataset(data);
-            } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
-
-        fetchRecommendations();
-        fetchDatasetPreview();
-    }, [id]);
-
     const [dataset, setDataset] = React.useState({
         id: '',
         title: '',
@@ -131,7 +111,8 @@ const DatasetPage = () => {
         files_structure: {},
         user_reaction: '',
         likes_amount: 0,
-        dislikes_amount: 0
+        dislikes_amount: 0,
+        isOwner: false,
     });
 
     const handleEditClick = () => {
@@ -178,8 +159,7 @@ const DatasetPage = () => {
     };
 
     const handleCopyCodeClick = () => {
-        if (!auth) setauthWarning(true);
-        else setIsCopyCodeOpen(true)
+        setIsCopyCodeOpen(true)
     }
 
     useEffect(() => {
@@ -188,7 +168,6 @@ const DatasetPage = () => {
 
     return (
         <div>
-            <Header />
             {dataset ? <div id='datasetPage'>
                 <Back />
                 <div id='datasetInfoHeader'>
@@ -234,19 +213,20 @@ const DatasetPage = () => {
                                     <img src={copyBlue} id='copyCodeIcon' alt=''/>
                                 </button>
                             </div>
-                            <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div>
+                            {/* <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div> */}
                         </div>
-                        <Download auth={auth} isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id} />
-                        <DownloadCopyCode auth={auth} isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
-                        {authWarning && <AuthAlert onClose={()=>setauthWarning(false)} isOpen={authWarning}/>}
-                            
-                        <LikeDislike auth={auth} dataset_id={dataset.id} previousReaction={dataset.user_reaction} likes_amount={dataset.likes_amount} dislikes_amount={dataset.dislikes_amount} />
-                        
-                        {/*<div className='row'>
-                            <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
-                            <button className='whiteRedButton' onClick={handleDeleteClick} style={{padding: '8px 16px'}}>Удалить</button>
-                            <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={dataset.id} back={true}/>
-                        </div>*/
+                        {!dataset.isOwner ?
+                            <div>
+                                <Download auth={auth} isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} id={dataset.id} setdownloaded={setdownloaded}/>
+                                <DownloadCopyCode auth={auth} isOpen={isCopyCodeOpen} onClose={() => setIsCopyCodeOpen(false)} id={dataset.id}/>
+                                <LikeDislike auth={auth} dataset_id={dataset.id} previousReaction={dataset.user_reaction} likes_amount={dataset.likes_amount} dislikes_amount={dataset.dislikes_amount} />
+                            </div>
+                            :
+                            <div className='row'>
+                                <button className='whiteBlueButton' style={{margin: '0', padding: '8px 16px'}} onClick={handleEditClick}>Редактировать</button>
+                                <button className='whiteRedButton' onClick={handleDeleteClick} style={{padding: '8px 16px'}}>Удалить</button>
+                                <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={dataset.id} back={true}/>
+                            </div>
                         }
                     </div>
                 </div>
@@ -262,37 +242,7 @@ const DatasetPage = () => {
                                 <p className='author'>Данные ({getFileCountString(dataset.files_structure)})</p>
                                 <p className='author'>{dataset.size}</p>
                             </div>
-                            <div className='files'>
-                                {(() => {
-                                    if (typeof dataset.files_structure === 'object' && dataset.files_structure !== null) {
-                                        return Object.entries(dataset.files_structure).map(([folderName, files], index) => {
-                                            if (typeof files === 'object' && files !== null) {
-                                                return (
-                                                    <div key={index}>
-                                                        <div className='row folderMargin'>
-                                                            <img id="folderIcon" src={folderDarkIcon}  alt="Folder"/>
-                                                            <p id='folderName'>{folderName}</p>
-                                                        </div>
-                                                        {Object.entries(files).map(([fileName, fileSize], subIndex) => (
-                                                            <div key={subIndex} className='file' id='fileInFolder'>
-                                                                <p className='fileDownload'>{fileName} {fileSize} && (- {formatFileSize(fileSize)})</p>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                );
-                                            } else {
-                                                return (
-                                                    <div key={index} className='file'>
-                                                        <p className='fileDownload'>{folderName} - {formatFileSize(files)}</p>
-                                                    </div>
-                                                );
-                                            }
-                                        });
-                                    } else {
-                                        return <p className='author'>Файлов нет</p>;
-                                    }
-                                })()}
-                            </div>
+                            <Files filesStructure={dataset.files_structure} />
                         </div>
                     </div>
                     

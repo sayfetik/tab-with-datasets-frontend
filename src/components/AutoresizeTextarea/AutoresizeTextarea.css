@@ -32,6 +32,9 @@ textarea {
   border: 1px solid rgba(0, 113, 206, 1);
   outline: none;
 }
+#textarea * {
+  background-color: transparent;
+}
 #textarea span,#textarea li,#textarea ul,#textarea p,#textarea strong, #textarea ol, #textarea h1,#textarea h2,#textarea h3,#textarea h4,#textarea h5, #textarea pre, #textarea code {
   color: #3E456F;
   padding-bottom: 2px;

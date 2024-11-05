@@ -1,51 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './CardsRowSection.css'
 import DatasetCard from '../DatasetCard/DatasetCard'
-import arrowsIcon from '../../img/iconArrows.png'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import fireIcon from '../../img/fireIcon.png';
 
-const CardsRowSection = () => {
-    const { id } = useParams();
-    const location = useLocation();
-    const navigate = useNavigate();
-    const { datasets: initialDatasets } = location.state.datasets || { datasets: [] };
-    const [searchString, setSearchString] = useState('');
-    const [resultsLimit, setResultsLimit] = useState(5);
-    const [datasets, setDatasets] = useState([]);
-    
-
-        return (
-            <div id='cardsRowSection'>
-                <div className='topicCardsInRow'>
-                    <h2>Похожее</h2>
-                    <div id='seeAllIcon'>
-                        <p id='seeAll'>Смотреть все</p>
-                        <img src={arrowsIcon} width={"19px"} alt=''/>
-                    </div>
-                </div>
-
-                <div id='cards'>
-                    {datasets.length > 0 ? (
-                        datasets.map(dataset => (
-                            <DatasetCard
-                                key={dataset.id}
-                                id={dataset.id}
-                                title={dataset.title}
-                                authors={dataset.authors}
-                                numberOfFiles={dataset.number_of_files}
-                                lastChangeDatetime={dataset.last_change_datetime}
-                                downloadsNumber={dataset.downloads_number}
-                                size={dataset.size}
-                                smallDescription={dataset.small_description}
-                            />
-                        ))
-                    ) : (
-                        <p>Error ocurred</p>
-                    )}       
-                </div>    
+const CardsRowSection = ({label, datasets}) => {
+    return ( datasets &&
+        (<div id='highlyRatedDatasetsSection'>
+            <div className='row' style={{marginBottom: '20px'}}>
+                <img src={fireIcon} alt='' id='cardsRowIcon'/>
+                <p id='highlyRatedDatasetsLabel'>{label}</p>
             </div>
-        ) 
-    
+            <div id='cardsContainer'>
+                <div id='cards'>
+                    {datasets.map(dataset => (
+                        <DatasetCard
+                            key={dataset.id}
+                            id={dataset.id}
+                            title={dataset.title}
+                            authors={dataset.authors}
+                            numberOfFiles={dataset.number_of_files}
+                            lastChangeDate={dataset.last_change_date}
+                            downloadsNumber={dataset.downloads_number}
+                            size={dataset.size}
+                            smallDescription={dataset.small_description}
+                        />))}
+                </div>
+            </div>
+        </div>)
+    )
 }
 
 export default CardsRowSection

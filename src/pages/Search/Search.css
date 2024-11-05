@@ -5,15 +5,33 @@
     width: 100%;
     margin-bottom: 80px;
 }
-
 #search {
-    padding: 3% 10% 10% 8%;
+    width: 100%;
+    padding: 3.5% 10% 10% 8%;
+}
+#searchSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+#main {
+    font-size: 40px;
+    font-weight: 700;
+    width: fit-content;
+    margin-right: 30px;
+    width: 220px;
+    margin-bottom: 7px;
+    line-height: 50px;
+}
+#inputSearch {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 body::before {
-    content: "";
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
@@ -23,38 +41,8 @@ body::before {
     z-index: -1;
     width: 100%;
 }
-#seeAllTopic {
-    margin-right: 15px;
-}
-#searchSection {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 150px;
-}
-#datasetLabel {
-    display: flex;
-    justify-content: center;
-    width: 500px;
-}
-#inputSearch {
-    display: flex;
-    margin: 10px;
-    align-items: center;
-}
-#newDatasetButton {
-    padding: 10px 20px 10px 20px;
-    border: none;
-    background-color: #7B93D2;
-    color: white;
-    font-weight: 600;
-    border-radius: 40px;
-    font-size: 16px;
-}
 #searchButton {
-    padding: 0px 20px;
+    padding: 0px 25px;
     border: none;
     background-color: #0071CE;
     color: white;
@@ -62,50 +50,11 @@ body::before {
     font-size: 16px;
     height: 40px;
 }
-#topicTags {
-    width: 60%;
-}
-#topicTag {
-    border-radius: 40px;
-    border: none;
-    padding: 8px 20px 8px 20px;
-    background-color: white;
-    box-shadow: 0 5px 1px #7B93D2, 5px 5px 1px #7B93D2;
-    color: #3E456F;
-    font-size: 18px;
-    margin: 7px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-#topicTag:hover {
-    transform: scale(1.05);
-}
-#main {
-    font-size: 60px;
-    font-weight: 700;
-    line-height: 70px;
-    width: fit-content;
-    margin-bottom: 10px;
-}
-#seeAllDatasets {
-    display: flex;
-    align-items: center;
-}
 #searchIcon {
     border: none;
     width: 50px;
     display: none;
 }
-@media screen and (max-width: 1000px){
-    #searchIcon {
-        display: flex;
-    }
-    #searchButton {
-        display: none;
-    }
-}
-
 #search input[type="text"], #datasets input[type="text"] {
     padding: 20px;
     border-width: 1px;
@@ -114,28 +63,18 @@ body::before {
     box-shadow: none;
     height: 35px;
     font-size: 16px;
-    width: 500px;
+    width: 100%;
   }
 #correctInput {
     border: solid rgba(228, 231, 242, 1);
     color: #3E456F;
+    width: 100%;
 }
 #search input[type="text"]:focus, #datasets input[type="text"]:focus {
     border: solid rgba(0, 113, 206, 1);
     outline: none;
     border-width: 1px;
   }
-
-@media screen and (max-width: 1000px) {
-    #search input[type="text"] {
-        width: 300px;
-      }
-}
-@media screen and (max-width: 500px) {
-    #search input[type="text"] {
-        width: 200px;
-      }
-}
 #filterIcon {
     margin: 0px 5px;
 }
@@ -154,26 +93,42 @@ body::before {
     align-items: center;
 }
 .topicsList {
+    margin-left: 220px;
     display: flex;
-    width: 55%;
+    width: fit-content;
     flex-wrap: wrap;
-    justify-content: center;
 }
 #topic {
-    margin: 7px;
+    margin: 0px 7px 7px 7px;
     padding: 5px 18px;
     border-radius: 50px !important;
 }
-#highlyRatedDatasetsSection {
-    margin-top: 60px;
-    margin: 100px 0px 50px 15px;
+#searchRow {
+    display: flex;
+    align-items: center;
 }
-#fireIcon {
-    width: 40px;
+#uploadIcon {
+    display: none;
 }
-#highlyRatedDatasetsLabel {
-    font-size: 30px;
-    font-weight: 700;
-    width: fit-content;
-    margin: 0px 20px;
+@media screen and (max-width: 1300px) {
+    .topicsList {
+        margin-left: 0px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    #searchSection {
+        flex-direction: column;
+    }
+    #main {
+        margin: 22px 0px;
+    }
+    #searchRow {
+        margin-bottom: 15px;
+    }
+    #uploadIcon {
+        display: block;
+    }
+    #uploadDatasetButton {
+        display: none;
+    }
 }

@@ -106,13 +106,13 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
                 })
                 .catch(error => {
                     console.error(error);
+                    navigate('/error')
                 });
     };
 }
     
     return (
         <div>
-            <Header />
             <div className='upload'>
             <Back />
 

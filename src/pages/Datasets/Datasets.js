@@ -57,7 +57,7 @@ const Datasets = () => {
                 subject: subject
             };
 
-            const data = await BackendConnector.search(searchString, filters);
+            const data = await BackendConnector.search(searchString, filters, 100);
 
             if (data && data.length > 0) {
                 setDatasets(data);
@@ -108,7 +108,6 @@ const Datasets = () => {
 
         return (
             <div>
-                <Header />
                 <div id='datasets'>
                     <Back />
                     <div className='searchFiltersSort'>
