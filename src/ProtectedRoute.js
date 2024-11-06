@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useKeycloak } from '@react-keycloak/web';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useKeycloak } from "./keycloak";
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
   const { keycloak } = useKeycloak();

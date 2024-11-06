@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 const NotificationContext = createContext();
 
@@ -9,7 +9,7 @@ export const NotificationProvider = ({ children }) => {
     setNotification(message);
     setTimeout(() => {
       setNotification(null);
-    }, 5000); // Уведомление исчезает через 3 секунды
+    }, 5000);
   };
 
   const hideNotification = () => {
@@ -17,7 +17,9 @@ export const NotificationProvider = ({ children }) => {
   };
 
   return (
-    <NotificationContext.Provider value={{ notification, showNotification, hideNotification }}>
+    <NotificationContext.Provider
+      value={{ notification, showNotification, hideNotification }}
+    >
       {children}
     </NotificationContext.Provider>
   );
