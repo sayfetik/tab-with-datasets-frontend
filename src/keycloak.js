@@ -1,4 +1,5 @@
-import Keycloak from 'keycloak-js';
+import Keycloak from "keycloak-js";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const configKeycloak = {
   url: process.env.REACT_APP_KEYCLOAK_URL,
@@ -6,28 +7,46 @@ const configKeycloak = {
   clientId: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
 };
 
-// Проверка наличия необходимых переменных окружения
 if (!configKeycloak.url || !configKeycloak.realm || !configKeycloak.clientId) {
-  throw new Error('Missing Keycloak configuration in environment variables.');
+  throw new Error("Missing Keycloak configuration in environment variables.");
 }
 
-const keycloak = new Keycloak(configKeycloak);
+export let keycloak = new Keycloak(configKeycloak);
 
-// Инициализация Keycloak
-const initKeycloak = async () => {
-  try {
-    await keycloak.init({
-      onLoad: 'check-sso', // или 'login-required' в зависимости от ваших нужд
-      // silentCheckSsoRedirectUri: `index.html`, // Убедитесь, что этот путь доступен
-    });
-  } catch (error) {
-    console.error('Failed to initialize Keycloak', error);
-  }
+const KeycloakContext = createContext({ keycloak, initialized: false });
+
+export const useKeycloak = () => {
+  const { keycloak, initialized } = useContext(KeycloakContext);
+  return { keycloak, initialized };
 };
 
+export const KeycloakProvider = ({ children }) => {
+  const [localKeycloak, setLocalKeycloak] = useState(keycloak);
+  const [initialized, setInitialized] = useState(false);
 
-// useLayoutEffect(()=>{
-//     if (!keycloak)
-// })
+  useEffect(() => {
+    if (initialized) return;
+    try {
+      localKeycloak.init({ onLoad: "check-sso" }).then(() => {
+        setInitialized(true);
+      });
+    } catch {
+      keycloak = new Keycloak(configKeycloak);
+      keycloak.init({ onLoad: "check-sso" }).then(() => {
+        setInitialized(true);
+      });
+      setLocalKeycloak(keycloak);
+    }
+  }, []);
 
-export { keycloak, initKeycloak };
+  return (
+    <KeycloakContext.Provider
+      value={{
+        keycloak: localKeycloak,
+        initialized,
+      }}
+    >
+      {children}
+    </KeycloakContext.Provider>
+  );
+};

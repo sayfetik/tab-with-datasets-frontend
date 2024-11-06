@@ -1,43 +1,60 @@
-import { Menu } from '@mantine/core'
-import { useKeycloak } from '@react-keycloak/web'
-import { IconChevronDown } from '@tabler/icons-react'
-import { useState } from 'react'
-import { useUserProfile } from '../../useUserProfile'
-import './Header.css'
-import { useNavigate } from 'react-router-dom'
+import { Menu } from "@mantine/core";
+import { IconChevronDown } from "@tabler/icons-react";
+import { useState } from "react";
+import { useUserProfile } from "../../useUserProfile";
+import "./Header.css";
+import { useNavigate } from "react-router-dom";
+import { useKeycloak } from "../../keycloak";
 
 export const ProfileSection = () => {
   const navigate = useNavigate();
-  const { keycloak } = useKeycloak()
-  const authenticated = keycloak.authenticated
-  const [opened, setOpened] = useState(false)
-  const userProfile = useUserProfile()
+  const { keycloak } = useKeycloak();
+  const authenticated = keycloak.authenticated;
+  const [opened, setOpened] = useState(false);
+  const userProfile = useUserProfile();
 
   const toUploadRequests = () => {
-    navigate('/uploadRequests');
-  }
+    navigate("/uploadRequests");
+  };
 
   const toMain = () => {
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   const toUpload = () => {
-    navigate('/upload');
-  }
+    navigate("/upload");
+  };
 
   if (!keycloak) {
-    return null
+    return null;
   }
 
   if (!authenticated) {
-    return <button className='whiteBlueButton' onClick={() => keycloak.login()} style={{padding: '8px 40px', marginRight: '30px'}}>Войти</button>
+    return (
+      <button
+        className="whiteBlueButton"
+        onClick={() => keycloak.login()}
+        style={{ padding: "8px 40px", marginRight: "30px" }}
+      >
+        Войти
+      </button>
+    );
   }
 
   return (
-    <Menu width='target' trigger='hover' opened={opened} onChange={setOpened}
-    classNames={{item: 'menuItem', itemLabel: 'menuItemLabel', dropdown: 'menuDropdown'}}>
+    <Menu
+      width="target"
+      trigger="hover"
+      opened={opened}
+      onChange={setOpened}
+      classNames={{
+        item: "menuItem",
+        itemLabel: "menuItemLabel",
+        dropdown: "menuDropdown",
+      }}
+    >
       <Menu.Target>
-        <div className='userDropdown'>
+        <div className="userDropdown">
           {userProfile?.email}
           <IconChevronDown />
         </div>
@@ -49,5 +66,5 @@ export const ProfileSection = () => {
         <Menu.Item onClick={() => keycloak?.logout()}>Выйти</Menu.Item>
       </Menu.Dropdown>
     </Menu>
-  )
-}
+  );
+};
