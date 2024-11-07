@@ -4,10 +4,10 @@ import back from '../../img/back.png'
 import './Back.css'
 import { useNavigate } from 'react-router-dom';
 
-const Back = () => {
+const Back = (pageFrom) => {
     const navigate = useNavigate();
     const goBack = () => {
-        navigate(-1);
+        navigate(pageFrom);
     };
     return (
         <div className='back' onClick={goBack}>

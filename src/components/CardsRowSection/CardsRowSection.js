@@ -6,7 +6,7 @@ import fireIcon from '../../img/fireIcon.png';
 const CardsRowSection = ({label, datasets}) => {
     return ( datasets &&
         (<div id='highlyRatedDatasetsSection'>
-            <div className='row' style={{marginBottom: '20px'}}>
+            <div className='row' style={{marginBottom: '5px'}}>
                 <img src={fireIcon} alt='' id='cardsRowIcon'/>
                 <p id='highlyRatedDatasetsLabel'>{label}</p>
             </div>

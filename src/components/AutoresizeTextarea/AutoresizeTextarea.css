@@ -33,7 +33,7 @@ textarea {
   outline: none;
 }
 #textarea * {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 #textarea span,#textarea li,#textarea ul,#textarea p,#textarea strong, #textarea ol, #textarea h1,#textarea h2,#textarea h3,#textarea h4,#textarea h5, #textarea pre, #textarea code {
   color: #3E456F;

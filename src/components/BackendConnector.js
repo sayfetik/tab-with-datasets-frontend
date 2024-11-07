@@ -36,29 +36,14 @@ export default class BackendConnector {
     static remove_rating_endpoint ='api/remove_rating';
     static highly_rated_datasets_endpoint ='api/get_highly_rated_datasets';
 
-    static async fetchWithToken(url, options) {
-        const token = await this.getToken();
-        const headers = {
-            ...options.headers,
-            Authorization: `Bearer ${token}`,
-        };
-
-        return axios({
-            ...options,
-            url,
-            headers,
-        });
-    }
-
     static async preview(id) {
-        const token = await this.getToken();
-        let url = `${this.host}/${this.preview_endpoint}/${id}`;
-        const headers = {};
-        if (token) headers['Authorization'] = `Bearer ${token}`;
+        const token = await this.getToken()
+        let url;
+        if (token) url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${token}`;
+        else  url =`${this.host}/${this.preview_endpoint}/${id}`;
     
         const response = await fetch(url, {
             method: 'GET',
-            headers: headers
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
@@ -111,23 +96,25 @@ export default class BackendConnector {
     static async download_code_cleaned_dataset(id) {
         return await this.get(`${this.codeAdvancedDataset_endpoint}/${id}`);
     }
-
-    static async download_initial_dataset(id) {
-        const token = await this.getToken();
-        const url = `${this.host}/${this.download_initial_dataset_endpoint}/${id}`;
-        const headers = {};
-        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+    static async download(endpoint, id) {
+        const token = await this.getToken()
+        let url;
+        if (token) url = `${this.host}/${endpoint}/${id}?user_id=${token}`;
+        else  url =`${this.host}/${endpoint}/${id}`;
     
         try {
             const response = await axios({
                 method: 'get',
                 url: url,
-                headers: headers,
                 responseType: 'blob',
             });
-    
-            let filename = 'base_dataset.zip';
-            const contentDisposition = response.headers['content-disposition'];
+
+            let filename;
+            if (endpoint === this.download_initial_dataset_endpoint) filename = 'base_dataset.zip';
+            else filename = 'cleaned_dataset.zip'
+            console.log(response.headers)
+            const contentDisposition = response.headers['Сontent-disposition'];
     
             if (contentDisposition) {
                 // Извлекаем имя файла с учетом кодировки utf-8
@@ -146,21 +133,13 @@ export default class BackendConnector {
             return null;
         }
     }
-    
+
+    static async download_initial_dataset(id) {
+        return this.download(this.download_initial_dataset_endpoint, id)
+    }
 
     static async download_cleaned_dataset(id) {
-        const token = await this.getToken();
-        try {
-            const response = await axios({
-                method: 'get',
-                url: `${this.host}/${this.download_cleaned_dataset_endpoint}/${id}`,
-                responseType: 'blob'
-            });
-            return response.data;
-        } catch (error) {
-            console.error('Error downloading file:', error);
-            return null;
-        }
+        return this.download(this.download_cleaned_dataset_endpoint, id)
     }
 
     static async delete(id) {
@@ -402,7 +381,17 @@ export default class BackendConnector {
 
     static async getUploadingRequests() {
         const token = await this.getToken();
-        return await this.get(`${this.uploading_requests_endpoint}`);
+        const url = `${this.host}/${this.uploading_requests_endpoint}/user_id=${token}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+        return response.data
     }
 
     static async getFailedRequests() {

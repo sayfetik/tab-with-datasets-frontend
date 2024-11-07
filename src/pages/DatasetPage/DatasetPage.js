@@ -6,7 +6,6 @@ import "./DatasetPage.css";
 import copyBlue from "../../img/copyBlue.png";
 import {
   Back,
-  Header,
   DownloadCopyCode,
   DatasetCard,
   BackendConnector,

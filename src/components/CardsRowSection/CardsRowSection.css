@@ -1,6 +1,6 @@
 #highlyRatedDatasetsSection {
     margin-top: 60px;
-    margin: 50px 0px 50px 0px;
+    margin: 60px 0px;
 }
 #cardsRowIcon {
     width: 30px;
@@ -10,4 +10,28 @@
     font-weight: 700;
     width: fit-content;
     margin: 0px 15px;
+}
+#seeAllDatasets {
+    font-size: 17px;
+    margin-right: 8px;
+}
+#seeAllDatasetsButton {
+    margin-right: 35px;
+    display: flex;
+    align-items: center;
+    border-color: #3E456F;
+    padding: 3px 10px;
+}
+#seeAllDatasetsButton:hover {
+    box-shadow: 0px 0px 2px #3E456F, 0px 0px 2px #3E456F;
+}
+@media screen and (max-width: 1300px) {
+    #seeAllDatasetsButton {
+        margin-right: 10px;
+    }
+}
+@media screen and (max-width: 850px) {
+    #seeAllDatasetsButton {
+        margin-right: 60px;
+    }
 }

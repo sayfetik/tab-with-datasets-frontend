@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './CardsRowSection.css';
 import { DatasetCard, BackendConnector } from '../../components';
+import linkIcon from '../../img/link-external.png'
 import classification_icon from '../../img/popularTopicsIcons/classification.png';
 import books_icon from '../../img/popularTopicsIcons/books.png';
 import business_icon from '../../img/popularTopicsIcons/business.png';
@@ -9,7 +10,7 @@ import images_icon from '../../img/popularTopicsIcons/images.png';
 import marketing_icon from '../../img/popularTopicsIcons/marketing.png';
 import movies_icon from '../../img/popularTopicsIcons/movies.png';
 
-const PopularTopics = ({ topics, showAll }) => {
+const PopularTopics = ({ topics, showAllClick }) => {
     const [datasets, setDatasets] = useState([]);
 
     // Маппинг иконок по меткам
@@ -53,10 +54,15 @@ const PopularTopics = ({ topics, showAll }) => {
         <div id='highlyRatedDatasetsSection'>
             {topics && topics.map(topic => (
                 <div key={topic} className='topicContainer' style={{ marginBottom: '20px' }}>
-                    <div className='row' style={{marginBottom: '15px'}}>
-                        <img src={icons[topic]} alt='' id='cardsRowIcon' />
-                        <p id='highlyRatedDatasetsLabel'>{topic}</p>
-                        <p>Смотреть все</p>
+                    <div className='rowSpaceBetween' style={{marginBottom: '5px'}}>
+                        <div className='row'>
+                            <img src={icons[topic]} alt='' id='cardsRowIcon' />
+                            <p id='highlyRatedDatasetsLabel'>{topic}</p>
+                        </div>
+                        <button className='darkBlueWhiteButton' id='seeAllDatasetsButton' onClick={()=>{showAllClick(topic)}}>
+                            <p id='seeAllDatasets'>Смотреть все</p>
+                            <img src={linkIcon} width='15px' />
+                        </button>
                     </div>
                     <div id='cardsContainer'>
                         <div id='cards'>

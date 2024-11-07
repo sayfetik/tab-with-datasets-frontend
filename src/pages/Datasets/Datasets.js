@@ -40,42 +40,60 @@ const Datasets = () => {
     const [blueButton, setblueButton] = useState('');
     const [lightBlueButton, setlightBlueButton] = useState('');
 
-    const handleSearch = async (e) => {
+    const handleClick = async (e) => {
         if (e) e.preventDefault();
-        setnoDatasets(false);
         if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
             setwarningSearch(true);
             return;
         }
-        try {
-            const filters = {
-                geography_and_places: geography_and_places,
-                language: language,
-                data_type: data_type,
-                task: task,
-                technique: technique,
-                subject: subject
-            };
-
-            const data = await BackendConnector.search(searchString, filters, 100);
-
-            if (data && data.length > 0) {
-                setDatasets(data);
-                setSortedData(data);
-            } else setnoDatasets(true);
-        } catch (error) {
-            setalertState(true);
-            setErrorMessage(error);
-            setblueButton('Подождать')
-            setlightBlueButton('Попробовать ещё раз');
-        }
+        
+        navigate(`/datasets`, { state: {
+            searchString: searchString,
+            geography_and_places: geography_and_places,
+            language: language,
+            data_type: data_type,
+            task: task,
+            technique: technique,
+            subject: subject
+        } })
     };
 
     const handleKeyDown = (event) => {
-        if (event.key === 'Enter') handleSearch(event);
+        if (event.key === 'Enter') handleClick(event);
     };
 
     useEffect(() => {
+        const handleSearch = async (e) => {
+            if (e) e.preventDefault();
+            setnoDatasets(false);
+            if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
+                setwarningSearch(true);
+                return;
+            }
+            try {
+                const filters = {
+                    geography_and_places: geography_and_places,
+                    language: language,
+                    data_type: data_type,
+                    task: task,
+                    technique: technique,
+                    subject: subject
+                };
+    
+                const data = await BackendConnector.search(searchString, filters, 100);
+    
+                if (data && data.length > 0) {
+                    setDatasets(data);
+                    setSortedData(data);
+                } else setnoDatasets(true);
+            } catch (error) {
+                setalertState(true);
+                setErrorMessage(error);
+                setblueButton('Подождать')
+                setlightBlueButton('Попробовать ещё раз');
+            }
+        };
+
         handleSearch();
     }, [])
 
@@ -109,9 +127,8 @@ const Datasets = () => {
         return (
             <div>
                 <div id='datasets'>
-                    <Back />
                     <div className='searchFiltersSort'>
-                        <form id='inputSearchDatasets' onSubmit={handleSearch} onKeyDown={handleKeyDown}>
+                        <form id='inputSearchDatasets' onSubmit={handleClick} onKeyDown={handleKeyDown}>
                             <input
                                 style={{width: '90%'}}
                                 type='text'
@@ -139,7 +156,7 @@ const Datasets = () => {
                                 setTechnique={setTechnique}
                                 subject={subject}
                                 setSubject={setSubject}
-                                applyChanges={handleSearch}
+                                applyChanges={handleClick}
                                 />
                                 <select className="selectionInput" id='sort' value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
                                     <option value="byRelevance">По релевантности</option>
@@ -150,7 +167,7 @@ const Datasets = () => {
                             <button type='submit' id='searchButton'>Найти</button>
                             <button type='submit' id='searchIcon'><img id='searchIcon' src={searchIcon} alt='search'/></button>
                         </form>
-                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{handleSearch()}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
+                        <Alert message={"Ошибка: " + errorMessage} blueButton={blueButton} blueButtonFunc={()=>{setalertState(false)}} lightBlueButtonFunc={()=>{handleClick()}} lightBlueButton={lightBlueButton} isOpen={alertState} onClose={()=>{setalertState(false)}}/>
                     </div>
                     <div id='cardsContainer'>
                         {!noDatasets ?

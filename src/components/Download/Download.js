@@ -52,12 +52,12 @@ const handleDownloadCleanedDsClick = async () => {
   setdownloaded(true)
   try {
     setloadingAdvanced(true);
-    const blob = await BackendConnector.download_cleaned_dataset(id);
-    if (blob) {
-      const url = window.URL.createObjectURL(blob);
+    const response = await BackendConnector.download_cleaned_dataset(id);
+    if (response) {
+      const url = window.URL.createObjectURL(response.blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'dataset_cleaned.zip'); // Specify the filename here
+      link.setAttribute('download', response.filename); // Specify the filename here
       document.body.appendChild(link);
       link.click();
       link.remove();

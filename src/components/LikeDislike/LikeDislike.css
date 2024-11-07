@@ -4,7 +4,7 @@
     justify-content: center;
     width: fit-content;
     padding: 4px;
-    gap: 5px;
+    gap: 15px;
 }
 .like, .dislike, .clickedLike, .clickedDisLike, .not_allowed {
     color: #3E456F;
@@ -12,24 +12,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 7px;
+    padding: 8px;
     border-radius: 30px;
-    /* border: 1px solid #3E456F; */
+    /* background-color: #d1eaff; */
+    box-shadow: 0px 0px 6px #3E456F, 0px 0px 6px #3E456F;
 }
-.like:hover, .dislike:hover, .clickedDisLike:hover, .clickedLike:hover {
-    filter: brightness(0.7);
+.like:hover, .dislike:hover {
+    filter: brightness(0.4);
 }
 .clickedLike {
     color: #0071CE;
-    border-color: #0071CE;
+    box-shadow: 0px 0px 10px #0071CE, 0px 0px 10px #0071CE;
+}
+.clickedLike:hover {
+    box-shadow: 0px 0px 12px #0071CE, 0px 0px 12px #0071CE;
 }
 .clickedDisLike {
     color: #FF0000;
-    border-color: #FF0000;
+    box-shadow: 0px 0px 10px #FF0000, 0px 0px 10px #FF0000;
+}
+.clickedDisLike:hover {
+    box-shadow: 0px 0px 12px #FF0000, 0px 0px 12px #FF0000;
 }
 .not_allowed {
     color: #A5A5A5;
-    border-color: #A5A5A5;
+    box-shadow: 0px 0px 8px #A5A5A5, 0px 0px 8px #A5A5A5;
 }
 .num_of_likes {
     font-weight: 500;
