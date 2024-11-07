@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Back = (pageFrom) => {
     const navigate = useNavigate();
     const goBack = () => {
-        navigate(pageFrom);
+        navigate(-1);
     };
     return (
         <div className='back' onClick={goBack}>
