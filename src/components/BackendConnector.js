@@ -100,15 +100,16 @@ export default class BackendConnector {
     
     static async download(endpoint, id) {
         const token = await this.getToken()
-        let url;
-        if (token) url = `${this.host}/${endpoint}/${id}?user_id=${token}`;
-        else  url =`${this.host}/${endpoint}/${id}`;
+        const url =`${this.host}/${endpoint}/${id}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
     
         try {
             const response = await axios({
                 method: 'get',
                 url: url,
                 responseType: 'blob',
+                headers: headers
             });
 
             let filename;
@@ -118,10 +119,8 @@ export default class BackendConnector {
             const contentDisposition = response.headers['Сontent-disposition'];
     
             if (contentDisposition) {
-                // Извлекаем имя файла с учетом кодировки utf-8
                 const match = contentDisposition.match(/filename\*?=\s*utf-8''([^;]+)/i);
                 if (match && match[1]) {
-                    // Декодируем имя файла, закодированное в формате URL
                     filename = decodeURIComponent(match[1]);
                 }
             } else {
