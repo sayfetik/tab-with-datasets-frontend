@@ -38,9 +38,7 @@ export default class BackendConnector {
 
     static async preview(id) {
         const token = await this.getToken()
-        let url;
-        if (token) url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${token}`;
-        else  url =`${this.host}/${this.preview_endpoint}/${id}`;
+        const url =`${this.host}/${this.preview_endpoint}/${id}`;
         const headers = {};
         if (token) headers['Authorization'] = `Bearer ${token}`;
     
