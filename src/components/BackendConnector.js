@@ -152,7 +152,6 @@ export default class BackendConnector {
         const token = await this.getToken();
         const url = `${this.host}/${this.upload_endpoint}`;
 
-
         formData.append('uploading_metadata', JSON.stringify(uploadingMetadata));
         
         for (let i = 0; i < uploadingFiles.length; i++) {
@@ -161,7 +160,21 @@ export default class BackendConnector {
         
         if (uploadingImage) formData.append('image', uploadingImage);
 
-        return await this.post(url, formData);
+        try {
+            const response = await axios({
+                method: 'post',
+                url: url,
+                data: data,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                  }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error uploading data:', error.response?.data || error.message);
+            return null;
+        }
     }
 
     static async update(id, uploading_metadata, files_updates, updatingFiles, updatingImage) {
