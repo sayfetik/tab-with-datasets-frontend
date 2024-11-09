@@ -419,9 +419,10 @@ export default class BackendConnector {
             method: 'GET',
             headers: headers
         });
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     
-        return response.data
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data;
     }
 
     static async getFailedRequests() {
