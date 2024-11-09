@@ -2,8 +2,8 @@ import axios from 'axios';
 import { keycloak } from '../keycloak';
 
 export default class BackendConnector {
-    // Метод для получения токена
     static async getToken() {
+        keycloak.updateToken()
         return keycloak.token;
     }
 
