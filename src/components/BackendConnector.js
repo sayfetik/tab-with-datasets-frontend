@@ -41,9 +41,12 @@ export default class BackendConnector {
         let url;
         if (token) url = `${this.host}/${this.preview_endpoint}/${id}?user_id=${token}`;
         else  url =`${this.host}/${this.preview_endpoint}/${id}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
     
         const response = await fetch(url, {
             method: 'GET',
+            headers: headers
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
@@ -396,12 +399,32 @@ export default class BackendConnector {
 
     static async getFailedRequests() {
         const token = await this.getToken();
-        return await this.get(`${this.failed_requests_endpoint}`);
+        const url = `${this.host}/${this.failed_requests_endpoint}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+        return response.data
     }
 
     static async getUploadedRequests() {
         const token = await this.getToken();
-        return await this.get(`${this.uploaded_requests_endpoint}`);
+        const url = `${this.host}/${this.uploaded_requests_endpoint}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+        return response.data
     }
 
     static async like(dataset_id) {
