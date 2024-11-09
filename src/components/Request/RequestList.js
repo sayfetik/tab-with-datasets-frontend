@@ -26,13 +26,7 @@ const RequestList = ({type, view}) => {
 
     useEffect(() => {
         fetchRequests();
-
-        const intervalId = setInterval(() => {
-            fetchRequests();
-        }, 5000);
-
-        return () => clearInterval(intervalId);
-    }, [type]);
+    }, []);
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
 
