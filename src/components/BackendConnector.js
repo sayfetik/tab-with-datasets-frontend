@@ -3,7 +3,8 @@ import { keycloak } from '../keycloak';
 
 export default class BackendConnector {
     static async getToken() {
-        const updated = await keycloak.updateToken(60);
+        let updated;
+        if (keycloak.token) updated = await keycloak.updateToken(60);
         return keycloak.token;
     }
 
@@ -115,11 +116,14 @@ export default class BackendConnector {
             let filename;
             if (endpoint === this.download_initial_dataset_endpoint) filename = 'base_dataset.zip';
             else filename = 'cleaned_dataset.zip'
-            const contentDisposition = response.headers['content-disposition'];
+            const contentDisposition = response.headers['Content-Disposition'];
+
+            console.log(response.headers)
     
             const fn = 'filename*'
             if (contentDisposition) {
                 const match = contentDisposition.match(/filename\*=utf-8''([^;]+)/i);
+                console.log(match)
                 if (match && match[1]) {
                     try {
                         filename = decodeURIComponent(match[1].replace(/\+/g, ' '));
