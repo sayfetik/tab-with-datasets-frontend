@@ -4,7 +4,7 @@ import back from '../../img/back.png'
 import './Back.css'
 import { useNavigate } from 'react-router-dom';
 
-const Back = (pageFrom) => {
+const Back = () => {
     const navigate = useNavigate();
     const goBack = () => {
         navigate(-1);

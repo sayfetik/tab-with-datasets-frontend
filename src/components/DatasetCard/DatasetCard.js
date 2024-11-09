@@ -29,7 +29,6 @@ const DatasetCard = ({
         };
 
         if (image === null) fetchImage();
-        console.log(title)
     }, [image, id])
 
     const getFileWord = (number) => {

@@ -115,12 +115,18 @@ export default class BackendConnector {
             let filename;
             if (endpoint === this.download_initial_dataset_endpoint) filename = 'base_dataset.zip';
             else filename = 'cleaned_dataset.zip'
-            const contentDisposition = response.headers['Сontent-disposition'];
+            const contentDisposition = response.headers['content-disposition'];
     
+            const fn = 'filename*'
             if (contentDisposition) {
-                const match = contentDisposition.match(/filename\*?=\s*utf-8''([^;]+)/i);
+                const match = contentDisposition.match(/filename\*=utf-8''([^;]+)/i);
                 if (match && match[1]) {
-                    filename = decodeURIComponent(match[1]);
+                    try {
+                        filename = decodeURIComponent(match[1].replace(/\+/g, ' '));
+                    } catch (e) {
+                        console.error('Error decoding filename:', e);
+                        filename = 'default_filename.zip';
+                    }
                 }
             } else {
                 console.warn('Content-Disposition header is missing. Using default filename.');
@@ -194,7 +200,6 @@ export default class BackendConnector {
         }
         
         const token = await this.getToken();
-    
         const api_url = `${this.host}/${this.update_endpoint}/${id}`;
     
         try {
@@ -223,6 +228,23 @@ export default class BackendConnector {
             const response = await axios({
                 method: 'get',
                 url: `${this.host}/${endpoint}`
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
+
+    static async getWithToken(endpoint) {
+        const token = await this.getToken();
+        try {
+            const response = await axios({
+                method: 'get',
+                url: `${this.host}/${endpoint}`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
             return response.data;
         } catch (error) {
@@ -429,13 +451,11 @@ export default class BackendConnector {
     }
 
     static async like(dataset_id) {
-        const token = await this.getToken();
-        return await this.get(`${this.like_dataset_endpoint}/${dataset_id}`);
+        return await this.getWithToken(`${this.like_dataset_endpoint}/${dataset_id}`);
     }
     
     static async dislike(dataset_id) {
-        const token = await this.getToken();
-        return await this.get(`${this.dislike_dataset_endpoint}/${dataset_id}`);
+        return await this.getWithToken(`${this.dislike_dataset_endpoint}/${dataset_id}`);
     }
 
     static async remove_rating(dataset_id) {

@@ -22,7 +22,6 @@ const Download = ({ isOpen, onClose, id, setdownloaded }) => {
   }
 
   const handleDownloadInitialDsClick = async () => {
-    setdownloaded(true);
     setloadingBase(true);
 
     try {
@@ -39,9 +38,9 @@ const Download = ({ isOpen, onClose, id, setdownloaded }) => {
             link.click();
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
+            setdownloaded(true);
         }
     } catch (error) {
-        seterrorBase(true);
         console.error('Error downloading file:', error);
     }
     setloadingBase(false);
@@ -49,9 +48,9 @@ const Download = ({ isOpen, onClose, id, setdownloaded }) => {
 
 
 const handleDownloadCleanedDsClick = async () => {
-  setdownloaded(true)
   try {
     setloadingAdvanced(true);
+    setdownloaded(true)
     const response = await BackendConnector.download_cleaned_dataset(id);
     if (response) {
       const url = window.URL.createObjectURL(response.blob);

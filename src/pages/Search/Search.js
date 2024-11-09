@@ -34,24 +34,37 @@ const Search = () => {
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
+    
         if (!(searchString.length > 0 || geography_and_places.length > 0 || language.length > 0 || data_type.length > 0 || task.length > 0 || technique.length > 0 || subject.length > 0)) {
             setwarningSearch(true);
             return;
         }
         
-        navigate(`/datasets`, { state: {
-            searchString: searchString,
-            geography_and_places: geography_and_places,
-            language: language,
-            data_type: data_type,
-            task: task,
-            technique: technique,
-            subject: subject
-        } })
+        const queryParams = new URLSearchParams({
+            searchString,
+            geography_and_places: geography_and_places.join(','),
+            language: language.join(','),
+            data_type: data_type.join(','),
+            task: task.join(','),
+            technique: technique.join(','),
+            subject: subject.join(',')
+        }).toString();
+    
+        navigate(`/datasets?${queryParams}`);
     };
 
     const handleTopicSearch = async (topic) => {
-        navigate(`/datasets`, { state: { searchString: topic } })
+        const queryParams = new URLSearchParams({
+            searchString: topic,
+            geography_and_places: geography_and_places.join(','),
+            language: language.join(','),
+            data_type: data_type.join(','),
+            task: task.join(','),
+            technique: technique.join(','),
+            subject: subject.join(',')
+        }).toString();
+    
+        navigate(`/datasets?${queryParams}`);
     };
 
     const handleKeyDown = (event) => {
@@ -108,7 +121,7 @@ const Search = () => {
 
     const handleUploadClick = () => {
         if (!auth) setauthWarning(true);
-        else navigate('/upload');
+        else navigate('/upload', { state: { pageFrom: '/' } });
     }
     
     useEffect(() => {

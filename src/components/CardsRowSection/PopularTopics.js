@@ -48,7 +48,7 @@ const PopularTopics = ({ topics, showAllClick }) => {
                 showPopularDatasets(topic); // Получаем датасеты для каждой метки
             });
         }
-    }, [topics]);
+    }, []);
 
     return (
         <div id='highlyRatedDatasetsSection'>
