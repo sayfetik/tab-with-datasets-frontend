@@ -50,7 +50,7 @@ const DatasetPage = () => {
     };
 
     fetchData();
-  }, [keycloak.authenticated, downloaded]);
+  }, [keycloak.authenticated, downloaded, id]);
 
   const renderMarkdownWithKaTeX = (text) => {
     marked.setOptions({
@@ -207,6 +207,7 @@ const DatasetPage = () => {
                 )}
               </div>
               <h2 id="datasetTitle">{dataset.title}</h2>
+              {dataset.tags &&
               <div id="tags">
                 {dataset.geography_and_places.length > 0 &&
                   dataset.geography_and_places.map(
@@ -262,7 +263,8 @@ const DatasetPage = () => {
                         </span>
                       )
                   )}
-              </div>
+
+              </div>}
               <div id="downloadSection">
                 <div id="downloadButtons">
                   <button
@@ -417,15 +419,9 @@ const DatasetPage = () => {
             </div>
           </div>
 
-          {datasets.length > 0 && (
+          {datasets && datasets.length > 0 && (
             <div id="cardsRowSection">
-              <div className="topicCardsInRow">
-                <h2>Похожее</h2>
-                {/*<div id='seeAllIcon'>
-                            <p id='seeAll'>Смотреть все</p>
-                            <img src={arrowsIcon} width={"19px"} alt=''/>
-                            </div>*/}
-              </div>
+              <div className="topicCardsInRow"><h2>Похожее</h2></div>
 
               <div id="cards">
                 {datasets.map((dataset) => (
@@ -435,7 +431,7 @@ const DatasetPage = () => {
                     title={dataset.title}
                     authors={dataset.authors}
                     numberOfFiles={dataset.number_of_files}
-                    lastChangeDatetime={dataset.last_change_date}
+                    lastChangeDate={dataset.last_change_date}
                     downloadsNumber={dataset.downloads_number}
                     size={dataset.size}
                     smallDescription={dataset.small_description}

@@ -5,6 +5,7 @@
     width: fit-content;
     padding: 4px;
     gap: 15px;
+    margin-top: 5px;
 }
 .like, .dislike, .clickedLike, .clickedDisLike, .not_allowed {
     color: #3E456F;

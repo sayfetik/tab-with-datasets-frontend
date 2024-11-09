@@ -29,6 +29,7 @@ const DatasetCard = ({
         };
 
         if (image === null) fetchImage();
+        console.log(title)
     }, [image, id])
 
     const getFileWord = (number) => {
@@ -45,11 +46,15 @@ const DatasetCard = ({
             }
         }
     };
+
+    const handleClick = () => {
+        navigate(`/dataset/${id}`);
+    };
     
     return (
         <div id='hover'>
             <div id='datasetCard'
-                onClick={() => {navigate(`/dataset/${id}`)}}
+                onClick={handleClick}
                 onMouseEnter={() => setshowSmallDescription(true)} 
                 onMouseLeave={() => setshowSmallDescription(false)} 
             >

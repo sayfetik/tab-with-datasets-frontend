@@ -264,3 +264,8 @@ padding: 0px 10px;
   font-weight: 500;
   margin: 0px 0px 5px 10px;
 }
+#visibilityChoice {
+  display: flex;
+  align-items: center;
+  margin: 7px 0px 10px 0px;
+}

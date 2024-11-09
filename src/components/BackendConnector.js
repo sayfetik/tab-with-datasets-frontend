@@ -381,7 +381,7 @@ export default class BackendConnector {
 
     static async getUploadingRequests() {
         const token = await this.getToken();
-        const url = `${this.host}/${this.uploading_requests_endpoint}/${token}`;
+        const url = `${this.host}/${this.uploading_requests_endpoint}`;
         const headers = {};
         if (token) headers['Authorization'] = `Bearer ${token}`;
     

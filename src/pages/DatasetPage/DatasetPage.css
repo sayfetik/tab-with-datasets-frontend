@@ -102,6 +102,9 @@
 .downloadIcon {
     margin-right: 10px;
 }
+#datasetTitle {
+    margin-bottom: 15px;
+}
 .datasetTag {
     border: solid 1px #3E456F;
     border-radius: 15px;
@@ -156,7 +159,6 @@
     width: fit-content;
     height: fit-content;
     line-height: 5px;
-    margin-bottom: 10px;
 }
 #editDatasetButton {
     display: flex;
