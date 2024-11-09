@@ -13,9 +13,12 @@ const RequestList = ({type, view}) => {
             if (type === 'uploading') data = await BackendConnector.getUploadingRequests();
             else if (type === 'failed') data = await BackendConnector.getFailedRequests();
             else if (type === 'uploaded') data = await BackendConnector.getUploadedRequests();
-            if (data && data.length > 0) setRequests(data.reverse());
+            if (data) {
+                if (data.length > 0) setRequests(data.reverse());
+                else setRequests(data);
+            }
         } catch (error) {
-            console.error("Error fetching data: ", error);
+            console.error(error);
             setError(true);
         }
         setisLoading(false);

@@ -344,8 +344,6 @@ export default class BackendConnector {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
-        console.log(response)
         return await response.json();
     };
     

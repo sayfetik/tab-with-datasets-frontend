@@ -132,8 +132,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             }
         } 
         BackendConnector.upload(payload, files, imageFile)
-            .then(response => {
-                console.log(response);
+            .then(() => {
                 navigate(`/uploadRequests`);
                 setIsUploading(false);
             })
