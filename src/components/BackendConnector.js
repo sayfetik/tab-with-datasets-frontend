@@ -3,7 +3,7 @@ import { keycloak } from '../keycloak';
 
 export default class BackendConnector {
     static async getToken() {
-        keycloak.updateToken()
+        const updated = await keycloak.updateToken(60);
         return keycloak.token;
     }
 
@@ -115,7 +115,6 @@ export default class BackendConnector {
             let filename;
             if (endpoint === this.download_initial_dataset_endpoint) filename = 'base_dataset.zip';
             else filename = 'cleaned_dataset.zip'
-            console.log(response.headers)
             const contentDisposition = response.headers['Сontent-disposition'];
     
             if (contentDisposition) {
