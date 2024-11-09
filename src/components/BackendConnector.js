@@ -436,8 +436,9 @@ export default class BackendConnector {
             headers: headers
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
     
-        return response.data
+        return data
     }
 
     static async getUploadedRequests() {
@@ -451,8 +452,9 @@ export default class BackendConnector {
             headers: headers
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
     
-        return response.data
+        return data
     }
 
     static async like(dataset_id) {
