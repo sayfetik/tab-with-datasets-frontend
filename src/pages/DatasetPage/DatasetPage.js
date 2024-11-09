@@ -50,7 +50,7 @@ const DatasetPage = () => {
     };
 
     fetchData();
-  }, [keycloak.authenticated, downloaded, id]);
+  }, [keycloak, downloaded, id]);
 
   const renderMarkdownWithKaTeX = (text) => {
     marked.setOptions({
@@ -188,6 +188,20 @@ const DatasetPage = () => {
   useEffect(() => {
     document.title = dataset.title;
   }, [dataset]);
+  
+  const update_frequency_dict = {
+    "never": "Никогда",
+    "onceWeek": "Раз в неделю",
+    "twiceWeek": "2 раза в неделю",
+    "threeAWeek": "3 раза в неделю",
+    "onceMonth": "Раз в месяц",
+    "twiceMonth": "2 раза в месяц",
+    "threeAMonth": "3 раза в месяц",
+    "onceYear": "Раз в год",
+    "twiceYear": "2 раза в год",
+    "threeAYear": "3 раза в год",
+    "fourAYear": "4 раза в год"
+}
 
   return (
     <div>
@@ -400,7 +414,7 @@ const DatasetPage = () => {
                 <div className="infoContainer">
                   <h4 className="metaWhite">Ожидаемая частота обновления</h4>
                   <p className="metaWhite">
-                    {dataset.expected_update_frequency}
+                    {update_frequency_dict[dataset.expected_update_frequency]}
                   </p>
                 </div>
               )}
