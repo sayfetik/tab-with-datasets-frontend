@@ -116,7 +116,7 @@ export default class BackendConnector {
             let filename;
             if (endpoint === this.download_initial_dataset_endpoint) filename = 'base_dataset.zip';
             else filename = 'cleaned_dataset.zip'
-            const contentDisposition = response.headers['Content-Disposition'];
+            const contentDisposition = response.headers['content-disposition'];
 
             console.log(response.headers)
     
