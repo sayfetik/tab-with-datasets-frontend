@@ -180,16 +180,13 @@ export default class BackendConnector {
     static async update(id, uploading_metadata, files_updates, updatingFiles, updatingImage) {
         const formData = new FormData();
     
-        // Добавление метаданных в форму
         formData.append('uploading_metadata', JSON.stringify(uploading_metadata));
         formData.append('files_updates', JSON.stringify(files_updates));
     
-        // Добавление файлов в форму
         for (let i = 0; i < updatingFiles.length; i++) {
             formData.append('files', updatingFiles[i]);
         }
     
-        // Добавление изображения, если оно есть
         if (updatingImage && updatingImage instanceof File) {
             formData.append('image', updatingImage);
         } else {
@@ -205,17 +202,14 @@ export default class BackendConnector {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    // Важно: не устанавливайте Content-Type, чтобы браузер сам его определил
-                    // 'Content-Type': 'multipart/form-data' 
+                    'Authorization': `Bearer ${token}`
                 }
             });
     
-            // Проверка на успешный ответ
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
-            // Получение данных из ответа
             const responseData = await response.json();
             return responseData;
         } catch (error) {
