@@ -176,7 +176,7 @@ const RequestPreview = () => {
                         <img id="datasetCoverImage" src={image} alt="Dataset cover"></img>
 
                         <div id='mainInfo'>
-                            <div>
+                            <div style={{marginBottom: '7px'}}>
                                 <p className='author'>{dataset.owner}</p>
                                 {dataset.visibility === "private" ?
                                     <div id='visibilityLabel'>Приватный</div>

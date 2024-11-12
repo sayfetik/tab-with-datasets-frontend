@@ -212,13 +212,12 @@ const DatasetPage = () => {
             <img id="datasetCoverImage" src={image} alt="Dataset cover"></img>
 
             <div id="mainInfo">
-              <div>
+              <div style={{marginBottom: '7px'}}>
                 <p className="author">{dataset.owner}</p>
-                {dataset.visibility === "private" ? (
-                  <div id="visibilityLabel">Приватный</div>
-                ) : (
-                  <div id="visibilityLabel">Публичный</div>
-                )}
+                {dataset.visibility === "private" ?
+                  <div id='visibilityLabel'>Приватный</div>
+                  : <div id='visibilityLabel'>Публичный</div>
+                }
               </div>
               <h2 id="datasetTitle">{dataset.title}</h2>
               {dataset.tags &&
@@ -376,6 +375,7 @@ const DatasetPage = () => {
                   }
                   className="rowSpaceBetween"
                 >
+
                   <p className="author">
                     Данные ({getFileCountString(dataset.files_structure)})
                   </p>
@@ -413,9 +413,7 @@ const DatasetPage = () => {
               {dataset.expected_update_frequency && (
                 <div className="infoContainer">
                   <h4 className="metaWhite">Ожидаемая частота обновления</h4>
-                  <p className="metaWhite">
-                    {update_frequency_dict[dataset.expected_update_frequency]}
-                  </p>
+                  <p className="metaWhite">{update_frequency_dict[dataset.expected_update_frequency]}</p>
                 </div>
               )}
               {dataset.last_change_date && (
