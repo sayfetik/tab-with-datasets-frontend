@@ -59,7 +59,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const requiredFields = {
         description: 'описание',
         smallDescription: 'краткое описание',
-        tags: 'теги',
         titleOfDataset: 'название',
         visibility: 'видимость',
         files: 'файлы'
@@ -70,9 +69,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     
         if (description.length === 0) newEmptyFields.push(requiredFields.description);
         if (smallDescription.length === 0) newEmptyFields.push(requiredFields.smallDescription);
-        
-        if (geography_and_places.length === 0 && language.length === 0 && subject.length === 0 && data_type.length === 0 && task.length === 0 && technique.length === 0)
-          newEmptyFields.push(requiredFields.tags);
     
         if (titleOfDataset.length === 0) newEmptyFields.push(requiredFields.titleOfDataset);
     
@@ -321,7 +317,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                         
                         {smallDescription.length > 0 &&
                             <div id='tagTypesContainer'>
-                                <span className='inputLabel' style={{marginBottom: '25px'}}>Теги *</span>
+                                <span className='inputLabel' style={{marginBottom: '25px'}}>Теги</span>
                                 <div id='tagType'>
                                     <InputTag label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                                 </div>
