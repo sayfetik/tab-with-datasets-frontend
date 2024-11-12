@@ -51,8 +51,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [GemptyFields, GsetEmptyFields] = useState(['описание','краткое описание','теги','название','файлы']);
     const [GemptyFieldsMessage, GsetemptyFieldsMessage,] = useState('');
 
-    let progress = (6-emptyFields.length)/6*100;
-    let Gprogress = (6-GemptyFields.length)/6*100;
+    let progress = (4-emptyFields.length)/4*100;
+    let Gprogress = (4-GemptyFields.length)/4*100;
 
     //const areRequiredInputsFilled = titleOfDataset && (isGenerateDesc ? generatedDescription : description) && smallDescription && (geography_and_places || language || data_type || task || technique || subject);
 
@@ -88,9 +88,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     
         if (generatedDescription.length === 0) newEmptyFields.push(requiredFields.description);
         if (smallDescription.length === 0) newEmptyFields.push(requiredFields.smallDescription);
-        
-        if (geography_and_places.length === 0 && language.length === 0 && subject.length === 0 && data_type.length === 0 && task.length === 0 && technique.length === 0)
-          newEmptyFields.push(requiredFields.tags);
     
         if (titleOfDataset.length === 0) newEmptyFields.push(requiredFields.titleOfDataset);
     
@@ -252,7 +249,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 />
 
                 <div id='rightContainer'>
-                    <div className='row'>
+                    <div className='descriptionChoiceButtons'>
                         <p>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
                             добавить своё описание</button>
@@ -304,7 +301,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                     <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                                 </div>
                                 <div id='rowContunuieLoading'>
-                                    <button id='continuie' onClick={generateSmallDescription}>
+                                    <button id='continuie' style={{padding: '9px 15px'}} onClick={generateSmallDescription}>
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание
                                     </button>
