@@ -14,6 +14,7 @@ const RequestList = ({type, view}) => {
             else if (type === 'failed') data = await BackendConnector.getFailedRequests();
             else if (type === 'uploaded') data = await BackendConnector.getUploadedRequests();
             if (data && data.length > 0) setRequests(data.reverse());
+            if (data && data.length === 0) setRequests(data);
             setError(false);
         } catch (error) {
             console.error(error);
@@ -26,7 +27,7 @@ const RequestList = ({type, view}) => {
         fetchRequests();
         const intervalId = setInterval(() => {
             fetchRequests();
-        }, 5000);
+        }, 7000);
 
         return () => clearInterval(intervalId);
     }, [type]);
