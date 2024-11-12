@@ -1,5 +1,5 @@
 import React , {useEffect} from 'react'
-import { Header, Back } from '../../components'
+import { Back } from '../../components'
 import './ErrorPage.css'
 import { useNavigate } from 'react-router-dom'; 
 

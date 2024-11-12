@@ -1,73 +1,171 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import folderDarkIcon from '../../img/folderDark.png';
-import { Back, Header, BackendConnector } from '../../components'
+import { useParams, useNavigate } from 'react-router-dom';
+import "katex/dist/katex.min.css";
+import { marked } from "marked";
+import katex from "katex";
+
+import { Back, BackendConnector, Files, DeleteVerification } from '../../components'
 
 const RequestPreview = () => {
-    const [dataset, setDataset] = useState();
-    const { state: request_id } = useLocation();
+    const [dataset, setDataset] = React.useState({
+        id: "",
+        title: "",
+        description: "",
+        small_description: "",
+        tags: [],
+        geography_and_places: [],
+        language: [],
+        data_type: [],
+        task: [],
+        technique: [],
+        subject: [],
+        owner: "",
+        authors: "",
+        data_source: "",
+        license: "",
+        number_of_files: 0,
+        doi: "",
+        expected_update_frequency: "",
+        last_change_date: "",
+        last_change_time: "",
+        downloads_number: 0,
+        visibility: "",
+        usability_rating: 0,
+        size: "",
+        size_bytes: 0,
+        rating: 0,
+        files_structure: {},
+        user_reaction: "",
+        likes_amount: 0,
+        dislikes_amount: 0,
+        isOwner: false,
+      });
+    const { request_id } = useParams();
+    const [image, setImage] = useState(null);
+    const navigate = useNavigate();
+    const [isDeleteVerification, setisDeleteVerification] = useState(false);
 
-    const formatFileSize = (size) => {
-        if (size === 0) return '0 Б';
-        const sizes = ['Б', 'КБ', 'МБ', 'ГБ'];
-        const i = Math.floor(Math.log(size) / Math.log(1024));
-        const formattedSize = (size / Math.pow(1024, i)).toFixed(2);
-        return `${formattedSize} ${sizes[i]}`;
-    };
+    const renderMarkdownWithKaTeX = (text) => {
+        marked.setOptions({
+          gfm: true,
+          breaks: true,
+          sanitize: false,
+        });
+    
+        // Заменяем \[...\] на $$...$$
+        text = text.replace(/\\\[(.*?)\\\]/g, (match, formula) => `$$${formula}$$`);
+    
+        // Преобразуем Markdown в HTML
+        let html = marked(text);
+    
+        // Преобразуем блочные формулы $$...$$
+        html = html.replace(/\$\$([^\$]+)\$\$/g, (match, formula) => {
+          try {
+            return `<div class="katex-block">${katex.renderToString(formula, {
+              displayMode: true,
+              throwOnError: false,
+            })}</div>`;
+          } catch (error) {
+            return match; // Возвращаем исходный текст, если есть ошибка
+          }
+        });
+    
+        // Преобразуем встроенные формулы $...$
+        html = html.replace(/\$([^\$]+)\$/g, (match, formula) => {
+          try {
+            return katex.renderToString(formula, { throwOnError: false });
+          } catch (error) {
+            return match; // Возвращаем исходный текст, если есть ошибка
+          }
+        });
+    
+        return html;
+      };
 
     useEffect(() => {
-        const fetchDatasetPreview = async () => {
+        const fetchData = async () => {
             try {
-                const data = await BackendConnector.previewUploadRequest(request_id);
-                setDataset(data);
+              const dataPreview = await BackendConnector.previewUploadRequest(request_id);
+              setDataset(dataPreview);
+      
+              const imageData = await BackendConnector.getImage(request_id);
+              setImage(imageData.imageUrl);
             } catch (error) {
-                console.error("Error fetching data: ", error);
-            }
-        };
-
-        fetchDatasetPreview();
-        console.log(dataset)
-    }, []);
-
-    const getFileWord = (number) => {
-        if (11 <= number % 100 && number % 100 <= 14) {
-            return `${number} файлов`;
-        } else { 
-            const lastDigit = number % 10;
-            if (lastDigit === 1) {
-                return `${number} файл`;
-            } else if (2 <= lastDigit && lastDigit <= 4) {
-                return `${number} файла`;
-            } else {
-                return `${number} файлов`;
+              console.error("Error fetching data: ", error);
+              navigate("/error");
             }
         }
-    };
+      
+        fetchData();
+    }, [request_id]);
 
-    function getFileCountString(folderCount, fileCount) {
+    const getFileCountString = (files_structure) => {
+        const getFilesAndFoldersCount = (files_structure) => {
+          const folderCount = Object.keys(files_structure).filter(
+            (key) =>
+              typeof files_structure[key] === "object" &&
+              files_structure[key] !== null
+          ).length;
+    
+          let totalFileCount = 0;
+          Object.entries(files_structure).forEach(([key, value]) => {
+            // Изменено, добавлен 'key'
+            if (typeof value === "object" && value !== null) {
+              totalFileCount += Object.keys(value).length;
+            } else {
+              totalFileCount += 1;
+            }
+          });
+          return { folders: folderCount, files: totalFileCount };
+        };
+    
         const getFolderWord = (count) => {
-          if (count % 10 === 1 && count % 100 !== 11) {
-            return 'папка';
-          } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'папки';
-          } else {
-            return 'папок';
-          }
+          if (count % 10 === 1 && count % 100 !== 11) return "папка";
+          else if (
+            count % 10 >= 2 &&
+            count % 10 <= 4 &&
+            (count % 100 < 10 || count % 100 >= 20)
+          )
+            return "папки";
+          else return "папок";
         };
-      
+    
         const getFileWord = (count) => {
-          if (count % 10 === 1 && count % 100 !== 11) {
-            return 'файл';
-          } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
-            return 'файла';
-          } else {
-            return 'файлов';
-          }
+          if (count % 10 === 1 && count % 100 !== 11) return "файл";
+          else if (
+            count % 10 >= 2 &&
+            count % 10 <= 4 &&
+            (count % 100 < 10 || count % 100 >= 20)
+          )
+            return "файла";
+          else return "файлов";
         };
-      
-        if (folderCount === 0) return `${fileCount} ${getFileWord(fileCount)}`;
-        return `${folderCount} ${getFolderWord(folderCount)}, ${fileCount} ${getFileWord(fileCount)}`;
-      }
+    
+        const counts = getFilesAndFoldersCount(files_structure);
+        if (counts.folders === 0)
+          return `${counts.files} ${getFileWord(counts.files)}`;
+        return `${counts.folders} ${getFolderWord(counts.folders)}, ${
+          counts.files
+        } ${getFileWord(counts.files)}`;
+      };
+    
+      const update_frequency_dict = {
+        "never": "Никогда",
+        "onceWeek": "Раз в неделю",
+        "twiceWeek": "2 раза в неделю",
+        "threeAWeek": "3 раза в неделю",
+        "onceMonth": "Раз в месяц",
+        "twiceMonth": "2 раза в месяц",
+        "threeAMonth": "3 раза в месяц",
+        "onceYear": "Раз в год",
+        "twiceYear": "2 раза в год",
+        "threeAYear": "3 раза в год",
+        "fourAYear": "4 раза в год"
+    }
+
+    const handleDeleteClick = () => {
+        setisDeleteVerification(true);
+      };
 
     return (
         <div>
@@ -75,15 +173,18 @@ const RequestPreview = () => {
                 <div id='datasetPage'>
                     <Back />
                     <div id='datasetInfoHeader'>
+                        <img id="datasetCoverImage" src={image} alt="Dataset cover"></img>
+
                         <div id='mainInfo'>
-                            <div className='rowSpaceBetween'>
-                                <p className='author'>{dataset.title}</p>
+                            <div>
+                                <p className='author'>{dataset.owner}</p>
                                 {dataset.visibility === "private" ?
                                     <div id='visibilityLabel'>Приватный</div>
                                     : <div id='visibilityLabel'>Публичный</div>
                                 }
                             </div>
                             <h1 id='datasetTitle'>{dataset.title}</h1>
+                            {dataset.tags && dataset.tags.length > 0 && 
                             <div id='tags'>
                                 {dataset.geography_and_places.length >0 && dataset.geography_and_places.map((tag, index) => ( 
                                     tag !== "" && <span key={index} className='datasetTag capitalize'>{tag}</span>
@@ -103,93 +204,68 @@ const RequestPreview = () => {
                                 {dataset.subject.length > 0 && dataset.subject.map((tag, index) => ( 
                                     tag !== "" && <span key={index} className='datasetTag'>{tag}</span>
                                 ))}
-                            </div>
-                            <div id='downloadRationgSection'>
-                                <button id='deleteDatasetButton'>Удалить</button>
-                            </div>
+                            </div>}
+                            <button
+                                className="whiteRedButton"
+                                onClick={handleDeleteClick}
+                                style={{ padding: "8px 16px", width: 'fit-content', marginLeft: '0px' }}
+                            >
+                                Удалить
+                            </button>
+                            <DeleteVerification
+                                onClose={() => {
+                                setisDeleteVerification(false);
+                                }}
+                                isOpen={isDeleteVerification}
+                                id={request_id}
+                                back={true}
+                            />
                         </div>
                     </div>
                         
                     <div id='datasetInfo'>
                         <div id='section'>
-                            <h2 id='descriptionLabel'>Описание</h2>
-                            <p id='description'>{dataset.description}</p>
-                            <h2 id='descriptionLabel'>Краткое описание</h2>
-                            <p id='description'>{dataset.small_description}</p>
-                            <div id='filesSection'>
-                                {dataset.number_of_files === 0 ?
-
-                                    <div id='filesHeader'>
-                                        <p className='author'>Данные ({getFileWord(dataset.number_of_files)})</p>
-                                    </div>
-
-                                    :
-
-                                    <div>
-                                        <div id='filesHeaderWithBottomDivider'>
-                                            {/* Calculate the number of folders and total files */}
-                                            {(() => {
-                                                const folderCount = Object.keys(dataset.files_structure).filter(key => 
-                                                    typeof dataset.files_structure[key] === 'object' && dataset.files_structure[key] !== null
-                                                ).length; // Count the number of folders
-                                                
-                                                let totalFileCount = 0;
-
-                                                // Calculate the total number of files in all folders and flat structures
-                                                Object.entries(dataset.files_structure).forEach(([key, value]) => {
-                                                    if (typeof value === 'object' && value !== null) {
-                                                        totalFileCount += Object.keys(value).length; // Count files in each folder
-                                                    } else {
-                                                        totalFileCount += 1; // Count the flat structure as a single file
-                                                    }
-                                                });
-
-                                                return (
-                                                    <p className='author'>Данные ({getFileCountString(folderCount, totalFileCount)})</p>
-                                                );
-                                            })()}
-                                            {/* <p className='author' id='versionLabel'>{dataset.version}</p> */}
-                                        </div>
-                                        <div className='files'>
-                                            {(() => {
-                                                // Check if files_structure is an object and not null
-                                                if (typeof dataset.files_structure === 'object' && dataset.files_structure !== null) {
-                                                    // Iterate through the entries of files_structure
-                                                    return Object.entries(dataset.files_structure).map(([folderName, files], index) => {
-                                                        // Check if the current entry is an object (folder)
-                                                        if (typeof files === 'object' && files !== null) {
-                                                            return (
-                                                                <div key={index}>
-                                                                    <div className='row folderMargin'>
-                                                                        <img id="folderIcon" src={folderDarkIcon} />
-                                                                        <p id='folderName'>{folderName}</p>
-                                                                    </div>
-                                                                    {Object.entries(files).map(([fileName, fileSize], subIndex) => (
-                                                                        <div key={subIndex} className='file' id='fileInFolder'>
-                                                                            {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                            <p className='fileDownload'>{fileName} {fileSize} && (- {formatFileSize(fileSize)})</p>
-                                                                        </div>
-                                                                    ))}
-                                                                </div>
-                                                            );
-                                                        } else {
-                                                            // If it's not an object, treat it as a flat structure
-                                                            return (
-                                                                <div key={index} className='file'>
-                                                                    {/*<Icon className="downloadIcon" image={downloadIconBlack} />*/}
-                                                                    <p className='fileDownload'>{folderName} - {formatFileSize(files)}</p>
-                                                                </div>
-                                                            );
-                                                        }
-                                                    });
-                                                } else {
-                                                    // Handle the case where files_structure is not a valid object
-                                                    return <p>No files</p>;
-                                                }
-                                            })()}
-                                        </div>
-                                    </div> 
+                            <h3 id='descriptionLabel'>Краткое описание</h3>
+                            <div
+                                id="textarea"
+                                style={{
+                                margin: "20px 0px",
+                                padding: "0",
+                                border: "none",
+                                backgroundColor: "transparent",
+                                }}
+                                dangerouslySetInnerHTML={{
+                                __html: renderMarkdownWithKaTeX(dataset.small_description),
+                                }}
+                            />
+                            <h3 id='descriptionLabel'>Описание</h3>
+                            <div
+                                id="textarea"
+                                style={{
+                                margin: "20px 0px",
+                                padding: "0",
+                                border: "none",
+                                backgroundColor: "transparent",
+                                }}
+                                dangerouslySetInnerHTML={{
+                                __html: renderMarkdownWithKaTeX(dataset.description),
+                                }}
+                            />
+                            <div id="filesSection">
+                                <div
+                                id={
+                                    dataset.number_of_files === 0
+                                    ? "filesHeader"
+                                    : "filesHeaderWithBottomDivider"
                                 }
+                                className="rowSpaceBetween"
+                                >
+                                <p className="author">
+                                    Данные ({getFileCountString(dataset.files_structure)})
+                                </p>
+                                <p className="author">{dataset.size}</p>
+                                </div>
+                                <Files filesStructure={dataset.files_structure} />
                             </div>
                         </div>
                         
@@ -212,7 +288,7 @@ const RequestPreview = () => {
                             </div>
                             <div className='infoContainer'>
                                 <h4 className='metaWhite'>Ожидаемая частота обновления</h4>
-                                <p className='metaWhite'>{dataset.expected_update_frequency}</p>
+                                <p className='metaWhite'>{update_frequency_dict[dataset.expected_update_frequency]}</p>
                             </div>
                             <div className='infoContainer'>
                                 <h4 className='metaWhite'>Последнее изменение</h4>
@@ -234,7 +310,10 @@ const RequestPreview = () => {
                     </div>
                 </div>
                 :
-                <h3 style={{margin: '50px 0px 0px 80px'}}>Не удалось получить информацию о датасете. Повторите попытку позже</h3>}
+                <div style={{marginLeft: '100px'}}>
+                    <Back />
+                    <h3 style={{margin: '50px 0px 0px 0px'}}>Не удалось получить информацию о датасете. Повторите попытку позже</h3>
+                </div>}
         </div>
     );
 }
