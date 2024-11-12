@@ -300,21 +300,21 @@ const DatasetPage = () => {
                 </div>
                 {/* <div id='numOfDownloads'>{dataset.downloads_number} скачиваний</div> */}
               </div>
+              <Download
+                auth={auth}
+                isOpen={isDownloadOpen}
+                onClose={() => setIsDownloadOpen(false)}
+                id={dataset.id}
+                setdownloaded={setdownloaded}
+              />
+              <DownloadCopyCode
+                auth={auth}
+                isOpen={isCopyCodeOpen}
+                onClose={() => setIsCopyCodeOpen(false)}
+                id={dataset.id}
+              />
               {!dataset.isOwner ? (
                 <div>
-                  <Download
-                    auth={auth}
-                    isOpen={isDownloadOpen}
-                    onClose={() => setIsDownloadOpen(false)}
-                    id={dataset.id}
-                    setdownloaded={setdownloaded}
-                  />
-                  <DownloadCopyCode
-                    auth={auth}
-                    isOpen={isCopyCodeOpen}
-                    onClose={() => setIsCopyCodeOpen(false)}
-                    id={dataset.id}
-                  />
                   <LikeDislike
                     auth={auth}
                     dataset_id={dataset.id}
@@ -324,7 +324,7 @@ const DatasetPage = () => {
                   />
                 </div>
               ) : (
-                <div className="row">
+                <div className="row" style={{marginTop: '15px'}}>
                   <button
                     className="whiteBlueButton"
                     style={{ margin: "0", padding: "8px 16px" }}
