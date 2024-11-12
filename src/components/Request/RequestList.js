@@ -13,10 +13,8 @@ const RequestList = ({type, view}) => {
             if (type === 'uploading') data = await BackendConnector.getUploadingRequests();
             else if (type === 'failed') data = await BackendConnector.getFailedRequests();
             else if (type === 'uploaded') data = await BackendConnector.getUploadedRequests();
-            if (data) {
-                if (data.length > 0) setRequests(data.reverse());
-                else setRequests(data);
-            }
+            if (data && data.length > 0) setRequests(data.reverse());
+            setError(false);
         } catch (error) {
             console.error(error);
             setError(true);
@@ -26,7 +24,12 @@ const RequestList = ({type, view}) => {
 
     useEffect(() => {
         fetchRequests();
-    }, []);
+        const intervalId = setInterval(() => {
+            fetchRequests();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, [type]);
 
     const [openStageIndex, setOpenStageIndex] = useState([]);
 
