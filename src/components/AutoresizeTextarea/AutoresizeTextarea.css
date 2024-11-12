@@ -17,7 +17,7 @@ textarea {
   align-items: center;
 }
 #textarea {
-  width: 100%;
+  width: 90%;
   margin-bottom: 10px;
   color: #3E456F;
   padding: 10px 20px;
@@ -27,6 +27,9 @@ textarea {
   background-color: #ffffff;
   font-size: 16px;
   box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 #textarea:focus {
   border: 1px solid rgba(0, 113, 206, 1);

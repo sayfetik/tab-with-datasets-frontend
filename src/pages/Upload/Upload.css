@@ -24,8 +24,8 @@
     word-break: break-word;
   }
   .metadataSection {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(300px, 1.5fr);
 }
 @media screen and (max-width: 1200px) {
   .metadataSection {
@@ -268,4 +268,9 @@ padding: 0px 10px;
   display: flex;
   align-items: center;
   margin: 7px 0px 10px 0px;
+}
+.descriptionChoiceButtons {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
