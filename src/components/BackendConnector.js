@@ -3,8 +3,7 @@ import { keycloak } from '../keycloak';
 
 export default class BackendConnector {
     static async getToken() {
-        let updated;
-        if (keycloak.token) updated = await keycloak.updateToken(60);
+        if (keycloak.token) await keycloak.updateToken(60);
         return keycloak.token;
     }
 
@@ -120,7 +119,6 @@ export default class BackendConnector {
 
             console.log(response.headers)
     
-            const fn = 'filename*'
             if (contentDisposition) {
                 const match = contentDisposition.match(/filename\*=utf-8''([^;]+)/i);
                 console.log(match)
@@ -275,10 +273,14 @@ export default class BackendConnector {
     }
 
     static async _delete(endpoint) {
+        const token = await this.getToken()
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
         try {
             const response = await axios({
                 method: 'delete',
-                url: `${this.host}/${endpoint}`
+                url: `${this.host}/${endpoint}`,
+                headers: headers
             });
             return response.data;
         } catch (error) {
@@ -406,7 +408,53 @@ export default class BackendConnector {
     }
 
     static async previewUploadRequest(request_id) {
-        return await this.get(`${this.uploadRequestPreview_endpoint}/${request_id}`);
+        const token = await this.getToken()
+        const url =`${this.host}/${this.uploadRequestPreview_endpoint}/?request_id=${request_id}`;
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+    
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: headers
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const responseData = await response.json();
+        const data = responseData.metadata;
+    
+        return {
+            id: data.id || '',
+            title: data.title || '',
+            description: data.description || '',
+            small_description: data.small_description || '',
+            geography_and_places: data.tags.geography_and_places || [],
+            language: data.tags.language || [],
+            data_type: data.tags.data_type || [],
+            task: data.tags.task || [],
+            technique: data.tags.technique || [],
+            subject: data.tags.subject || [],
+            owner: data.owner || '',
+            authors: data.authors || '',
+            data_source: data.data_source || '',
+            license: data.license || '',
+            number_of_files: data.number_of_files || 0,
+            doi: data.doi || '',
+            expected_update_frequency: data.expected_update_frequency || 'Никогда',
+            last_change_date: data.last_change_date || '',
+            last_change_time: data.last_change_time || '',
+            downloads_number: data.downloads_number || 0,
+            visibility: data.visibility || '',
+            usability_rating: data.usability_rating || 0,
+            size: data.size || '',
+            size_bytes: data.size_bytes || 0,
+            files: data.files || [],
+            rating: data.rating || 0,
+            files_structure: data.files_structure || {},
+            user_reaction: responseData.rating || '',
+            likes_amount: data.likes_amount || 0,
+            dislikes_amount: data.dislikes_amount || 0,
+            isOwner: responseData.is_owner || false,
+        };
     }
 
     static async getUploadingRequests() {

@@ -37,7 +37,7 @@ const AppContent = () => {
         <Route path="/dataset/:id" element={<DatasetPage />} />
         <Route path="/upload" element={<Upload {...datasetRestrictions} />} />
         <Route path="/datasets" element={<Datasets />} />
-        <Route path="/requestPreview" element={<RequestPreview />} />
+        <Route path="/requestPreview/:request_id" element={<RequestPreview />} />
         <Route path="/uploadRequests" element={<UploadRequests />} />
         <Route path="error" element={<ErrorPage />} />
         <Route
