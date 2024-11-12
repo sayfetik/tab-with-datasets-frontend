@@ -515,7 +515,7 @@ export default class BackendConnector {
 
     static async remove_rating(dataset_id) {
         const token = await this.getToken();
-        return await this.get(`${this.remove_rating_endpoint}/${dataset_id}`);
+        return await this.getWithToken(`${this.remove_rating_endpoint}/${dataset_id}`);
     }
 
     static async highly_rated_datasets(results_limit) {
