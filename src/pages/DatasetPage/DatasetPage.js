@@ -1,6 +1,6 @@
 import "katex/dist/katex.min.css";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import downloadIconWhite from "../../img/downloadWhite.png";
 import "./DatasetPage.css";
 import copyBlue from "../../img/copyBlue.png";
@@ -19,6 +19,7 @@ import katex from "katex";
 import { useKeycloak } from "../../keycloak";
 
 const DatasetPage = () => {
+    const location = useLocation();
   const navigate = useNavigate();
   const { keycloak } = useKeycloak();
   const auth = keycloak.authenticated;
@@ -44,13 +45,13 @@ const DatasetPage = () => {
           setDatasets(recommendations);
         }
       } catch (error) {
-        console.error("Error fetching data: ", error);
+        console.error(error);
         navigate("/error");
       }
     };
 
     fetchData();
-  }, [keycloak, downloaded, id]);
+  }, [keycloak, isDownloadOpen, id]);
 
   const renderMarkdownWithKaTeX = (text) => {
     marked.setOptions({
