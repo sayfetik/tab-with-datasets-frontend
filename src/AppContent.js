@@ -21,7 +21,7 @@ const datasetRestrictions = {
   authorsLimit: 500,
   sourceLimit: 100,
   frequencyLimit: 100,
-  descriptionFieldsLimit: 10,
+  descriptionFieldsLimit: 3000,
 };
 
 const AppContent = () => {
