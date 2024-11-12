@@ -349,7 +349,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
             {!isGenerateDesc ?
             <div className='rowSpaceBetween'>
-                <div style={{width: '84%', marginTop: '15px'}}>
+                <div style={{width: '84%', margin: '15px 25px 0px 0px'}}>
                     <div className='progressBar'><div className='progress' style={{ width: `${progress}%` }}></div></div>
                     <p style={{fontSize: '18px', fontWeight: '500'}} id='requiredFieldsLabel'>{emptyFieldsMessage}</p>
                 </div>
