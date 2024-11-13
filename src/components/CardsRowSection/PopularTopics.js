@@ -10,7 +10,7 @@ import images_icon from '../../img/popularTopicsIcons/images.png';
 import marketing_icon from '../../img/popularTopicsIcons/marketing.png';
 import movies_icon from '../../img/popularTopicsIcons/movies.png';
 
-const PopularTopics = ({ topics, showAllClick }) => {
+const PopularTopics = ({ topics, showAllClick, addToHistory }) => {
     const [datasets, setDatasets] = useState([]);
 
     // Маппинг иконок по меткам
@@ -77,6 +77,7 @@ const PopularTopics = ({ topics, showAllClick }) => {
                                     downloadsNumber={dataset.downloads_number}
                                     size={dataset.size}
                                     smallDescription={dataset.small_description}
+                                    addToHistory={addToHistory}
                                 />
                             ))}
                         </div>

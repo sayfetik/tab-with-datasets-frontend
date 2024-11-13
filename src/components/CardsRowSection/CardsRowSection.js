@@ -3,7 +3,7 @@ import './CardsRowSection.css'
 import DatasetCard from '../DatasetCard/DatasetCard'
 import fireIcon from '../../img/fireIcon.png';
 
-const CardsRowSection = ({label, datasets}) => {
+const CardsRowSection = ({label, datasets, addToHistory}) => {
     return ( datasets &&
         (<div id='highlyRatedDatasetsSection'>
             <div className='row' style={{marginBottom: '5px'}}>
@@ -23,6 +23,7 @@ const CardsRowSection = ({label, datasets}) => {
                             downloadsNumber={dataset.downloads_number}
                             size={dataset.size}
                             smallDescription={dataset.small_description}
+                            addToHistory={addToHistory}
                         />))}
                 </div>
             </div>

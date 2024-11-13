@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UploadRequest, RequestCard, BackendConnector } from '../';
 import loadingDarkGif from '../../img/loadingDark.gif';
 
-const RequestList = ({type, view}) => {
+const RequestList = ({addToHistory, type, view}) => {
     const [requests, setRequests] = useState([]);
     const [error, setError] = useState(false);
     const [loading, setisLoading] = useState(true);
@@ -63,13 +63,14 @@ const RequestList = ({type, view}) => {
                     toggleStage={toggleStage}
                     isOpen={openStageIndex.includes(request.request_id)}
                     fetchPreview={type === 'uploaded'}
+                    addToHistory={addToHistory}
                 />))}
         </div>)
     } else { return (
         <div id='cardsContainer'>
             <div id='cards'>
                 {requests.map((request, index) => (
-                    <RequestCard key={index} request={request} fetchPreview={type === 'uploaded'}/>
+                    <RequestCard key={index} request={request} fetchPreview={type === 'uploaded'} addToHistory={addToHistory}/>
                 ))}
             </div>
         </div>)  

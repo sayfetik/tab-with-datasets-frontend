@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { IconButton } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-const Datasets = () => {
+const Datasets = ({addToHistory, back}) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [sortedData, setSortedData] = useState([]);
@@ -52,6 +52,7 @@ const Datasets = () => {
             setSubject(newSubject);
         }
         document.title = `Поиск: ${newSearchString}`;
+        addToHistory(`/datasets/${queryParams}`);
         search();
     }, [location.search]);
 
@@ -133,7 +134,7 @@ const Datasets = () => {
 
     return (
         <div id='datasets'>
-            <Back />
+            <Back back={back}/>
             <div className='searchFiltersSort'>
                 <form id='inputSearchDatasets' onSubmit={handleClick} onKeyDown={handleKeyDown}>
                     <input

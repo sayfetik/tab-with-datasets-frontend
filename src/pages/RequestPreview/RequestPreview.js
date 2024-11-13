@@ -6,7 +6,7 @@ import katex from "katex";
 
 import { Back, BackendConnector, Files, DeleteVerification } from '../../components'
 
-const RequestPreview = () => {
+const RequestPreview = ({back}) => {
     const [dataset, setDataset] = React.useState({
         id: "",
         title: "",
@@ -171,7 +171,7 @@ const RequestPreview = () => {
         <div>
             {dataset ?
                 <div id='datasetPage'>
-                    <Back />
+                    <Back back={back}/>
                     <div id='datasetInfoHeader'>
                         <img id="datasetCoverImage" src={image} alt="Dataset cover"></img>
 
@@ -218,7 +218,7 @@ const RequestPreview = () => {
                                 }}
                                 isOpen={isDeleteVerification}
                                 id={request_id}
-                                back={true}
+                                back={back}
                             />
                         </div>
                     </div>

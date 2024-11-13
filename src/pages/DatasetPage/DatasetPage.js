@@ -13,13 +13,13 @@ import {
   DeleteVerification,
   LikeDislike,
   Files,
+  back
 } from "../../components";
 import { marked } from "marked";
 import katex from "katex";
 import { useKeycloak } from "../../keycloak";
 
-const DatasetPage = () => {
-    const location = useLocation();
+const DatasetPage = ({addToHistory, back}) => {
   const navigate = useNavigate();
   const { keycloak } = useKeycloak();
   const auth = keycloak.authenticated;
@@ -125,6 +125,7 @@ const DatasetPage = () => {
   });
 
   const handleEditClick = () => {
+    addToHistory("/editDataset");
     navigate("/editDataset", { state: dataset });
   };
 
@@ -208,7 +209,7 @@ const DatasetPage = () => {
     <div>
       {dataset ? (
         <div id="datasetPage">
-          <Back />
+          <Back back={back} />
           <div id="datasetInfoHeader">
             <img id="datasetCoverImage" src={image} alt="Dataset cover"></img>
 
@@ -317,6 +318,7 @@ const DatasetPage = () => {
                 <div>
                   <LikeDislike
                     auth={auth}
+                    back={back}
                     dataset_id={dataset.id}
                     previousReaction={dataset.user_reaction}
                     likes_amount={dataset.likes_amount}
@@ -345,7 +347,7 @@ const DatasetPage = () => {
                     }}
                     isOpen={isDeleteVerification}
                     id={dataset.id}
-                    back={true}
+                    back={back}
                   />
                 </div>
               )}
@@ -448,6 +450,7 @@ const DatasetPage = () => {
                     downloadsNumber={dataset.downloads_number}
                     size={dataset.size}
                     smallDescription={dataset.small_description}
+                    addToHistory={addToHistory}
                   />
                 ))}
               </div>

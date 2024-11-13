@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import sparklesIcon from '../../img/sparkles.png';
 import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
-const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
+const Upload = ({addToHistory, back, descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
     const navigate = useNavigate();
     useEffect(() => { document.title = `Загрузить датасет`; }, []);
 
@@ -126,6 +126,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
         } 
         BackendConnector.upload(payload, files, imageFile)
             .then(() => {
+                addToHistory(`/uploadRequests`)
                 navigate(`/uploadRequests`);
                 setIsUploading(false);
             })
@@ -221,7 +222,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     return (
         <div>
             <div className='upload'>
-            <Back />
+            <Back back={back} />
             
             <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} fileSizes={fileSizes} setFileSizes={setFileSizes} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             

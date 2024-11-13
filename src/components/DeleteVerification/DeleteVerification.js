@@ -15,8 +15,7 @@ const DeleteVerification = ({ isOpen, onClose, id, back }) => {
       event.preventDefault();
       BackendConnector.delete(id)
         .then(() => {
-            if (back) navigate(-1);
-            else onClose();
+            navigate(back());
         })
         .catch(error => {
           setdeleteWarning(true);

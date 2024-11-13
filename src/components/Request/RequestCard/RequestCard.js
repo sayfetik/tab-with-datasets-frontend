@@ -6,12 +6,9 @@ import { BackendConnector, RequestFullModal, DeleteVerification, RequestStatus }
 import default_image from '../../../img/default_image.jpg';
 import redTrash from '../../../img/trashRed.png';
 import arrowDownIcon from '../../../img/arrowDown.png';
-import editIcon from '../../../img/editBlue.png';
-import editBlueIcon from '../../../img/editBlue.png';
 
-const RequestCard = ({ request, fetchPreview }) => {
+const RequestCard = ({ addToHistory, request, fetchPreview }) => {
     const navigate = useNavigate();
-    const [menuState, setMenuState] = useState(false);
     const [fullStages, setfullStages] = useState(false);
     
     const [isDeleteVerification, setisDeleteVerification] = useState(false);
@@ -59,11 +56,17 @@ const RequestCard = ({ request, fetchPreview }) => {
     }, [request.request_id]);
 
     const handleEditClick = () => {
+        addToHistory('/editDataset');
         navigate('/editDataset', { state: dataset });
       };
 
     const handleDeleteClick = () => {
         setisDeleteVerification(true);
+    }
+
+    const gotoDataset = () => {
+        addToHistory(`/dataset/${request.request_id}`)
+        navigate(`/dataset/${request.request_id}`)
     }
 
     return (
@@ -72,7 +75,7 @@ const RequestCard = ({ request, fetchPreview }) => {
                 <div style={{display: 'flex'}}>
                     <img id='datasetImage' src={default_image} alt='Ошибка загрузки изображения'></img>
                     {fetchPreview ?
-                        <p id='uploadedDatasetTitleList' onClick={() => {navigate(`/dataset/${request.request_id}`)}}>{request.dataset_title}</p>
+                        <p id='uploadedDatasetTitleList' onClick={gotoDataset}>{request.dataset_title}</p>
                         :
                         <p id='datasetTitleList'>{request.dataset_title}</p>
                     }
@@ -81,13 +84,13 @@ const RequestCard = ({ request, fetchPreview }) => {
                     <RequestStatus request={request} />
                     <button id='showStagesButton' onClick={() => setfullStages(true)}>
                         Подробнее о загрузке
-                        <img alt='down' id='arrowDown' src={arrowDownIcon} onClick={()=>{setMenuState(true)}}/>
+                        <img alt='down' id='arrowDown' src={arrowDownIcon}/>
                     </button>
                     <RequestFullModal request={request} isOpen={fullStages} onClose={()=>{setfullStages(false)}} />
                     
                     <div className='rowEditDeleteRequestCard'>
                         {request.uploading?.status === 'done' && <button className='lightBlueButton' id='editButtonOnRequest' style={{marginLeft: '0', padding: '5px 20px'}} onClick={handleEditClick}>Редактировать</button>}
-                        {request.uploading?.status === 'done' && <button className='deleteButtonOnRequest' onClick={handleDeleteClick}><img src={redTrash} id='trashIconList' alt="Удалить" /></button>}
+                        <button className='deleteButtonOnRequest' onClick={handleDeleteClick}><img src={redTrash} id='trashIconList' alt="Удалить" /></button>
                         <DeleteVerification onClose={()=>{setisDeleteVerification(false)}} isOpen={isDeleteVerification} id={request.request_id} />
                     </div>
                 </div>

@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Icon from '../Icon/Icon'
-import back from '../../img/back.png'
+import backIcon from '../../img/back.png'
 import './Back.css'
 import { useNavigate } from 'react-router-dom';
 
-const Back = () => {
+const Back = ({back}) => {
+    const click = () => {
+        console.log(back());
+        navigate(back())
+    }
     const navigate = useNavigate();
-    const goBack = () => {
-        navigate(-1);
-    };
     return (
-        <div className='back' onClick={goBack}>
-            <Icon image={back} />
+        <div className='back' onClick={click}>
+            <Icon image={backIcon} />
             <button>Назад</button>
         </div>
     )   

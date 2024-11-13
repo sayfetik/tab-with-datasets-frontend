@@ -15,7 +15,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { useKeycloak } from "../../keycloak";
 import fireIcon from "../../img/fireIcon.png";
 
-const Search = () => {
+const Search = ({addToHistory}) => {
     const { keycloak } = useKeycloak()
     const auth = keycloak.authenticated
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,6 +64,7 @@ const Search = () => {
             subject: subject.join(',')
         }).toString();
     
+        addToHistory(`/datasets?${queryParams}`);
         navigate(`/datasets?${queryParams}`);
     };
 
@@ -127,6 +128,7 @@ const Search = () => {
     useEffect(() => {
         document.title = `Поиск датасета`;
         getHighlyRatedDatasets();
+        addToHistory('/');
       }, []);
 
     return (
@@ -181,8 +183,8 @@ const Search = () => {
                     ))}
                 </div>
 
-                <CardsRowSection datasets={datasets} label='Высокий рейтинг'/>   
-                <PopularTopics topics={topics} showAllClick={handleTopicSearch}/>         
+                <CardsRowSection addToHistory={addToHistory} datasets={datasets} label='Высокий рейтинг'/>   
+                <PopularTopics addToHistory={addToHistory} topics={topics} showAllClick={handleTopicSearch}/>         
             </div>
         </div>
     );
