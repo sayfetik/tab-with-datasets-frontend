@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './EditPage.css'
 import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
-const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, doiLimit}) => {
+const EditPage = ({addToHistory, back, descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, doiLimit}) => {
     const { state: dataset } = useLocation();
     useEffect(() => {
         document.title = `Редактировать датасет "${dataset.title}"`;
@@ -101,20 +101,21 @@ const EditPage = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsL
             BackendConnector.update(dataset.id, uploading_metadata, files_updates, files, imageFile)
                 .then(response => {
                     console.log(response);
-                    navigate(`/uploadRequests`);
+                    addToHistory(`/uploadRequests`)
+                    navigate(`/uploadRequests`, {replace: true});
                     setIsUploading(false);
                 })
                 .catch(error => {
                     console.error(error);
+                    navigate('/error')
                 });
     };
 }
     
     return (
         <div>
-            <Header />
             <div className='upload'>
-            <Back />
+            <Back back={back}/>
 
             <UploadFile pageLabel="Редактировать датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} fileSizes={fileSizes} setFileSizes={setFileSizes} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             

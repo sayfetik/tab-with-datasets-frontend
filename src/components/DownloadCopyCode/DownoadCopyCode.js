@@ -54,6 +54,7 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
             }
         };
 
+        if (!id) return;
         getCleanedInitialCode();
         getCleanedCleanedCode();
     }, [id]);
@@ -84,8 +85,8 @@ const DownloadCopyCode = ({ isOpen, onClose, id }) => {
                     <h3>Скопировать код для скачивания</h3>
                     <button className="modal-close-button" onClick={onClose}>&times;</button>
                 </div>
-                <div className='row'>
-                    <div style={{ marginRight: '50px' }}>
+                <div id='codeContainer'>
+                    <div id='blueCodeContainer'>
                         <div className='codeLabel'>
                             <div className='row'>
                                 <p id='datasetBaseClean'>Датасет с базовой обработкой</p>

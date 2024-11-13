@@ -4,26 +4,37 @@ import { marked } from 'marked'; // Правильный импорт
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 
-const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, length, height, markdown }) => {
+const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, length, markdown }) => {
   const textareaRef = useRef(null);
-  const [isEditing, setIsEditing] = useState(true); // Флаг редактирования
-  const renderedRef = useRef(null); // Реф для отрисованного HTML
+  const [isEditing, setIsEditing] = useState(true);
+  const renderedRef = useRef(null);
 
   useEffect(()=>{
     textareaRef.current.blur()
   },[])
-  useEffect(() => {
+  
+  const handleResize = () => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = '50px';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.height = '50px'; // Сброс высоты
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Установка высоты
     }
-  }, [value, isEditing]);
-
-  useEffect(() => {
     if (!isEditing && renderedRef.current) {
       renderedRef.current.innerHTML = renderMarkdownWithKaTeX(value);
+      renderedRef.current.style.height = '50px'; // Сброс высоты
+      renderedRef.current.style.height = `${renderedRef.current.scrollHeight + 7}px`; // Установка высоты
     }
-  }, [isEditing, value, renderedRef]);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize); // Добавление обработчика события
+
+    // Вызов функции для первоначальной настройки
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Очистка обработчика при размонтировании
+    };
+  }, [isEditing, value]);
 
   const handleChange = (event) => {
     if (event.target.value.length <= textLimit || textLimit === 0) {
@@ -119,9 +130,9 @@ const AutoResizeTextarea = ({ value, setValue, textLimit, placeholder, label, le
             onClick={handleFocus}
           />
         )}
-        <p id="textLimit">
+        <div id="textLimit" style={{ padding: '0'}}>
           <p style={{ color: counterColor }}>{value.length}</p>/{textLimit}
-        </p>
+        </div>
       </div>
     </div>
   :

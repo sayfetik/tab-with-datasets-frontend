@@ -74,7 +74,7 @@
 #downloadSection {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 #downloadButtons {
     display: flex;
@@ -102,6 +102,9 @@
 .downloadIcon {
     margin-right: 10px;
 }
+#datasetTitle {
+    margin-bottom: 15px;
+}
 .datasetTag {
     border: solid 1px #3E456F;
     border-radius: 15px;
@@ -126,6 +129,7 @@
     padding-left: 4px;
     line-height: 20px;
     margin-right: 2%;
+    margin: 0;
 }
 #descriptionLabel {
     margin-bottom: 10px;
@@ -133,43 +137,6 @@
 #description {
     width: 100%;
     margin-bottom: 30px;
-}
-#filesSection {
-    background-color: white;
-    border-radius: 20px;
-    margin-bottom: 50px;
-    box-shadow: 0 5px 1px #0071CE, 6px 5px 5px 0 #0071CE;
-}
-#filesHeaderWithBottomDivider {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    background-color: transparent;
-    padding-bottom: 15px;
-    border-bottom:  solid 1px #3E456F;
-}
-#filesHeader {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    background-color: transparent;
-}
-.files {
-    padding: 20px;
-    padding-top: 15px;
-    background-color: transparent;
-}
-#datasetInfo, #section, #filesSection, .files, .file {
-    width: 100%;
-}
-.file {
-    background-color: transparent;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-}
-.fileDownload {
-    margin-left: 10px;
 }
 #rating {
     font-weight: 500;
@@ -192,7 +159,6 @@
     width: fit-content;
     height: fit-content;
     line-height: 5px;
-    margin-bottom: 10px;
 }
 #editDatasetButton {
     display: flex;
@@ -222,11 +188,6 @@
 #deleteDatasetButton:hover {
     background-color: #b45459;
     color: white;
-}
-#fileInFolder {
-    padding-left: 13px;
-    margin-left: 10px;
-    border-left: 1px solid #3E456F;
 }
 .folderMargin {
     margin-top: 8px;

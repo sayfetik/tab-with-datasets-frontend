@@ -27,6 +27,7 @@ const InputMetadata = ({
         setwarningDoi(false)
         setDoi(value);
         if (value && !value.startsWith('https://doi.org/')) setwarningDoi(true);
+        console.log(visibility)
     };
 
     return (
@@ -40,10 +41,13 @@ const InputMetadata = ({
                 textLimit={titleLimit}
             />
             <div className='metadataLabel'>Видимость *</div>
-            <select className="selectionInput" style={{width: '80%'}} value={visibility} onChange={(e) => setVisibility(e.target.value)}>
-                <option value="private">Приватный</option>
-                <option value="public">Публичный</option>
-            </select>
+            <div id='visibilityChoice'>
+                <button id={visibility === 'public' ? 'descriptionChosen' : 'descriptionChoice'} onClick={()=>{setVisibility('public')}}>
+                    Публичный</button>
+                <p >или</p>
+                <button id={visibility === 'private' ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={()=>{setVisibility('private')}}>
+                    Приватный</button>
+            </div>
             <AutoResizeTextarea
                 label="Авторы"
                 length='80%'

@@ -1,45 +1,37 @@
-#seeAll {
-    font-size: 23px;
-    margin-right: 9px;
-    padding-bottom: 7px;
+#highlyRatedDatasetsSection {
+    margin-top: 60px;
+    margin: 60px 0px;
 }
-.topicCardsInRow {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+#cardsRowIcon {
+    width: 30px;
 }
-#seeAllIcon {
+#highlyRatedDatasetsLabel {
+    font-size: 30px;
+    font-weight: 700;
+    width: fit-content;
+    margin: 0px 15px;
+}
+#seeAllDatasets {
+    font-size: 17px;
+    margin-right: 8px;
+}
+#seeAllDatasetsButton {
+    margin-right: 35px;
     display: flex;
     align-items: center;
+    border-color: #3E456F;
+    padding: 3px 10px;
 }
-#cardsRowSection {
-    padding-bottom: 100px;
+#seeAllDatasetsButton:hover {
+    box-shadow: 0px 0px 2px #3E456F, 0px 0px 2px #3E456F;
 }
-@media screen and (max-width: 1350px) {
-    #cards3 {
-        display: flex;
-        justify-content: space-between;
-    }
-    #cards4 {
-        display: none;
+@media screen and (max-width: 1300px) {
+    #seeAllDatasetsButton {
+        margin-right: 10px;
     }
 }
-@media screen and (min-width: 1351px) {
-    #cards4 {
-        display: flex;
-        justify-content: space-between;
-    }
-    #cards3 {
-        display: none;
-    }
-  }
-  @media screen and (max-width: 1000px) {
-    #cards3 {
-        display: none;
-    }
-    #cards4 {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+@media screen and (max-width: 850px) {
+    #seeAllDatasetsButton {
+        margin-right: 60px;
     }
 }

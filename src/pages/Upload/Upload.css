@@ -24,8 +24,8 @@
     word-break: break-word;
   }
   .metadataSection {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(300px, 1.5fr);
 }
 @media screen and (max-width: 1200px) {
   .metadataSection {
@@ -63,6 +63,7 @@
   background-color: #D5A9F4;
   border-radius: 15px;
   color: white;
+  white-space: nowrap;
   font-weight: 600;
   border-radius: 20px;
   font-size: 16px;
@@ -88,6 +89,7 @@
   font-weight: 600;
   border-radius: 40px;
   font-size: 16px;
+  text-wrap: nowrap;
 }
 .saveDraft {
   margin-right: 15px;
@@ -211,6 +213,7 @@ padding: 0px 10px;
 #tagTypeLabel {
   width: 180px;
   padding-top: 7px;
+  margin: 0;
 }
 #rowContunuieLoading {
   display: flex;
@@ -220,7 +223,7 @@ padding: 0px 10px;
   margin-bottom: 20px;
 }
 #descriptionChoice, #descriptionChosen {
-  margin: 3px 15px 15px 0px;
+  margin: 3px 15px 5px 0px;
   padding: 5px 10px;
   border: none;
   font-weight: 600;
@@ -261,4 +264,14 @@ padding: 0px 10px;
   color: #b575e3;
   font-weight: 500;
   margin: 0px 0px 5px 10px;
+}
+#visibilityChoice {
+  display: flex;
+  align-items: center;
+  margin: 7px 0px 10px 0px;
+}
+.descriptionChoiceButtons {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }

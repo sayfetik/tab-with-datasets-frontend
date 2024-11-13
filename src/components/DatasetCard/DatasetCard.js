@@ -12,7 +12,8 @@ const DatasetCard = ({
     lastChangeDate, 
     downloadsNumber,
     size,
-    smallDescription
+    smallDescription,
+    addToHistory
 }) => {
     const navigate = useNavigate();
     const [image, setImage] = useState(null);
@@ -45,11 +46,16 @@ const DatasetCard = ({
             }
         }
     };
+
+    const handleClick = () => {
+        addToHistory(`/dataset/${id}`);
+        navigate(`/dataset/${id}`);
+    };
     
     return (
         <div id='hover'>
             <div id='datasetCard'
-                onClick={() => {navigate(`/dataset/${id}`)}}
+                onClick={handleClick}
                 onMouseEnter={() => setshowSmallDescription(true)} 
                 onMouseLeave={() => setshowSmallDescription(false)} 
             >

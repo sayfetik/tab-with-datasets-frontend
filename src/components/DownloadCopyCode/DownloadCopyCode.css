@@ -9,7 +9,7 @@
     border-radius: 10px;
     font-size: 16px;
     font-weight: 500;
-    height: 320px; /* Фиксированная высота */
+    height: 320px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -18,14 +18,14 @@
     color: #7B61FF;
   }
 #purpleCode::-webkit-scrollbar-thumb {
-    background-color: #9e8aff; /* Цвет ползунка */
+    background-color: #9e8aff;
 }
 #blueCode {
     background-color: #D3EBFF;
     color: #0071CE;
 }
 #blueCode::-webkit-scrollbar-thumb {
-    background-color: #4889bf; /* Цвет ползунка */
+    background-color: #4889bf;
 }
 .codeLabel {
     margin-bottom: 10px;
@@ -45,4 +45,34 @@
     transform: translateX(-50%);
     z-index: 1001; /* Ensure it appears above other elements */
     white-space: nowrap; /* Prevent text from wrapping */
+}
+#codeContainer {
+    display: flex;
+    align-items: center;
+}
+#blueCodeContainer {
+    margin-right: 50px;
+}
+@media screen and (max-width: 1700px) {
+    #codeContainer {
+        flex-direction: column;
+        justify-content: center;     
+    }
+    #blueCodeContainer {
+        margin-right: 0px;
+        margin-bottom: 50px;
+    }
+    #blueCode, #purpleCode {
+        height: 200px;
+    }
+}
+@media screen and (max-width: 900px) {
+    .modal-content-copy-code {
+        scale: 0.8;    
+    }
+}
+@media screen and (max-width: 700px) {
+    .modal-content-copy-code {
+        scale: 0.7;    
+    }
 }

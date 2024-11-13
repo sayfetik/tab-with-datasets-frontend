@@ -296,7 +296,7 @@ const UploadFilesPart = ({ pageLabel, files, setFiles, image, setImage, filesStr
                             Файлы *
                             <button id={uploadFilesChoice ? 'uploadChosen' : 'uploadChoice'} onClick={()=>{setuploadFilesChoice(true)}}>
                                 json, csv</button>
-                            <p>или</p>
+                            <p style={{margin: '0'}}>или</p>
                             <button id={uploadFilesChoice ? 'uploadChoice' : 'uploadChosen'} onClick={()=>{setuploadFilesChoice(false)}}>
                                 zip</button>
                         </div>

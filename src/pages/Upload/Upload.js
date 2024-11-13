@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import sparklesIcon from '../../img/sparkles.png';
 import loadingOnBlue from '../../img/loadingOnBlue.gif'
 
-const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
+const Upload = ({addToHistory, back, descriptionLimit, smallDescriptionLimit, titleLimit, authorsLimit, sourceLimit, frequencyLimit, descriptionFieldsLimit, doiLimit}) => {
     const navigate = useNavigate();
     useEffect(() => { document.title = `Загрузить датасет`; }, []);
 
@@ -51,15 +51,14 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     const [GemptyFields, GsetEmptyFields] = useState(['описание','краткое описание','теги','название','файлы']);
     const [GemptyFieldsMessage, GsetemptyFieldsMessage,] = useState('');
 
-    let progress = (6-emptyFields.length)/6*100;
-    let Gprogress = (6-GemptyFields.length)/6*100;
+    let progress = (4-emptyFields.length)/4*100;
+    let Gprogress = (4-GemptyFields.length)/4*100;
 
     //const areRequiredInputsFilled = titleOfDataset && (isGenerateDesc ? generatedDescription : description) && smallDescription && (geography_and_places || language || data_type || task || technique || subject);
 
     const requiredFields = {
         description: 'описание',
         smallDescription: 'краткое описание',
-        tags: 'теги',
         titleOfDataset: 'название',
         visibility: 'видимость',
         files: 'файлы'
@@ -70,9 +69,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     
         if (description.length === 0) newEmptyFields.push(requiredFields.description);
         if (smallDescription.length === 0) newEmptyFields.push(requiredFields.smallDescription);
-        
-        if (geography_and_places.length === 0 && language.length === 0 && subject.length === 0 && data_type.length === 0 && task.length === 0 && technique.length === 0)
-          newEmptyFields.push(requiredFields.tags);
     
         if (titleOfDataset.length === 0) newEmptyFields.push(requiredFields.titleOfDataset);
     
@@ -92,9 +88,6 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
     
         if (generatedDescription.length === 0) newEmptyFields.push(requiredFields.description);
         if (smallDescription.length === 0) newEmptyFields.push(requiredFields.smallDescription);
-        
-        if (geography_and_places.length === 0 && language.length === 0 && subject.length === 0 && data_type.length === 0 && task.length === 0 && technique.length === 0)
-          newEmptyFields.push(requiredFields.tags);
     
         if (titleOfDataset.length === 0) newEmptyFields.push(requiredFields.titleOfDataset);
     
@@ -132,13 +125,14 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
             }
         } 
         BackendConnector.upload(payload, files, imageFile)
-            .then(response => {
-                console.log(response);
+            .then(() => {
+                addToHistory(`/uploadRequests`)
                 navigate(`/uploadRequests`);
                 setIsUploading(false);
             })
             .catch(error => {
                 console.error(error);
+                navigate('/error')
         }); 
     }
 
@@ -227,9 +221,8 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
     return (
         <div>
-            <Header />
             <div className='upload'>
-            <Back />
+            <Back back={back} />
             
             <UploadFile pageLabel="Загрузить датасет" image={image} setImage={setImage} files={files} setFiles={setFiles} filesStructure={filesStructure} setFilesStructure={setFilesStructure} fileSizes={fileSizes} setFileSizes={setFileSizes} initialImageSize = {imageSize} setInitialImageSize={setImageSize} initialImageFile = {imageFile} setInitialImageFile={setImageFile}/>
             
@@ -257,11 +250,11 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                 />
 
                 <div id='rightContainer'>
-                    <div className='row'>
-                        <p style={{marginBottom: '15px'}}>Выберите:</p>
+                    <div className='descriptionChoiceButtons'>
+                        <p>Выберите:</p>
                         <button style={{marginLeft: '10px'}} id={isGenerateDesc ? 'descriptionChoice' : 'descriptionChosen'} onClick={()=>{setIsGenerateDesc(false)}}>
                             добавить своё описание</button>
-                        <p style={{marginBottom: '15px'}}>или</p>
+                        <p >или</p>
                         <button id={isGenerateDesc ? 'descriptionChosen' : 'descriptionChoice'} style={{marginLeft: '15px'}} onClick={()=>{setIsGenerateDesc(true)}}>
                             сгенерировать</button>
                     </div>
@@ -285,9 +278,9 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                     <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                     Сгенерировать описание
                                 </button>
-                                {warningDescGeneration && <p className='warning'style={{marginTop: '-8px'}}>Введите название, информацию о том, как были получены данные, загрузите файлы</p>}
+                                {warningDescGeneration && <p className='warning'>Введите название, информацию о получении данных, загрузите файлы</p>}
                                 {isDescGenerating && <GenerationAnimation />}
-                                {errorDescritionGeneration && <p className='warning'style={{marginTop: '-8px'}}>Произошла ошибка. Попробуйте позже.</p>}
+                                {errorDescritionGeneration && <p className='warning'>Произошла ошибка. Попробуйте позже.</p>}
                             </div>
                             {isGDescrition && 
                             <div>
@@ -309,7 +302,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                                     <AutoResizeTextarea placeholder="Введите краткое описание датасета" value={smallDescription} setValue={setSmallDescription} textLimit={smallDescriptionLimit}/>
                                 </div>
                                 <div id='rowContunuieLoading'>
-                                    <button id='continuie' onClick={generateSmallDescription}>
+                                    <button id='continuie' style={{padding: '9px 15px'}} onClick={generateSmallDescription}>
                                         <img src={sparklesIcon} width='15px' style={{marginRight: '10px'}} alt=''/>
                                         Сгенерировать краткое описание
                                     </button>
@@ -322,7 +315,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
                         
                         {smallDescription.length > 0 &&
                             <div id='tagTypesContainer'>
-                                <span className='inputLabel'>Теги *</span>
+                                <span className='inputLabel' style={{marginBottom: '25px'}}>Теги</span>
                                 <div id='tagType'>
                                     <InputTag label="География данных" tags={geography_and_places} setTags={set_geography_and_places}/>
                                 </div>
@@ -357,7 +350,7 @@ const Upload = ({descriptionLimit, smallDescriptionLimit, titleLimit, authorsLim
 
             {!isGenerateDesc ?
             <div className='rowSpaceBetween'>
-                <div style={{width: '84%', marginTop: '15px'}}>
+                <div style={{width: '84%', margin: '15px 25px 0px 0px'}}>
                     <div className='progressBar'><div className='progress' style={{ width: `${progress}%` }}></div></div>
                     <p style={{fontSize: '18px', fontWeight: '500'}} id='requiredFieldsLabel'>{emptyFieldsMessage}</p>
                 </div>
