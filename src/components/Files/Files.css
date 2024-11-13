@@ -1,0 +1,53 @@
+#filesSection {
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    box-shadow: 0 5px 1px #0071CE, 6px 5px 5px 0 #0071CE;
+    
+    padding: 0px 25px;
+}
+#fileInFolder {
+    padding-left: 13px;
+    margin-left: 10px;
+    border-left: 1px solid #3E456F;
+}
+.files {
+    width: 100%;
+    margin: 20px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    background-color: transparent;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.files::-webkit-scrollbar-thumb {
+    background-color: #4889bf;
+}
+#datasetInfo, #section, #filesSection, .files, .file {
+    width: 100%;
+}
+.file {
+    background-color: transparent;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    margin-left: -10px;
+}
+.fileDownload {
+    margin-left: 10px;
+}
+#filesHeaderWithBottomDivider {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+    padding-bottom: 15px;
+    border-bottom:  solid 1px #3E456F;
+}
+#filesHeader {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent;
+}

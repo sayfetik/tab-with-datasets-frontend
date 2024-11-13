@@ -6,7 +6,7 @@ import blueLoading from '../../img/blueLoadingLine.gif';
 import purpleLoading from '../../img/purpleLoadingLine.gif';
 import { ProccessStages, BackendConnector } from '..';
 
-const Download = ({ isOpen, onClose, id }) => {
+const Download = ({ isOpen, onClose, id, setdownloaded }) => {
   const [loadingBase, setloadingBase] = useState(false);
   const [loadingAdvanced, setloadingAdvanced] = useState(false);
   const [errorBase, seterrorBase] = useState(false);
@@ -23,33 +23,40 @@ const Download = ({ isOpen, onClose, id }) => {
 
   const handleDownloadInitialDsClick = async () => {
     setloadingBase(true);
+
     try {
-        const blob = await BackendConnector.download_initial_dataset(id);
-        if (blob) {
-          const url = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', 'dataset_base.zip'); // Specify the filename here
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
+        const response = await BackendConnector.download_initial_dataset(id);
+        if (response) {
+            const url = window.URL.createObjectURL(response.blob);
+            const link = document.createElement('a');
+            link.href = url;
+
+            let filename =  response.filename
+
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            setdownloaded(true);
         }
     } catch (error) {
-      seterrorBase(true);
-      console.error('Error downloading file:', error);
+        console.error('Error downloading file:', error);
     }
     setloadingBase(false);
 };
 
+
 const handleDownloadCleanedDsClick = async () => {
   try {
     setloadingAdvanced(true);
-    const blob = await BackendConnector.download_cleaned_dataset(id);
-    if (blob) {
-      const url = window.URL.createObjectURL(blob);
+    setdownloaded(true)
+    const response = await BackendConnector.download_cleaned_dataset(id);
+    if (response) {
+      const url = window.URL.createObjectURL(response.blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'dataset_cleaned.zip'); // Specify the filename here
+      link.setAttribute('download', response.filename); // Specify the filename here
       document.body.appendChild(link);
       link.click();
       link.remove();

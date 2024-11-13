@@ -1,292 +1,105 @@
-#header {
-    z-index: 100;
-    width: 100%;
+.headerContainer {
     display: flex;
-}
-#accountImage {
-    width: 30px;
-    margin-right: 10px;
-}
-#accountButton {
-    background: none;
-    border: none;
-    border-radius: 10px;
-    color: #3E456F;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    height: 64px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 0;
+    z-index: 12;
+    margin: 0;
+    border-bottom: 1px solid #E4E7F2;
+  }
+  
+  .productLogo {
+    margin-left: 28px;
+    width: 140px;
     cursor: pointer;
-    font: inherit;
+    height: 36px;
+    fill: none;
+    flex-shrink: 0;
+    z-index: 12;
+  }
+  
+  .productButtons {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    align-items: flex-start;
+    gap: 32px;
+    z-index: 12;
+    z-index: 12;
+  }
+  
+  .productButton {
+    color: var(--Grey-70, #3b4168);
+    text-align: right;
     font-size: 16px;
     font-style: normal;
-    font-weight: 500;
-    height: 44px;
+    font-weight: 400;
+    cursor: pointer;
+    z-index: 12;
+  
     line-height: 20px;
-    outline: inherit;
-    display: flex;
-    padding: 8px 7px;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(103, 103, 103, 0.2);
-}
-#arrowInAccount {
-    width: 18px;
-    height: auto;
-    margin: 0px 8px;
-}
-.options {
-    background-color: white;
-    box-shadow: 0 2px 15px rgba(54, 54, 54, 0.2);
-    border-radius: 10px;
-    margin-top: 6px;
-    width: 203px;
-    position: absolute;
-    padding: 10px 10px;
-}
-.option {
-    color: #6F7C98;
-    padding: 8px 15px;
-    border: none;
-    width: 100%;
-    font-size: 16px;
-    text-align: left;
-}
-.option:hover {
-    color: #0071CE;
-    background-color: #EFF8FE;
-    border-radius: 5px;
-}
-@media screen and (min-width: 1351px) {
-    .commonsHeader {
-        font-family: 'IBM Plex sans', sans-serif;
-        width: 100%;
-        z-index: 11;
-        height: 64px;
-        background: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        font-size: 16px;
-        transition: all 0.5s;
-        border-bottom: 1px solid #E4E7F2;
-    }
-    #smallHeader {
-        display: none;
-    }
   }
-@media screen and (max-width: 1350px) {
-    .commonsHeader {
-      display: none;
-    }
-    #smallHeader {
-        font-family: 'IBM Plex sans', sans-serif;
-        width: 100%;
-        z-index: 11;
-        height: 64px;
-        background: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        font-size: 16px;
-        transition: all 0.5s;
-        border-bottom: 1px solid #E4E7F2;
-        padding-right: 20px;
-    }
+  
+  .productButton:active {
+    background-color: rgba(175, 194, 241, 0.28);
   }
-.NavMenu_commonsNavMenu__qSq5M {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    user-select: none;
-}
-.commonsHeaderHeader {
-    background: black;
-}
-
-.commonsHeader a {
-    border-bottom: none;
-    text-decoration: none;
-}
-
-.logo {
-    margin-left: 28px;
-    max-width: 265px;
-    display: flex;
-    align-items: center;
-}
-
-.logoDark svg {
-    filter: hue-rotate(353deg) brightness(100);
-}
-
-.mobileBtn {
-    padding-right: 10px;
-    padding-left: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    height: 100%;
-}
-
-.mobileBtn svg path {
-    fill: #3B4168;
-}
-
-.commons-header__profile-item {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding-left: 28px;
-    padding-right: 28px;
-}
-
-.commons-header__profile-item--active, .commons-header__profile-item:hover {
-    background: #F5FBFF;
-}
-
-.commons-header__profile-image {
-    padding-right: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.commons-header__profile-name {
-    color: #6F7C98;
-}
-
-@media screen and (min-width: 1920px) {
-    .logo {
-        height: 36px;
-    }
-}
-
-@media screen and (max-width: 1600px) {
-    .commonsHeader {
-        font-size: 14px;
-    }
-}
-
-@media screen and (max-width: 756px) {
-    .commonsHeader {
-        padding: 16px 20px 16px 0;
-    }
-
-    .logo {
-        height: 24px;
-    }   
-}
-
-.Header_commonsHeader__AGVst {
-    align-items: center;
-    background: #fff;
-    border-bottom: 1px solid #e4e7f2;
-    display: flex;
-    font-family: 'IBM Plex sans', sans-serif;
+  
+  .productButton:hover {
+    color: var(--Blue-60-main, #0071ce);
+  }
+  
+  .userDropdown {
+    color: #3b4168;
+    font-family: IBM Plex sans, sans-serif;
     font-size: 16px;
-    height: 64px;
+    font-weight: 500;
+    line-height: 20px;
+  
+    min-width: 200px;
+    gap: 1rem;
+    height: 44px;
+  
+    margin-right: 28px;
+    font-size: 16px;
+    font-weight: 500;
+  
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 4px 15px rgba(33, 36, 55, 0.12);
     justify-content: space-between;
-    position: relative;
-    transition: all .5s;
-    z-index: 11;
-}
-.NavProfile_wrapper__8vQYw {
-    color: #0071ce;
-    height: 100%;
-    padding-left: 28px;
-    padding-right: 28px;
-}
-.Header_commonsHeader__AGVst a {
-    border-bottom: none;
-    text-decoration: none;
-}
-
-.NavMenu_commonsNavMenuItem__N9\+6J {
-    align-items: center;
-    color: #3b4168;
-    display: flex;
-    height: 100%;
-    justify-content: flex-end;
-    padding-left: 14px;
-    padding-right: 14px;
-    background-color: none;
-}
-.NavMenu_commonsNavMenuItemNotActive__0ESa- {
-    color: #3b4168;
-    background-color: none;
-}
-div {
-    display: block;
-    unicode-bidi: isolate;
-    background-color: transparent;
-}
-.NavMenu_itemIcon__Kpda0 {
-    align-items: center;
-    display: flex;
-    padding-right: 14px;
-    background-color: transparent;
-}
-.NavMenu_itemLabel__kbH6O {
-    background-color: transparent;
-}
-svg {
-    background-color: transparent;
-}
-button, select {
-    text-transform: none;
-}
-button, input {
-    overflow: visible;
-}
-button, input, optgroup, select {
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    margin: 0;
-}
-[role=button], a, area, button, input:not([type=range]), label, select, summary, textarea {
-    touch-action: manipulation;
-}
-button {
-    appearance: auto;
-    text-rendering: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    align-items: flex-start;
-    cursor: default;
-    box-sizing: border-box;
-    margin: 0em;
-    padding-block: 1px;
-    padding-inline: 6px;
-    border-width: 2px;
-    border-style: outset;
-    border-image: initial;
-}
-.NavMenu_commonsNavMenuItemActive__-A5SY, .NavMenu_commonsNavMenuItem__N9\+6J:hover {
-    background: #f5fbff;
-    color: #0071ce;
-}
-a {
-    background-color: initial;
-    color: #1890ff;
+    border-radius: 6px;
+  
+    user-select: none;
     cursor: pointer;
-    outline: none;
-    text-decoration: none;
-    transition: color .3s;
+  }
+#warningNotification {
+  background-color: #D3EBFF;
+  color: #0071CE;
+  padding: 8px 20px;
+  text-align: center;
 }
-[role=button], a, area, button, input:not([type=range]), label, select, summary, textarea {
-    touch-action: manipulation;
+.menuItem {
+  background-color: white !important;
+  color: #3E456F !important;
+  border-radius: 0px !important;
+  margin: 0;
+  padding: 10px !important;
 }
-* {
-    font-feature-settings: "tnum";
-    color: rgba(0, 0, 0, .85);
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    font-size: 14px;
-    font-variant: tabular-nums;
-    line-height: 1.5715;
-    margin: 0;
+.menuItem:hover {
+  background-color: #EFF8FE !important;
+  filter: brightness(1);
+  color: #0071CE !important;
+}
+.menuItemLabel {
+  font-size: 15px;
+  color: inherit;
+}
+.menuDropdown {
+  border-radius: 10px !important;
+  padding: 0;
 }

@@ -93,7 +93,7 @@
 }
 #editIconRequest {
     width: 26px;
-    margin-right: 15px;
+    margin-right: 5px;
 }
 #stageStatus {
     display: flex;
@@ -119,4 +119,9 @@
     .rowTitleAndStatus {
         justify-content: space-between;
     }
+}
+#seeDatasetButton {
+    margin-left: 8px;
+    margin-right: 15px;
+    padding: 2px 15px;
 }
