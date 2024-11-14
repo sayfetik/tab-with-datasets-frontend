@@ -13,7 +13,6 @@ import {
   DeleteVerification,
   LikeDislike,
   Files,
-  back
 } from "../../components";
 import { marked } from "marked";
 import katex from "katex";
