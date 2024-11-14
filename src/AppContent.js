@@ -50,7 +50,7 @@ const AppContent = () => {
         lastIndex = prevIndex - 1;
         previousPath = historyStack[lastIndex];
       }
-      const updatedHistory = historyStack.slice(0, lastIndex);
+      const updatedHistory = historyStack.slice(0, lastIndex + 1);
       setHistoryStack(updatedHistory);
       localStorage.setItem('navigationHistory', JSON.stringify(updatedHistory));
       return previousPath;

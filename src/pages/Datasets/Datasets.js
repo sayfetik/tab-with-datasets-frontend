@@ -52,9 +52,8 @@ const Datasets = ({addToHistory, back}) => {
             setSubject(newSubject);
         }
         document.title = `Поиск: ${newSearchString}`;
-        addToHistory(`/datasets/${queryParams}`);
         search();
-    }, [location.search]);
+    }, []);
 
     const [warningSearch, setwarningSearch] = useState(false);
     const [alertState, setalertState] = useState(false);
@@ -79,6 +78,7 @@ const Datasets = ({addToHistory, back}) => {
             technique: technique.join(','),
             subject: subject.join(',')
         }).toString();
+        addToHistory(`/datasets/${queryParams}`);
         navigate(`/datasets?${queryParams}`);
     };
 
@@ -191,6 +191,7 @@ const Datasets = ({addToHistory, back}) => {
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
                                 smallDescription={dataset.small_description}
+                                addToHistory={addToHistory}
                             />))}
                     </div>
                     :
