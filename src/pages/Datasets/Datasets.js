@@ -191,6 +191,7 @@ const Datasets = ({addToHistory, back}) => {
                                 downloadsNumber={dataset.downloads_number}
                                 size={dataset.size}
                                 smallDescription={dataset.small_description}
+                                addToHistory={addToHistory}
                             />))}
                     </div>
                     :
