@@ -59,9 +59,9 @@ const AppContent = () => {
     }
   };
 
-  // useEffect(()=>{
-  //   console.log(historyStack);
-  // }, [historyStack])
+  useEffect(()=>{
+    console.log(historyStack);
+  }, [historyStack])
 
   if (!initialized) return <></>;
   return (

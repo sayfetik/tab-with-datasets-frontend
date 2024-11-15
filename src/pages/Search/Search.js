@@ -13,7 +13,6 @@ import searchIcon from "../../img/search.png";
 import { IconButton } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useKeycloak } from "../../keycloak";
-import fireIcon from "../../img/fireIcon.png";
 
 const Search = ({addToHistory}) => {
     const { keycloak } = useKeycloak()
@@ -41,7 +40,7 @@ const Search = ({addToHistory}) => {
         }
         
         const queryParams = new URLSearchParams({
-            searchString,
+            searchString: searchString,
             geography_and_places: geography_and_places.join(','),
             language: language.join(','),
             data_type: data_type.join(','),
