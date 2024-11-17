@@ -10,19 +10,20 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 const Datasets = ({addToHistory, back}) => {
     const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
     const navigate = useNavigate();
     const [sortedData, setSortedData] = useState([]);
     const [selectedOption, setSelectedOption] = useState('byRelevance');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [datasets, setDatasets] = useState([]);
     
-    const [searchString, setSearchString] = useState('searchString' || '');
-    const [geography_and_places, setGeography] = useState([]);
-    const [language, setLanguage] = useState([]);
-    const [data_type, setData_type] = useState([]);
-    const [task, setTask] = useState([]);
-    const [technique, setTechnique] = useState([]);
-    const [subject, setSubject] = useState([]);
+    const [searchString, setSearchString] = useState(queryParams.get('searchString') || '');
+    const [geography_and_places, setGeography] = useState(queryParams.get('geography_and_places') ? queryParams.get('geography_and_places').split(',') : []);
+    const [language, setLanguage] = useState(queryParams.get('language') ? queryParams.get('language').split(',') : []);
+    const [data_type, setData_type] = useState(queryParams.get('data_type') ? queryParams.get('data_type').split(',') : []);
+    const [task, setTask] = useState(queryParams.get('task') ? queryParams.get('task').split(',') : []);
+    const [technique, setTechnique] = useState(queryParams.get('technique') ? queryParams.get('technique').split(',') : []);
+    const [subject, setSubject] = useState(queryParams.get('subject') ? queryParams.get('subject').split(',') : []);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -34,23 +35,13 @@ const Datasets = ({addToHistory, back}) => {
         const newTechnique = queryParams.get('technique') ? queryParams.get('technique').split(',') : [];
         const newSubject = queryParams.get('subject') ? queryParams.get('subject').split(',') : [];
     
-        if (
-            newSearchString !== searchString ||
-            !_.isEqual(newGeography, geography_and_places) ||
-            !_.isEqual(newLanguage, language) ||
-            !_.isEqual(newDataType, data_type) ||
-            !_.isEqual(newTask, task) ||
-            !_.isEqual(newTechnique, technique) ||
-            !_.isEqual(newSubject, subject)
-        ) {
-            setSearchString(newSearchString);
-            setGeography(newGeography);
-            setLanguage(newLanguage);
-            setData_type(newDataType);
-            setTask(newTask);
-            setTechnique(newTechnique);
-            setSubject(newSubject);
-        }
+        setSearchString(newSearchString);
+        setGeography(newGeography);
+        setLanguage(newLanguage);
+        setData_type(newDataType);
+        setTask(newTask);
+        setTechnique(newTechnique);
+        setSubject(newSubject);
         document.title = `Поиск: ${newSearchString}`;
         search();
     }, []);

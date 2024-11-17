@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Icon from '../Icon/Icon'
 import backIcon from '../../img/back.png'
 import './Back.css'
