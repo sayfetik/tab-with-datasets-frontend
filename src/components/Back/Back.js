@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Back = ({back}) => {
     const click = () => {
-        // console.log(back());
         navigate(back())
     }
     const navigate = useNavigate();

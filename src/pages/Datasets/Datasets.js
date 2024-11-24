@@ -23,10 +23,18 @@ const Datasets = ({addToHistory, back}) => {
     const [data_type, setData_type] = useState(queryParams.get('data_type') ? queryParams.get('data_type').split(',') : []);
     const [task, setTask] = useState(queryParams.get('task') ? queryParams.get('task').split(',') : []);
     const [technique, setTechnique] = useState(queryParams.get('technique') ? queryParams.get('technique').split(',') : []);
-    const [subject, setSubject] = useState(queryParams.get('subject') ? queryParams.get('subject').split(',') : []);
+    const [subject, setSubject] = useState(queryParams.get('subject') ? queryParams.get('subject').split(',') : [])
 
-    useEffect(() => {
+    const [warningSearch, setwarningSearch] = useState(false);
+    const [alertState, setalertState] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [noDatasets, setnoDatasets] = useState(false);
+    const [blueButton, setblueButton] = useState('');
+    const [lightBlueButton, setlightBlueButton] = useState('');
+
+    const setQueryParams = () => {
         const queryParams = new URLSearchParams(location.search);
+    
         const newSearchString = queryParams.get('searchString') || '';
         const newGeography = queryParams.get('geography_and_places') ? queryParams.get('geography_and_places').split(',') : [];
         const newLanguage = queryParams.get('language') ? queryParams.get('language').split(',') : [];
@@ -42,16 +50,18 @@ const Datasets = ({addToHistory, back}) => {
         setTask(newTask);
         setTechnique(newTechnique);
         setSubject(newSubject);
-        document.title = `Поиск: ${newSearchString}`;
-        search();
-    }, [location.search]);
-
-    const [warningSearch, setwarningSearch] = useState(false);
-    const [alertState, setalertState] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [noDatasets, setnoDatasets] = useState(false);
-    const [blueButton, setblueButton] = useState('');
-    const [lightBlueButton, setlightBlueButton] = useState('');
+    
+        return {
+            newSearchString,
+            newGeography,
+            newLanguage,
+            newDataType,
+            newTask,
+            newTechnique,
+            newSubject,
+        };
+    };
+    
 
     const handleClick = async (e) => {
         if (e?.preventDefault) e.preventDefault();
@@ -79,30 +89,48 @@ const Datasets = ({addToHistory, back}) => {
 
     const search = async (e) => {
         if (e) e.preventDefault();
+    
+        const {
+            newSearchString,
+            newGeography,
+            newLanguage,
+            newDataType,
+            newTask,
+            newTechnique,
+            newSubject,
+        } = setQueryParams();
+    
         setnoDatasets(false);
+    
         try {
             const filters = {
-                geography_and_places: geography_and_places,
-                language: language,
-                data_type: data_type,
-                task: task,
-                technique: technique,
-                subject: subject
+                geography_and_places: newGeography,
+                language: newLanguage,
+                data_type: newDataType,
+                task: newTask,
+                technique: newTechnique,
+                subject: newSubject,
             };
-
-            const data = await BackendConnector.search(searchString, filters, 100);
-
+    
+            const data = await BackendConnector.search(newSearchString, filters, 100);
+    
             if (data && data.length > 0) {
                 setDatasets(data);
                 setSortedData(data);
-            } else setnoDatasets(true);
+            } else {
+                setnoDatasets(true);
+            }
         } catch (error) {
             setalertState(true);
-            setErrorMessage(error);
-            setblueButton('Подождать')
+            setErrorMessage(error.message || error.toString());
+            setblueButton('Подождать');
             setlightBlueButton('Попробовать ещё раз');
         }
-    };
+    };    
+
+    useEffect(() => {
+        search()
+    }, [location.search]);
 
     useEffect(() => {
         let sorted = [...datasets];
